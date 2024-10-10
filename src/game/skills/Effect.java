@@ -1,6 +1,7 @@
 package game.skills;
 
-import game.entities.Entity;
+import game.entities.Hero;
+
 import java.util.List;
 
 public class Effect {
@@ -15,8 +16,8 @@ public class Effect {
     public int intensity;
     public int successChance= 100;
     public List<EffectCondition> conditions;
-    public Entity origin;
-    public Entity entity;
+    public Hero origin;
+    public Hero entity;
 
     public String name;
     public String description;

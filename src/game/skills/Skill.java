@@ -66,10 +66,15 @@ public abstract class Skill {
     protected boolean canMiss = true;
     protected int countAsHits = 1;
 
-
-
     protected Stat primaryMultiplier;
 
+
+    public static List<TargetType> MAX_ACC_TARGET_TYPES = List.of(
+            TargetType.SELF,
+            TargetType.ALL_ALLY,
+            TargetType.SINGLE_ALLY,
+            TargetType.SINGLE_ALLY_IN_FRONT
+    );
 
 //AI
     public List<AiSkillTag> tags = new ArrayList<>();
@@ -185,6 +190,7 @@ public abstract class Skill {
     private void performEffect() {}
     public void changeEffects(Skill s) {}
     public void baseDamageChanges(){}
+    public void baseHealChanges(){};
     public void replacementEffect(Skill s){}
     public int getDamageChanges(Entity caster, Entity target, Skill damagingSkill, int result, Stat damageType, boolean simulated) {return result;}
     public int getHealChanges(Entity caster, Entity target, Skill damagingSkill, int result) {return result;}
@@ -224,8 +230,6 @@ public abstract class Skill {
         for (Entity target : targets) {
             if (this.targetType.equals(TargetType.SINGLE_ALLY)
                     || this.targetType.equals(TargetType.SINGLE_ALLY_IN_FRONT)) {
-
-                target.isTargeted(this);
                 this.individualResolve(target);
             } else {
                 Logger.logLn("Resolve " + this.name + " for " + target.name);
@@ -250,6 +254,7 @@ public abstract class Skill {
     protected void individualResolve(Entity target) {
         Logger.logLn("Base DMG:" + this.dmg);
         this.baseDamageChanges();
+        this.baseHealChanges();
         Logger.logLn("After base dmg changes:" + this.dmg);
         int dmg = this.getDamage();
         Logger.logLn("After multipliers:" + dmg);

@@ -12,7 +12,6 @@ import framework.graphics.containers.HUD;
 import game.controllers.ArenaAIController;
 import game.entities.Entity;
 import game.entities.EntityGroup;
-import game.entities.Hero;
 import game.entities.HeroTeam;
 import game.objects.Equipment;
 import game.skills.Effect;
