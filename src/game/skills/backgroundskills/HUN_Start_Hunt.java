@@ -1,7 +1,7 @@
 package game.skills.backgroundskills;
 
 import framework.Logger;
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Effect;
 import game.skills.Skill;
 import game.skills.changeeffects.effects.Bounty;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Random;
 
 public class HUN_Start_Hunt extends Skill {
-    public HUN_Start_Hunt(Entity e) {
+    public HUN_Start_Hunt(Hero e) {
         super(e);
         this.name="hun_start_hunt";
         this.translation="Start the Hunt";
@@ -24,21 +24,21 @@ public class HUN_Start_Hunt extends Skill {
     }
     @Override
     public Skill getCast() {
-        HUN_Start_Hunt cast = new HUN_Start_Hunt(this.entity);
+        HUN_Start_Hunt cast = new HUN_Start_Hunt(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
     @Override
-    public String getDescriptionFor(Entity e) {
+    public String getDescriptionFor(Hero e) {
         return "Choose a rdm target each round. They will gain bounty target.";
     }
     @Override
     public void startOfTurn() {
-        List<Entity> enemies = Arrays.stream(this.entity.arena.getAllLivingEntities())
-                .filter(e -> e.enemy != this.entity.enemy).toList();
+        List<Hero> enemies = Arrays.stream(this.Hero.arena.getAllLivingEntities())
+                .filter(e -> e.enemy != this.Hero.enemy).toList();
         Random rdm = new Random();
-        Logger.logLn(this.entity.name + ".hun_starthunt.startofturn");
-        enemies.get(rdm.nextInt(enemies.size())).addEffect(getBountyTarget(),this.entity);
+        Logger.logLn(this.Hero.name + ".hun_starthunt.startofturn");
+        enemies.get(rdm.nextInt(enemies.size())).addEffect(getBountyTarget(),this.Hero);
     }
     public static Effect getBountyTarget() {
         return new BountyTarget();

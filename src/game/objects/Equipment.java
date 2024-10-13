@@ -1,6 +1,6 @@
 package game.objects;
 
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Effect;
 import game.skills.Skill;
 import game.skills.Stat;
@@ -34,7 +34,7 @@ public class Equipment {
     protected int maxOverheat = 0;
     protected boolean inOverheat;
     public int inventoryPosition = 0;
-    public Entity entity;
+    public Hero Hero;
 
     protected Map<Stat,Integer> statBonus = new HashMap<>();
     protected List<Skill> skillList = new ArrayList<>();
@@ -72,7 +72,7 @@ public class Equipment {
     public int getCastingStat(Stat stat, Skill cast) { return 0;}
     public int getAccuracyFor(Skill cast, int accuracy) { return accuracy; }
     public int getCurrentActionAmountChange() { return 0;}
-    public void effectAddedTrigger(Effect effect, Entity target) {}
+    public void effectAddedTrigger(Effect effect, Hero target) {}
     public void replacementEffect(Skill cast){};
     public void changeEffects(Skill cast){};
     public int getAutoAttackPower() {
@@ -129,10 +129,10 @@ public class Equipment {
         return 1;
     }
 
-    public int getDamageChanges(Entity caster, Entity target, Skill damagingSkill, int result, Stat damageType, boolean simulated) {
+    public int getDamageChanges(Hero caster, Hero target, Skill damagingSkill, int result, Stat damageType, boolean simulated) {
         return result;
     }
-    public int getHealChanges(Entity caster, Entity target, Skill damagingSkill, int result) {
+    public int getHealChanges(Hero caster, Hero target, Skill damagingSkill, int result) {
         return result;
     }
 

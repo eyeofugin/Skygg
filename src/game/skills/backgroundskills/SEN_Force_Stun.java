@@ -1,7 +1,7 @@
 package game.skills.backgroundskills;
 
 import framework.Logger;
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -17,7 +17,7 @@ public class SEN_Force_Stun extends Skill {
     private static final int PUSH_DIST = 1;
     private static final int POWER = 10;
 
-    public SEN_Force_Stun(Entity e) {
+    public SEN_Force_Stun(Hero e) {
         super(e);
         this.name="sen_force_stun";
         this.translation="Force Stun";
@@ -35,24 +35,24 @@ public class SEN_Force_Stun extends Skill {
     }
     @Override
     public Skill getCast() {
-        SEN_Force_Stun cast = new SEN_Force_Stun(this.entity);
+        SEN_Force_Stun cast = new SEN_Force_Stun(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
     @Override
-    public String getDescriptionFor(Entity e) {
+    public String getDescriptionFor(Hero e) {
         return "Deals "+ POWER + " damage and paralyses target. Then pushes target up to " + PUSH_DIST + " fields away.";
     }
     @Override
-    protected void individualResolve(Entity target) {
+    protected void individualResolve(Hero target) {
         int dmg = this.getDamage();
-        int lethality = this.entity.getCastingStat(this, Stat.LETHALITY);
+        int lethality = this.Hero.getCastingStat(this, Stat.LETHALITY);
         if (dmg > 0) {
-            int doneDamage = target.damage(this.entity, dmg, this.damageType, lethality, this);
-            this.entity.arena.dmgTrigger(target,this, doneDamage);
+            int doneDamage = target.damage(this.Hero, dmg, this.damageType, lethality, this);
+            this.Hero.arena.dmgTrigger(target,this, doneDamage);
         }
-        int dir = this.entity.position < target.position ? -1: 1;
-        this.entity.arena.move(target, PUSH_DIST, dir);
+        int dir = this.Hero.position < target.position ? -1: 1;
+        this.Hero.arena.move(target, PUSH_DIST, dir);
         this.applySkillEffects(target);
     }
 }

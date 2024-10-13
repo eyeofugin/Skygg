@@ -1,7 +1,7 @@
 package game.skills.backgroundskills;
 
 import framework.Logger;
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.Timeout;
@@ -14,7 +14,7 @@ public class HUN_Lure_in extends Skill {
     private static final int DISTANCE = 3;
     private static final int PULL_DIST = 2;
 
-    public HUN_Lure_in(Entity e) {
+    public HUN_Lure_in(Hero e) {
         super(e);
         this.name="hun_lure_in";
         this.translation="Lure in";
@@ -30,18 +30,18 @@ public class HUN_Lure_in extends Skill {
     }
     @Override
     public Skill getCast() {
-        HUN_Lure_in cast = new HUN_Lure_in(this.entity);
+        HUN_Lure_in cast = new HUN_Lure_in(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
     @Override
-    public String getDescriptionFor(Entity e) {
+    public String getDescriptionFor(Hero e) {
         return "Pull target up to " + PULL_DIST + " fields towards you. Stun them.";
     }
     @Override
-    protected void individualResolve(Entity target) {
-        int dir = this.entity.position < target.position ? 1: -1;
-        this.entity.arena.move(target, PULL_DIST, dir);
+    protected void individualResolve(Hero target) {
+        int dir = this.Hero.position < target.position ? 1: -1;
+        this.Hero.arena.move(target, PULL_DIST, dir);
         this.applySkillEffects(target);
     }
 }

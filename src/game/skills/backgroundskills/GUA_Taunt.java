@@ -1,6 +1,6 @@
 package game.skills.backgroundskills;
 
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.TargetType;
 import game.skills.changeeffects.statusinflictions.Taunted;
@@ -13,7 +13,7 @@ public class GUA_Taunt extends Skill {
     private static final int CD_TOTAL = 3;
     private static final int DISTANCE = 2;
 
-    public GUA_Taunt(Entity e) {
+    public GUA_Taunt(Hero e) {
         super(e);
         this.name="gua_taunt";
         this.translation="Taunt";
@@ -29,12 +29,12 @@ public class GUA_Taunt extends Skill {
     }
     @Override
     public Skill getCast() {
-        GUA_Taunt cast = new GUA_Taunt(this.entity);
+        GUA_Taunt cast = new GUA_Taunt(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
     @Override
-    public String getDescriptionFor(Entity e) {
+    public String getDescriptionFor(Hero e) {
         return "Target must auto attack ~ in the next turn.";
     }
 

@@ -1,6 +1,6 @@
 package game.skills.backgroundskills;
 
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.Resilient;
@@ -13,7 +13,7 @@ public class SEN_Force_Barrier extends Skill {
     private static final int ACTION_COST = 1;
     private static final int CD_TOTAL = 5;
 
-    public SEN_Force_Barrier(Entity e) {
+    public SEN_Force_Barrier(Hero e) {
         super(e);
         this.name="sen_force_barrier";
         this.translation="Force Barrier";
@@ -29,12 +29,12 @@ public class SEN_Force_Barrier extends Skill {
     }
     @Override
     public Skill getCast() {
-        SEN_Force_Barrier cast = new SEN_Force_Barrier(this.entity);
+        SEN_Force_Barrier cast = new SEN_Force_Barrier(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
     @Override
-    public String getDescriptionFor(Entity e) {
+    public String getDescriptionFor(Hero e) {
         return "Gain resilient for " + TURNS + " turns." ;
     }
 }

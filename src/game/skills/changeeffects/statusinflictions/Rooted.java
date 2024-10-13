@@ -18,8 +18,8 @@ public class Rooted extends Effect {
     }
     @Override
     public boolean performSuccessCheck(Skill cast) {
-        if (cast.entity == this.entity && cast.isMove()) {
-            Logger.logLn(this.entity.name + ".Rooted.performSuccessCheck: false");
+        if (cast.Hero == this.Hero && cast.isMove()) {
+            Logger.logLn(this.Hero.name + ".Rooted.performSuccessCheck: false");
             return false;
         }
         return true;

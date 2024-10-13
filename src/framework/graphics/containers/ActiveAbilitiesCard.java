@@ -7,14 +7,14 @@ import framework.graphics.GUIElement;
 import framework.graphics.elements.SkillInfo;
 import framework.graphics.text.Color;
 import framework.states.Arena;
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Skill;
 
 public class ActiveAbilitiesCard extends GUIElement {
 
     public Engine engine;
     public Arena arena;
-    private Entity activeEntity;
+    private Hero activeHero;
     public int abilityPointer = 0;
 
     GUIElement[] skillIcons = new GUIElement[5];
@@ -49,10 +49,10 @@ public class ActiveAbilitiesCard extends GUIElement {
         }
     }
     private void act() {
-        if (this.arena.activeEntity == this.activeEntity) {
+        if (this.arena.activeHero == this.activeHero) {
             Skill s = getSkill();
             if (s != null) {
-                if (this.activeEntity.canPerform(s)) {
+                if (this.activeHero.canPerform(s)) {
                     this.active = false;
                     this.arena.chooseTargets(s);
                 } else {
@@ -61,9 +61,9 @@ public class ActiveAbilitiesCard extends GUIElement {
             }
         }
     }
-    public void setActiveEntity(Entity e) {
+    public void setActiveHero(Hero e) {
         if (!e.enemy) {
-            this.activeEntity = e;
+            this.activeHero = e;
             this.abilityPointer = 0;
             createSkillIcons();
             activateIcon();
@@ -71,8 +71,8 @@ public class ActiveAbilitiesCard extends GUIElement {
     }
     private void createSkillIcons() {
         int y = 2;
-        for (int i = 0; i < this.activeEntity.skills.length; i++) {
-            Skill s = this.activeEntity.skills[i];
+        for (int i = 0; i < this.activeHero.getSkills().length; i++) {
+            Skill s = this.activeHero.getSkills()[i];
             GUIElement skillIcon = new GUIElement();
             skillIcon.setSize(16, 16);
             skillIcon.setPixels(s!=null ? s.iconPixels : new int[16*16]);
@@ -109,8 +109,8 @@ public class ActiveAbilitiesCard extends GUIElement {
     }
 
     private Skill getSkill() {
-        if (this.activeEntity != null && this.activeEntity.skills.length > this.abilityPointer) {
-            Skill s = this.activeEntity.skills[this.abilityPointer];
+        if (this.activeHero != null && this.activeHero.getSkills().length > this.abilityPointer) {
+            Skill s = this.activeHero.getSkills()[this.abilityPointer];
             if (s != null) {
                 return s._cast;
             }

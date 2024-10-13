@@ -1,6 +1,6 @@
 package game.skills.backgroundskills;
 
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.TargetType;
 import game.skills.changeeffects.statusinflictions.Paralysed;
@@ -15,7 +15,7 @@ public class TEC_Shock_Gauntlet extends Skill {
     private static final int TURNS = 1;
     private static final int POWER = 20;
 
-    public TEC_Shock_Gauntlet(Entity e) {
+    public TEC_Shock_Gauntlet(Hero e) {
         super(e);
         this.name="tec_shock_gauntlet";
         this.translation="Shock Gauntlet";
@@ -32,12 +32,12 @@ public class TEC_Shock_Gauntlet extends Skill {
     }
     @Override
     public Skill getCast() {
-        TEC_Shock_Gauntlet cast = new TEC_Shock_Gauntlet(this.entity);
+        TEC_Shock_Gauntlet cast = new TEC_Shock_Gauntlet(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
     @Override
-    public String getDescriptionFor(Entity e) {
+    public String getDescriptionFor(Hero e) {
         return "Deals " + POWER + " damage to target and paralyses them for " + TURNS + " turns.";
 
     }

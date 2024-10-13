@@ -1,6 +1,6 @@
 package game.skills.itemskills;
 
-import game.entities.Entity;
+import game.entities.Hero;
 import game.entities.Multiplier;
 import game.skills.Skill;
 import game.skills.Stat;
@@ -13,8 +13,8 @@ import java.util.List;
 public class Rifle_Crossfire extends Skill {
     private static final int DMG = 10;
     private static final int DMG_BONUS = 5;
-    public Rifle_Crossfire(Entity entity) {
-        super(entity);
+    public Rifle_Crossfire(Hero Hero) {
+        super(Hero);
         this.name="rifle_crossfire";
         this.translation="Crossfire";
         this.description= "Deals damage to the first two enemies";
@@ -31,26 +31,26 @@ public class Rifle_Crossfire extends Skill {
     }
     @Override
     public Skill getCast() {
-        Rifle_Crossfire cast = new Rifle_Crossfire(this.entity);
+        Rifle_Crossfire cast = new Rifle_Crossfire(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
     @Override
-    protected void individualResolve(Entity target) {
-        int critChance = this.entity.getCastingStat(this, Stat.CRIT_CHANCE);
-        if (!this.entity.hasStatBuff()) {
+    protected void individualResolve(Hero target) {
+        int critChance = this.Hero.getCastingStat(this, Stat.CRIT_CHANCE);
+        if (!this.Hero.hasStatBuff()) {
             this.dmg += DMG_BONUS;
         }
         if (MyMaths.success(critChance)) {
             this.dmg*=2;
-            this.entity.arena.critTrigger(target, this);
+            this.Hero.arena.critTrigger(target, this);
         }
         int dmg = this.getDamage();
         Stat dt = this.getDamageType();
-        int lethality = this.entity.getCastingStat(this, Stat.LETHALITY);
+        int lethality = this.Hero.getCastingStat(this, Stat.LETHALITY);
         if (dmg>0) {
-            int doneDamage = target.damage(this.entity, dmg, dt, lethality, this);
-            this.entity.arena.dmgTrigger(target,this, doneDamage);
+            int doneDamage = target.damage(this.Hero, dmg, dt, lethality, this);
+            this.Hero.arena.dmgTrigger(target,this, doneDamage);
         }
         this.applySkillEffects(target);
     }

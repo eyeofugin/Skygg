@@ -4,7 +4,7 @@ import framework.resources.SpriteLibrary;
 import framework.states.Arena;
 import game.entities.Animation;
 import game.entities.Animator;
-import game.entities.Entity;
+import game.entities.Hero;
 import game.objects.equipments.MWC35c;
 import game.objects.equipments.basic.BlasterPistol;
 import game.skills.Skill;
@@ -16,7 +16,7 @@ import game.skills.itemskills.ITEM_Grenades;
 
 import java.awt.*;
 
-public class BAZE_TEST extends Entity {
+public class BAZE_TEST extends Hero {
     public static int counter = 0;
 
     static int[][] idleR = SpriteLibrary.setupSprites(new Point[]{new Point(0,0),new Point(1,0), new Point(2,0), new Point(3,0),
@@ -54,7 +54,7 @@ public class BAZE_TEST extends Entity {
         this.appearanceName = "Baze";
         MWC35c primary = new MWC35c();
         primary.inventoryPosition = 0;
-        primary.entity = this;
+        primary.Hero = this;
         this.equipments.add(0, primary);
 
         this.skills = new Skill[] {

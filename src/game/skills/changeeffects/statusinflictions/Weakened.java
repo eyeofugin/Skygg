@@ -22,8 +22,8 @@ public class Weakened extends Effect {
     }
     @Override
     public void replacementEffect(Skill cast){
-        if (cast.entity == this.entity) {
-            Logger.logLn(this.entity.name + ".weakened.replacementEffect");
+        if (cast.Hero == this.Hero) {
+            Logger.logLn(this.Hero.name + ".weakened.replacementEffect");
             cast.setCdMax(1+cast.getCdMax());
         }
     }

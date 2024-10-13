@@ -17,7 +17,7 @@ public class Effect {
     public int successChance= 100;
     public List<EffectCondition> conditions;
     public Hero origin;
-    public Hero entity;
+    public Hero Hero;
 
     public String name;
     public String description;
@@ -36,7 +36,7 @@ public class Effect {
         this.successChance = effect.successChance;
         this.conditions = effect.conditions;
         this.origin = effect.origin;
-        this.entity = effect.entity;
+        this.Hero = effect.Hero;
         this.name = effect.name;
         this.description = effect.description;
         this.stackable = effect.stackable;
@@ -82,10 +82,10 @@ public class Effect {
         return getRdmBuff(-1*intensity);
     }
 
-    public int getDamageChanges(Entity caster, Entity target, Skill damagingSkill, int result, Stat damageType, boolean simulated) {
+    public int getDamageChanges(Hero caster, Hero target, Skill damagingSkill, int result, Stat damageType, boolean simulated) {
         return result;
     }
-    public int getHealChanges(Entity caster, Entity target, Skill damagingSkill, int result) {
+    public int getHealChanges(Hero caster, Hero target, Skill damagingSkill, int result) {
         return result;
     }
     public int getActionChanges() {
@@ -100,7 +100,7 @@ public class Effect {
     public int getTargetedStat(Stat stat, Skill targeted) {
         return 0;
     }
-    public void dmgTrigger(Entity target, Skill cast, int doneDamage) {}
+    public void dmgTrigger(Hero target, Skill cast, int doneDamage) {}
     public void replacementEffect(Skill cast){}
     public void changeEffects(Skill cast) {}
 

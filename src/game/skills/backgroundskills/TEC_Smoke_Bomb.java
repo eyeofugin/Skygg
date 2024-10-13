@@ -1,6 +1,6 @@
 package game.skills.backgroundskills;
 
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Effect;
 import game.skills.Skill;
 import game.skills.Stat;
@@ -15,7 +15,7 @@ public class TEC_Smoke_Bomb extends Skill {
     private static final int DISTANCE = 2;
     private static final int TURNS = 2;
 
-    public TEC_Smoke_Bomb(Entity e) {
+    public TEC_Smoke_Bomb(Hero e) {
         super(e);
         this.name="tec_smoke_bomb";
         this.translation="Smoke Bomb";
@@ -31,12 +31,12 @@ public class TEC_Smoke_Bomb extends Skill {
     }
     @Override
     public Skill getCast() {
-        TEC_Smoke_Bomb cast = new TEC_Smoke_Bomb(this.entity);
+        TEC_Smoke_Bomb cast = new TEC_Smoke_Bomb(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
     @Override
-    public String getDescriptionFor(Entity e) {
+    public String getDescriptionFor(Hero e) {
         return "Blinds target for " + TURNS + " turns.";
     }
 }

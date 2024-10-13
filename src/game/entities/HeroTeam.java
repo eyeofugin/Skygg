@@ -1,32 +1,59 @@
 package game.entities;
 
-import framework.graphics.elements.ArenaHeroElement;
+import game.skills.Stat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class HeroTeam {
 
-    private List<ArenaHeroElement> heroes = new ArrayList<>();
-    private List<ArenaHeroElement> deadHeroes = new ArrayList<>();
+    private final int fillUpDirection;
+    public  Hero[] heroes;
+    public  List<Hero> deadHeroes = new ArrayList<>();
 
-    public HeroTeam(ArenaHeroElement... heroes) {
-        this.heroes = List.of(heroes);
+    public HeroTeam(int fillUpDirection, Hero[] heroes) {
+        this.heroes = heroes;
+        this.fillUpDirection = fillUpDirection;
     }
 
-    public List<ArenaHeroElement> getHeroes() {
-        return heroes;
+    public void updateAnimations(int frame) {
+        Arrays.stream(this.heroes).filter(Objects::nonNull).forEach(e -> e.update(frame));
     }
 
-    public void setHeroes(List<ArenaHeroElement> heroes) {
+    public List<Hero> removeTheDead() {
+        List<Hero> removed = new ArrayList<>();
+        for (int i = 0; i < this.heroes.length; i++) {
+            if (this.heroes[i] != null && this.heroes[i].getStats().get(Stat.CURRENT_LIFE) < 1) {
+                this.deadHeroes.add(this.heroes[i]);
+                removed.add(this.heroes[i]);
+                this.heroes[i] = null;
+                for (int j = i - fillUpDirection; j >= 0 && j < this.heroes.length; j-=fillUpDirection) {
+                    if (this.heroes[j] != null) {
+                        this.heroes[j+fillUpDirection] = this.heroes[j];
+                        this.heroes[j+fillUpDirection].position = j+fillUpDirection;
+                        this.heroes[j] = null;
+                    }
+                }
+            }
+        }
+        return removed;
+    }
+
+    public List<Hero> getHeroesAsList() {
+        return List.of(heroes);
+    }
+
+    public void setHeroes(Hero[] heroes) {
         this.heroes = heroes;
     }
 
-    public List<ArenaHeroElement> getDeadHeroes() {
+    public List<Hero> getDeadHeroes() {
         return deadHeroes;
     }
 
-    public void setDeadHeroes(List<ArenaHeroElement> deadHeroes) {
+    public void setDeadHeroes(List<Hero> deadHeroes) {
         this.deadHeroes = deadHeroes;
     }
 }

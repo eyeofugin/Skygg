@@ -1,6 +1,6 @@
 package game.skills.backgroundskills;
 
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.TargetType;
 
@@ -15,7 +15,7 @@ public class SEN_Mind_Trick extends Skill {
     private static final int PUSH_DIST = 1;
     public static final int TURNS = 2;
 
-    public SEN_Mind_Trick(Entity e) {
+    public SEN_Mind_Trick(Hero e) {
         super(e);
         this.name="sen_mind_trick";
         this.translation="Mind Trick";
@@ -30,16 +30,16 @@ public class SEN_Mind_Trick extends Skill {
     }
     @Override
     public Skill getCast() {
-        SEN_Mind_Trick cast = new SEN_Mind_Trick(this.entity);
+        SEN_Mind_Trick cast = new SEN_Mind_Trick(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
     @Override
-    public String getDescriptionFor(Entity e) {
+    public String getDescriptionFor(Hero e) {
         return "A random ability of the target is blocked for " + TURNS + " turns.";
     }
     @Override
-    protected void individualResolve(Entity target) {
+    protected void individualResolve(Hero target) {
         Random rand = new Random();
         List<Skill> nonPassiveSkills = Arrays.stream(target.skills).filter(s->!s.isPassive()).toList();
         if (nonPassiveSkills.size()>0) {

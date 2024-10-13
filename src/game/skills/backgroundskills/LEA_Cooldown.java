@@ -1,7 +1,7 @@
 package game.skills.backgroundskills;
 
 import framework.Logger;
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.TargetType;
 
@@ -14,7 +14,7 @@ public class LEA_Cooldown extends Skill {
     private static final int CD_TOTAL = 3;
     public static final int CD_VALUE = 1;
 
-    public LEA_Cooldown(Entity e) {
+    public LEA_Cooldown(Hero e) {
         super(e);
         this.name="lea_agitate";
         this.translation="Agitate";
@@ -28,16 +28,16 @@ public class LEA_Cooldown extends Skill {
     }
     @Override
     public Skill getCast() {
-        LEA_Cooldown cast = new LEA_Cooldown(this.entity);
+        LEA_Cooldown cast = new LEA_Cooldown(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
     @Override
-    public String getDescriptionFor(Entity e) {
+    public String getDescriptionFor(Hero e) {
         return "Reduces cooldown for all allies for " + CD_VALUE;
     }
     @Override
-    protected void individualResolve(Entity target) {
+    protected void individualResolve(Hero target) {
         List<Skill> skillsWithCD = Arrays.stream(target.skills).filter(skill -> skill.getCdCurrent()>0).toList();
         if (skillsWithCD.size()>0) {
             Random rand = new Random();

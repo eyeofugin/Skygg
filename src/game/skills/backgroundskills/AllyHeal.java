@@ -1,12 +1,12 @@
 package game.skills.backgroundskills;
 
-import game.entities.Entity;
+import game.entities.Hero;
 import game.entities.Multiplier;
 import game.skills.Skill;
 import game.skills.Stat;
 
 public class AllyHeal extends Skill {
-    public AllyHeal(Entity e) {
+    public AllyHeal(Hero e) {
         super(e);
         this.name="ally_heal";
         this.translation="Ally Heal";
@@ -28,13 +28,13 @@ public class AllyHeal extends Skill {
 
     @Override
     public Skill getCast() {
-        AllyHeal cast = new AllyHeal(this.entity);
+        AllyHeal cast = new AllyHeal(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
 
     @Override
-    public String getDescriptionFor(Entity e) {
+    public String getDescriptionFor(Hero e) {
         return "Heals target friend for " + getDamage() + "" + getDmgMultiplierString(e) + " up to " + this.distance + " away. [br] " +
                 "Sets target on fire.";
     }

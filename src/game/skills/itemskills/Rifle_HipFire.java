@@ -1,6 +1,6 @@
 package game.skills.itemskills;
 
-import game.entities.Entity;
+import game.entities.Hero;
 import game.entities.Multiplier;
 import game.skills.Skill;
 import game.skills.Stat;
@@ -13,8 +13,8 @@ import java.util.List;
 public class Rifle_HipFire extends Skill {
     private static final double DMG = 0.3;
 
-    public Rifle_HipFire(Entity entity) {
-        super(entity);
+    public Rifle_HipFire(Hero Hero) {
+        super(Hero);
         this.name="rifle_hipfire";
         this.translation="Hip Fire";
         this.description= "";
@@ -27,13 +27,13 @@ public class Rifle_HipFire extends Skill {
         this.distance = 3;
         this.overheatCost = 3;
         this.countAsHits = 3;
-        this.dmg = (int)(entity.getPrimary().getAutoAttackPower()*DMG);
+        this.dmg = (int)(Hero.getPrimary().getAutoAttackPower()*DMG);
         this.tags = List.of(AiSkillTag.DMG);
         this.weaponSkill = true;
     }
     @Override
     public Skill getCast() {
-        Rifle_HipFire cast = new Rifle_HipFire(this.entity);
+        Rifle_HipFire cast = new Rifle_HipFire(this.Hero);
         cast.copyFrom(this);
         return cast;
     }

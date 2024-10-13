@@ -31,11 +31,11 @@ public class BlasterCannon extends Equipment {
     public void reload() {
         this.currentOverheat = 0;
         this.inOverheat = false;
-        this.entity.skills[0] = new AutoAttack(this.entity, this);
+        this.Hero.skills[0] = new AutoAttack(this.Hero, this);
     }
     @Override
     protected void overHeat() {
         this.inOverheat = true;
-        this.entity.skills[0] = new Cannon_Reload(this.entity);
+        this.Hero.skills[0] = new Cannon_Reload(this.Hero);
     }
 }

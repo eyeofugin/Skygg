@@ -1,6 +1,6 @@
 package game.skills.backgroundskills;
 
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.Advantage;
@@ -13,7 +13,7 @@ public class LEA_Give_orders extends Skill {
     private static final int TURNS = 2;
     private static final int TARGET_DIST = 2;
 
-    public LEA_Give_orders(Entity e) {
+    public LEA_Give_orders(Hero e) {
         super(e);
         this.name="lea_give_orders";
         this.translation="Give orders";
@@ -29,12 +29,12 @@ public class LEA_Give_orders extends Skill {
     }
     @Override
     public Skill getCast() {
-        LEA_Give_orders cast = new LEA_Give_orders(this.entity);
+        LEA_Give_orders cast = new LEA_Give_orders(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
     @Override
-    public String getDescriptionFor(Entity e) {
+    public String getDescriptionFor(Hero e) {
         return "Target gets advantage for " + TURNS + " turns.";
     }
 }

@@ -1,6 +1,6 @@
 package game.skills.itemskills;
 
-import game.entities.Entity;
+import game.entities.Hero;
 import game.entities.Multiplier;
 import game.skills.Skill;
 import game.skills.Stat;
@@ -12,8 +12,8 @@ import java.util.List;
 public class Cannon_PiercingBlast extends Skill {
     private static final int DMG_BONUS=10;
 
-    public Cannon_PiercingBlast(Entity entity) {
-        super(entity);
+    public Cannon_PiercingBlast(Hero Hero) {
+        super(Hero);
         this.name="cannon_piercingblast";
         this.translation="Piercing Blast";
         this.description= "";
@@ -24,13 +24,13 @@ public class Cannon_PiercingBlast extends Skill {
                 new Multiplier(Stat.STRENGTH,0.3));
         this.actionCost = 1;
         this.distance = 2;
-        this.dmg = entity.getPrimary().getAutoAttackPower();
+        this.dmg = Hero.getPrimary().getAutoAttackPower();
         this.tags = List.of(AiSkillTag.DMG);
         this.weaponSkill = true;
     }
     @Override
     public Skill getCast() {
-        Cannon_PiercingBlast cast = new Cannon_PiercingBlast(this.entity);
+        Cannon_PiercingBlast cast = new Cannon_PiercingBlast(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
@@ -40,6 +40,6 @@ public class Cannon_PiercingBlast extends Skill {
     }
     @Override
     public void postInit() {
-        this.overheatCost = this.entity.getPrimary().getMaxOverheat()- this.entity.getPrimary().getCurrentOverheat();
+        this.overheatCost = this.Hero.getPrimary().getMaxOverheat()- this.Hero.getPrimary().getCurrentOverheat();
     }
 }

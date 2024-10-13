@@ -1,6 +1,6 @@
 package game.skills.backgroundskills;
 
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -16,7 +16,7 @@ public class SEN_Force_Lightning extends Skill {
     private static final int DISTANCE = 2;
     private static final int POWER = 30;
 
-    public SEN_Force_Lightning(Entity e) {
+    public SEN_Force_Lightning(Hero e) {
         super(e);
         this.name="sen_battle_meditation";
         this.translation="Battle Meditation";
@@ -34,12 +34,12 @@ public class SEN_Force_Lightning extends Skill {
     }
     @Override
     public Skill getCast() {
-        SEN_Force_Lightning cast = new SEN_Force_Lightning(this.entity);
+        SEN_Force_Lightning cast = new SEN_Force_Lightning(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
     @Override
-    public String getDescriptionFor(Entity e) {
+    public String getDescriptionFor(Hero e) {
         return "Deals " + POWER + " damage to the next "+ DISTANCE + " characters. Chance to paralyse.";
     }
 }

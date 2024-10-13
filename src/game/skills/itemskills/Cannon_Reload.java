@@ -1,6 +1,6 @@
 package game.skills.itemskills;
 
-import game.entities.Entity;
+import game.entities.Hero;
 import game.objects.equipments.basic.BlasterCannon;
 import game.skills.Skill;
 import game.skills.TargetType;
@@ -9,8 +9,8 @@ import java.util.List;
 
 public class Cannon_Reload extends Skill {
 
-    public Cannon_Reload(Entity entity) {
-        super(entity);
+    public Cannon_Reload(Hero Hero) {
+        super(Hero);
         this.name="cannon_reload";
         this.translation="Reload";
         this.description= "getDescription()";
@@ -23,18 +23,18 @@ public class Cannon_Reload extends Skill {
     }
     @Override
     public Skill getCast() {
-        Cannon_Reload cast = new Cannon_Reload(this.entity);
+        Cannon_Reload cast = new Cannon_Reload(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
     @Override
-    public String getDescriptionFor(Entity e) {
+    public String getDescriptionFor(Hero e) {
         return "Cannon Reload1";
     }
 
     @Override
-    protected void individualResolve(Entity target) {
-        if (this.entity.getPrimary() instanceof BlasterCannon cannon) {
+    protected void individualResolve(Hero target) {
+        if (this.Hero.getPrimary() instanceof BlasterCannon cannon) {
             cannon.reload();
         }
     }

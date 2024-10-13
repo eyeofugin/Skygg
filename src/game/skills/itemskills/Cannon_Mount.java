@@ -1,7 +1,7 @@
 package game.skills.itemskills;
 
 import framework.Logger;
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -12,8 +12,8 @@ import java.util.List;
 
 public class Cannon_Mount extends Skill {
     public boolean active = false;
-    public Cannon_Mount(Entity entity) {
-        super(entity);
+    public Cannon_Mount(Hero Hero) {
+        super(Hero);
         this.name="cannon_mount";
         this.translation="Mount";
         this.description= "";
@@ -26,28 +26,28 @@ public class Cannon_Mount extends Skill {
     }
     @Override
     public Skill getCast() {
-        Cannon_Mount cast = new Cannon_Mount(this.entity);
+        Cannon_Mount cast = new Cannon_Mount(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
     @Override
-    public int getDamageChanges(Entity caster, Entity target, Skill cast, int result, Stat damageType, boolean simulated) {
+    public int getDamageChanges(Hero caster, Hero target, Skill cast, int result, Stat damageType, boolean simulated) {
         int bonus = 0;
-        if (caster == this.entity && cast.isWeaponSkill()) {
-            Logger.logLn(this.entity.name + ".Cannon_mount.getDamageChanges");
+        if (caster == this.Hero && cast.isWeaponSkill()) {
+            Logger.logLn(this.Hero.name + ".Cannon_mount.getDamageChanges");
             bonus = result;
         }
         return result + bonus;
     }
     @Override
-    protected void individualResolve(Entity target) {
+    protected void individualResolve(Hero target) {
         ((Cannon_Mount)this.ogSkill).active = !active;
     }
     @Override
     public void update() {
         if (this.active) {
-            Logger.logLn(this.entity.name + ".Cannon_mount.update:add rooted");
-            this.entity.addEffect(new Rooted(1),null);
+            Logger.logLn(this.Hero.name + ".Cannon_mount.update:add rooted");
+            this.Hero.addEffect(new Rooted(1),null);
         }
     }
 }

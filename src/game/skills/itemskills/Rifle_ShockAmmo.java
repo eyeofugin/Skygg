@@ -1,6 +1,6 @@
 package game.skills.itemskills;
 
-import game.entities.Entity;
+import game.entities.Hero;
 import game.entities.Multiplier;
 import game.skills.Skill;
 import game.skills.Stat;
@@ -13,8 +13,8 @@ import java.util.List;
 
 public class Rifle_ShockAmmo extends Skill {
     private static final int DMG = 5;
-    public Rifle_ShockAmmo(Entity entity) {
-        super(entity);
+    public Rifle_ShockAmmo(Hero Hero) {
+        super(Hero);
         this.name="rifle_shockammo";
         this.translation="Shock Ammo";
         this.description= "Deals damage with chance to paralyse";
@@ -32,7 +32,7 @@ public class Rifle_ShockAmmo extends Skill {
     }
     @Override
     public Skill getCast() {
-        Rifle_ShockAmmo cast = new Rifle_ShockAmmo(this.entity);
+        Rifle_ShockAmmo cast = new Rifle_ShockAmmo(this.Hero);
         cast.copyFrom(this);
         return cast;
     }

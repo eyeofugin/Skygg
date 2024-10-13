@@ -4,7 +4,7 @@ import framework.resources.SpriteLibrary;
 import framework.states.Arena;
 import game.entities.Animation;
 import game.entities.Animator;
-import game.entities.Entity;
+import game.entities.Hero;
 import game.entities.individuals.NPC_Blorgon;
 import game.skills.DEV_Skill;
 import game.skills.Skill;
@@ -13,7 +13,7 @@ import game.skills.backgroundskills.*;
 
 import java.awt.Point;
 
-public class DUMMY extends Entity {
+public class DUMMY extends Hero {
     public static int counter = 1;
 
     static int[][] meleeR = SpriteLibrary.setupSprites(new Point[]{new Point(0,0),new Point(1,0), new Point(0,1), new Point(1,1)},

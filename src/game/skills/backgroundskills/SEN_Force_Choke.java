@@ -1,6 +1,6 @@
 package game.skills.backgroundskills;
 
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -16,7 +16,7 @@ public class SEN_Force_Choke extends Skill {
     private static final int PUSH_DIST = 1;
     private static final int POWER = 10;
 
-    public SEN_Force_Choke(Entity e) {
+    public SEN_Force_Choke(Hero e) {
         super(e);
         this.name="sen_force_choke";
         this.translation="Force Choke";
@@ -34,12 +34,12 @@ public class SEN_Force_Choke extends Skill {
     }
     @Override
     public Skill getCast() {
-        SEN_Force_Choke cast = new SEN_Force_Choke(this.entity);
+        SEN_Force_Choke cast = new SEN_Force_Choke(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
     @Override
-    public String getDescriptionFor(Entity e) {
+    public String getDescriptionFor(Hero e) {
         return "Deals "+ POWER + " damage and roots target for " + ROOT_TURNS + " turns.";
     }
 }

@@ -4,7 +4,7 @@ import framework.resources.SpriteLibrary;
 import framework.states.Arena;
 import game.entities.Animation;
 import game.entities.Animator;
-import game.entities.Entity;
+import game.entities.Hero;
 import game.objects.equipments.basic.BlasterPistol;
 import game.skills.Skill;
 import game.skills.Stat;
@@ -16,7 +16,7 @@ import game.skills.itemskills.ITEM_Grenades;
 
 import java.awt.*;
 
-public class Chirrut_TEST extends Entity {
+public class Chirrut_TEST extends Hero {
     public static int counter = 0;
 
     static int[][] idleR = SpriteLibrary.setupSprites(new Point[]{new Point(0,0),new Point(1,0)},
@@ -49,7 +49,7 @@ public class Chirrut_TEST extends Entity {
         this.appearanceName = "Chirrut";
         BlasterPistol primary = new BlasterPistol();
         primary.inventoryPosition = 0;
-        primary.entity = this;
+        primary.Hero = this;
         this.equipments.add(0, primary);
 
         this.skills = new Skill[] {

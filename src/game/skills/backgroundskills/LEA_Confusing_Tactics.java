@@ -1,6 +1,6 @@
 package game.skills.backgroundskills;
 
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.TargetType;
 import game.skills.changeeffects.statusinflictions.Paralysed;
@@ -12,7 +12,7 @@ public class LEA_Confusing_Tactics extends Skill {
     private static final int CD_TOTAL = 2;
     private static final int TURNS = 2;
 
-    public LEA_Confusing_Tactics(Entity e) {
+    public LEA_Confusing_Tactics(Hero e) {
         super(e);
         this.name="lea_confusing_tactics";
         this.translation="Confusing tactics";
@@ -27,12 +27,12 @@ public class LEA_Confusing_Tactics extends Skill {
     }
     @Override
     public Skill getCast() {
-        LEA_Confusing_Tactics cast = new LEA_Confusing_Tactics(this.entity);
+        LEA_Confusing_Tactics cast = new LEA_Confusing_Tactics(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
     @Override
-    public String getDescriptionFor(Entity e) {
+    public String getDescriptionFor(Hero e) {
         return "Confuse two random enemies for " + TURNS + " turns.";
     }
 }

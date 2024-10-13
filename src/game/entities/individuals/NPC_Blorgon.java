@@ -4,14 +4,14 @@ import framework.resources.SpriteLibrary;
 import framework.states.Arena;
 import game.entities.Animation;
 import game.entities.Animator;
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.backgroundskills.AllyHeal;
 
 import java.awt.Point;
 
-public class NPC_Blorgon extends Entity {
+public class NPC_Blorgon extends Hero {
 
     public static int counter = 1;
 

@@ -21,7 +21,7 @@ public class Timeout extends Effect {
     }
     @Override
     public int getActionChanges() {
-        Logger.logLn(this.entity.name + ".Timeout.getActionChanges");
+        Logger.logLn(this.Hero.name + ".Timeout.getActionChanges");
         return 999;
     }
 }

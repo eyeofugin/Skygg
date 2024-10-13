@@ -1,10 +1,10 @@
 package utils;
 
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Skill;
 
 public class Action {
     public int rating;
     public Skill skill;
-    public Entity[] targets;
+    public Hero[] targets;
 }

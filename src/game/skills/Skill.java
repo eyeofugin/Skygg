@@ -1,9 +1,11 @@
 package game.skills;
 
 import framework.Logger;
+import framework.graphics.elements.Hero;
 import framework.graphics.text.TextEditor;
 import framework.resources.SpriteLibrary;
-import game.entities.Entity;
+import game.entities.Hero;
+import game.entities.Hero;
 import game.entities.Multiplier;
 import game.objects.Equipment;
 import utils.MyMaths;
@@ -17,7 +19,7 @@ public abstract class Skill {
 
     private static int counter;
     public int id;
-    public final Entity entity;
+    public final Hero hero;
     public Equipment equipment;
     public String name;
     public String translation;
@@ -47,7 +49,7 @@ public abstract class Skill {
     protected List<Multiplier> dmgMultipliers = new ArrayList<>();
     protected List<Multiplier> healMultipliers = new ArrayList<>();
 
-    protected List<Entity> targets = new ArrayList<>();
+    protected List<Hero> targets = new ArrayList<>();
 
     protected int manaCost = 0;
     protected int lifeCost = 0;
@@ -78,7 +80,9 @@ public abstract class Skill {
 
 //AI
     public List<AiSkillTag> tags = new ArrayList<>();
-    public int getAIRating(Entity target, int beatDownMeter){return 0;}
+    public int getAIRating(Hero target, int beatDownMeter){return 0;}
+
+
     public enum AiSkillTag {
         DMG,
         HEAL,
@@ -90,16 +94,16 @@ public abstract class Skill {
         REGROUP
     }
 
-    public Skill(Entity entity) {
+    public Skill(Hero hero) {
         this.id = ++counter;
-        this.entity = entity;
+        this.hero = hero;
         this.iconPixels = SpriteLibrary.sprites.get(this.getClass().getName());
     }
 
     public Skill(Skill s) {
         this.id = s.id;
         this._cast = null;
-        this.entity = s.entity;
+        this.hero = s.hero;
         this.name = s.name;
         this.translation = s.translation;
         this.description = s.description;
@@ -192,12 +196,12 @@ public abstract class Skill {
     public void baseDamageChanges(){}
     public void baseHealChanges(){};
     public void replacementEffect(Skill s){}
-    public int getDamageChanges(Entity caster, Entity target, Skill damagingSkill, int result, Stat damageType, boolean simulated) {return result;}
-    public int getHealChanges(Entity caster, Entity target, Skill damagingSkill, int result) {return result;}
-    public void dmgTrigger(Entity target, Skill cast, int doneDamage) {}
-    public void critTrigger(Entity target, Skill cast) {}
-    public void effectAddedTrigger(Effect effect, Entity target) {}
-    public boolean effectFailure(Effect effect, Entity target) {return false;}
+    public int getDamageChanges(Hero caster, Hero target, Skill damagingSkill, int result, Stat damageType, boolean simulated) {return result;}
+    public int getHealChanges(Hero caster, Hero target, Skill damagingSkill, int result) {return result;}
+    public void dmgTrigger(Hero target, Skill cast, int doneDamage) {}
+    public void critTrigger(Hero target, Skill cast) {}
+    public void effectAddedTrigger(Effect effect, Hero target) {}
+    public boolean effectFailure(Effect effect, Hero target) {return false;}
     public TargetMode getTargetMode(Skill targetingSkill) {
         return TargetMode.NORMAL;
     }
@@ -216,8 +220,8 @@ public abstract class Skill {
     public int getCurrentActionAmountChange(){return 0;}
 
     public void perform() {
-        this.entity.playAnimation(animationL,animationR);
-        this.entity.payForSkill(this);
+        this.hero.playAnimation(animationL,animationR);
+        this.hero.payForSkill(this);
         this.ogSkill.setCdCurrent(this.getCdMax());
         Logger.logLn("Cd now " + this.ogSkill.getCdCurrent());
         this.performEffect();
@@ -227,17 +231,18 @@ public abstract class Skill {
     }
 
     public void resolve() {
-        for (Entity target : targets) {
+        for (Hero arenaTarget : targets) {
+            Hero target = arenaTarget;
             if (this.targetType.equals(TargetType.SINGLE_ALLY)
                     || this.targetType.equals(TargetType.SINGLE_ALLY_IN_FRONT)) {
                 this.individualResolve(target);
             } else {
-                Logger.logLn("Resolve " + this.name + " for " + target.name);
-                int dist = Math.abs(entity.position - target.position);
+                Logger.logLn("Resolve " + this.name + " for " + target.getName());
+                int dist = Math.abs(hero.position - target.position);
                 Logger.logLn("Dist:"+dist);
-                int evasion = target.getTargetedStat(this, Stat.EVASION);
+                int evasion = target.getStat( Stat.EVASION, this);
                 Logger.logLn("evasion:"+evasion);
-                int hitChance = entity.getAccuracyFor(this, dist);
+                int hitChance = hero.getAccuracyFor(this, dist);
                 Logger.logLn("Hitchance:"+hitChance);
                 if (this.canMiss && !MyMaths.success(hitChance - evasion)) {
                     Logger.logLn("Missed");
@@ -251,7 +256,7 @@ public abstract class Skill {
         }
         this.resetCast();
     }
-    protected void individualResolve(Entity target) {
+    protected void individualResolve(Hero target) {
         Logger.logLn("Base DMG:" + this.dmg);
         this.baseDamageChanges();
         this.baseHealChanges();
@@ -260,46 +265,46 @@ public abstract class Skill {
         Logger.logLn("After multipliers:" + dmg);
         Stat dt = this.getDamageType();
         Logger.logLn("DT:" + dt);
-        int lethality = this.entity.getCastingStat(this, Stat.LETHALITY);
-        Logger.logLn("Lethality:"+lethality);
+//        int lethality = this.hero.getStat( Stat.LETHALITY, this);
+        Logger.logLn("Lethality:"+0);
         for (int i = 0; i < getCountsAsHits(); i++) {
             Logger.logLn("Hit no:" + i+1);
             if (this.isWeaponSkill()) {
-                int critChance = this.entity.getCastingStat(this, Stat.CRIT_CHANCE);
+                int critChance = this.hero.getStat(Stat.CRIT_CHANCE, this);
                 Logger.logLn("Crit Chance:"+critChance);
                 if (MyMaths.success(critChance)) {
                     Logger.logLn("Crit!");
                     this.dmg*=2;
-                    this.entity.arena.critTrigger(target, this);
+                    this.hero.arena.critTrigger(target, this);
                 }
             }
             if (dmg>0) {
-                int doneDamage = target.damage(this.entity, dmg, dt, lethality, this);
+                int doneDamage = target.damage(this.hero, dmg, dt, 0, this);
                 Logger.logLn("done damage:"+doneDamage);
-                this.entity.arena.dmgTrigger(target,this, doneDamage);
+                this.hero.arena.dmgTrigger(target,this, doneDamage);
             }
             int heal = this.getHeal();
             Logger.logLn("Heal:" + heal);
             if (heal > 0) {
-                target.heal(this.entity, heal, this);
+                target.heal(this.hero, heal, this);
             }
             this.applySkillEffects(target);
         }
     }
-    public void applySkillEffects(Entity target) {
-        this.entity.addAllEffects(this.getCasterEffects(), this.entity);
-        target.addAllEffects(this.getEffects(), this.entity);
+    public void applySkillEffects(Hero target) {
+        this.hero.addAllEffects(this.getCasterEffects(), this.hero);
+        target.addAllEffects(this.getEffects(), this.hero);
     }
     protected int getHealMultiBonus() {
         return this.getMultiplierBonus(this.healMultipliers);
     }
-    public String getHealMultiplierString(Entity e) {
+    public String getHealMultiplierString(Hero e) {
         return getMultiString(e, this.healMultipliers);
     }
     protected int getDmgMultiBonus() {
         return this.getMultiplierBonus(this.dmgMultipliers);
     }
-    public String getDmgMultiplierString(Entity e) {
+    public String getDmgMultiplierString(Hero e) {
         return getMultiString(e, this.dmgMultipliers);
     }
     protected int getMultiplierBonus(List<Multiplier> multipliers) {
@@ -308,11 +313,11 @@ public abstract class Skill {
         }
         int result = 0;
         for(Multiplier m : multipliers) {
-            result +=(int)( m.percentage * this.entity.getCastingStat(this, m.prof));
+            result +=(int)( m.percentage * this.hero.getStat(m.prof, this));
         }
         return result;
     }
-    public String getMultiString(Entity e, List<Multiplier> multipliers) {
+    public String getMultiString(Hero e, List<Multiplier> multipliers) {
         if (multipliers == null) {
             return "";
         }
@@ -322,22 +327,22 @@ public abstract class Skill {
                     .append(m.percentage)
                     .append("[").append(m.prof.getIconKey()).append("]")
                     .append("=")
-                    .append((int)(m.percentage * e.getStat(m.prof)))
+                    .append((int)(m.percentage * e.getStats().get(m.prof)))
                     .append(")");
         }
         return result.toString();
     }
     public int[] setupTargetMatrix() {
         int[] baseTargets = new int[]{0,1,2,3,4,5,6,7};
-        int position = this.entity.position;
+        int position = this.hero.position;
 
-        if (!this.entity.enemy && this.targetType.equals(TargetType.SINGLE_ALLY)) {
+        if (!this.hero.enemy && this.targetType.equals(TargetType.SINGLE_ALLY)) {
             baseTargets = new int[]{0,1,2,3};
-        } else if (this.entity.enemy && this.targetType.equals(TargetType.SINGLE_ALLY)) {
+        } else if (this.hero.enemy && this.targetType.equals(TargetType.SINGLE_ALLY)) {
             baseTargets = new int[]{4,5,6,7};
-        } else if (!this.entity.enemy && this.targetType.equals(TargetType.SINGLE_ALLY_IN_FRONT)) {
+        } else if (!this.hero.enemy && this.targetType.equals(TargetType.SINGLE_ALLY_IN_FRONT)) {
             baseTargets = Arrays.stream(baseTargets).filter(i->i<4 && i>position).toArray();
-        } else if (this.entity.enemy && this.targetType.equals(TargetType.SINGLE_ALLY_IN_FRONT)) {
+        } else if (this.hero.enemy && this.targetType.equals(TargetType.SINGLE_ALLY_IN_FRONT)) {
             baseTargets = Arrays.stream(baseTargets).filter(i->i>3 && i<position).toArray();
         }
         int range = this.getDistance();
@@ -347,7 +352,7 @@ public abstract class Skill {
                 baseTargets[i]=-1;
             }
             if (this.targetType.equals(TargetType.SINGLE)) {
-                Entity possibleTarget = this.entity.arena.getAtPosition(baseTargets[i]);
+                Hero possibleTarget = this.hero.arena.getAtPosition(baseTargets[i]);
                 if (possibleTarget!=null) {
                     TargetMode targetMode = possibleTarget.getTargetModeForSkill(this);
                     if (targetMode!=null) {
@@ -377,13 +382,13 @@ public abstract class Skill {
         }
         return resultList.stream().mapToInt(i->i).toArray();
     }
-    public String getDescriptionFor(Entity p) {return "skill description";}
+    public String getDescriptionFor(Hero p) {return "skill description";}
 
     public int getDistance() {
-        int bonus = this.entity.getDistBonusFor(this);
+        int bonus = this.hero.getDistBonusFor(this);
         return distance + bonus;
     }
-    public int getLifeCost(Entity caster) {
+    public int getLifeCost(Hero caster) {
         return lifeCost;
     }
     protected List<Effect> of(Effect[] effects){
@@ -489,13 +494,7 @@ public abstract class Skill {
         this.healMultipliers = healMultipliers;
     }
 
-    public List<Entity> getTargets() {
-        return targets;
-    }
 
-    public void setTargets(List<Entity> targets) {
-        this.targets = targets;
-    }
 
     public int getManaCost() {
         return manaCost;
@@ -588,6 +587,14 @@ public abstract class Skill {
         return cdCurrent;
     }
 
+    public void setTargets(List<Hero> targets) {
+        this.targets = targets;
+    }
+
+    public List<Hero> getTargets() {
+        return targets;
+    }
+
     public void setCdCurrent(int cdCurrent) {
         this.cdCurrent = cdCurrent;
     }
@@ -668,7 +675,7 @@ public abstract class Skill {
     public String toString() {
         return "\nSkill{" +
                 "id=" + id +
-                ", entity=" + entity.name +
+                ", Hero=" + hero.getName() +
                 ", equipment=" + (equipment!=null) +
                 ", name='" + name + '\'' +
                 ", distance=" + distance +

@@ -2,7 +2,7 @@ package game.skills.itemskills;
 
 import framework.Logger;
 import framework.resources.SpriteLibrary;
-import game.entities.Entity;
+import game.entities.Hero;
 import game.entities.Multiplier;
 import game.objects.Equipment;
 import game.skills.Skill;
@@ -11,10 +11,10 @@ import game.skills.Stat;
 import java.util.List;
 
 public class AutoAttack extends Skill {
-    public AutoAttack(Entity e) {
+    public AutoAttack(Hero e) {
         this(e, null);
     }
-    public AutoAttack(Entity e, Equipment equipment) {
+    public AutoAttack(Hero e, Equipment equipment) {
         super(e);
         this.name = "auto_attack";
         this.translation = "Auto Attack";   
@@ -27,18 +27,18 @@ public class AutoAttack extends Skill {
 
     @Override
     public Skill getCast() {
-        AutoAttack cast = new AutoAttack(this.entity);
+        AutoAttack cast = new AutoAttack(this.Hero);
         cast.copyFrom(this);
-        cast.setEquipment(this.entity.getPrimary());
+        cast.setEquipment(this.Hero.getPrimary());
         return cast;
     }
     @Override
-    public String getDescriptionFor(Entity e) {
+    public String getDescriptionFor(Hero e) {
         return "Uses the primary weapon if available to perform a basic attack.";
     }
 
     public void setEquipment(Equipment equipment) {
-        Logger.logLn(this.entity.name + ".AutoAttack.setEquipment:" + equipment);
+        Logger.logLn(this.Hero.name + ".AutoAttack.setEquipment:" + equipment);
         if (equipment!=null) {
             this.setDamageType(equipment.getDamageType());
             this.setDistance(equipment.getAutoAttackDistance());

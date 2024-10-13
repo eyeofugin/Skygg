@@ -1,6 +1,6 @@
 package game.skills.backgroundskills;
 
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.TargetType;
 
@@ -13,7 +13,7 @@ public class TEC_Bacta_Pack extends Skill {
     private static final int CD_TOTAL = 3;
     private static final int DISTANCE = 1;
 
-    public TEC_Bacta_Pack(Entity e) {
+    public TEC_Bacta_Pack(Hero e) {
         super(e);
         this.name="tec_bacta_pack";
         this.translation="Bacta Pack";
@@ -29,19 +29,19 @@ public class TEC_Bacta_Pack extends Skill {
     }
     @Override
     public Skill getCast() {
-        TEC_Bacta_Pack cast = new TEC_Bacta_Pack(this.entity);
+        TEC_Bacta_Pack cast = new TEC_Bacta_Pack(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
     @Override
-    public String getDescriptionFor(Entity e) {
+    public String getDescriptionFor(Hero e) {
         return "Heals target for " + POWER ;
     }
 
     @Override
-    protected void individualResolve(Entity target) {
+    protected void individualResolve(Hero target) {
         int heal = this.getHeal();
-        target.heal(this.entity, heal, this);
+        target.heal(this.Hero, heal, this);
         this.applySkillEffects(target);
     }
 }

@@ -1,6 +1,6 @@
 package game.skills.itemskills;
 
-import game.entities.Entity;
+import game.entities.Hero;
 import game.entities.Multiplier;
 import game.skills.Skill;
 import game.skills.Stat;
@@ -15,8 +15,8 @@ public class ITEM_Grenades extends Skill {
     private final int INJURE_CHANCE = 10;
     private final int WEAKEN_CHANCE = 10;
 
-    public ITEM_Grenades(Entity entity) {
-        super(entity);
+    public ITEM_Grenades(Hero Hero) {
+        super(Hero);
         this.name="item_grenades";
         this.translation="Grenades";
         this.description= "";
@@ -34,13 +34,13 @@ public class ITEM_Grenades extends Skill {
     }
     @Override
     public Skill getCast() {
-        ITEM_Grenades cast = new ITEM_Grenades(this.entity);
+        ITEM_Grenades cast = new ITEM_Grenades(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
 
     @Override
-    public String getDescriptionFor(Entity e) {
+    public String getDescriptionFor(Hero e) {
         return "Throws grenades at the first two enemies. Has a chance to injure and weaken.";
     }
 }

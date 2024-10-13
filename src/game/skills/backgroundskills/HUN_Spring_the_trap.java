@@ -1,6 +1,6 @@
 package game.skills.backgroundskills;
 
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.TargetType;
 import game.skills.changeeffects.statusinflictions.Paralysed;
@@ -13,7 +13,7 @@ public class HUN_Spring_the_trap extends Skill {
     private static final int CD_TOTAL = 2;
     private static final int DISTANCE = 2;
 
-    public HUN_Spring_the_trap(Entity e) {
+    public HUN_Spring_the_trap(Hero e) {
         super(e);
         this.name="hun_spring_the_trap";
         this.translation="Spring the trap";
@@ -29,12 +29,12 @@ public class HUN_Spring_the_trap extends Skill {
     }
     @Override
     public Skill getCast() {
-        HUN_Spring_the_trap cast = new HUN_Spring_the_trap(this.entity);
+        HUN_Spring_the_trap cast = new HUN_Spring_the_trap(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
     @Override
-    public String getDescriptionFor(Entity e) {
+    public String getDescriptionFor(Hero e) {
         return "Target is paralysed.";
     }
 }

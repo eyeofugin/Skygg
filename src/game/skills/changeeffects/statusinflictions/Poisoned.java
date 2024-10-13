@@ -1,7 +1,7 @@
 package game.skills.changeeffects.statusinflictions;
 
 import framework.Logger;
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Effect;
 import game.skills.Skill;
 
@@ -20,8 +20,8 @@ public class Poisoned extends Effect {
         return new Poisoned(this.turns);
     }
     @Override
-    public int getHealChanges(Entity caster, Entity target, Skill skill, int result) {
-        Logger.logLn(this.entity.name + ".Poisoned.getHealChanges");
+    public int getHealChanges(Hero caster, Hero target, Skill skill, int result) {
+        Logger.logLn(this.Hero.name + ".Poisoned.getHealChanges");
         return 0;
     }
 

@@ -4,7 +4,7 @@ import framework.Engine;
 import framework.graphics.GUIElement;
 import framework.graphics.text.Color;
 import framework.states.Arena;
-import game.entities.Entity;
+import game.entities.Hero;
 
 
 public class HUD extends GUIElement {
@@ -32,8 +32,8 @@ public class HUD extends GUIElement {
         this.arenaOv = new TeamArenaOverview(e, arena);
         this.children.add(arenaOv);
     }
-    public void setActiveEntity(Entity e) {
-        this.arenaOv.setActiveEntity(e);
+    public void setActiveHero(Hero e) {
+        this.arenaOv.setActiveHero(e);
     }
     public void activateTeamOverview() {
         this.arenaOv.activate();

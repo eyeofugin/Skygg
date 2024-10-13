@@ -1,6 +1,6 @@
 package game.skills.itemskills;
 
-import game.entities.Entity;
+import game.entities.Hero;
 import game.entities.Multiplier;
 import game.skills.Skill;
 import game.skills.Stat;
@@ -12,8 +12,8 @@ import game.skills.changeeffects.statusinflictions.Disarmed;
 import java.util.List;
 
 public class Blade_DisarmingSwipe extends Skill {
-    public Blade_DisarmingSwipe(Entity entity) {
-        super(entity);
+    public Blade_DisarmingSwipe(Hero Hero) {
+        super(Hero);
         this.name="blade_disarmingswipe";
         this.translation="Disarming Strike";
         this.description= "";
@@ -26,12 +26,12 @@ public class Blade_DisarmingSwipe extends Skill {
         this.cdMax=3;
         this.actionCost = 1;
         this.distance = 2;
-        this.dmg = entity.getPrimary().getAutoAttackPower();
+        this.dmg = Hero.getPrimary().getAutoAttackPower();
         this.weaponSkill = true;
     }
     @Override
     public Skill getCast() {
-        Blade_DisarmingSwipe cast = new Blade_DisarmingSwipe(this.entity);
+        Blade_DisarmingSwipe cast = new Blade_DisarmingSwipe(this.Hero);
         cast.copyFrom(this);
         return cast;
     }

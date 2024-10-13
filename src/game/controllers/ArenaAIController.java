@@ -2,7 +2,7 @@ package game.controllers;
 
 import framework.Logger;
 import framework.states.Arena;
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.Stat;
 import utils.Action;
@@ -23,8 +23,8 @@ public class ArenaAIController {
         this.memory = new AIMemory();
     }
     public void setup() {
-        for (Entity ai : this.arena.enemies.entities) {
-            int averageLife = (int) Arrays.stream(this.arena.enemies.entities).map(e->e.getStat(Stat.MAX_LIFE)).mapToInt(Integer::intValue)
+        for (Hero ai : this.arena.enemies.heroes) {
+            int averageLife = (int) Arrays.stream(this.arena.enemies.heroes).map(e->e.getStats().get(Stat.LIFE)).mapToInt(Integer::intValue)
                     .summaryStatistics().getAverage();
             calculatePreferredPosition(ai, averageLife);
         }
@@ -32,8 +32,8 @@ public class ArenaAIController {
 
     private void estimateBeatDownMeter() {
         int mediumValue = 500;
-        for (Entity e : this.arena.getAllLivingEntities()) {
-            int lifePercentage = e.getStat(Stat.CURRENT_LIFE) * 100 / e.getStat(Stat.MAX_LIFE);
+        for (Hero e : this.arena.getAllLivingEntities()) {
+            int lifePercentage = e.getStats().get(Stat.CURRENT_LIFE) * 100 / e.getStats().get(Stat.LIFE);
             mediumValue += e.enemy?lifePercentage:-1*lifePercentage;
         }
         this.beatDownMeter = mediumValue/100;
@@ -69,18 +69,18 @@ public class ArenaAIController {
 
 
     private void evaluateSkills() {
-        for (Skill s: this.arena.activeEntity.skills) {
+        for (Skill s: this.arena.activeHero.getSkills()) {
             if (s != null) {
                 Logger.aiLogln("evaluate:" +s.name);
                 Skill cast = s._cast;
-                if (cast == null || !this.arena.activeEntity.canPerform(cast)) {
+                if (cast == null || !this.arena.activeHero.canPerform(cast)) {
                     Logger.aiLogln("ai cannot perform");
                     continue;
                 }
-                for (Entity[] targets : getPossibleTargetGroups(cast)) {
+                for (Hero[] targets : getPossibleTargetGroups(cast)) {
                     Logger.aiLog("rating for targetgroup ");
-                    for (Entity target : targets) {
-                        Logger.aiLog(target.name + " ");
+                    for (Hero target : targets) {
+                        Logger.aiLog(target.getName() + " ");
                     }
                     int rating = 0; //Rating borders ~+-20(==400%dmg/heal)
                     rating += getDamageRating(cast, targets);
@@ -100,42 +100,42 @@ public class ArenaAIController {
             }
         }
     }
-    private int getDamageRating(Skill cast, Entity[] targets) {
+    private int getDamageRating(Skill cast, Hero[] targets) {
         int weightedPercentages = 0;
-        int lethality = this.arena.activeEntity.getCastingStat(cast, Stat.LETHALITY);
+        int lethality = 0; // this.arena.activeHero.getStat(Stat.LETHALITY, cast);
         int estimatedDamage = cast.getDamage();
         Logger.aiLog(" estimated dmg:"+estimatedDamage);
-        for (Entity e : targets) {
-            Logger.aiLog(" target:"+e.name);
-            int dmgPercentage = e.simulateDamageInPercentages(this.arena.activeEntity, estimatedDamage, cast.getDamageType(), lethality, cast);
+        for (Hero e : targets) {
+            Logger.aiLog(" target:"+e.getName());
+            int dmgPercentage = e.simulateDamageInPercentages(this.arena.activeHero, estimatedDamage, cast.getDamageType(), lethality, cast);
             if (dmgPercentage >= e.getMissingLifePercentage()) {
                 Logger.aiLog(" low life bonus!");
                 dmgPercentage *= 5;
             }
-            int entityWeightedPercentage = e.enemy?-1*dmgPercentage:dmgPercentage;
-            Logger.aiLog(" weighted dmg percentage:"+entityWeightedPercentage);
-            weightedPercentages += entityWeightedPercentage;
+            int HeroWeightedPercentage = e.enemy?-1*dmgPercentage:dmgPercentage;
+            Logger.aiLog(" weighted dmg percentage:"+HeroWeightedPercentage);
+            weightedPercentages += HeroWeightedPercentage;
         }
         int damageRating = weightedPercentages / 10;
         Logger.aiLog(" sum weighted dmg percentage:"+weightedPercentages);
         Logger.aiLog(" dmgRating:"+damageRating);
         return damageRating;
     }
-    private int getHealRating(Skill cast, Entity[] targets) {
+    private int getHealRating(Skill cast, Hero[] targets) {
         int weightedPercentages = 0;
         int estimatedDamage = cast.getHeal();
         Logger.aiLog(" estimated heal:"+estimatedDamage);
-        for (Entity e : targets) {
-            Logger.aiLog(" target:"+e.name);
-            int healPercentage = e.simulateHealInPercentages(this.arena.activeEntity, estimatedDamage, cast);
+        for (Hero e : targets) {
+            Logger.aiLog(" target:"+e.getName());
+            int healPercentage = e.simulateHealInPercentages(this.arena.activeHero, estimatedDamage, cast);
             if (e.getCurrentLifePercentage() < 30) {
                 Logger.aiLog(" low life bonus!");
                 healPercentage *= 3;
             }
 
-            int entityWeightedPercentage = e.enemy?healPercentage:-1*healPercentage;
-            Logger.aiLog(" weighted heal percentage:"+entityWeightedPercentage);
-            weightedPercentages += entityWeightedPercentage;
+            int HeroWeightedPercentage = e.enemy?healPercentage:-1*healPercentage;
+            Logger.aiLog(" weighted heal percentage:"+HeroWeightedPercentage);
+            weightedPercentages += HeroWeightedPercentage;
         }
         int healRating = weightedPercentages / 10;
         Logger.aiLog(" sum weighted heal percentage:"+weightedPercentages);
@@ -151,20 +151,20 @@ public class ArenaAIController {
         Logger.aiLog(" temporating:"+tempoRating);
         return tempoRating;
     }
-    private int getCustomAIRating(Skill cast, Entity[] targets) {
+    private int getCustomAIRating(Skill cast, Hero[] targets) {
         int result = 0;
-        for (Entity e: targets) {
+        for (Hero e: targets) {
             result+=cast.getAIRating(e,beatDownMeter);
         }
         Logger.aiLog(" customrating:"+result);
         return result;
     }
-//    private int getLethalityRating(Entity[] targets, int damagePercentage) {
+//    private int getLethalityRating(Hero[] targets, int damagePercentage) {
 //        int lethality = 0;
-//        for (Entity target : targets) {
+//        for (Hero target : targets) {
 //            int currentLifePercentage = target.getStat(Stat.CURRENT_LIFE) * 100 / target.getStat(Stat.MAX_LIFE);
 //            if (damagePercentage > currentLifePercentage) {
-//                if (target.enemy == this.arena.activeEntity.enemy) {
+//                if (target.enemy == this.arena.activeHero.enemy) {
 //                    lethality -= 2;
 //                } else {
 //                    lethality++;
@@ -173,18 +173,18 @@ public class ArenaAIController {
 //        }
 //        return lethality * 5;
 //    }
-//    private int getHealRating(Entity[] targets, int healPercentage) {
+//    private int getHealRating(Hero[] targets, int healPercentage) {
 //        int healRating = 0;
-//        for (Entity target : targets) {
+//        for (Hero target : targets) {
 //            int currentLifePercentage = target.getStat(Stat.CURRENT_LIFE) * 100 / target.getStat(Stat.MAX_LIFE);
 //            int weightedHeal = healPercentage * 2 / currentLifePercentage;
 //            healRating += weightedHeal;
 //        }
 //        return healRating;
 //    }
-//    private int getRescueRating(Entity[] targets) {
+//    private int getRescueRating(Hero[] targets) {
 //        int rescue = 0;
-//        for (Entity target : targets) {
+//        for (Hero target : targets) {
 //            int currentLifePercentage = target.getStat(Stat.CURRENT_LIFE) * 100 / target.getStat(Stat.MAX_LIFE);
 //            if (currentLifePercentage < 20) {
 //                rescue++;
@@ -192,7 +192,7 @@ public class ArenaAIController {
 //        }
 //        return rescue * 3;
 //    }
-//    private int getEffectRatingForSkill(Skill s, Entity[] targets) {
+//    private int getEffectRatingForSkill(Skill s, Hero[] targets) {
 //        int effectRating = 0;
 //        for (Effect e: s.getEffects()) {
 //            effectRating += getEffectTargetRating(e, targets);
@@ -202,15 +202,15 @@ public class ArenaAIController {
 //        }
 //        //TODO rebuild to use effectCondition
 ////        for (Map.Entry<Effect, List<Effect>> conditional : s.conditionals.entrySet()) {
-////            if (conditional.getKey().targetCaster && this.arena.activeEntity.hasEffect(conditional.getKey()) > 0) {
+////            if (conditional.getKey().targetCaster && this.arena.activeHero.hasEffect(conditional.getKey()) > 0) {
 ////                for (Effect subEffect : conditional.getValue()) {
 ////                    effectRating += getEffectRating(subEffect, targets);
 ////                }
 ////            } else {
 ////                for (Effect subEffect : conditional.getValue()) {
-////                   for (Entity target : targets) {
+////                   for (Hero target : targets) {
 ////                       if (target.hasEffect(subEffect) > 0) {
-////                           effectRating += getEffectRating(subEffect, new Entity[]{target});
+////                           effectRating += getEffectRating(subEffect, new Hero[]{target});
 ////                       }
 ////                   }
 ////                }
@@ -221,15 +221,15 @@ public class ArenaAIController {
 //    private int getEffectCasterRating(Effect e) {
 //        int effectRating = 0;
 //        if (e.permanentEffect != null) {
-//            effectRating += getChangeEffectRating(e, this.arena.activeEntity);
+//            effectRating += getChangeEffectRating(e, this.arena.activeHero);
 //        }
 //        return effectRating;
 //    }
 //
-//    private int getEffectTargetRating(Effect e, Entity[] targets) {
+//    private int getEffectTargetRating(Effect e, Hero[] targets) {
 //        int effectRating = 0;
 //        {
-//            for (Entity t : targets) {
+//            for (Hero t : targets) {
 //                if (e.permanentEffect != null) {
 //                    effectRating += getChangeEffectRating(e, t);
 //                } else {
@@ -239,11 +239,11 @@ public class ArenaAIController {
 //        }
 //        return effectRating;
 //    }
-//    private int getChangeEffectRating(Effect e, Entity t) {
+//    private int getChangeEffectRating(Effect e, Hero t) {
 //        int effectRating = 0;
-//        boolean isEnemy = t.enemy != this.arena.activeEntity.enemy;
-//        Entity[] teamMates = this.arena.getTeam(this.arena.activeEntity.enemy);
-//        for (Entity teamMate : teamMates) {
+//        boolean isEnemy = t.enemy != this.arena.activeHero.enemy;
+//        Hero[] teamMates = this.arena.getTeam(this.arena.activeHero.enemy);
+//        for (Hero teamMate : teamMates) {
 ////            if (hasPayoff(e.permanentEffect.getClass(), teamMate, isEnemy)) {effectRating++;}
 //        }
 //        if (Angry.class.equals(e.permanentEffect.getClass())) {
@@ -289,8 +289,8 @@ public class ArenaAIController {
 //        }
 //        return effectRating;
 //    }
-//    private int getOtherRating(Effect effect, Entity t) {
-//        boolean isEnemy = t.enemy != this.arena.activeEntity.enemy;
+//    private int getOtherRating(Effect effect, Hero t) {
+//        boolean isEnemy = t.enemy != this.arena.activeHero.enemy;
 //        switch (effect.type) {
 //            case BLOCK_ABILITY, RDM_CD_UP, OBJECT_PUSH, OBJECT_PULL -> { return isEnemy ?  3 :  -3;}
 //            case RDM_CD_DOWN -> { return isEnemy ? -3 : 3;}
@@ -298,131 +298,131 @@ public class ArenaAIController {
 //        }
 //        return 0;
 //    }
-//    private int getCoverRating(Entity target) {
+//    private int getCoverRating(Hero target) {
 //        int payOffs = 0;
-//        if (target.role.equals(Entity.ROLE.DPS) || target.role.equals(Entity.ROLE.SUPPORT)) {
+//        if (target.role.equals(Hero.ROLE.DPS) || target.role.equals(Hero.ROLE.SUPPORT)) {
 //            payOffs++;
 //        }
 //        return payOffs;
 //    }
-//    private int getShieldedRating(Entity target) {
+//    private int getShieldedRating(Hero target) {
 //        int payOffs = 0;
-//        if (target.role.equals(Entity.ROLE.DPS) || target.role.equals(Entity.ROLE.SUPPORT)) {
+//        if (target.role.equals(Hero.ROLE.DPS) || target.role.equals(Hero.ROLE.SUPPORT)) {
 //            payOffs++;
 //        }
 //        return payOffs;
 //    }
-//    private int getBleedingRating(Entity target) {
+//    private int getBleedingRating(Hero target) {
 //        int payOffs = 1;
-//        if (target.role.equals(Entity.ROLE.BRAWL) || target.role.equals(Entity.ROLE.TANK)) {
+//        if (target.role.equals(Hero.ROLE.BRAWL) || target.role.equals(Hero.ROLE.TANK)) {
 //            payOffs++;
 //        }
 //        return payOffs;
 //    }
-//    private int getSteadFastRating(Entity target) {
+//    private int getSteadFastRating(Hero target) {
 //        int payOffs = 1;
-//        if (target.role.equals(Entity.ROLE.BRAWL) || target.role.equals(Entity.ROLE.TANK)) {
+//        if (target.role.equals(Hero.ROLE.BRAWL) || target.role.equals(Hero.ROLE.TANK)) {
 //            payOffs++;
 //        }
 //        return payOffs;
 //    }
-//    private int getResilientRating(Entity target) {
+//    private int getResilientRating(Hero target) {
 //        int payOffs = 1;
-//        if (target.role.equals(Entity.ROLE.BRAWL) || target.role.equals(Entity.ROLE.TANK)) {
+//        if (target.role.equals(Hero.ROLE.BRAWL) || target.role.equals(Hero.ROLE.TANK)) {
 //            payOffs++;
 //        }
 //        return payOffs;
 //    }
-//    private int getBlindedRating(Entity target) {
+//    private int getBlindedRating(Hero target) {
 //        int payOffs = 1;
-//        if (target.role.equals(Entity.ROLE.DPS) || target.role.equals(Entity.ROLE.BRAWL)) {
+//        if (target.role.equals(Hero.ROLE.DPS) || target.role.equals(Hero.ROLE.BRAWL)) {
 //            payOffs++;
 //        }
 //        return payOffs;
 //    }
-//    private int getVigilantRating(Entity target) {
+//    private int getVigilantRating(Hero target) {
 //        int payOffs = 1;
-//        if (target.role.equals(Entity.ROLE.DPS) || target.role.equals(Entity.ROLE.BRAWL)) {
+//        if (target.role.equals(Hero.ROLE.DPS) || target.role.equals(Hero.ROLE.BRAWL)) {
 //            payOffs++;
 //        }
 //        return payOffs;
 //    }
-//    private int getTauntedRating(Entity target) {
+//    private int getTauntedRating(Hero target) {
 //        int payOffs = 1;
-//        if (target.role != null && (target.role.equals(Entity.ROLE.DPS) || target.role.equals(Entity.ROLE.BRAWL))) {
+//        if (target.role != null && (target.role.equals(Hero.ROLE.DPS) || target.role.equals(Hero.ROLE.BRAWL))) {
 //            payOffs++;
 //        }
 //        return payOffs;
 //    }
-//    private int getPreciseRating(Entity target) {
+//    private int getPreciseRating(Hero target) {
 //        int payOffs = 1;
-//        if (target.role != null && (target.role.equals(Entity.ROLE.DPS) || target.role.equals(Entity.ROLE.BRAWL))) {
+//        if (target.role != null && (target.role.equals(Hero.ROLE.DPS) || target.role.equals(Hero.ROLE.BRAWL))) {
 //            payOffs++;
 //        }
 //        return payOffs;
 //    }
-//    private int getParalysedRating(Entity target) {
-//        int payOffs = 0;
-//        payOffs++;
-//        if (target.role != null && (target.role.equals(Entity.ROLE.DPS) || target.role.equals(Entity.ROLE.BRAWL))) {
-//            payOffs++;
-//        }
-//        return payOffs;
-//    }
-//    private int getTimeoutRating(Entity target) {
+//    private int getParalysedRating(Hero target) {
 //        int payOffs = 0;
 //        payOffs++;
-//        if (target.role != null && target.role.equals(Entity.ROLE.DPS)) {
+//        if (target.role != null && (target.role.equals(Hero.ROLE.DPS) || target.role.equals(Hero.ROLE.BRAWL))) {
+//            payOffs++;
+//        }
+//        return payOffs;
+//    }
+//    private int getTimeoutRating(Hero target) {
+//        int payOffs = 0;
+//        payOffs++;
+//        if (target.role != null && target.role.equals(Hero.ROLE.DPS)) {
 //            payOffs++;
 //        }
 //        if (this.arena.getPositionInQueue(target) < 3) {payOffs++;}
 //        return payOffs;
 //    }
-//    private int getBurningRating(Entity target) {
+//    private int getBurningRating(Hero target) {
 //        int payOffs = 1;
-//        if (target.role != null && (target.role.equals(Entity.ROLE.BRAWL) || target.role.equals(Entity.ROLE.TANK))) {
+//        if (target.role != null && (target.role.equals(Hero.ROLE.BRAWL) || target.role.equals(Hero.ROLE.TANK))) {
 //            payOffs++;
 //        }
 //        return payOffs;
 //    }
-//    private int getEnlightenedRating(Entity t) {
+//    private int getEnlightenedRating(Hero t) {
 //        int payOffs = 1;
-//        if (t.role != null && (t.role.equals(Entity.ROLE.BRAWL) || t.role.equals(Entity.ROLE.TANK))) {
+//        if (t.role != null && (t.role.equals(Hero.ROLE.BRAWL) || t.role.equals(Hero.ROLE.TANK))) {
 //            payOffs++;
 //        }
 //        return payOffs;
 //    }
-//    private int getAngryRating(Entity t) {
+//    private int getAngryRating(Hero t) {
 //        return 1; //TODO
 //    }
-//    private int getAdvantageRating(Entity t) {
+//    private int getAdvantageRating(Hero t) {
 //        int payOffs = 0;
 //        payOffs++;
-//        if (t.role != null && t.role.equals(Entity.ROLE.DPS)) {
+//        if (t.role != null && t.role.equals(Hero.ROLE.DPS)) {
 //            payOffs+=2;
 //        }
-//        if (t.role != null && t.role.equals(Entity.ROLE.BRAWL)) {
+//        if (t.role != null && t.role.equals(Hero.ROLE.BRAWL)) {
 //            payOffs++;
 //        }
 //        return payOffs;
 //    }
-//    private int getDisadvantageRating(Entity t) {
+//    private int getDisadvantageRating(Hero t) {
 //        int payOffs = 0;
 //        payOffs++;
-//        if (t.role != null && t.role.equals(Entity.ROLE.DPS)) {
+//        if (t.role != null && t.role.equals(Hero.ROLE.DPS)) {
 //            payOffs+=2;
 //        }
-//        if (t.role != null && t.role.equals(Entity.ROLE.BRAWL)) {
+//        if (t.role != null && t.role.equals(Hero.ROLE.BRAWL)) {
 //            payOffs++;
 //        }
 //        return payOffs;
 //    }
-//    private int getAscendedRating(Entity t) {
+//    private int getAscendedRating(Hero t) {
 //        int payOffs = 0;
 //        payOffs++;
-//        if (t.role != null && t.role.equals(Entity.ROLE.DPS)) {
+//        if (t.role != null && t.role.equals(Hero.ROLE.DPS)) {
 //            payOffs+=4;
-//        } else if (t.role != null && t.role.equals(Entity.ROLE.BRAWL)) {
+//        } else if (t.role != null && t.role.equals(Hero.ROLE.BRAWL)) {
 //            payOffs+=3;
 //        } else {
 //            payOffs++;
@@ -430,25 +430,25 @@ public class ArenaAIController {
 //
 //        return payOffs;
 //    }
-//    private int getConfusedRating(Entity target) {
+//    private int getConfusedRating(Hero target) {
 //        int payOffs = 0;
 //        payOffs++;
-//        if (target.role != null && target.role.equals(Entity.ROLE.DPS)) {
+//        if (target.role != null && target.role.equals(Hero.ROLE.DPS)) {
 //            payOffs+=2;
 //        }
-//        if (target.role != null && target.role.equals(Entity.ROLE.BRAWL)) {
+//        if (target.role != null && target.role.equals(Hero.ROLE.BRAWL)) {
 //            payOffs++;
 //        }
 //        return payOffs;
 //    }
-//    private int getRootedRating(Entity t) {
+//    private int getRootedRating(Hero t) {
 //        int payOffs = 0;
-//        if (t.role != null && (t.role.equals(Entity.ROLE.DPS) || t.role.equals(Entity.ROLE.SUPPORT))) {
+//        if (t.role != null && (t.role.equals(Hero.ROLE.DPS) || t.role.equals(Hero.ROLE.SUPPORT))) {
 //            payOffs++;
 //        }
 //        return payOffs;
 //    }
-//    private int getCleanseRating(Entity target, boolean isEnemy) {
+//    private int getCleanseRating(Hero target, boolean isEnemy) {
 //        if (isEnemy) {
 //            return -10;
 //        }
@@ -460,7 +460,7 @@ public class ArenaAIController {
 //        }
 //        return 0;
 //    }
-//    private int getClearRating(Entity target, boolean isEnemy) {
+//    private int getClearRating(Hero target, boolean isEnemy) {
 //
 //        if (isEnemy && !target.currentEffects.isEmpty()) {
 //            return -5;
@@ -474,7 +474,7 @@ public class ArenaAIController {
 //        }
 //        return 0;
 //    }
-//    private <T extends ChangeEffect> boolean hasPayoff(Class<T> infliction, Entity teamMate, boolean targetIsEnemy) {
+//    private <T extends ChangeEffect> boolean hasPayoff(Class<T> infliction, Hero teamMate, boolean targetIsEnemy) {
 //        return Arrays.stream(teamMate.skills)
 //                .filter(Objects::nonNull)
 //                .anyMatch(skill -> Stream.concat(skill.effects.stream(), skill.casterEffects.stream())
@@ -482,7 +482,7 @@ public class ArenaAIController {
 //                                && ((effect.condition.effectAsConditionForTarget && targetIsEnemy) /*|| best not to complicate things for a start...
 //                                                (effect.targetCaster && target.equals(teamMate) && skill.attributes.contains(SkillAttribute.BUFF))*/)));
 //    }
-//    private boolean hasTeammatePayoff(String infliction, Entity teamMate) {
+//    private boolean hasTeammatePayoff(String infliction, Hero teamMate) {
 //        return Arrays.stream(teamMate.skills)
 //                .anyMatch(skill -> skill.conditionals.keySet()
 //                        .stream()
@@ -502,12 +502,12 @@ public class ArenaAIController {
         return targets;
     }
 
-    private List<Entity[]> getPossibleTargetGroups(Skill s) {
-        List<Entity[]> result = new ArrayList<>();
+    private List<Hero[]> getPossibleTargetGroups(Skill s) {
+        List<Hero[]> result = new ArrayList<>();
         switch (s.getTargetType()) {
             case SINGLE, SINGLE_ALLY, SINGLE_ALLY_IN_FRONT -> setSingleTargetGroups(s, result);
             case LINE -> setLineTargetGroups(s, result);
-            case SELF -> result.add(new Entity[]{this.arena.activeEntity});
+            case SELF -> result.add(new Hero[]{this.arena.activeHero});
             case ALL -> setAllTargetGroups(result);
             case ALL_ALLY -> setAllAllyTargetGroups(result);
             case ALL_ENEMY -> setAllEnemyTargetGroups(result);
@@ -517,57 +517,57 @@ public class ArenaAIController {
         result.forEach(entities-> entities = removeNullValuesAndTheDead(entities));
         return result;
     }
-    private void setSingleTargetGroups(Skill s, List<Entity[]> result) {
+    private void setSingleTargetGroups(Skill s, List<Hero[]> result) {
         int[] targetMatrix = s.setupTargetMatrix();
         for (int i : targetMatrix) {
-            Entity[] targets = new Entity[1];
+            Hero[] targets = new Hero[1];
             targets[0] = this.arena.getAtPosition(i);
             result.add(targets);
         }
     }
-    private void setLineTargetGroups(Skill s, List<Entity[]> results) {
+    private void setLineTargetGroups(Skill s, List<Hero[]> results) {
         int[] targetMatrix = s.setupTargetMatrix();
-        int casterPosition = this.arena.activeEntity.position;
+        int casterPosition = this.arena.activeHero.position;
         if (targetMatrix.length>0) {
-            List<Entity> lineGroup = new ArrayList<>();
+            List<Hero> lineGroup = new ArrayList<>();
             for (int i = targetMatrix[0]; i < casterPosition; i++) {
-                Entity target = this.arena.getAtPosition(i);
+                Hero target = this.arena.getAtPosition(i);
                 lineGroup.add(target);
             }
-            results.add(lineGroup.toArray(new Entity[0]));
+            results.add(lineGroup.toArray(new Hero[0]));
         }
     }
-    private void setAllTargetGroups(List<Entity[]> results) {
+    private void setAllTargetGroups(List<Hero[]> results) {
         results.add(this.arena.getAllLivingEntities());
     }
-    private void setAllAllyTargetGroups(List<Entity[]> results) {
-        results.add(this.arena.activeEntity.getAllies().toArray(new Entity[0]));
+    private void setAllAllyTargetGroups(List<Hero[]> results) {
+        results.add(this.arena.activeHero.getAllies().toArray(new Hero[0]));
     }
-    private void setAllEnemyTargetGroups(List<Entity[]> results) {
-        List<Entity> enemies = Arrays.stream(this.arena.getAllLivingEntities())
-                .filter(e->e.enemy != this.arena.activeEntity.enemy).toList();
-        results.add(enemies.toArray(new Entity[0]));
+    private void setAllEnemyTargetGroups(List<Hero[]> results) {
+        List<Hero> enemies = this.arena.getAllLivingEntities().stream()
+                .filter(e->e.enemy != this.arena.activeHero.enemy).toList();
+        results.add(enemies.toArray(new Hero[0]));
     }
-    private void setFirstTwoEnemyTargetGroups(List<Entity[]> results) {
-        results.add(new Entity[]{this.arena.getAtPosition(2),this.arena.getAtPosition(3)});
+    private void setFirstTwoEnemyTargetGroups(List<Hero[]> results) {
+        results.add(new Hero[]{this.arena.getAtPosition(2),this.arena.getAtPosition(3)});
     }
-    private void setFirstEnemyTargetGroups(List<Entity[]> results) {
-        results.add(new Entity[]{this.arena.getAtPosition(3)});
+    private void setFirstEnemyTargetGroups(List<Hero[]> results) {
+        results.add(new Hero[]{this.arena.getAtPosition(3)});
     }
-    private Entity[] removeNullValuesAndTheDead(Entity[] source) {
-        List<Entity> resultList = new ArrayList<>();
-        for (Entity e: source) {
-            if (e != null && e.getStat(Stat.CURRENT_LIFE) > 0) {
+    private Hero[] removeNullValuesAndTheDead(Hero[] source) {
+        List<Hero> resultList = new ArrayList<>();
+        for (Hero e: source) {
+            if (e != null && e.getStats().get(Stat.CURRENT_LIFE) > 0) {
                 resultList.add(e);
             }
         }
-        return resultList.toArray(new Entity[0]);
+        return resultList.toArray(new Hero[0]);
     }
 
-    private void calculatePreferredPosition(Entity ai, int averageTeamLife) {
+    private void calculatePreferredPosition(Hero ai, int averageTeamLife) {
         List<Double> factors = new ArrayList<>();
-        for (int i = 0; i < ai.skills.length; i++) {
-            Skill s = ai.skills[i];
+        for (int i = 0; i < ai.getSkills().length; i++) {
+            Skill s = ai.getSkills()[i];
             if (s != null) {
 //                if (s.attributes.contains(SkillAttribute.BUFF) && s.distance > 0) {
 //                    factors.add(s.distance > 2
@@ -578,11 +578,11 @@ public class ArenaAIController {
 //                }
             }
         }
-        factors.add(ai.getStat(Stat.MAX_LIFE) < averageTeamLife
+        factors.add(ai.getStats().get(Stat.LIFE) < averageTeamLife
                 ? 5.0 : 8.0);
 
-        ai.effectivePosition = (int) Math.round(factors.stream()
-                .mapToDouble(a -> a)
-                .average().orElse(8.0));
+//        ai.effectivePosition = (int) Math.round(factors.stream()
+//                .mapToDouble(a -> a)
+//                .average().orElse(8.0));
     }
 }

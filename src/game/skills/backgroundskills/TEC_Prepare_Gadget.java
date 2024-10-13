@@ -1,10 +1,10 @@
 package game.skills.backgroundskills;
 
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Skill;
 
 public class TEC_Prepare_Gadget extends Skill {
-    public TEC_Prepare_Gadget(Entity e) {
+    public TEC_Prepare_Gadget(Hero e) {
         super(e);
         this.name="tec_prepare_gadget";
         this.translation="Prepare Gadget";
@@ -14,12 +14,12 @@ public class TEC_Prepare_Gadget extends Skill {
     }
     @Override
     public Skill getCast() {
-        TEC_Prepare_Gadget cast = new TEC_Prepare_Gadget(this.entity);
+        TEC_Prepare_Gadget cast = new TEC_Prepare_Gadget(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
     @Override
-    public String getDescriptionFor(Entity e) {
+    public String getDescriptionFor(Hero e) {
         return "At the start of battle switch this ability with an unused one.";
     }
 }

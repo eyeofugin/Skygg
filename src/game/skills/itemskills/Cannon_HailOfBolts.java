@@ -1,6 +1,6 @@
 package game.skills.itemskills;
 
-import game.entities.Entity;
+import game.entities.Hero;
 import game.entities.Multiplier;
 import game.skills.Skill;
 import game.skills.Stat;
@@ -10,8 +10,8 @@ import game.skills.backgroundskills.GUA_Adaptability;
 import java.util.List;
 
 public class Cannon_HailOfBolts extends Skill {
-    public Cannon_HailOfBolts(Entity entity) {
-        super(entity);
+    public Cannon_HailOfBolts(Hero Hero) {
+        super(Hero);
         this.name="cannon_hailofbolts";
         this.translation="Hail of Bolts";
         this.description= "";
@@ -23,14 +23,14 @@ public class Cannon_HailOfBolts extends Skill {
         this.actionCost = 1;
         this.distance = 3;
         this.countAsHits = 2;
-        this.dmg = entity.getPrimary().getAutoAttackPower();
+        this.dmg = Hero.getPrimary().getAutoAttackPower();
         this.tags = List.of(AiSkillTag.DMG);
         this.weaponSkill = true;
 
     }
     @Override
     public Skill getCast() {
-        Cannon_HailOfBolts cast = new Cannon_HailOfBolts(this.entity);
+        Cannon_HailOfBolts cast = new Cannon_HailOfBolts(this.Hero);
         cast.copyFrom(this);
         return cast;
     }

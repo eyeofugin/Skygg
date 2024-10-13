@@ -1,13 +1,13 @@
 package game.skills.backgroundskills;
 
 import framework.Logger;
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.TargetMode;
 
 public class GUA_Zone_of_Ctrl extends Skill {
 
-    public GUA_Zone_of_Ctrl(Entity e) {
+    public GUA_Zone_of_Ctrl(Hero e) {
         super(e);
         this.name="gua_zone_of_ctrl";
         this.translation="Zone of Control";
@@ -16,23 +16,23 @@ public class GUA_Zone_of_Ctrl extends Skill {
     }
     @Override
     public Skill getCast() {
-        GUA_Zone_of_Ctrl cast = new GUA_Zone_of_Ctrl(this.entity);
+        GUA_Zone_of_Ctrl cast = new GUA_Zone_of_Ctrl(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
     @Override
-    public String getDescriptionFor(Entity e) {
+    public String getDescriptionFor(Hero e) {
         return "Enemies up to 2 fields away can only target ~.";
     }
 
     @Override
     public TargetMode getTargetMode(Skill targetingSkill) {
-        Entity caster = targetingSkill.entity;
-        if (caster.enemy == this.entity.enemy) {
+        Hero caster = targetingSkill.Hero;
+        if (caster.enemy == this.Hero.enemy) {
             return TargetMode.NORMAL;
         }
-        int dist = Math.abs(caster.position-this.entity.position);
-        Logger.log(this.entity.name + ".GUA_ZoneOfCtrl.getTargetMode: " );
+        int dist = Math.abs(caster.position-this.Hero.position);
+        Logger.log(this.Hero.name + ".GUA_ZoneOfCtrl.getTargetMode: " );
         if (dist<=2) {
             Logger.logLn("MUST");
             return TargetMode.MUST;

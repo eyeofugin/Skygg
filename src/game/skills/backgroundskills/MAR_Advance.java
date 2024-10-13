@@ -1,6 +1,6 @@
 package game.skills.backgroundskills;
 
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.Advantage;
@@ -14,7 +14,7 @@ public class MAR_Advance extends Skill {
     private static final int DISTANCE = 1;
     private static final int TURNS = 2;
 
-    public MAR_Advance(Entity e) {
+    public MAR_Advance(Hero e) {
         super(e);
         this.name="mar_advance";
         this.translation="Advance";
@@ -31,36 +31,36 @@ public class MAR_Advance extends Skill {
 
     @Override
     public Skill getCast() {
-        MAR_Advance cast = new MAR_Advance(this.entity);
+        MAR_Advance cast = new MAR_Advance(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
 
     @Override
-    public String getDescriptionFor(Entity e) {
+    public String getDescriptionFor(Hero e) {
         return "~ moves up to " + DISTANCE + " fields and gains advantage for " + TURNS +" turns.";
     }
     @Override
-    protected void individualResolve(Entity target) {
-        int dist = Math.abs(target.position - this.entity.position);
-        int dir = this.entity.enemy ? -1 : 1;
-        this.entity.arena.move(this.entity, dist, dir);
+    protected void individualResolve(Hero target) {
+        int dist = Math.abs(target.position - this.Hero.position);
+        int dir = this.Hero.enemy ? -1 : 1;
+        this.Hero.arena.move(this.Hero, dist, dir);
         this.applySkillEffects(target);
     }
     @Override
     public int[] setupTargetMatrix() {
         List<Integer> resultList = new ArrayList<>();
-        if (this.entity.enemy) {
-            int start = this.entity.position-1;
+        if (this.Hero.enemy) {
+            int start = this.Hero.position-1;
             for (int i = start; i > 3 && Math.abs(start-i)<=DISTANCE; i--) {
-                if (this.entity.arena.getAtPosition(i)!=null)
+                if (this.Hero.arena.getAtPosition(i)!=null)
                     resultList.add(i);
             }
             return resultList.stream().mapToInt(i->i).toArray();
         } else {
-            int start = this.entity.position+1;
+            int start = this.Hero.position+1;
             for (int i = start; i < 4 && Math.abs(i-start)<=DISTANCE; i++) {
-                if (this.entity.arena.getAtPosition(i)!=null)
+                if (this.Hero.arena.getAtPosition(i)!=null)
                     resultList.add(i);
             }
             return resultList.stream().mapToInt(i->i).toArray();

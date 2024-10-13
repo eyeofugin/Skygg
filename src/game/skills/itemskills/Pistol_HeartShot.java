@@ -1,6 +1,6 @@
 package game.skills.itemskills;
 
-import game.entities.Entity;
+import game.entities.Hero;
 import game.entities.Multiplier;
 import game.skills.Skill;
 import game.skills.Stat;
@@ -11,8 +11,8 @@ import game.skills.changeeffects.statusinflictions.Injured;
 import java.util.List;
 
 public class Pistol_HeartShot extends Skill {
-    public Pistol_HeartShot(Entity entity) {
-        super(entity);
+    public Pistol_HeartShot(Hero Hero) {
+        super(Hero);
         this.name="pistol_heartshot";
         this.translation="Heart Shot";
         this.description= "";
@@ -23,12 +23,12 @@ public class Pistol_HeartShot extends Skill {
         this.tags = List.of(AiSkillTag.DMG);
         this.actionCost = 1;
         this.distance = 3;
-        this.dmg = entity.getPrimary().getAutoAttackPower();
+        this.dmg = Hero.getPrimary().getAutoAttackPower();
         this.weaponSkill = true;
     }
     @Override
     public Skill getCast() {
-        Pistol_HeartShot cast = new Pistol_HeartShot(this.entity);
+        Pistol_HeartShot cast = new Pistol_HeartShot(this.Hero);
         cast.copyFrom(this);
         return cast;
     }

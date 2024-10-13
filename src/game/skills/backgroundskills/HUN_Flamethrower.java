@@ -1,7 +1,7 @@
 package game.skills.backgroundskills;
 
 import framework.Logger;
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -16,7 +16,7 @@ public class HUN_Flamethrower extends Skill {
     private static final int CD_TOTAL = 3;
     private static final int POWER = 20;
 
-    public HUN_Flamethrower(Entity e) {
+    public HUN_Flamethrower(Hero e) {
         super(e);
         this.name="hun_flamethrower";
         this.translation="Flamethrower";
@@ -34,16 +34,16 @@ public class HUN_Flamethrower extends Skill {
 
     @Override
     public Skill getCast() {
-        HUN_Flamethrower cast = new HUN_Flamethrower(this.entity);
+        HUN_Flamethrower cast = new HUN_Flamethrower(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
     @Override
-    public String getDescriptionFor(Entity e) {
+    public String getDescriptionFor(Hero e) {
         return "Deals " + POWER + " burning damage to all targets in front for a distance of X where X is 1 plus the amount of bounty stacks ~ has. " + BURN_CHANCE + "% chance to burn.";
     }
     @Override
     public int getDistance() {
-        return 1 + this.entity.hasPermanentEffect(Bounty.class);
+        return 1 + this.Hero.hasPermanentEffect(Bounty.class);
     }
 }

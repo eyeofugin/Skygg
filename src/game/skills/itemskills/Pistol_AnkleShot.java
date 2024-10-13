@@ -1,6 +1,6 @@
 package game.skills.itemskills;
 
-import game.entities.Entity;
+import game.entities.Hero;
 import game.entities.Multiplier;
 import game.skills.Skill;
 import game.skills.Stat;
@@ -12,8 +12,8 @@ import game.skills.changeeffects.statusinflictions.Weakened;
 import java.util.List;
 
 public class Pistol_AnkleShot extends Skill {
-    public Pistol_AnkleShot(Entity entity) {
-        super(entity);
+    public Pistol_AnkleShot(Hero Hero) {
+        super(Hero);
         this.name="pistol_ankleshot";
         this.translation="Ankle Shot";
         this.description= "";
@@ -25,12 +25,12 @@ public class Pistol_AnkleShot extends Skill {
         this.tags = List.of(AiSkillTag.CC, AiSkillTag.DMG);
         this.actionCost = 1;
         this.distance = 3;
-        this.dmg = entity.getPrimary().getAutoAttackPower();
+        this.dmg = Hero.getPrimary().getAutoAttackPower();
         this.weaponSkill = true;
     }
     @Override
     public Skill getCast() {
-        Pistol_AnkleShot cast = new Pistol_AnkleShot(this.entity);
+        Pistol_AnkleShot cast = new Pistol_AnkleShot(this.Hero);
         cast.copyFrom(this);
         return cast;
     }

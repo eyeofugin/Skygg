@@ -1,7 +1,7 @@
 package game.skills.backgroundskills;
 
 import framework.Logger;
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -14,7 +14,7 @@ public class GUA_Recover extends Skill {
     private static final int CD_TOTAL = 2;
     private static final int HEAL_PERCENTAGE = 50;
 
-    public GUA_Recover(Entity e) {
+    public GUA_Recover(Hero e) {
         super(e);
         this.name="gua_recover";
         this.translation="Recover";
@@ -29,28 +29,28 @@ public class GUA_Recover extends Skill {
     }
     @Override
     public Skill getCast() {
-        GUA_Recover cast = new GUA_Recover(this.entity);
+        GUA_Recover cast = new GUA_Recover(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
     @Override
-    public String getDescriptionFor(Entity e) {
+    public String getDescriptionFor(Hero e) {
         return "Cleanses all debuffs and heals for " + HEAL_PERCENTAGE + "%. Skips the next turn.";
     }
     @Override
     public int[] setupTargetMatrix() {
-        return new int[]{this.entity.position};
+        return new int[]{this.Hero.position};
     }
     @Override
-    protected void individualResolve(Entity target) {
+    protected void individualResolve(Hero target) {
         int heal = this.getHeal();
-        target.heal(this.entity, heal, this);
+        target.heal(this.Hero, heal, this);
         target.cleanse();
         this.applySkillEffects(target);
     }
     @Override
     public int getHeal() {
-        int baseHeal = (int)((double)this.entity.getStat(Stat.MAX_LIFE) * HEAL_PERCENTAGE / 100);
+        int baseHeal = (int)((double)this.Hero.getStat(Stat.MAX_LIFE) * HEAL_PERCENTAGE / 100);
         int multBonus = getHealMultiBonus();
         return baseHeal + multBonus;
     }

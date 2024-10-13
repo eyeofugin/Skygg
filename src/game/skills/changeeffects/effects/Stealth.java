@@ -27,7 +27,7 @@ public class Stealth extends Effect {
     @Override
     public int getTargetedStat(Stat stat, Skill targeted) {
         if (Stat.EVASION.equals(stat) && targeted.getTargetType().equals(TargetType.SINGLE)) {
-            Logger.logLn(this.entity.name + ".Stealth.getTargetedStat");
+            Logger.logLn(this.Hero.name + ".Stealth.getTargetedStat");
             return intensity;
         }
         return 0;

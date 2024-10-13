@@ -21,7 +21,7 @@ public class SkillInfo extends GUIElement {
         int[] costPixels = getTextLine(costString, this.width, 10, 1,
                 TextAlignment.LEFT, Color.VOID, Color.WHITE);
         fillWithGraphicsSize(0, 12, this.width, 10, costPixels, false);
-        int[] descriptionPixels = getTextBlock(this.skill.getDescriptionFor(this.skill.entity), this.width, 1, TextAlignment.LEFT, Color.VOID, Color.WHITE);
+        int[] descriptionPixels = getTextBlock(this.skill.getDescriptionFor(this.skill.hero), this.width, 1, TextAlignment.LEFT, Color.VOID, Color.WHITE);
         int height = descriptionPixels.length / this.width;
         fillWithGraphicsSize(0, 24,  this.width, height, descriptionPixels, false);
         return pixels;

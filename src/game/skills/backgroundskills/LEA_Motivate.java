@@ -1,6 +1,6 @@
 package game.skills.backgroundskills;
 
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.TargetType;
 
@@ -10,7 +10,7 @@ public class LEA_Motivate extends Skill {
     private static final int ACTION_COST = 1;
     private static final int CD_TOTAL = 2;
 
-    public LEA_Motivate(Entity e) {
+    public LEA_Motivate(Hero e) {
         super(e);
         this.name="lea_motivate";
         this.translation="Motivate";
@@ -25,12 +25,12 @@ public class LEA_Motivate extends Skill {
     }
     @Override
     public Skill getCast() {
-        LEA_Motivate cast = new LEA_Motivate(this.entity);
+        LEA_Motivate cast = new LEA_Motivate(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
     @Override
-    public String getDescriptionFor(Entity e) {
+    public String getDescriptionFor(Hero e) {
         return "Removes all debuffs of target.";
     }
 }

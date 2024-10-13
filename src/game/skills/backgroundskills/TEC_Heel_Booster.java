@@ -1,6 +1,6 @@
 package game.skills.backgroundskills;
 
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.TargetType;
 
@@ -13,7 +13,7 @@ public class TEC_Heel_Booster extends Skill {
     private static final int ACTION_COST = 1;
     private static final int CD_TOTAL = 2;
 
-    public TEC_Heel_Booster(Entity e) {
+    public TEC_Heel_Booster(Hero e) {
         super(e);
         this.name="tec_heel_booster";
         this.translation="Heel Booster";
@@ -28,39 +28,39 @@ public class TEC_Heel_Booster extends Skill {
     }
     @Override
     public Skill getCast() {
-        TEC_Heel_Booster cast = new TEC_Heel_Booster(this.entity);
+        TEC_Heel_Booster cast = new TEC_Heel_Booster(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
     @Override
-    public String getDescriptionFor(Entity e) {
+    public String getDescriptionFor(Hero e) {
         return "Moves " + DISTANCE + " fields." ;
     }
 
     @Override
-    public void individualResolve(Entity target) {
-        int dist = target.position - this.entity.position;
-        int dir = this.entity.enemy ? -1 : 1;
-        this.entity.arena.move(this.entity, dist, dir);
+    public void individualResolve(Hero target) {
+        int dist = target.position - this.Hero.position;
+        int dir = this.Hero.enemy ? -1 : 1;
+        this.Hero.arena.move(this.Hero, dist, dir);
     }
     @Override
     public int[] setupTargetMatrix() {
         List<Integer> resultList = new ArrayList<>();
-        if (this.entity.enemy) {
-            int start = Math.max(4,this.entity.position-DISTANCE);
-            int end = Math.min(7,this.entity.position+DISTANCE);
+        if (this.Hero.enemy) {
+            int start = Math.max(4,this.Hero.position-DISTANCE);
+            int end = Math.min(7,this.Hero.position+DISTANCE);
             for (int i = start; i <= end; i++) {
-                if (this.entity.arena.getAtPosition(i)!=null)
+                if (this.Hero.arena.getAtPosition(i)!=null)
                     resultList.add(i);
             }
         } else {
-            int start = Math.max(0,this.entity.position-DISTANCE);
-            int end = Math.min(3,this.entity.position+DISTANCE);
+            int start = Math.max(0,this.Hero.position-DISTANCE);
+            int end = Math.min(3,this.Hero.position+DISTANCE);
             for (int i = start; i <= end; i++) {
-                if (this.entity.arena.getAtPosition(i)!=null)
+                if (this.Hero.arena.getAtPosition(i)!=null)
                     resultList.add(i);
             }
         }
-        return resultList.stream().mapToInt(i->i).filter(i->i!=this.entity.position).toArray();
+        return resultList.stream().mapToInt(i->i).filter(i->i!=this.Hero.position).toArray();
     }
 }

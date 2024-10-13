@@ -1,6 +1,6 @@
 package game.skills.itemskills;
 
-import game.entities.Entity;
+import game.entities.Hero;
 import game.entities.Multiplier;
 import game.skills.Skill;
 import game.skills.Stat;
@@ -10,8 +10,8 @@ import game.skills.backgroundskills.GUA_Adaptability;
 import java.util.List;
 
 public class Blade_XChop extends Skill {
-    public Blade_XChop(Entity entity) {
-        super(entity);
+    public Blade_XChop(Hero Hero) {
+        super(Hero);
         this.name="blade_xchop";
         this.translation="X Chop";
         this.description= "";
@@ -24,12 +24,12 @@ public class Blade_XChop extends Skill {
         this.actionCost = 1;
         this.distance = 2;
         this.accuracy = -1;
-        this.dmg = entity.getPrimary().getAutoAttackPower();
+        this.dmg = Hero.getPrimary().getAutoAttackPower();
         this.weaponSkill = true;
     }
     @Override
     public Skill getCast() {
-        Blade_XChop cast = new Blade_XChop(this.entity);
+        Blade_XChop cast = new Blade_XChop(this.Hero);
         cast.copyFrom(this);
         return cast;
     }

@@ -15,7 +15,7 @@ public enum Stat {
     SPEED("Speed", "SPE"),
     MAX_ACTION("Max", "ACT"),
     CURRENT_ACTION("Action", "CAC"),
-    MAX_LIFE("Max", "LIF"),
+    LIFE("Max", "LIF"),
     LIFE_REGAIN("Regain", "LRE"),
     CURRENT_LIFE("Life", "CLI"),
     MANA("Max", "MAN"),
@@ -23,7 +23,16 @@ public enum Stat {
     CURRENT_MANA("Mana", "CMA"),
     FAITH("Max", "FAI"),
     CURRENT_FAITH("Faith", "CFA"),
-    CRIT_CHANCE("Crit Chance", "CRI");
+    CRIT_CHANCE("Crit Chance", "CRI"),
+
+    NORMAL("Normal", "NOR"),
+    HEAT("Heat", "HEA"),
+    DIVINE("Divine", "DIV"),
+    DARK("Dark", "DAR"),
+    CHEMICAL("Chemical", "CHE"),
+    ARCANE("Arcane", "ARC"),
+    COSMIC("Cosmic", "COS");
+
 
     private String translationString;
     private String iconKey;

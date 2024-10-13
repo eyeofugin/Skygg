@@ -19,8 +19,8 @@ public class Taunted extends Effect {
     }
     @Override
     public boolean canPerformCheck(Skill cast) {
-        if (cast.entity == this.entity && !cast.isAutoAttack()) {
-            Logger.logLn(this.entity.name + ".Taunted.performSuccessCheck: false");
+        if (cast.Hero == this.Hero && !cast.isAutoAttack()) {
+            Logger.logLn(this.Hero.name + ".Taunted.performSuccessCheck: false");
             return false;
         }
         return true;

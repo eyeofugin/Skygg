@@ -1,6 +1,6 @@
 package game.skills.itemskills;
 
-import game.entities.Entity;
+import game.entities.Hero;
 import game.entities.Multiplier;
 import game.skills.Skill;
 import game.skills.Stat;
@@ -11,8 +11,8 @@ import game.skills.changeeffects.effects.Disadvantage;
 import java.util.List;
 
 public class Blade_SarlaccSweep extends Skill {
-    public Blade_SarlaccSweep(Entity entity) {
-        super(entity);
+    public Blade_SarlaccSweep(Hero Hero) {
+        super(Hero);
         this.name="blade_sarlaccsweep";
         this.translation="Sarlacc Sweep";
         this.description= "";
@@ -26,12 +26,12 @@ public class Blade_SarlaccSweep extends Skill {
         this.cdMax=2;
         this.actionCost = 1;
         this.distance = 2;
-        this.dmg = entity.getPrimary().getAutoAttackPower();
+        this.dmg = Hero.getPrimary().getAutoAttackPower();
         this.weaponSkill = true;
     }
     @Override
     public Skill getCast() {
-        Blade_SarlaccSweep cast = new Blade_SarlaccSweep(this.entity);
+        Blade_SarlaccSweep cast = new Blade_SarlaccSweep(this.Hero);
         cast.copyFrom(this);
         return cast;
     }

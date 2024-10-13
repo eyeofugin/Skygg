@@ -18,7 +18,7 @@ public class Enlightened extends Effect {
     }
     @Override
     public void turnLogic() {
-        Logger.logLn(this.entity.name + ".Enlightened.turnLogic");
-        this.entity.heal(this.entity, this.stacks*this.intensity,null);
+        Logger.logLn(this.Hero.name + ".Enlightened.turnLogic");
+        this.Hero.heal(this.Hero, this.stacks*this.intensity,null);
     }
 }

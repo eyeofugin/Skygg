@@ -1,6 +1,6 @@
 package game.skills.backgroundskills;
 
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Effect;
 import game.skills.Skill;
 import game.skills.Stat;
@@ -12,7 +12,7 @@ public class GUA_DefStance extends Skill {
     private static final int ACTION_COST = 1;
     private static final int CD_TOTAL = 2;
 
-    public GUA_DefStance(Entity e) {
+    public GUA_DefStance(Hero e) {
         super(e);
         this.name="gua_def_stance";
         this.translation="Defensive Stance";
@@ -28,12 +28,12 @@ public class GUA_DefStance extends Skill {
     }
     @Override
     public Skill getCast() {
-        GUA_DefStance cast = new GUA_DefStance(this.entity);
+        GUA_DefStance cast = new GUA_DefStance(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
     @Override
-    public String getDescriptionFor(Entity e) {
+    public String getDescriptionFor(Hero e) {
         return "Boosts Vitality and Reflexes";
     }
 }

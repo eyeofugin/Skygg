@@ -1,7 +1,7 @@
 package game.skills.backgroundskills;
 
 import framework.Logger;
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.TargetType;
 
@@ -14,7 +14,7 @@ public class SEN_Force_Healing extends Skill {
     private static final int DISTANCE = 2;
     private static final int POWER = 20;
 
-    public SEN_Force_Healing(Entity e) {
+    public SEN_Force_Healing(Hero e) {
         super(e);
         this.name="sen_force_healing";
         this.translation="Force Healing";
@@ -30,19 +30,19 @@ public class SEN_Force_Healing extends Skill {
     }
     @Override
     public Skill getCast() {
-        SEN_Force_Healing cast = new SEN_Force_Healing(this.entity);
+        SEN_Force_Healing cast = new SEN_Force_Healing(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
     @Override
-    public String getDescriptionFor(Entity e) {
+    public String getDescriptionFor(Hero e) {
         return "Cleanses target and heals for " + POWER + "." ;
     }
 
     @Override
-    protected void individualResolve(Entity target) {
+    protected void individualResolve(Hero target) {
         int heal = this.getHeal();
-        target.heal(this.entity, heal, this);
+        target.heal(this.Hero, heal, this);
         target.cleanse();
         this.applySkillEffects(target);
     }

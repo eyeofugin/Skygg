@@ -1,7 +1,7 @@
 package game.skills.changeeffects.effects;
 
 import framework.Logger;
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Effect;
 import game.skills.Skill;
 import game.skills.Stat;
@@ -26,9 +26,9 @@ public class Advantage extends Effect {
     }
 
     @Override
-    public int getDamageChanges(Entity caster, Entity target, Skill skill, int result, Stat damageType, boolean simulated) {
-        if (caster == this.entity) {
-            Logger.logLn(this.entity.name + ".Advantage.getDamageChanges");
+    public int getDamageChanges(Hero caster, Hero target, Skill skill, int result, Stat damageType, boolean simulated) {
+        if (caster == this.Hero) {
+            Logger.logLn(this.Hero.name + ".Advantage.getDamageChanges");
             result *= (double) (100 + this.intensity) /100;
         }
         return result;

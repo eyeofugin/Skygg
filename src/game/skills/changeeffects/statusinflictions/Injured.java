@@ -25,8 +25,8 @@ public class Injured extends Effect {
     }
     @Override
     public void turnLogic() {
-        Logger.logLn(this.entity.name + ".Injured.turnLogic");
-        int percentageDmg = this.entity.getStat(Stat.CURRENT_LIFE) * 10 / 100;
-        this.entity.effectDamage(percentageDmg);
+        Logger.logLn(this.Hero.name + ".Injured.turnLogic");
+        int percentageDmg = this.Hero.getStat(Stat.CURRENT_LIFE) * 10 / 100;
+        this.Hero.effectDamage(percentageDmg);
     }
 }

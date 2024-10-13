@@ -1,6 +1,6 @@
 package game.skills.backgroundskills;
 
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Effect;
 import game.skills.Skill;
 import game.skills.Stat;
@@ -13,7 +13,7 @@ public class SEN_Battle_Meditation extends Skill {
     private static final int ACTION_COST = 2;
     private static final int CD_TOTAL = 5;
 
-    public SEN_Battle_Meditation(Entity e) {
+    public SEN_Battle_Meditation(Hero e) {
         super(e);
         this.name="sen_battle_meditation";
         this.translation="Battle Meditation";
@@ -32,21 +32,21 @@ public class SEN_Battle_Meditation extends Skill {
     }
     @Override
     public Skill getCast() {
-        SEN_Battle_Meditation cast = new SEN_Battle_Meditation(this.entity);
+        SEN_Battle_Meditation cast = new SEN_Battle_Meditation(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
     @Override
-    public String getDescriptionFor(Entity e) {
+    public String getDescriptionFor(Hero e) {
         return "Boosts all non-offensive stats." ;
     }
 
     @Override
     public int[] setupTargetMatrix() {
-        return new int[]{this.entity.position};
+        return new int[]{this.Hero.position};
     }
     @Override
-    protected void individualResolve(Entity target) {
+    protected void individualResolve(Hero target) {
         this.applySkillEffects(target);
     }
 }

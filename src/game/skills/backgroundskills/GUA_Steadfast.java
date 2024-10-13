@@ -1,14 +1,14 @@
 package game.skills.backgroundskills;
 
 import framework.Logger;
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Effect;
 import game.skills.Skill;
 import utils.MyMaths;
 
 public class GUA_Steadfast extends Skill {
 
-    public GUA_Steadfast(Entity e) {
+    public GUA_Steadfast(Hero e) {
         super(e);
         this.name="gua_steadfast";
         this.translation="Steadfast";
@@ -17,18 +17,18 @@ public class GUA_Steadfast extends Skill {
     }
     @Override
     public Skill getCast() {
-        GUA_Steadfast cast = new GUA_Steadfast(this.entity);
+        GUA_Steadfast cast = new GUA_Steadfast(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
     @Override
-    public String getDescriptionFor(Entity e) {
+    public String getDescriptionFor(Hero e) {
         return "20% chance to ignore status inflictions.";
     }
 
     @Override
-    public boolean effectFailure(Effect e, Entity target) {
-        if (e.type.equals(Effect.ChangeEffectType.STATUS_INFLICTION) && target.equals(this.entity)) {
+    public boolean effectFailure(Effect e, Hero target) {
+        if (e.type.equals(Effect.ChangeEffectType.STATUS_INFLICTION) && target.equals(this.Hero)) {
             Logger.logLn("Steadfast check.");
             return MyMaths.success(20);
         }

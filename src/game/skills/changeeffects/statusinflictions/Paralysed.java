@@ -28,7 +28,7 @@ public class Paralysed extends Effect {
     @Override
     public int getActionChanges() {
         if (MyMaths.success(PARA_CHANCE)) {
-            Logger.logLn(this.entity.name + ".Paralysed.getActionChanges:-1");
+            Logger.logLn(this.Hero.name + ".Paralysed.getActionChanges:-1");
             return 1;
         }
         return 0;

@@ -3,8 +3,8 @@ package framework.graphics.containers;
 import framework.Engine;
 import framework.graphics.GUIElement;
 import framework.states.Arena;
-import game.entities.Entity;
 import framework.graphics.text.Color;
+import game.entities.Hero;
 
 public class TeamArenaOverview extends GUIElement {
 
@@ -61,9 +61,9 @@ public class TeamArenaOverview extends GUIElement {
         }
     }
 
-    public void setActiveEntity(Entity e) {
-        this.activeCharCard.setActiveEntity(e);
-        this.activeAbilitiesCard.setActiveEntity(e);
+    public void setActiveHero(Hero e) {
+        this.activeCharCard.setActiveHero(e);
+        this.activeAbilitiesCard.setActiveHero(e);
     }
     public void activate() {
         this.active = true;

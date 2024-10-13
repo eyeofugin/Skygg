@@ -23,8 +23,8 @@ public class Disarmed extends Effect {
     }
     @Override
     public boolean canPerformCheck(Skill cast) {
-        if (cast.entity == this.entity && cast.isWeaponSkill()) {
-            Logger.logLn(this.entity.name + ".Disarmed.canPerformCheck: false");
+        if (cast.Hero == this.Hero && cast.isWeaponSkill()) {
+            Logger.logLn(this.Hero.name + ".Disarmed.canPerformCheck: false");
             return false;
         }
         return true;

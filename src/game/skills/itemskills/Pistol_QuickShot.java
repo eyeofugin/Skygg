@@ -1,7 +1,7 @@
 package game.skills.itemskills;
 
 import framework.Logger;
-import game.entities.Entity;
+import game.entities.Hero;
 import game.entities.Multiplier;
 import game.objects.Equipment;
 import game.skills.Skill;
@@ -16,7 +16,7 @@ public class Pistol_QuickShot extends Skill {
     private static final int ACTION_COST = 1;
     private static final int CD_TOTAL = 1;
 
-    public Pistol_QuickShot(Entity e) {
+    public Pistol_QuickShot(Hero e) {
         super(e);
         this.name="pistol_quick_shot";
         this.translation="Quick Shot";
@@ -34,16 +34,16 @@ public class Pistol_QuickShot extends Skill {
     }
     @Override
     public Skill getCast() {
-        Pistol_QuickShot cast = new Pistol_QuickShot(this.entity);
+        Pistol_QuickShot cast = new Pistol_QuickShot(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
     @Override
-    public String getDescriptionFor(Entity e) {
+    public String getDescriptionFor(Hero e) {
         return "Auto attack that scales with the speed of ~.";
     }
     public void setEquipment(Equipment equipment) {
-        Logger.logLn(this.entity.name + ".Pistol_QuickShot.setEquipment:" + equipment);
+        Logger.logLn(this.Hero.name + ".Pistol_QuickShot.setEquipment:" + equipment);
         if (equipment != null) {
             this.setDamageType(equipment.getDamageType());
             this.setDistance(equipment.getAutoAttackDistance());

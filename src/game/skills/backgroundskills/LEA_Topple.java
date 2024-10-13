@@ -1,6 +1,6 @@
 package game.skills.backgroundskills;
 
-import game.entities.Entity;
+import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.Disadvantage;
@@ -12,7 +12,7 @@ public class LEA_Topple extends Skill {
     private static final int CD_TOTAL = 2;
     private static final int TURNS = 2;
 
-    public LEA_Topple(Entity e) {
+    public LEA_Topple(Hero e) {
         super(e);
         this.name="lea_topple";
         this.translation="Topple";
@@ -27,19 +27,19 @@ public class LEA_Topple extends Skill {
     }
     @Override
     public Skill getCast() {
-        LEA_Topple cast = new LEA_Topple(this.entity);
+        LEA_Topple cast = new LEA_Topple(this.Hero);
         cast.copyFrom(this);
         return cast;
     }
 
     @Override
-    public String getDescriptionFor(Entity e) {
+    public String getDescriptionFor(Hero e) {
         return "The two closest enemies get disadvantage for " + TURNS + " turns.";
     }
 
     @Override
     public int[] setupTargetMatrix() {
-        if (this.entity.enemy) {
+        if (this.Hero.enemy) {
             return new int[]{2,3};
         } else {
             return new int[]{4,5};
