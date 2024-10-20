@@ -2,34 +2,26 @@ package framework.states;
 
 import framework.Engine;
 import framework.Logger;
-import framework.Property;
 import framework.connector.Connector;
 import framework.connector.payloads.CanPerformPayload;
 import framework.connector.payloads.PrepareUpdatePayload;
 import framework.connector.payloads.UpdatePayload;
 import framework.graphics.GUIElement;
-
 import framework.graphics.text.Color;
-import framework.graphics.text.TextAlignment;
 import framework.resources.SpriteLibrary;
 import framework.graphics.containers.HUD;
+
 import game.controllers.ArenaAIController;
 import game.entities.Hero;
-import game.entities.HeroGroup;
 import game.entities.HeroTeam;
-import game.objects.Equipment;
-import game.skills.Effect;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
-import utils.MyMaths;
 
-import java.awt.Point;
+import utils.MyMaths;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -65,8 +57,10 @@ public class Arena extends GUIElement {
     public Hero[] activeTargets = null;
     public HeroTeam friends;
     public HeroTeam enemies;
-    private final int[] friendXPos = new int[]{0, 68, 136, 204};
-    private final int[] enemyXPos = new int[]{312, 380, 448, 516};
+
+    private final int[] friendXPos = new int[]{30, 98, 166, 234};
+    private final int[] enemyXPos = new int[]{342, 410, 478, 546};
+    private final int heroYPos = 120;
 
     public Arena() {
         super(0,0);
@@ -100,7 +94,7 @@ public class Arena extends GUIElement {
                 .toList());
         Collections.shuffle(backwards);
         backwards = backwards.stream()
-                .sorted((Hero e1, Hero e2)->Integer.compare(e2.getStat(Stat.SPEED, null), e1.getStat(Stat.SPEED, null)))
+                .sorted((Hero e1, Hero e2)->Integer.compare(e2.getStat(Stat.SPEED), e1.getStat(Stat.SPEED)))
                 .toList();
         this.order.addAll(backwards);
     }
@@ -136,7 +130,6 @@ public class Arena extends GUIElement {
                     Method method = this.getClass().getMethod(this.nextAction);
                     method.invoke(this);
                 } catch (Exception e) {
-                    e.printStackTrace();
                     this.nextAction = null;
                 }
             } else {
@@ -158,7 +151,7 @@ public class Arena extends GUIElement {
         if (engine.keyB._backPressed) {
             this.status = Status.WAIT_ON_HUD;
             this.hud.activateTeamOverview();
-            this.activeSkill.resetCast();
+            this.activeSkill.setToInitial();
             this.pointers = new int[0];
             this.targetMatrix = new int[0];
         }
@@ -197,21 +190,12 @@ public class Arena extends GUIElement {
         UpdatePayload updatePayload = new UpdatePayload();
         Connector.fireTopic(Connector.UPDATE, updatePayload);
     }
-    public void devDoTurn(int skillIndex, Hero[] targets) {
-        this.activeSkill = this.activeHero.getSkills()[skillIndex]._cast;
-        this.activeSkill.setTargets(java.util.List.of(targets));
-        Logger.logLn("Load Skill " + this.activeSkill.name);
-        if (this.performSuccessCheck(this.activeSkill)) {
-            this.activeSkill.perform();
-            this.activeSkill.resolve();
-        }
-    }
     private void resumeTurn() {
         Logger.logLn("resumeTurn()");
         this.removeTheDead();
         this.updateEntities();
         this.activeHero.prepareCast();
-        if (this.activeHero.getStats().get(Stat.CURRENT_ACTION) > 0) {
+        if (this.activeHero.getStat(Stat.CURRENT_ACTION) > 0) {
             if (this.activeHero.enemy) {
                 aiTurn();
             } else {
@@ -253,24 +237,16 @@ public class Arena extends GUIElement {
     }
 
     private void performSkill() {
-        if (this.performSuccessCheck(this.activeSkill)) {
-            if (this.activeSkill.getTargets() == null || this.activeSkill.getTargets().isEmpty()) {
-                this.activeTargets = getEntitiesAt(this.pointers);
-                this.activeSkill.setTargets(java.util.List.of(this.activeTargets));
-            }
-            Logger.logLn("Player will perform " + this.activeSkill.name + " at position " + this.activePointer);
-            //allEntities.onPerform(skill, targets);
-            this.activeSkill.perform();
-            this.pointers = new int[0];
-            this.nextAction = "resolveSkill";
-            this.status = Status.WAIT_ON_ANIMATION;
+        if (this.activeSkill.getTargets() == null || this.activeSkill.getTargets().isEmpty()) {
+            this.activeTargets = getEntitiesAt(this.pointers);
+            this.activeSkill.setTargets(java.util.List.of(this.activeTargets));
         }
-    }
-    public boolean performSuccessCheck(Skill skill) {
-        CanPerformPayload canPerformPayload = new CanPerformPayload()
-                .setSkill(skill);
-        Connector.fireTopic(Connector.CAN_PERFORM, canPerformPayload);
-        return canPerformPayload.success;
+        Logger.logLn("Player will perform " + this.activeSkill.name + " at position " + this.activePointer);
+        //allEntities.onPerform(skill, targets);
+        this.activeSkill.perform();
+        this.pointers = new int[0];
+        this.nextAction = "resolveSkill";
+        this.status = Status.WAIT_ON_ANIMATION;
     }
     public void resolveSkill() {
         this.activeSkill.resolve();
@@ -355,9 +331,6 @@ public class Arena extends GUIElement {
     private void setupTargetMatrix() {
         this.targetMatrix = this.activeSkill.setupTargetMatrix();
     }
-    private int[] getTargetMatrix(Skill s) {
-        return s.setupTargetMatrix();
-    }
 
     public List<Hero> getAllLivingEntities() {
         return Stream.concat(this.friends.getHeroesAsList().stream(), this.enemies.getHeroesAsList().stream()).toList();
@@ -365,7 +338,7 @@ public class Arena extends GUIElement {
 
     public Hero getAtPosition(int position) {
         for (Hero e: getAllLivingEntities()) {
-            if (e.position == position) {
+            if (e != null && e.position == position) {
                 return e;
             }
         }
@@ -377,15 +350,6 @@ public class Arena extends GUIElement {
             resultList.add(getAtPosition(position));
         }
         return resultList.stream().filter(Objects::nonNull).toList().toArray(new Hero[0]);
-    }
-    public Hero[] getTeam(boolean enemy) {
-        List<Hero> team = new ArrayList<>();
-        for (Hero e : getAllLivingEntities()) {
-            if (e.enemy == enemy) {
-                team.add(e);
-            }
-        }
-        return team.toArray(new Hero[0]);
     }
     public int getPositionInQueue(Hero e) {
         //TODO
@@ -410,12 +374,6 @@ public class Arena extends GUIElement {
 
     private int[] getSingleTargets() {
         return new int[]{this.activePointer};
-        //handle radius targets by individual resolve of skill
-//        int[] targets = new int[this.activeSkill.getTargetRadius()+1];
-//        for (int i = 0; i <= this.activeSkill.getTargetRadius();i++) {
-//            targets[i] = this.activePointer-i;
-//        }
-//        return targets;
     }
     private int[] getLineTargets() {
         int casterPosition = this.activeHero.position;
@@ -429,68 +387,30 @@ public class Arena extends GUIElement {
         }
         return targets;
     }
-    private void renderTeams() {
-        friends.render();
-        enemies.render();
+    private void renderPointer() {
+        for (int j : pointers) {
+            int x;
+            if (j > 3) {
+                x = enemyXPos[j - 4];
+            } else {
+                x = friendXPos[j];
+            }
+            int[] pointer = SpriteLibrary.sprites.get("arrow_down");
+            fillWithGraphicsSize(x + (64 / 2 - 16), heroYPos - (32), 32, 32, pointer, null);
+        }
     }
-    private void renderTeam(Point[] points, HeroTeam entities) {
-
-        for (int i = 0; i < points.length; i++) {
-            Hero e = entities.heroes[i];
-            if (e == null) {
-                continue;
+    private void renderTeams() {
+        for (Hero hero: friends.heroes) {
+            if (hero != null) {
+                int x = friendXPos[hero.position];
+                fillWithGraphicsSize(x, heroYPos, hero.getWidth(), hero.getHeight(), hero.render(), this.activeHero.equals(hero));
             }
-            int[] pixels = e.render();
-            fillWithGraphicsSize(points[i].x, points[i].y, e.anim.width, e.anim.height, pixels, e.equals(this.activeHero)?Color.WHITE:null);
-            int barsY = points[i].y + e.anim.height+5;
-            writeBar(points[i].x, points[i].x+33, barsY, barsY + 3, (double)e.getStats().get(Stat.CURRENT_LIFE) / e.getStat(Stat.MAX_LIFE), Color.GREEN, Color.BLACK);
-            int actionBallOffset = 0;
-            int healthBarOffset = 35;
-            for (int a = 0; a < e.getStats().get(Stat.CURRENT_ACTION) && a < 3; a++) {
-                int from = points[i].x + healthBarOffset + actionBallOffset;
-                int until = points[i].x + healthBarOffset + actionBallOffset + 3;
-                fillWithGraphics(from, until, barsY, barsY + 3, SpriteLibrary.sprites.get("actionS"),false, Color.VOID, Color.VOID);
-                actionBallOffset+=5;
+        }
+        for (Hero hero: enemies.heroes) {
+            if (hero != null) {
+                int x = enemyXPos[hero.position - 4];
+                fillWithGraphicsSize(x, heroYPos, hero.getWidth(), hero.getHeight(), hero.render(), this.activeHero.equals(hero));
             }
-//            int overheatOffset = 0;
-//            String overheatIcon = e.getPrimary().isOverheated()? "overheat_active": "overheat_inactive";
-//            for (int o = 0; o < e.getPrimary().getCurrentOverheat(); o++) {
-//                int from = points[i].x + e.anim.width - overheatOffset - 3;
-//                int until = points[i].x + e.anim.width - overheatOffset;
-//                fillWithGraphics(from, until, barsY, barsY + 3, SpriteLibrary.sprites.get(overheatIcon),false, Color.VOID, Color.VOID);
-//                overheatOffset+=1;
-//            }
-            int effectsY = barsY + 10;
-            int effectsX = points[i].x;
-            int paddingBetween = (e.anim.width - 5 * Property.EFFECT_ICON_SIZE) / 4;
-
-            int paintedEffects = 0;
-            for (Effect effect : e.getEffects()) {
-                int[] sprite;
-                if (effect.type == Effect.ChangeEffectType.STAT_CHANGE) {
-                    sprite = getTextLine(effect.stat.getIconKey(), Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE,
-                            1, TextAlignment.CENTER, effect.intensity > 0 ? Color.GREEN : Color.RED, Color.WHITE);
-                } else {
-                    sprite = SpriteLibrary.sprites.get(effect.getClass().getName());
-                }
-                for (int n = 0; n < effect.stacks; n++) {
-                    fillWithGraphicsSize(effectsX, effectsY, Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE,
-                            sprite, false, null,
-                            effect.type.equals(Effect.ChangeEffectType.EFFECT) ? Color.DARKYELLOW : Color.RED);
-                    paintedEffects++;
-
-                    if (paintedEffects % 5 == 0) {
-                        effectsY += Property.EFFECT_ICON_SIZE + 5;
-                        effectsX = points[i].x;
-                    } else {
-                        effectsX += Property.EFFECT_ICON_SIZE + paddingBetween;
-                    }
-                }
-            }
-
-
-//            writeBar(points[i].x, points[i].x+192, points[i].y + e.anim.height + 35, points[i].y + e.anim.height + 45, (double)e.currentMana / e.maxMana, Color.BLUE, Color.BLACK);
-
         }
     }
     private void renderHUD() {

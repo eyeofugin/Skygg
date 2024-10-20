@@ -1,6 +1,6 @@
 package game.entities;
 
-import framework.resources.SpriteUtils;
+import framework.resources.SpriteLibrary;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +21,12 @@ public class Animator {
     public boolean waitFor;
     public int[] image;
 
+    public Hero hero;
+
+    public void setupAnimation(String path, String name, int[] ms) {
+        this.animations.put(name, new Animation(ms, SpriteLibrary.setupSprites(ms.length, width, height, path, false)));
+    }
+
     public void animate() {
         Animation anim = animations.get(currentAnim);
         image = anim.getImage(animationCounter);
@@ -35,20 +41,7 @@ public class Animator {
             }
         }
         animationCounter++;
-//        for (int i = 0; i < effects.size(); i++) {
-//            animateEffect(i);
-//        }
     }
-//    public void animateEffect(int effectIndex) {
-//        Animation effect = effects.get(effectIndex);
-//        int[] effectImage = effect.getImage(effect.animationCounter);
-//        if (effect.animationCounter == effect.length) {
-//            effect.animationCounter = 0;
-//        }
-//        int yFrom = effectIndex * 37;
-//        this.image = SpriteUtils.mergeIntoSize(this.image, 192, effectImage, 36, 36, 192-36, yFrom);
-//        effect.animationCounter++;
-//    }
     public void playAnimation(String animName, boolean waitFor) {
         if (this.animations.containsKey(animName)) {
             currentAnim = animName;
@@ -56,11 +49,5 @@ public class Animator {
             this.waitFor = waitFor;
             onLoop = false;
         }
-    }
-    public void addEffectAnimation(Animation animation) {
-        this.effects.add(animation);
-    }
-    public void removeEffectAnimation(String name) {
-        this.effects.removeIf(e->e.name.equals(name));
     }
 }

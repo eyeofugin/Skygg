@@ -55,7 +55,9 @@ public class GUIElement {
         this.pixels = new int[width*height];
     }
 
-    public void update(int frame) {};
+    public void update(int frame) {
+
+    };
     public int[] render() {
         renderChildren();
         return this.pixels;

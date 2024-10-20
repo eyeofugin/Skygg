@@ -1,41 +1,56 @@
 package game.skills.backgroundskills;
 
 import game.entities.Hero;
-import game.entities.Multiplier;
+import game.entities.individuals.dev.DUMMY;
 import game.skills.Skill;
 import game.skills.Stat;
+import game.skills.TargetType;
+import java.util.List;
 
 public class AllyHeal extends Skill {
-    public AllyHeal(Hero e) {
-        super(e);
-        this.name="ally_heal";
-        this.translation="Ally Heal";
-        this.description= "getDescription()";
-        this.animationR="runR";
-        this.animationL="runL";
-//        this.activateRange = new Range(1,4);
-//        this.targetRange = new Range(1,4);
-        this.damageType= Stat.FORCE;
-//        this.effects = List.of(new Effect(EffectType.STATUS_INFLICTION, -1, new Burning_deprecated(), null));
-        this.dmgMultipliers = of(new Multiplier[] {
-                new Multiplier(Stat.LETHALITY,0.8),
-                new Multiplier(Stat.HARMONY,0.8)
-        });
+
+    public AllyHeal(Hero hero) {
+        super(hero);
+        setToInitial();
+        initAnimation();
+    }
+
+    @Override
+    public void setToInitial() {
+        super.setToInitial();
+        this.name = "ALLYHEAL";
+        this.tags = List.of(Skill.SkillTag.DMG);
+        this.targetType = TargetType.SINGLE;
+        this.distance = 8;
         this.dmg = 1;
-        this.distance = 5;
-        this.actionCost = 1;
+        this.damageType = Stat.HEAT;
+    }
+
+    protected void initAnimation() {
+        String path = "res/sprites/enemies/blorgon/blorgon_melee.png";
+        switch(((DUMMY)this.hero).colorIndex) {
+            case 1:
+                path = "res/sprites/enemies/blorgon/blorgon_melee.png";
+                break;
+            case 2:
+                path = "res/sprites/enemies/blorgon_red/blorgon_melee.png";
+                break;
+            case 3:
+                path = "res/sprites/enemies/blorgon_blue/blorgon_melee.png";
+                break;
+            case 4:
+                path = "res/sprites/enemies/blorgon_green/blorgon_melee.png";
+                break;
+
+        }
+        this.hero.anim.setupAnimation(path, this.name, new int[]{15, 30, 45, 60});
     }
 
     @Override
-    public Skill getCast() {
-        AllyHeal cast = new AllyHeal(this.Hero);
-        cast.copyFrom(this);
-        return cast;
+    public String getDescriptionFor(Hero hero) {
+        return "Descr.";
     }
 
     @Override
-    public String getDescriptionFor(Hero e) {
-        return "Heals target friend for " + getDamage() + "" + getDmgMultiplierString(e) + " up to " + this.distance + " away. [br] " +
-                "Sets target on fire.";
-    }
+    public void addSubscriptions() {}
 }

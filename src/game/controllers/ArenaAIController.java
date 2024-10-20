@@ -24,7 +24,7 @@ public class ArenaAIController {
     }
     public void setup() {
         for (Hero ai : this.arena.enemies.heroes) {
-            int averageLife = (int) Arrays.stream(this.arena.enemies.heroes).map(e->e.getStats().get(Stat.LIFE)).mapToInt(Integer::intValue)
+            int averageLife = (int) Arrays.stream(this.arena.enemies.heroes).map(e->e.getStat(Stat.LIFE)).mapToInt(Integer::intValue)
                     .summaryStatistics().getAverage();
             calculatePreferredPosition(ai, averageLife);
         }
@@ -33,7 +33,7 @@ public class ArenaAIController {
     private void estimateBeatDownMeter() {
         int mediumValue = 500;
         for (Hero e : this.arena.getAllLivingEntities()) {
-            int lifePercentage = e.getStats().get(Stat.CURRENT_LIFE) * 100 / e.getStats().get(Stat.LIFE);
+            int lifePercentage = e.getStat(Stat.CURRENT_LIFE) * 100 / e.getStat(Stat.LIFE);
             mediumValue += e.enemy?lifePercentage:-1*lifePercentage;
         }
         this.beatDownMeter = mediumValue/100;
@@ -54,16 +54,14 @@ public class ArenaAIController {
             Logger.logLn("no moves?");
         } else {
             Skill s = bestAction.skill;
-            if (this.arena.performSuccessCheck(s)) {
-                Logger.logLn("AI will perform " + s.name + "/" + bestAction.rating + " at position " + bestAction.targets[0].position);
-                this.arena.activeSkill = s;
-                this.arena.activeSkill.setTargets(List.of(bestAction.targets));
+            Logger.logLn("AI will perform " + s.name + "/" + bestAction.rating + " at position " + bestAction.targets[0].position);
+            this.arena.activeSkill = s;
+            this.arena.activeSkill.setTargets(List.of(bestAction.targets));
 
-                this.arena.activeSkill.perform();
-                this.arena.activeTargets = bestAction.targets;
-                this.arena.nextAction = "resolveSkill";
-                this.arena.status = Arena.Status.WAIT_ON_ANIMATION;
-            }
+            this.arena.activeSkill.perform();
+            this.arena.activeTargets = bestAction.targets;
+            this.arena.nextAction = "resolveSkill";
+            this.arena.status = Arena.Status.WAIT_ON_ANIMATION;
         }
     }
 
@@ -72,27 +70,28 @@ public class ArenaAIController {
         for (Skill s: this.arena.activeHero.getSkills()) {
             if (s != null) {
                 Logger.aiLogln("evaluate:" +s.name);
-                Skill cast = s._cast;
-                if (cast == null || !this.arena.activeHero.canPerform(cast)) {
+                if ( !this.arena.activeHero.canPerform(s)) {
                     Logger.aiLogln("ai cannot perform");
                     continue;
                 }
-                for (Hero[] targets : getPossibleTargetGroups(cast)) {
+                for (Hero[] targets : getPossibleTargetGroups(s)) {
                     Logger.aiLog("rating for targetgroup ");
                     for (Hero target : targets) {
-                        Logger.aiLog(target.getName() + " ");
+                        if (target != null) {
+                            Logger.aiLog(target.getName() + " ");
+                        }
                     }
                     int rating = 0; //Rating borders ~+-20(==400%dmg/heal)
-                    rating += getDamageRating(cast, targets);
-                    rating += getHealRating(cast,targets);
-                    rating += getTempoRating(cast);
-                    rating += getCustomAIRating(cast, targets);
+                    rating += getDamageRating(s, targets);
+                    rating += getHealRating(s,targets);
+                    rating += getTempoRating(s);
+                    rating += getCustomAIRating(s, targets);
                     //TODO missing move rating
 
                     Logger.aiLogln("\n\trating:"+rating);
 
                     Action action = new Action();
-                    action.skill = cast;
+                    action.skill = s;
                     action.targets = targets;
                     action.rating = rating;
                     this.turnOptions.add(action);
@@ -103,7 +102,7 @@ public class ArenaAIController {
     private int getDamageRating(Skill cast, Hero[] targets) {
         int weightedPercentages = 0;
         int lethality = 0; // this.arena.activeHero.getStat(Stat.LETHALITY, cast);
-        int estimatedDamage = cast.getDamage();
+        int estimatedDamage = cast.getDmgWithMulti();
         Logger.aiLog(" estimated dmg:"+estimatedDamage);
         for (Hero e : targets) {
             Logger.aiLog(" target:"+e.getName());
@@ -144,7 +143,7 @@ public class ArenaAIController {
     }
     private int getTempoRating(Skill cast) {
         int tempoRating = 0;
-        if (cast.tags.contains(Skill.AiSkillTag.SETUP)
+        if (cast.tags.contains(Skill.SkillTag.SETUP)
                 && this.beatDownMeter < 7 && this.beatDownMeter > 3) {
             tempoRating = 2;
         }
@@ -503,18 +502,30 @@ public class ArenaAIController {
     }
 
     private List<Hero[]> getPossibleTargetGroups(Skill s) {
+        List<Hero[]> preFilter = new ArrayList<>();
         List<Hero[]> result = new ArrayList<>();
         switch (s.getTargetType()) {
-            case SINGLE, SINGLE_ALLY, SINGLE_ALLY_IN_FRONT -> setSingleTargetGroups(s, result);
-            case LINE -> setLineTargetGroups(s, result);
-            case SELF -> result.add(new Hero[]{this.arena.activeHero});
-            case ALL -> setAllTargetGroups(result);
-            case ALL_ALLY -> setAllAllyTargetGroups(result);
-            case ALL_ENEMY -> setAllEnemyTargetGroups(result);
-            case FIRST_TWO_ENEMIES -> setFirstTwoEnemyTargetGroups(result);
-            case FIRST_ENEMY -> setFirstEnemyTargetGroups(result);
+            case SINGLE, SINGLE_ALLY, SINGLE_ALLY_IN_FRONT -> setSingleTargetGroups(s, preFilter);
+            case LINE -> setLineTargetGroups(s, preFilter);
+            case SELF -> preFilter.add(new Hero[]{this.arena.activeHero});
+            case ALL -> setAllTargetGroups(preFilter);
+            case ALL_ALLY -> setAllAllyTargetGroups(preFilter);
+            case ALL_ENEMY -> setAllEnemyTargetGroups(preFilter);
+            case FIRST_TWO_ENEMIES -> setFirstTwoEnemyTargetGroups(preFilter);
+            case FIRST_ENEMY -> setFirstEnemyTargetGroups(preFilter);
         }
-        result.forEach(entities-> entities = removeNullValuesAndTheDead(entities));
+        for (Hero[] heroArray : preFilter) {
+            List<Hero> targets = new ArrayList<>();
+            for (Hero hero : heroArray) {
+                if (hero != null) {
+                    targets.add(hero);
+                }
+            }
+            if (!targets.isEmpty()) {
+                result.add(targets.toArray(new Hero[0]));
+            }
+        }
+
         return result;
     }
     private void setSingleTargetGroups(Skill s, List<Hero[]> result) {
@@ -538,7 +549,7 @@ public class ArenaAIController {
         }
     }
     private void setAllTargetGroups(List<Hero[]> results) {
-        results.add(this.arena.getAllLivingEntities());
+        results.add(this.arena.getAllLivingEntities().toArray(new Hero[0]));
     }
     private void setAllAllyTargetGroups(List<Hero[]> results) {
         results.add(this.arena.activeHero.getAllies().toArray(new Hero[0]));
@@ -554,14 +565,14 @@ public class ArenaAIController {
     private void setFirstEnemyTargetGroups(List<Hero[]> results) {
         results.add(new Hero[]{this.arena.getAtPosition(3)});
     }
-    private Hero[] removeNullValuesAndTheDead(Hero[] source) {
+    private void removeNullValuesAndTheDead(Hero[] source) {
         List<Hero> resultList = new ArrayList<>();
         for (Hero e: source) {
-            if (e != null && e.getStats().get(Stat.CURRENT_LIFE) > 0) {
+            if (e != null && e.getStat(Stat.CURRENT_LIFE) > 0) {
                 resultList.add(e);
             }
         }
-        return resultList.toArray(new Hero[0]);
+        resultList.toArray(source);
     }
 
     private void calculatePreferredPosition(Hero ai, int averageTeamLife) {
@@ -578,7 +589,7 @@ public class ArenaAIController {
 //                }
             }
         }
-        factors.add(ai.getStats().get(Stat.LIFE) < averageTeamLife
+        factors.add(ai.getStat(Stat.LIFE) < averageTeamLife
                 ? 5.0 : 8.0);
 
 //        ai.effectivePosition = (int) Math.round(factors.stream()

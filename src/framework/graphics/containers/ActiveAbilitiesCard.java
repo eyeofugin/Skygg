@@ -16,8 +16,9 @@ public class ActiveAbilitiesCard extends GUIElement {
     public Arena arena;
     private Hero activeHero;
     public int abilityPointer = 0;
+    public int maxAbilityPointer = 0;
 
-    GUIElement[] skillIcons = new GUIElement[5];
+    GUIElement[] skillIcons;
     SkillInfo skillInfo;
 
     public ActiveAbilitiesCard(Engine e, Arena arena) {
@@ -38,7 +39,7 @@ public class ActiveAbilitiesCard extends GUIElement {
                 }
             }
             if (engine.keyB._downPressed) {
-                if (abilityPointer != 4) {
+                if (abilityPointer != maxAbilityPointer) {
                     abilityPointer++;
                     this.activateIcon();
                 }
@@ -65,11 +66,13 @@ public class ActiveAbilitiesCard extends GUIElement {
         if (!e.enemy) {
             this.activeHero = e;
             this.abilityPointer = 0;
+            this.maxAbilityPointer = this.activeHero.getSkills().length - 1;
             createSkillIcons();
             activateIcon();
         }
     }
     private void createSkillIcons() {
+        skillIcons = new GUIElement[this.activeHero.getSkills().length];
         int y = 2;
         for (int i = 0; i < this.activeHero.getSkills().length; i++) {
             Skill s = this.activeHero.getSkills()[i];
@@ -110,10 +113,7 @@ public class ActiveAbilitiesCard extends GUIElement {
 
     private Skill getSkill() {
         if (this.activeHero != null && this.activeHero.getSkills().length > this.abilityPointer) {
-            Skill s = this.activeHero.getSkills()[this.abilityPointer];
-            if (s != null) {
-                return s._cast;
-            }
+            return this.activeHero.getSkills()[this.abilityPointer];
         }
         return null;
     }

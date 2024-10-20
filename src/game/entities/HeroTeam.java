@@ -15,6 +15,11 @@ public class HeroTeam {
 
     public HeroTeam(int fillUpDirection, Hero[] heroes) {
         this.heroes = heroes;
+        for (Hero hero: this.heroes) {
+            if (hero != null) {
+                hero.team = this;
+            }
+        }
         this.fillUpDirection = fillUpDirection;
     }
 
@@ -25,7 +30,7 @@ public class HeroTeam {
     public List<Hero> removeTheDead() {
         List<Hero> removed = new ArrayList<>();
         for (int i = 0; i < this.heroes.length; i++) {
-            if (this.heroes[i] != null && this.heroes[i].getStats().get(Stat.CURRENT_LIFE) < 1) {
+            if (this.heroes[i] != null && this.heroes[i].getStat(Stat.CURRENT_LIFE) < 1) {
                 this.deadHeroes.add(this.heroes[i]);
                 removed.add(this.heroes[i]);
                 this.heroes[i] = null;
@@ -42,7 +47,13 @@ public class HeroTeam {
     }
 
     public List<Hero> getHeroesAsList() {
-        return List.of(heroes);
+        List<Hero> list = new ArrayList<>();
+        for (Hero hero : this.heroes) {
+            if (hero != null) {
+                list.add(hero);
+            }
+        }
+        return list;
     }
 
     public void setHeroes(Hero[] heroes) {
