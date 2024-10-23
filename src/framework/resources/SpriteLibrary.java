@@ -1,13 +1,18 @@
 package framework.resources;
 
 import framework.Property;
+import game.skills.changeeffects.effects.Burning;
+import game.skills.changeeffects.effects.Combo;
+import game.skills.changeeffects.effects.Exalted;
+import game.skills.changeeffects.statusinflictions.Bleeding;
+import game.skills.changeeffects.statusinflictions.Blinded;
+import game.skills.changeeffects.statusinflictions.Dazed;
 import game.skills.changeeffects.statusinflictions.Disenchanted;
 import game.skills.changeeffects.statusinflictions.Injured;
 import game.skills.changeeffects.statusinflictions.Rooted;
 import game.skills.changeeffects.statusinflictions.Taunted;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.HashMap;
@@ -23,10 +28,27 @@ public class SpriteLibrary {
         sprites.put("scene01", sprite(640,360, 320, 180, "res/battlescene/scene01.png", 0));
         sprites.put("arrow_down", sprite(32,32,32,32,"res/icons/gui/arrowsmall.png", 90));
         sprites.put("arrow", sprite(12,12,12,12,"res/icons/gui/arrow.png", 0));
-        sprites.put(Injured.class.getName(), sprite(Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_FILE_SIZE,Property.EFFECT_ICON_FILE_SIZE,"res/icons/effect/burning.png",0));
-        sprites.put(Disenchanted.class.getName(), sprite(Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_FILE_SIZE,Property.EFFECT_ICON_FILE_SIZE,"res/icons/effect/paralysed.png",0));
-        sprites.put(Rooted.class.getName(), sprite(Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_FILE_SIZE,Property.EFFECT_ICON_FILE_SIZE,"res/icons/effect/rooted.png",0));
-        sprites.put(Taunted.class.getName(), sprite(Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_FILE_SIZE,Property.EFFECT_ICON_FILE_SIZE,"res/icons/effect/steadfast.png",0));
+        sprites.put(Burning.class.getName(), sprite(Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,
+                "res/icons/effect/burning.png", 0));
+        sprites.put(Combo.class.getName(), sprite(Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,
+                "res/icons/effect/combo.png", 0));
+        sprites.put(Exalted.class.getName(), sprite(Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,
+                "res/icons/effect/exalted.png", 0));
+        sprites.put(Bleeding.class.getName(), sprite(Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,
+                "res/icons/effect/bleeding.png", 0));
+        sprites.put(Blinded.class.getName(), sprite(Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,
+                "res/icons/effect/blinded.png", 0));
+        sprites.put(Dazed.class.getName(), sprite(Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,
+                "res/icons/effect/dazed.png", 0));
+        sprites.put(Disenchanted.class.getName(), sprite(Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,
+                "res/icons/effect/disenchanted.png", 0));
+        sprites.put(Injured.class.getName(), sprite(Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,
+                "res/icons/effect/injured.png", 0));
+        sprites.put(Rooted.class.getName(), sprite(Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,
+                "res/icons/effect/rooted.png", 0));
+        sprites.put(Taunted.class.getName(), sprite(Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,
+                "res/icons/effect/taunted.png", 0));
+//        sprites.put("Skill1", sprite(Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_FILE_SIZE,Property.EFFECT_ICON_FILE_SIZE,"res/icons/effect/steadfast.png",0));
 
     }
 

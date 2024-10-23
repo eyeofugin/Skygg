@@ -14,6 +14,7 @@ import framework.graphics.containers.HUD;
 import game.controllers.ArenaAIController;
 import game.entities.Hero;
 import game.entities.HeroTeam;
+import game.skills.GlobalEffect;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -57,6 +58,7 @@ public class Arena extends GUIElement {
     public Hero[] activeTargets = null;
     public HeroTeam friends;
     public HeroTeam enemies;
+    public GlobalEffect globalEffect;
 
     private final int[] friendXPos = new int[]{30, 98, 166, 234};
     private final int[] enemyXPos = new int[]{342, 410, 478, 546};
@@ -84,7 +86,7 @@ public class Arena extends GUIElement {
             System.out.println("Could not retrieve first in queue");
             return;
         }
-        this.hud.setActiveHero(this.activeHero.enemy? this.friends.heroes[3]: this.activeHero);
+        this.hud.setActiveHero(this.activeHero.isEnemy()? this.friends.heroes[3]: this.activeHero);
         this.aiController.setup();
         this.updateEntities();
     }
@@ -130,6 +132,7 @@ public class Arena extends GUIElement {
                     Method method = this.getClass().getMethod(this.nextAction);
                     method.invoke(this);
                 } catch (Exception e) {
+                    System.out.println(e.getStackTrace());
                     this.nextAction = null;
                 }
             } else {
@@ -196,7 +199,7 @@ public class Arena extends GUIElement {
         this.updateEntities();
         this.activeHero.prepareCast();
         if (this.activeHero.getStat(Stat.CURRENT_ACTION) > 0) {
-            if (this.activeHero.enemy) {
+            if (this.activeHero.isEnemy()) {
                 aiTurn();
             } else {
                 this.status = Status.WAIT_ON_HUD;
@@ -222,7 +225,7 @@ public class Arena extends GUIElement {
         this.activeHero = this.order.peek();
         if (this.activeHero != null) {
             Logger.logLn("-----------------------------");
-            Logger.logLn("Start turn for " + this.activeHero.getName() + " " + this.activeHero.position);
+            Logger.logLn("Start turn for " + this.activeHero.getName() + " " + this.activeHero.getPosition());
             this.activeHero.startOfTurn();
             resumeTurn();
         }
@@ -255,24 +258,24 @@ public class Arena extends GUIElement {
     }
     public void move(Hero e, int toGo, int dir) {
         if (toGo>0) {
-            int targetPos = e.position+dir;
-            int indexOffset = e.enemy ? 4:0;
+            int targetPos = e.getPosition()+dir;
+            int indexOffset = e.isEnemy() ? 4:0;
 
-            if ((e.enemy && (targetPos == 3 || targetPos == 8)) ||
-                    (!e.enemy && (targetPos == -1 || targetPos == 4))) {
+            if ((e.isEnemy() && (targetPos == 3 || targetPos == 8)) ||
+                    (!e.isEnemy() && (targetPos == -1 || targetPos == 4))) {
                 return;
             }
-            if ((e.enemy && (this.enemies.heroes.length <= targetPos-4 || this.enemies.heroes[targetPos-4] == null)) ||
-                    !e.enemy && (this.friends.heroes.length <= targetPos || this.friends.heroes[targetPos] == null)) {
+            if ((e.isEnemy() && (this.enemies.heroes.length <= targetPos-4 || this.enemies.heroes[targetPos-4] == null)) ||
+                    !e.isEnemy() && (this.friends.heroes.length <= targetPos || this.friends.heroes[targetPos] == null)) {
                 return;
             }
 
-            HeroTeam group = e.enemy ? this.enemies : this.friends;
-            int oldPosition = e.position;
+            HeroTeam group = e.isEnemy() ? this.enemies : this.friends;
+            int oldPosition = e.getPosition();
             Hero switchWith = group.heroes[targetPos-indexOffset];
 
-            switchWith.position = oldPosition;
-            e.position = targetPos;
+            switchWith.setPosition(oldPosition);
+            e.setPosition(targetPos);
             group.heroes[targetPos-indexOffset] = e;
             group.heroes[oldPosition-indexOffset] = switchWith;
 
@@ -294,14 +297,14 @@ public class Arena extends GUIElement {
             this.matrixPointer = this.targetMatrix.length-1;
         } else {
             Random rand = new Random();
-            int from = this.activeHero.enemy?0:4;
-            int until = this.activeHero.enemy?3:7;
+            int from = this.activeHero.isEnemy()?0:4;
+            int until = this.activeHero.isEnemy()?3:7;
             switch (this.activeSkill.getTargetType()) {
                 case ALL:
                     this.pointers = new int[]{0,1,2,3,4,5,6,7};
                     break;
                 case SELF:
-                    this.pointers = new int[]{this.activeHero.position};
+                    this.pointers = new int[]{this.activeHero.getPosition()};
                     break;
                 case ONE_RDM:
                     this.pointers = new int[]{rand.nextInt(from,until+1)};
@@ -313,16 +316,16 @@ public class Arena extends GUIElement {
                     this.pointers = MyMaths.getIntArrayWithExclusiveRandValues(from, until, 3);
                     break;
                 case ALL_ALLY:
-                    this.pointers = this.activeHero.enemy?new int[]{4,5,6,7}:new int[]{0,1,2,3};
+                    this.pointers = this.activeHero.isEnemy()?new int[]{4,5,6,7}:new int[]{0,1,2,3};
                     break;
                 case ALL_ENEMY:
-                    this.pointers = this.activeHero.enemy?new int[]{0,1,2,3}:new int[]{4,5,6,7};
+                    this.pointers = this.activeHero.isEnemy()?new int[]{0,1,2,3}:new int[]{4,5,6,7};
                     break;
                 case FIRST_ENEMY:
-                    this.pointers = this.activeHero.enemy?new int[]{3}:new int[]{4};
+                    this.pointers = this.activeHero.isEnemy()?new int[]{3}:new int[]{4};
                     break;
                 case FIRST_TWO_ENEMIES:
-                    this.pointers = this.activeHero.enemy?new int[]{2,3}:new int[]{4,5};
+                    this.pointers = this.activeHero.isEnemy()?new int[]{2,3}:new int[]{4,5};
                     break;
             }
             this.performSkill();
@@ -338,7 +341,7 @@ public class Arena extends GUIElement {
 
     public Hero getAtPosition(int position) {
         for (Hero e: getAllLivingEntities()) {
-            if (e != null && e.position == position) {
+            if (e != null && e.getPosition() == position) {
                 return e;
             }
         }
@@ -354,6 +357,10 @@ public class Arena extends GUIElement {
     public int getPositionInQueue(Hero e) {
         //TODO
         return 3;
+    }
+
+    public void setGlobalEffect(GlobalEffect globalEffect) {
+        this.globalEffect = globalEffect;
     }
     //RENDER
 
@@ -376,7 +383,7 @@ public class Arena extends GUIElement {
         return new int[]{this.activePointer};
     }
     private int[] getLineTargets() {
-        int casterPosition = this.activeHero.position;
+        int casterPosition = this.activeHero.getPosition();
         int[] targets = new int[Math.abs(casterPosition-this.activePointer)];
         int index = 0;
         for (int j = Math.min(this.activePointer,casterPosition); j <= Math.max(this.activePointer,casterPosition);j++) {
@@ -402,13 +409,13 @@ public class Arena extends GUIElement {
     private void renderTeams() {
         for (Hero hero: friends.heroes) {
             if (hero != null) {
-                int x = friendXPos[hero.position];
+                int x = friendXPos[hero.getPosition()];
                 fillWithGraphicsSize(x, heroYPos, hero.getWidth(), hero.getHeight(), hero.render(), this.activeHero.equals(hero));
             }
         }
         for (Hero hero: enemies.heroes) {
             if (hero != null) {
-                int x = enemyXPos[hero.position - 4];
+                int x = enemyXPos[hero.getPosition() - 4];
                 fillWithGraphicsSize(x, heroYPos, hero.getWidth(), hero.getHeight(), hero.render(), this.activeHero.equals(hero));
             }
         }

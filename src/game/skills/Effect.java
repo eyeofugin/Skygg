@@ -1,5 +1,8 @@
 package game.skills;
 
+import framework.Property;
+import framework.graphics.GUIElement;
+import framework.graphics.text.Color;
 import game.entities.Hero;
 
 import java.util.HashMap;
@@ -25,7 +28,6 @@ public abstract class Effect {
     public boolean stackable;
     public ChangeEffectType type;
     protected Map<Stat, Integer> statBonus = new HashMap<>();
-    public Stat dmgType;
 
     public abstract Effect getNew();
     public abstract void addSubscriptions();
@@ -37,11 +39,13 @@ public abstract class Effect {
         }
         addSubscriptions();
     }
-    public void addStack(){
-        for (Map.Entry<Stat, Integer> mapEntry : statBonus.entrySet()) {
-            hero.addToStat(mapEntry.getKey(), mapEntry.getValue());
+    public void addStack(int stacks){
+        for (int i = 0; i < stacks; i++) {
+            for (Map.Entry<Stat, Integer> mapEntry : statBonus.entrySet()) {
+                hero.addToStat(mapEntry.getKey(), mapEntry.getValue());
+            }
         }
-        this.stacks++;
+        this.stacks+=stacks;
     }
     public void removeEffect() {
         for (int i = 0; i < stacks; i++) {
@@ -56,13 +60,27 @@ public abstract class Effect {
     }
 
     public void turn() {
-        if(turns>=0) {
+        if (turns == -1) {
+            turnLogic();
+            return;
+        }
+        if(turns>0) {
             this.turns--;
             turnLogic();
         }
     }
     public int getDamageChanges(Hero caster, Hero target, Skill damagingSkill, int result, Stat damageType, boolean simulated) {
         return result;
+    }
+
+    public void addStacksToSprite(int[] effectSprite) {
+        if (stackable) {
+            int x = Property.EFFECT_ICON_SIZE - 2;
+            for (int i = 0; i < this.stacks; i++) {
+                GUIElement.verticalLine(x, Property.EFFECT_ICON_SIZE - 3,Property.EFFECT_ICON_SIZE - 1, Property.EFFECT_ICON_SIZE, effectSprite, Color.RED);
+                x-=2;
+            }
+        }
     }
 
     @Override

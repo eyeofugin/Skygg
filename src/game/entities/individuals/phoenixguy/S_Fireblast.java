@@ -5,9 +5,12 @@ import framework.connector.Connector;
 import framework.connector.payloads.DmgChangesPayload;
 import game.entities.Hero;
 import game.entities.Multiplier;
+import game.skills.DamageType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
+import game.skills.changeeffects.effects.Burning;
+import utils.MyMaths;
 
 import java.util.List;
 
@@ -15,6 +18,9 @@ public class S_Fireblast extends Skill {
 
     public S_Fireblast(Hero hero) {
         super(hero);
+        this.name = "Fireblast";
+        this.iconPath = "/res/icons/fireblast.png";
+        addSubscriptions();
         setToInitial();
         initAnimation();
     }
@@ -22,32 +28,35 @@ public class S_Fireblast extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.name = "Fireblast";
         this.tags = List.of(SkillTag.DMG);
         this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.15));
         this.targetType = TargetType.SINGLE;
         this.distance = 3;
         this.dmg = 8;
-        this.damageType = Stat.HEAT;
+        this.damageType = DamageType.MAGIC;
     }
 
     protected void initAnimation() {
-        this.hero.anim.setupAnimation("res/sprites/dev/action_w.png", this.name, new int[]{15, 30, 45});
+        this.hero.anim.setupAnimation(this.hero.basePath + "/res/sprites/action_w.png", this.name, new int[]{15, 30, 45});
     }
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Mid dmg, double power if target under 50% life. 10+ FAITH% to burn, get 3 favor";
+        return "Mid dmg, double power if target under 50% life. 20+ Magic% to burn, get 3 favor";
     }
 
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
-        this.hero.addToStat(Stat.CURRENT_FAITH, 3);
+        int magic = this.hero.getStat(Stat.MAGIC);
+        if (MyMaths.success(magic + 20)) {
+            target.addEffect(new Burning(-1, 1), this.hero);
+        }
+        this.hero.addResource(Stat.CURRENT_FAITH, Stat.FAITH, 3);
     }
     @Override
     public void addSubscriptions() {
-        Connector.addSubscription(Connector.BASE_DMG_CHANGES, new Connection(this, "dmgChanges"));
+        Connector.addSubscription(Connector.BASE_DMG_CHANGES, new Connection(this,  DmgChangesPayload.class, "dmgChanges"));
     }
 
     public void dmgChanges(DmgChangesPayload pl) {

@@ -22,7 +22,7 @@ public class Exalted extends Effect {
 
     @Override
     public void addSubscriptions() {
-        Connector.addSubscription(Connector.CAST_CHANGE, new Connection(this, "castChange"));
+        Connector.addSubscription(Connector.CAST_CHANGE, new Connection(this, CastChangePayload.class,"castChange"));
     }
 
     public void castChange(CastChangePayload pl) {

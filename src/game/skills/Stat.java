@@ -7,11 +7,13 @@ public enum Stat {
 
     MAGIC("Magic","MAG"),
     FORCE("Force", "FOR"),
-    ENDURANCE("Endurance", "END"),
     FINESSE("Finesse", "FIN"),
+    STAMINA("Stamina", "STA"),
+    ENDURANCE("Endurance", "END"),
+    SPEED("Speed", "SPE"),
+
     ACCURACY("Accuracy", "ACC"),
     EVASION("Evasion", "EVA"),
-    SPEED("Speed", "SPE"),
 
     MAX_ACTION("Max", "ACT"),
     CURRENT_ACTION("Action", "CAC"),
@@ -27,16 +29,7 @@ public enum Stat {
     FAITH("Max", "FAI"),
     CURRENT_FAITH("Faith", "CFA"),
 
-    CRIT_CHANCE("Crit Chance", "CRI"),
-
-    NORMAL("Normal", "NOR"),
-    HEAT("Heat", "HEA"),
-    DIVINE("Divine", "DIV"),
-    DARK("Dark", "DAR"),
-    CHEMICAL("Chemical", "CHE"),
-    ARCANE("Arcane", "ARC"),
-    ELDRITCH("Eldritch", "ELD"),
-    COSMIC("Cosmic", "COS");
+    CRIT_CHANCE("Crit Chance", "CRI");
 
     private final String translationString;
     private final String iconKey;

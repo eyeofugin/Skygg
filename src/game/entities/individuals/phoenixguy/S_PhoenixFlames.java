@@ -1,10 +1,7 @@
 package game.entities.individuals.phoenixguy;
 
 import game.entities.Hero;
-import game.entities.Multiplier;
-import game.skills.Effect;
 import game.skills.Skill;
-import game.skills.Stat;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.Burning;
 import game.skills.changeeffects.effects.Exalted;
@@ -15,6 +12,8 @@ public class S_PhoenixFlames extends Skill {
 
     public S_PhoenixFlames(Hero hero) {
         super(hero);
+        this.name = "Phoenix Flames";
+        this.iconPath = "/res/icons/phoenixflames.png";
         setToInitial();
         initAnimation();
     }
@@ -22,7 +21,6 @@ public class S_PhoenixFlames extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.name = "Phoenix Flames";
         this.tags = List.of(SkillTag.BUFF);
         this.targetType = TargetType.SELF;
         this.effects = List.of(new Exalted(3));
@@ -40,7 +38,7 @@ public class S_PhoenixFlames extends Skill {
 
     @Override
     protected void initAnimation() {
-        this.hero.anim.setupAnimation("res/sprites/dev/action_w.png", this.name, new int[]{15, 30, 45});
+        this.hero.anim.setupAnimation(this.hero.basePath + "/res/sprites/action_w.png", this.name, new int[]{15, 30, 45});
     }
 
     @Override

@@ -27,4 +27,13 @@ public class Logger {
             System.out.println(s);
         }
     }
+
+    public static void printIcon(int[] icon) {
+        for ( int i = 0; i < 16; i++) {
+            for (int j = 0; j < 16; j++) {
+                System.out.print(icon[j+i*16] == -1? "X": ".");
+            }
+            System.out.println();
+        }
+    }
 }

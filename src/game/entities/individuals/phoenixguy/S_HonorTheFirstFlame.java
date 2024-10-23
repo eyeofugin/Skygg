@@ -14,13 +14,15 @@ public class S_HonorTheFirstFlame extends Skill {
 
     public S_HonorTheFirstFlame(Hero hero) {
         super(hero);
+        this.name = "Honor the Flames";
+        this.iconPath = "/res/icons/honorthefirstflame.png";
+        addSubscriptions();
         setToInitial();
     }
 
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.name = "Honor the Flames";
         this.tags = List.of(SkillTag.RESTOCK);
         this.passive = true;
     }
@@ -34,13 +36,13 @@ public class S_HonorTheFirstFlame extends Skill {
 
     @Override
     public void addSubscriptions() {
-        Connector.addSubscription(Connector.EFFECT_DMG_TRIGGER, new Connection(this, "dmgTrigger"));
+        Connector.addSubscription(Connector.EFFECT_DMG_TRIGGER, new Connection(this, DmgTriggerPayload.class, "dmgTrigger"));
     }
 
     public void dmgTrigger(DmgTriggerPayload pl) {
         if (pl.target != null && pl.effect != null && pl.effect.getClass().equals(Burning.class)) {
-            if (pl.target.enemy != this.hero.enemy) {
-                this.hero.addToStat(Stat.CURRENT_FAITH, pl.dmgDone);
+            if (pl.target.isEnemy() != this.hero.isEnemy()) {
+                this.hero.addResource(Stat.CURRENT_FAITH, Stat.FAITH, pl.dmgDone);
             }
         }
     }

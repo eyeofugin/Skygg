@@ -1,8 +1,10 @@
 package framework.graphics.text;
 
 import framework.Property;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,9 +20,10 @@ public class TextEditor {
     public static String FAITH = "FAI";
     public static String LIFE = "LIF";
 
-    public int charWidth,charHeight;
+    public int charWidth,charHeight,smallNumHeight,smallNumWidth;
     public boolean hasLowerCase=true;
-    public static TextEditorConfig conf5x8 = new TextEditorConfig(5,8);
+    public static TextEditorConfig conf5x8 = new TextEditorConfig(5,8, 3, 5);
+    private final HashMap<String, int[]> smallNumeric;
     private final HashMap<String,int[]> symbols;
     private final HashMap<String,String> iconCodes = new HashMap<>();
     private static final HashMap<String,String> staticIconCodes = new HashMap<>();
@@ -30,7 +33,10 @@ public class TextEditor {
     public TextEditor(TextEditorConfig conf) {
         this.charWidth = conf.getCharWidth();
         this.charHeight = conf.getCharHeight();
+        this.smallNumHeight = conf.getSmallNumHeight();
+        this.smallNumWidth = conf.getSmallNumWidth();
         this.symbols = fillSymbols5x8();
+        this.smallNumeric = fillSmallNumeric();
         fillIconMap();
     }
     private void fillIconMap() {
@@ -60,6 +66,20 @@ public class TextEditor {
         }
     }
 
+    private HashMap<String, int[]> fillSmallNumeric() {
+        HashMap<String,int[]> symbols = new HashMap<String,int[]>();
+        symbols.put("1", Symbol.smallNum1.pixels);
+        symbols.put("2", Symbol.smallNum2.pixels);
+        symbols.put("3", Symbol.smallNum3.pixels);
+        symbols.put("4", Symbol.smallNum4.pixels);
+        symbols.put("5", Symbol.smallNum5.pixels);
+        symbols.put("6", Symbol.smallNum6.pixels);
+        symbols.put("7", Symbol.smallNum7.pixels);
+        symbols.put("8", Symbol.smallNum8.pixels);
+        symbols.put("9", Symbol.smallNum9.pixels);
+        symbols.put("0", Symbol.smallNum0.pixels);
+        return symbols;
+    }
     private HashMap<String,int[]> fillSymbols5x8() {
         HashMap<String,int[]> symbols = new HashMap<String,int[]>();
 
@@ -162,6 +182,82 @@ public class TextEditor {
         return getTextLine(text,targetWidth,targetHeight,
                 0,TextAlignment.CENTER,
                 Color.BLACK, Color.WHITE);
+    }
+    public int[] getSmallNumTextLine(String text, int targetWidth, int targetHeight, TextAlignment alignment,
+                                     Color backGroundColor, Color fontColor) {
+        if(text == null) {
+            return new int[targetWidth*targetHeight];
+        }
+        int backgroundColor = backGroundColor.VALUE;
+        int fontcolor = fontColor.VALUE;
+
+        int[] result = new int[targetWidth * targetHeight];
+        int textLength = getTextWidth(text);
+        int resultWidth = Math.max(1,textLength * this.smallNumWidth + textLength - 1);
+        int[] word = new int[this.smallNumHeight * resultWidth];
+
+        char[] textArray = new char[text.length()];
+
+        int widthOverhead = targetWidth - resultWidth;
+        int leftOverhead = (widthOverhead / 2);
+        int rightOverhead = (widthOverhead / 2) + (widthOverhead % 2);
+
+        if(alignment==TextAlignment.LEFT) {
+            leftOverhead = 0;
+            rightOverhead = widthOverhead;
+        }
+        if(alignment==TextAlignment.RIGHT) {
+            rightOverhead = 0;
+            leftOverhead  = widthOverhead;
+        }
+        Arrays.fill(result, backgroundColor);
+
+        int lastWrittenWidth = 0;
+        text.getChars(0, text.length(), textArray, 0);
+
+        int symbolNr = 1;
+        for (int charindex = 0; charindex < textArray.length; charindex++) {
+            char symbol = textArray[charindex];
+            if (Character.isDigit(symbol)) {
+
+                int[] symbolarray = smallNumeric.get((symbol+""));
+                int index = 0;
+
+                for (int y = 0; y < this.smallNumHeight; y++) {
+                    for (int x = lastWrittenWidth; x < lastWrittenWidth + this.smallNumWidth; x++) {
+                        word[x + y * resultWidth] = symbolarray[index];
+                        index++;
+                    }
+                }
+            }
+
+            lastWrittenWidth += this.smallNumWidth;
+            if (symbolNr != text.length()) {
+                for (int i = 0; i < this.smallNumHeight; i++) {
+                    word[lastWrittenWidth + i * resultWidth] = backgroundColor;
+                }
+                lastWrittenWidth+=1;
+            }
+            symbolNr++;
+        }
+        for (int y = 0; y < targetHeight; y++) {
+            for (int x = leftOverhead; x < (targetWidth - rightOverhead); x++) {
+                int newx = x - leftOverhead;
+                result[x + y * targetWidth] = word[newx + y * resultWidth];
+            }
+        }
+        int resultIndex = 0;
+
+        for(int i : result) {
+            if(i == 0 || i == -16777216 || i == -12450784) {
+                result[resultIndex] = backgroundColor;
+            }else if(i == -1 || i == -1710619) {
+                result[resultIndex] = fontcolor;
+            }else {
+            }
+            resultIndex++;
+        }
+        return result;
     }
     public int[] getTextLine(String text, int targetWidth, int targetHeight,
                              int fontSize, TextAlignment alignment,
@@ -538,10 +634,13 @@ public class TextEditor {
 
         private int charWidth;
         private int charHeight;
-
-        public TextEditorConfig(int charWidth, int charHeight) {
+        private int smallNumWidth;
+        private int smallNumHeight;
+        public TextEditorConfig(int charWidth, int charHeight, int smallNumWidth, int smallNumHeight) {
             this.charWidth=charWidth;
             this.charHeight=charHeight;
+            this.smallNumWidth = smallNumWidth;
+            this.smallNumHeight = smallNumHeight;
         }
         public int getCharWidth() {
             return this.charWidth;
@@ -550,6 +649,12 @@ public class TextEditor {
             return this.charHeight;
         }
 
+        public int getSmallNumWidth() {
+            return smallNumWidth;
+        }
 
+        public int getSmallNumHeight() {
+            return smallNumHeight;
+        }
     }
 }

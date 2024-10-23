@@ -1,6 +1,5 @@
 package game.skills.changeeffects.statusinflictions;
 
-import framework.Logger;
 import framework.connector.Connection;
 import framework.connector.Connector;
 import framework.connector.payloads.CanPerformPayload;
@@ -18,7 +17,7 @@ public class Taunted extends Effect {
     }
 
     public void addSubscriptions() {
-        Connector.addSubscription(Connector.CAN_PERFORM, new Connection(this, "performCheck"));
+        Connector.addSubscription(Connector.CAN_PERFORM, new Connection(this, CanPerformPayload.class, "performCheck"));
     }
 
     @Override

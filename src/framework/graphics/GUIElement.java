@@ -55,9 +55,7 @@ public class GUIElement {
         this.pixels = new int[width*height];
     }
 
-    public void update(int frame) {
-
-    };
+    public void update(int frame) {}
     public int[] render() {
         renderChildren();
         return this.pixels;
@@ -194,6 +192,9 @@ public class GUIElement {
     protected int[] getTextLine(String text, int textWidth, int textHeight, int fontSize, TextAlignment alignment, Color background, Color fontColor) {
         return editor.getTextLine(text, textWidth, textHeight, fontSize, alignment, background, fontColor);
     }
+    protected int[] getSmallNumTextLine(String text, int textWidth, int textHeight, TextAlignment alignment, Color background, Color fontColor) {
+        return editor.getSmallNumTextLine(text, textWidth, textHeight, alignment, background, fontColor);
+    }
 
     protected void writeLine(String text, int xFrom, int xUntil, int yFrom, int yUntil) {
         writeLine(text, xFrom, xUntil, yFrom, yUntil, 0, TextAlignment.CENTER, Color.BLACK, Color.WHITE);
@@ -218,6 +219,21 @@ public class GUIElement {
     protected void horizontalLine(int xfrom, int xuntil, int height) {
         for (int i = xfrom; i <= xuntil; i++) {
             pixels[i + height * this.width] = -1;
+        }
+    }
+    public static void verticalLine(int x, int yf, int yu, int w, int[] sprite, Color color) {
+        for (int i = yf; i <= yu; i++) {
+            sprite[x + i * w] = color.VALUE;
+        }
+    }
+    public static void addBorder(int w, int h, int[] sprite, Color color) {
+        for (int i = 0; i < h; i++) {
+            sprite[i * w] = color.VALUE;
+            sprite[(w-1) + i * w] = color.VALUE;
+        }
+        for (int j = 0; j < w; j++) {
+            sprite[j] = color.VALUE;
+            sprite[j + (h-1) * w] = color.VALUE;
         }
     }
     protected void fill(int[] graphics) {
@@ -297,6 +313,9 @@ public class GUIElement {
         Arrays.fill(this.pixels, color.VALUE);
     }
     protected int[] getBar(int width, int height, double percentage, Color color, Color color2) {
+        if (percentage > 1) {
+            percentage = 1;
+        }
         int[] resultPixels = new int[width * height];
         int filledSize = (int) (width * percentage);
         for (int x = 0; x < width; x++) {
@@ -309,14 +328,14 @@ public class GUIElement {
                 resultPixels[x + y * width] = color.VALUE;
             }
         }
-        for (int i = 0; i < width; i++) {
-            resultPixels[i] = Color.WHITE.VALUE;
-            resultPixels[i + (height - 1) * width] = Color.WHITE.VALUE;
-        }
-        for (int i = 0; i < height; i++) {
-            resultPixels[i * width] = Color.WHITE.VALUE;
-            resultPixels[width - 1 + i * width] = Color.WHITE.VALUE;
-        }
+//        for (int i = 0; i < width; i++) {
+//            resultPixels[i] = Color.WHITE.VALUE;
+//            resultPixels[i + (height - 1) * width] = Color.WHITE.VALUE;
+//        }
+//        for (int i = 0; i < height; i++) {
+//            resultPixels[i * width] = Color.WHITE.VALUE;
+//            resultPixels[width - 1 + i * width] = Color.WHITE.VALUE;
+//        }
         return resultPixels;
     }
     protected void writeBar(int xFrom, int xUntil, int yFrom, int yUntil, double percentage, Color color, Color color2) {

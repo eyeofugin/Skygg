@@ -1,10 +1,12 @@
 package game.skills;
 
 import framework.Logger;
+import framework.Property;
 import framework.connector.Connector;
 import framework.connector.payloads.BaseDmgChangesPayload;
 import framework.connector.payloads.BaseHealChangesPayload;
 import framework.connector.payloads.CriticalTriggerPayload;
+import framework.connector.payloads.DmgChangesPayload;
 import framework.connector.payloads.DmgTriggerPayload;
 import framework.graphics.text.TextEditor;
 import framework.resources.SpriteLibrary;
@@ -24,13 +26,14 @@ public abstract class Skill {
     public final Hero hero;
     public String name;
     public String description;
-    public int[] iconPixels;
+    protected int[] iconPixels;
+    protected String iconPath;
 
     protected int distance = 0;
     protected TargetType targetType = TargetType.SINGLE;
     protected int targetRadius = 0;
 
-    protected Stat damageType = null;
+    protected DamageType damageType = null;
     protected boolean passive = false;
     protected boolean isMove = false;
     protected List<Effect> movedWithEffects = new ArrayList<>();
@@ -55,6 +58,7 @@ public abstract class Skill {
     protected int enhancementId = 0;
     protected int cdMax = 0;
     protected int cdCurrent = 0;
+    protected boolean justCast = false;
     protected int blockedTurns = 0;
     protected boolean canMiss = true;
     protected int countAsHits = 1;
@@ -84,7 +88,6 @@ public abstract class Skill {
     public Skill(Hero hero) {
         this.id = ++counter;
         this.hero = hero;
-        this.iconPixels = SpriteLibrary.sprites.get(this.getClass().getName());
     }
     public void setToInitial() {
         this.targetRadius = 0;
@@ -107,6 +110,21 @@ public abstract class Skill {
         this.enhancementId = 0;
         this.cdMax = 0;
         this.canMiss = true;
+        if (SpriteLibrary.sprites.containsKey(this.name)) {
+            this.iconPixels = SpriteLibrary.sprites.get(this.name);
+        } else {
+            this.iconPixels = SpriteLibrary.sprite(Property.SKILL_ICON_SIZE,Property.SKILL_ICON_SIZE,Property.SKILL_ICON_SIZE,Property.SKILL_ICON_SIZE,
+                    this.hero.basePath + this.iconPath, 0);
+            SpriteLibrary.sprites.put(this.name, this.iconPixels);
+        }
+    }
+
+    public void turn() {
+        if (justCast) {
+            justCast = false;
+        } else if (cdCurrent > 0) {
+            cdCurrent--;
+        }
     }
     protected abstract void  initAnimation();
     public abstract String getDescriptionFor(Hero hero);
@@ -115,13 +133,13 @@ public abstract class Skill {
     //SKILL LOGIC
     public void baseDamageChanges(Hero target, Hero caster){
         if (this.dmg > 0) {
-            BaseDmgChangesPayload baseDmgChangesPayload = new BaseDmgChangesPayload()
+            DmgChangesPayload dmgChangesPayload = new DmgChangesPayload()
                     .setDmg(this.dmg)
                     .setSkill(this)
                     .setTarget(target)
                     .setCaster(caster);
-            Connector.fireTopic(Connector.BASE_DMG_CHANGES, baseDmgChangesPayload);
-            this.dmg = baseDmgChangesPayload.dmg;
+            Connector.fireTopic(Connector.BASE_DMG_CHANGES, dmgChangesPayload);
+            this.dmg = dmgChangesPayload.dmg;
         }
     }
     public void baseHealChanges(Hero target, Hero caster) {
@@ -139,6 +157,7 @@ public abstract class Skill {
         this.hero.playAnimation(this.name);
         this.hero.payForSkill(this);
         this.setCdCurrent(this.getCdMax());
+        this.justCast = true;
         Logger.logLn("Cd now " + this.getCdCurrent());
     }
     public void clearEffects() {
@@ -176,22 +195,23 @@ public abstract class Skill {
         Logger.logLn("After base dmg changes:" + this.dmg);
         int dmg = getDmgWithMulti();
         Logger.logLn("After multipliers:" + dmg);
-        Stat dt = this.getDamageType();
+        DamageType dt = this.getDamageType();
         Logger.logLn("DT:" + dt);
 //        int lethality = this.hero.getStat( Stat.LETHALITY, this);
         for (int i = 0; i < getCountsAsHits(); i++) {
+            int dmgPerHit = dmg;
             Logger.logLn("Hit no:" + i+1);
-            if (this.damageType.equals(Stat.NORMAL)) {
+            if (this.damageType != null && this.damageType.equals(DamageType.NORMAL)) {
                 int critChance = this.hero.getStat(Stat.CRIT_CHANCE);
                 Logger.logLn("Crit Chance:"+critChance);
                 if (MyMaths.success(critChance)) {
                     Logger.logLn("Crit!");
-                    this.dmg*=2;
+                    dmgPerHit*=2;
                     this.fireCritTrigger(target, this);
                 }
             }
-            if (dmg>0) {
-                int doneDamage = target.damage(this.hero, dmg, dt, 0, this);
+            if (dmgPerHit>0) {
+                int doneDamage = target.damage(this.hero, dmgPerHit, dt, 0, this);
                 Logger.logLn("done damage:"+doneDamage);
                 this.fireDmgTrigger(target,this, doneDamage);
             }
@@ -259,15 +279,15 @@ public abstract class Skill {
     }
     public int[] setupTargetMatrix() {
         int[] baseTargets = new int[]{0,1,2,3,4,5,6,7};
-        int position = this.hero.position;
+        int position = this.hero.getPosition();
 
-        if (!this.hero.enemy && this.targetType.equals(TargetType.SINGLE_ALLY)) {
+        if (!this.hero.isEnemy() && this.targetType.equals(TargetType.SINGLE_ALLY)) {
             baseTargets = new int[]{0,1,2,3};
-        } else if (this.hero.enemy && this.targetType.equals(TargetType.SINGLE_ALLY)) {
+        } else if (this.hero.isEnemy() && this.targetType.equals(TargetType.SINGLE_ALLY)) {
             baseTargets = new int[]{4,5,6,7};
-        } else if (!this.hero.enemy && this.targetType.equals(TargetType.SINGLE_ALLY_IN_FRONT)) {
+        } else if (!this.hero.isEnemy() && this.targetType.equals(TargetType.SINGLE_ALLY_IN_FRONT)) {
             baseTargets = Arrays.stream(baseTargets).filter(i->i<4 && i>position).toArray();
-        } else if (this.hero.enemy && this.targetType.equals(TargetType.SINGLE_ALLY_IN_FRONT)) {
+        } else if (this.hero.isEnemy() && this.targetType.equals(TargetType.SINGLE_ALLY_IN_FRONT)) {
             baseTargets = Arrays.stream(baseTargets).filter(i->i>3 && i<position).toArray();
         }
         int range = this.distance;
@@ -353,11 +373,11 @@ public abstract class Skill {
         this.targetRadius = targetRadius;
     }
 
-    public Stat getDamageType() {
+    public DamageType getDamageType() {
         return damageType;
     }
 
-    public void setDamageType(Stat damageType) {
+    public void setDamageType(DamageType damageType) {
         this.damageType = damageType;
     }
 
@@ -544,6 +564,11 @@ public abstract class Skill {
     public String getIcon() {
         return "aa_blaster";
     }
+
+    public int[] getIconPixels() {
+        return iconPixels;
+    }
+
     public String getCostString() {
         if (this.isPassive()) {
             return "Passive";

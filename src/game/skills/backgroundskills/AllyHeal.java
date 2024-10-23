@@ -1,7 +1,8 @@
 package game.skills.backgroundskills;
 
 import game.entities.Hero;
-import game.entities.individuals.dev.DUMMY;
+import game.entities.individuals.dev.dummy.DUMMY;
+import game.skills.DamageType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -11,6 +12,8 @@ public class AllyHeal extends Skill {
 
     public AllyHeal(Hero hero) {
         super(hero);
+        this.name = "Spark";
+        this.iconPath = "/res/icons/spark.png";
         setToInitial();
         initAnimation();
     }
@@ -18,12 +21,11 @@ public class AllyHeal extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.name = "ALLYHEAL";
         this.tags = List.of(Skill.SkillTag.DMG);
         this.targetType = TargetType.SINGLE;
         this.distance = 8;
         this.dmg = 1;
-        this.damageType = Stat.HEAT;
+        this.damageType = DamageType.MAGIC;
     }
 
     protected void initAnimation() {

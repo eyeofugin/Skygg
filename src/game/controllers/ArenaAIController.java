@@ -34,7 +34,7 @@ public class ArenaAIController {
         int mediumValue = 500;
         for (Hero e : this.arena.getAllLivingEntities()) {
             int lifePercentage = e.getStat(Stat.CURRENT_LIFE) * 100 / e.getStat(Stat.LIFE);
-            mediumValue += e.enemy?lifePercentage:-1*lifePercentage;
+            mediumValue += e.isEnemy()?lifePercentage:-1*lifePercentage;
         }
         this.beatDownMeter = mediumValue/100;
     }
@@ -54,7 +54,7 @@ public class ArenaAIController {
             Logger.logLn("no moves?");
         } else {
             Skill s = bestAction.skill;
-            Logger.logLn("AI will perform " + s.name + "/" + bestAction.rating + " at position " + bestAction.targets[0].position);
+            Logger.logLn("AI will perform " + s.name + "/" + bestAction.rating + " at position " + bestAction.targets[0].getPosition());
             this.arena.activeSkill = s;
             this.arena.activeSkill.setTargets(List.of(bestAction.targets));
 
@@ -111,7 +111,7 @@ public class ArenaAIController {
                 Logger.aiLog(" low life bonus!");
                 dmgPercentage *= 5;
             }
-            int HeroWeightedPercentage = e.enemy?-1*dmgPercentage:dmgPercentage;
+            int HeroWeightedPercentage = e.isEnemy()?-1*dmgPercentage:dmgPercentage;
             Logger.aiLog(" weighted dmg percentage:"+HeroWeightedPercentage);
             weightedPercentages += HeroWeightedPercentage;
         }
@@ -132,7 +132,7 @@ public class ArenaAIController {
                 healPercentage *= 3;
             }
 
-            int HeroWeightedPercentage = e.enemy?healPercentage:-1*healPercentage;
+            int HeroWeightedPercentage = e.isEnemy()?healPercentage:-1*healPercentage;
             Logger.aiLog(" weighted heal percentage:"+HeroWeightedPercentage);
             weightedPercentages += HeroWeightedPercentage;
         }
@@ -538,7 +538,7 @@ public class ArenaAIController {
     }
     private void setLineTargetGroups(Skill s, List<Hero[]> results) {
         int[] targetMatrix = s.setupTargetMatrix();
-        int casterPosition = this.arena.activeHero.position;
+        int casterPosition = this.arena.activeHero.getPosition();
         if (targetMatrix.length>0) {
             List<Hero> lineGroup = new ArrayList<>();
             for (int i = targetMatrix[0]; i < casterPosition; i++) {
@@ -556,7 +556,7 @@ public class ArenaAIController {
     }
     private void setAllEnemyTargetGroups(List<Hero[]> results) {
         List<Hero> enemies = this.arena.getAllLivingEntities().stream()
-                .filter(e->e.enemy != this.arena.activeHero.enemy).toList();
+                .filter(e->e.isEnemy() != this.arena.activeHero.isEnemy()).toList();
         results.add(enemies.toArray(new Hero[0]));
     }
     private void setFirstTwoEnemyTargetGroups(List<Hero[]> results) {

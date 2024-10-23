@@ -2,6 +2,7 @@ package game.entities.individuals.phoenixguy;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
+import game.skills.DamageType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -13,6 +14,8 @@ public class S_Spark extends Skill {
 
     public S_Spark(Hero hero) {
         super(hero);
+        this.name = "Spark";
+        this.iconPath = "/res/icons/spark.png";
         setToInitial();
         initAnimation();
     }
@@ -20,27 +23,26 @@ public class S_Spark extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.name = "Spark";
         this.tags = List.of(SkillTag.DMG);
         this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.1));
         this.targetType = TargetType.SINGLE;
         this.distance = 3;
         this.dmg = 5;
-        this.damageType = Stat.HEAT;
+        this.damageType =  DamageType.MAGIC;
     }
 
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
-        this.hero.addToStat(Stat.CURRENT_FAITH, 5);
+        this.hero.addResource(Stat.CURRENT_FAITH, Stat.FAITH, 5);
         if (this.hero.hasPermanentEffect(Combo.class) > 0) {
             this.hero.removePermanentEffectOfClass(Combo.class);
-            this.hero.addToStat(Stat.CURRENT_FAITH, 7);
+            this.hero.addResource(Stat.CURRENT_FAITH, Stat.FAITH,  7);
         }
     }
 
     protected void initAnimation() {
-        this.hero.anim.setupAnimation("res/sprites/dev/action_w.png", this.name, new int[]{15, 30, 45});
+        this.hero.anim.setupAnimation(this.hero.basePath + "/res/sprites/action_w.png", this.name, new int[]{15, 30, 45});
     }
 
     @Override

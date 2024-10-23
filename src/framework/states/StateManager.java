@@ -4,7 +4,8 @@ import framework.Engine;
 import framework.graphics.GUIElement;
 import game.entities.Hero;
 import game.entities.HeroTeam;
-import game.entities.individuals.dev.DUMMY;
+import game.entities.individuals.burner.H_Burner;
+import game.entities.individuals.dev.dummy.DUMMY;
 import game.entities.individuals.phoenixguy.H_Phoenixguy;
 
 public class StateManager {
@@ -15,8 +16,10 @@ public class StateManager {
     public StateManager(Engine e) {
         this.e = e;
         Arena arena = new Arena(e);
-        H_Phoenixguy pGuy = new H_Phoenixguy();
-        pGuy.enterArena(false, 3, arena);
+        H_Burner hero = new H_Burner();
+        hero.enterArena(false, 3, arena);
+//        H_Phoenixguy hero = new H_Phoenixguy();
+//        hero.enterArena(false, 3, arena);
 
         DUMMY dummy1 = new DUMMY(1);
         dummy1.enterArena(true, 4, arena);
@@ -27,13 +30,13 @@ public class StateManager {
         DUMMY dummy4 = new DUMMY(4);
         dummy4.enterArena(true, 7, arena);
 
-        HeroTeam friends = new HeroTeam(1,
+        HeroTeam friends = new HeroTeam(1, false,
                 new Hero[]{
                         null,
                         null,
                         null,
-                        pGuy});
-        HeroTeam enemies = new HeroTeam(-1,
+                        hero});
+        HeroTeam enemies = new HeroTeam(-1, true,
                 new Hero[]{dummy1,dummy2,dummy3,dummy4});
         arena.setTeams(friends, enemies);
         activeScene = arena;

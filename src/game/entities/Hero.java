@@ -16,14 +16,15 @@ import framework.connector.payloads.HealChangesPayload;
 import framework.connector.payloads.StartOfTurnPayload;
 import framework.graphics.GUIElement;
 import framework.graphics.text.Color;
+import framework.graphics.text.TextAlignment;
 import framework.resources.SpriteLibrary;
 import framework.resources.SpriteUtils;
 import framework.states.Arena;
 import game.objects.Equipment;
+import game.skills.DamageType;
 import game.skills.Effect;
 import game.skills.Skill;
 import game.skills.Stat;
-import game.skills.changeeffects.statusinflictions.Bleeding;
 import game.skills.changeeffects.statusinflictions.Injured;
 import utils.MyMaths;
 
@@ -40,6 +41,7 @@ public abstract class Hero extends GUIElement {
     public Animator anim;
     public HeroTeam team;
     protected Map<String, int[][]> sprites = new HashMap<>();
+    public String basePath = "";
 
     protected int id;
     protected String name;
@@ -51,8 +53,8 @@ public abstract class Hero extends GUIElement {
     protected List<Effect> effects = new ArrayList<>();
     protected Stat secondaryResource;
 
-    public int position;
-    public boolean enemy;
+    private int position;
+    private boolean enemy;
 
     protected Hero(String name) {
         this.width = 64;
@@ -76,10 +78,19 @@ public abstract class Hero extends GUIElement {
         this.arena = arena;
     }
 
+    public <T extends Hero> void initBasePath(String name) {
+        String base = "src/game/entities/individuals/";
+        this.basePath = base + name;
+    }
+
     protected abstract void initAnimator();
     protected abstract void initSkills();
     protected abstract void initStats();
 
+    @Override
+    public void update(int frame) {
+        this.anim.animate();
+    }
     @Override
     public int[] render() {
         background(Color.VOID);
@@ -94,7 +105,7 @@ public abstract class Hero extends GUIElement {
         fillWithGraphicsSize(0, 0, 64, 64, image, false);
     }
     private void renderBars() {
-        fillWithGraphicsSize(0, 65, 64, 5, getBar(64, 5, getResourcePercentage(Stat.LIFE), Color.DARKGREEN, Color.DARKRED), false);
+        fillWithGraphicsSize(0, 65, 64, 5, getBar(64, 5, getResourcePercentage(Stat.LIFE), Color.GREEN, Color.DARKRED), false);
         if (this.secondaryResource != null) {
             fillWithGraphicsSize(0, 71, 64, 5, getBar(64, 5, getResourcePercentage(this.secondaryResource), getResourceColor(this.secondaryResource), Color.DARKRED), false);
         }
@@ -103,22 +114,33 @@ public abstract class Hero extends GUIElement {
         int effectsX = 0;
         int effectsY = 72;
         int paintedEffects = 0;
-        int paddingBetween = 2;
+        int paddingX = 2;
+        int paddingY = 5;
         for (Effect effect : this.effects) {
             int[] sprite = SpriteLibrary.sprites.get(effect.getClass().getName());
+//            GUIElement.addBorder(Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE, sprite, Color.WHITE);
+//            effect.addStacksToSprite(sprite);
+            fillWithGraphicsSize(effectsX, effectsY, Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE,
+                    sprite, false, null,
+                    effect.type.equals(Effect.ChangeEffectType.EFFECT) ? Color.DARKYELLOW : Color.RED);
+            if (effect.stackable) {
+                int[] stacks = getSmallNumTextLine(effect.stacks+"", Property.EFFECT_ICON_SIZE, this.editor.smallNumHeight, TextAlignment.RIGHT, Color.VOID, Color.BLACK);
+                fillWithGraphicsSize(effectsX +1, effectsY + (Property.EFFECT_ICON_SIZE-2), Property.EFFECT_ICON_SIZE, this.editor.smallNumHeight,
+                        stacks, false);
+            } else if (effect.turns > 0) {
+                int[] turns = getSmallNumTextLine(effect.turns+"", Property.EFFECT_ICON_SIZE, this.editor.smallNumHeight, TextAlignment.RIGHT, Color.VOID, Color.WHITE);
+                fillWithGraphicsSize(effectsX +1, effectsY + (Property.EFFECT_ICON_SIZE-2), Property.EFFECT_ICON_SIZE, this.editor.smallNumHeight,
+                        turns, false);
+            }
 
-            for (int n = 0; n < effect.stacks; n++) {
-                fillWithGraphicsSize(effectsX, effectsY, Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE,
-                        sprite, true, Color.WHITE,
-                        effect.type.equals(Effect.ChangeEffectType.EFFECT) ? Color.DARKYELLOW : Color.RED);
-                paintedEffects++;
 
-                if (paintedEffects % 5 == 0) {
-                    effectsY += Property.EFFECT_ICON_SIZE + paddingBetween;
-                    effectsX = 0;
-                } else {
-                    effectsX += Property.EFFECT_ICON_SIZE + paddingBetween;
-                }
+            paintedEffects++;
+
+            if (paintedEffects % 5 == 0) {
+                effectsY += Property.EFFECT_ICON_SIZE + paddingY;
+                effectsX = 0;
+            } else {
+                effectsX += Property.EFFECT_ICON_SIZE + paddingX;
             }
         }
     }
@@ -137,6 +159,18 @@ public abstract class Hero extends GUIElement {
 
     public void addToStat(Stat stat, int value) {
         this.stats.put(stat, Math.max(this.stats.get(stat) + value, 0));
+    }
+
+    public void addResource(Stat currentStat, Stat maxStat, int value) {
+        int result = value + this.getStat(currentStat);
+        int max = this.getStat(maxStat);
+        if (result < 0) {
+            this.changeStatTo(currentStat, 0);
+        } else if ( result <= max) {
+            this.changeStatTo(currentStat, result);
+        } else {
+            this.changeStatTo(currentStat, max);
+        }
     }
 
     public int getSkillAccuracy(Skill skill) {
@@ -187,6 +221,10 @@ public abstract class Hero extends GUIElement {
         EndOfTurnPayload endOfTurnPayload = new EndOfTurnPayload();
         Connector.fireTopic(this.id + Connector.END_OF_TURN, endOfTurnPayload);
         effectTurn();
+        skillTurn();
+        if (this.getStat(Stat.CURRENT_LIFE)<1) {
+            return;
+        }
         int heal = getStat(Stat.LIFE_REGAIN);
         if (this.hasPermanentEffect(Injured.class) > 0) {
             return;
@@ -198,6 +236,9 @@ public abstract class Hero extends GUIElement {
         ActionInflictionPayload actionInflictionPayload = new ActionInflictionPayload();
         Connector.fireTopic(Connector.ACTION_INFLICTION, actionInflictionPayload);
         this.addToStat(Stat.CURRENT_ACTION, actionInflictionPayload.getInfliction());
+        if (this.getStat(Stat.CURRENT_ACTION) < 0) {
+            this.changeStatTo(Stat.CURRENT_ACTION, 0);
+        }
     }
 
 //EffectMagic
@@ -245,7 +286,7 @@ public abstract class Hero extends GUIElement {
                 if (effect.stackable) {
                     added = true;
                     newlyAdded = true;
-                    effectHave.addStack();
+                    effectHave.addStack(effect.stacks);
                 } else {
                     effectHave.turns = effect.turns;
                     added = true;
@@ -309,6 +350,13 @@ public abstract class Hero extends GUIElement {
     }
 
 //SkillMagic
+    private void skillTurn() {
+        for (Skill s : this.skills) {
+            if (s != null) {
+                s.turn();
+            }
+        }
+    }
     public <T extends Skill> boolean hasSkill(Class<T> clazz) {
         for (Skill s : this.skills) {
             if (s!= null && s.getClass().equals(clazz)) {
@@ -328,7 +376,7 @@ public abstract class Hero extends GUIElement {
         return canPerformPayload.success;
     }
     private boolean canPerformResourceCheck(Skill s) {
-        return this.stats.get(Stat.CURRENT_LIFE) >= s.getLifeCost() &&
+        return this.stats.get(Stat.CURRENT_LIFE) > s.getLifeCost() &&
                 this.stats.get(Stat.CURRENT_ACTION) >= s.getActionCost() &&
                 this.stats.get(Stat.CURRENT_FAITH) >= s.getFaithCost() &&
                 this.stats.get(Stat.CURRENT_MANA) >= s.getManaCost() &&
@@ -366,12 +414,10 @@ public abstract class Hero extends GUIElement {
                 .setHeal(heal);
         Connector.fireTopic(Connector.HEAL_CHANGES, healChangesPayload);
         int resultHeal = healChangesPayload.getHeal();
-        addToStat(Stat.CURRENT_LIFE, resultHeal);
-        if (this.stats.get(Stat.CURRENT_LIFE) > this.stats.get(Stat.LIFE))
-            changeStatTo(Stat.CURRENT_LIFE, this.stats.get(Stat.LIFE));
+        addResource(Stat.CURRENT_LIFE, Stat.LIFE, resultHeal);
     }
 
-    public int damage(Hero caster, int damage, Stat dmgType, int lethality, Skill skill) {
+    public int damage(Hero caster, int damage, DamageType dmgType, int lethality, Skill skill) {
 
         int def = getStat(getDefenseStatFor(dmgType));
         int result = MyMaths.getDamage(damage, def, lethality);
@@ -386,16 +432,16 @@ public abstract class Hero extends GUIElement {
         System.out.println("dmg:"+result);
         Logger.logLn("1play dmg animation of " + this.name + "/"+this.id);
         playAnimation("damaged", true);
-        addToStat(Stat.CURRENT_LIFE, -1*result);
+        addResource(Stat.CURRENT_LIFE, Stat.LIFE, -1*result);
         return result;
     }
-    private Stat getDefenseStatFor(Stat dmgType) {
-        if (Objects.requireNonNull(dmgType) == Stat.NORMAL) {
-            return Stat.FORCE;
+    private Stat getDefenseStatFor(DamageType dmgType) {
+        if (Objects.requireNonNull(dmgType) == DamageType.NORMAL) {
+            return Stat.STAMINA;
         }
         return Stat.ENDURANCE;
     }
-    public int simulateDamageInPercentages(Hero caster, int damage, Stat dmgType, int lethality, Skill skill) {
+    public int simulateDamageInPercentages(Hero caster, int damage, DamageType dmgType, int lethality, Skill skill) {
         int def = getStat(getDefenseStatFor(dmgType));
         int result = MyMaths.getDamage(damage, def, lethality);
         DmgChangesPayload dmgChangesPayload = new DmgChangesPayload()
@@ -483,9 +529,9 @@ public abstract class Hero extends GUIElement {
     }
     public List<Hero> getEnemies() {
         if (this.enemy) {
-            return Arrays.stream(this.arena.friends.heroes).toList();
+            return Arrays.stream(this.arena.friends.heroes).filter(Objects::nonNull).toList();
         } else {
-            return Arrays.stream(this.arena.enemies.heroes).toList();
+            return Arrays.stream(this.arena.enemies.heroes).filter(Objects::nonNull).toList();
         }
     }
 
@@ -552,5 +598,21 @@ public abstract class Hero extends GUIElement {
     public Hero setSecondaryResource(Stat secondaryResource) {
         this.secondaryResource = secondaryResource;
         return this;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    public boolean isEnemy() {
+        return enemy;
+    }
+
+    public void setEnemy(boolean enemy) {
+        this.enemy = enemy;
     }
 }

@@ -1,4 +1,4 @@
-package game.entities.individuals.dev;
+package game.entities.individuals.dev.dummy;
 
 import game.entities.Animator;
 import game.entities.Hero;
@@ -11,6 +11,7 @@ public class DUMMY extends Hero {
 
     public DUMMY(int colorIndex) {
         super("DUMMY");
+        this.initBasePath("dev/dummy");
         this.colorIndex = colorIndex;
         initAnimator();
         initStats();
@@ -18,8 +19,8 @@ public class DUMMY extends Hero {
     }
 
     protected void initStats() {
-        this.stats.put(Stat.LIFE, 40);
-        this.stats.put(Stat.CURRENT_LIFE, 40);
+        this.stats.put(Stat.LIFE, 20);
+        this.stats.put(Stat.CURRENT_LIFE, 20);
         this.stats.put(Stat.LIFE_REGAIN, 2);
 
         this.stats.put(Stat.MANA, 40);
@@ -35,23 +36,15 @@ public class DUMMY extends Hero {
         //
         this.stats.put(Stat.MAGIC, 10);
         this.stats.put(Stat.FORCE, 10);
+        this.stats.put(Stat.STAMINA, 10);
         this.stats.put(Stat.ENDURANCE, 10);
         this.stats.put(Stat.FINESSE, 10);
         this.stats.put(Stat.ACCURACY, 100);
         this.stats.put(Stat.EVASION, 0);
-        this.stats.put(Stat.SPEED, 10);
+        this.stats.put(Stat.SPEED, 1);
 
         this.stats.put(Stat.CRIT_CHANCE, 0);
 
-        //
-        this.stats.put(Stat.NORMAL, 2);
-        this.stats.put(Stat.HEAT, 2);
-        this.stats.put(Stat.DIVINE, 2);
-        this.stats.put(Stat.DARK, 2);
-        this.stats.put(Stat.CHEMICAL, 2);
-        this.stats.put(Stat.ARCANE, 2);
-        this.stats.put(Stat.ELDRITCH, 2);
-        this.stats.put(Stat.COSMIC, 2);
     }
 
     @Override

@@ -2,12 +2,12 @@ package framework;
 
 public class Property {
 
-    public static final int SKILL_ICON_SIZE = 45;
+    public static final int SKILL_ICON_SIZE = 16;
     public static final int SKILL_ICON_FILE_SIZE = 15;
     public static final int PORTRAIT_SIZE = 60;
     public static final int PORTRAIT_FILE_SIZE = 20;
-    public static final int EFFECT_ICON_SIZE = 8;
-    public static final int EFFECT_ICON_FILE_SIZE = 8;
+    public static final int EFFECT_ICON_SIZE = 12;
+    public static final int EFFECT_ICON_FILE_SIZE = 12;
 
     //TEXT
     public static final int BASE_LINE_DISTANCE = 5;

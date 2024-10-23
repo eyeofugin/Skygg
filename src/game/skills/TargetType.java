@@ -14,4 +14,5 @@ public enum TargetType {
     LINE,
     FIRST_TWO_ENEMIES,
     FIRST_ENEMY,
+    ARENA
 }

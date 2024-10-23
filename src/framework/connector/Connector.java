@@ -2,6 +2,7 @@ package framework.connector;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,20 +33,22 @@ public class Connector {
     public static String END_OF_TURN = "END_OF_TURN";
     public static String START_OF_MATCH = "START_OF_MATCH";
 
-    public static Map<String, List<Connection>> subscriptions = new HashMap<>();
+    public static Map<String, ArrayList<Connection>> subscriptions = new HashMap<>();
 
     public static void addSubscription(String topic, Connection connection) {
         if (subscriptions.containsKey(topic)) {
             subscriptions.get(topic).add(connection);
         } else {
-            subscriptions.put(topic, List.of(connection));
+            ArrayList<Connection> newList = new ArrayList<>();
+            newList.add(connection);
+            subscriptions.put(topic, newList);
         }
     }
     public static void fireTopic(String topic, ConnectionPayload payload) {
         if (subscriptions.containsKey(topic)) {
             for (Connection connection : subscriptions.get(topic)) {
                 try {
-                    Method method = connection.element.getClass().getMethod(connection.methodName);
+                    Method method = connection.element.getClass().getMethod(connection.methodName, connection.payloadClass);
                     method.invoke(connection.element, payload);
                 } catch (NoSuchMethodException e) {
                     System.out.println("Hä");

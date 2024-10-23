@@ -23,7 +23,7 @@ public class Rooted extends Effect {
 
     @Override
     public void addSubscriptions() {
-        Connector.addSubscription(Connector.CAN_PERFORM, new Connection(this, "canPerform"));
+        Connector.addSubscription(Connector.CAN_PERFORM, new Connection(this, CanPerformPayload.class, "canPerform"));
     }
 
     public void canPerform(CanPerformPayload canPerformPayload) {

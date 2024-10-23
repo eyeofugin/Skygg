@@ -37,7 +37,7 @@ public class ActiveCharCard extends GUIElement {
     }
 
     public void setActiveHero(Hero e) {
-        if (!e.enemy) {
+        if (!e.isEnemy()) {
             this.activeHero = e;
             this.name = new TextField();
             this.name.setSize(124, 11);

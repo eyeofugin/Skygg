@@ -63,7 +63,7 @@ public class ActiveAbilitiesCard extends GUIElement {
         }
     }
     public void setActiveHero(Hero e) {
-        if (!e.enemy) {
+        if (!e.isEnemy()) {
             this.activeHero = e;
             this.abilityPointer = 0;
             this.maxAbilityPointer = this.activeHero.getSkills().length - 1;
@@ -72,14 +72,19 @@ public class ActiveAbilitiesCard extends GUIElement {
         }
     }
     private void createSkillIcons() {
-        skillIcons = new GUIElement[this.activeHero.getSkills().length];
+        skillIcons = new GUIElement[5];
         int y = 2;
-        for (int i = 0; i < this.activeHero.getSkills().length; i++) {
-            Skill s = this.activeHero.getSkills()[i];
+        for (int i = 0; i < 5; i++) {
             GUIElement skillIcon = new GUIElement();
             skillIcon.setSize(16, 16);
-            skillIcon.setPixels(s!=null ? s.iconPixels : new int[16*16]);
+            skillIcon.setPixels(new int[16*16]);
             skillIcon.setPosition(2, y);
+            if (i < this.activeHero.getSkills().length) {
+                Skill s = this.activeHero.getSkills()[i];
+                if (s!=null && s.getIconPixels()!=null) {
+                    skillIcon.setPixels(s.getIconPixels());
+                }
+            }
             this.skillIcons[i] = skillIcon;
             y+=18;
         }

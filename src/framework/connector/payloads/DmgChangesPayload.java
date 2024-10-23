@@ -2,15 +2,15 @@ package framework.connector.payloads;
 
 import framework.connector.ConnectionPayload;
 import game.entities.Hero;
+import game.skills.DamageType;
 import game.skills.Skill;
-import game.skills.Stat;
 
 public class DmgChangesPayload  extends ConnectionPayload {
     public Hero caster;
     public Hero target;
     public Skill skill;
     public int dmg;
-    public Stat dmgtype;
+    public DamageType dmgtype;
     public boolean simulate;
 
     public DmgChangesPayload setSimulate(boolean simulate) {
@@ -18,7 +18,7 @@ public class DmgChangesPayload  extends ConnectionPayload {
         return this;
     }
 
-    public DmgChangesPayload setDmgtype(Stat dmgtype) {
+    public DmgChangesPayload setDmgtype(DamageType dmgtype) {
         this.dmgtype = dmgtype;
         return this;
     }

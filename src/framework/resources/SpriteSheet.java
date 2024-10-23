@@ -11,6 +11,7 @@ public class SpriteSheet {
     public int[] pixels;
 
     public static SpriteSheet fonts5x8 = new SpriteSheet("res/fonts/FontsMid.png",50,60);
+    public static SpriteSheet smallNum = new SpriteSheet("res/fonts/smallnum.png",30,5);
 
     public SpriteSheet(String path, int width, int height) {
         this.HEIGHT = height;

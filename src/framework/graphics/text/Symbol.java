@@ -98,6 +98,17 @@ public class Symbol {
     public static Symbol turn = new Symbol("res/fonts/turn.png", 5,8);
     public static Symbol overheat_inactive = new Symbol("res/fonts/overheat_inactive.png", 5,8);
 
+    public static Symbol smallNum1 = new Symbol(30,	0,2,	0,4,	SpriteSheet.smallNum);
+    public static Symbol smallNum2 = new Symbol(30,	3,5,	0,4,	SpriteSheet.smallNum);
+    public static Symbol smallNum3 = new Symbol(30,	6,8,	0,4,	SpriteSheet.smallNum);
+    public static Symbol smallNum4 = new Symbol(30,	9,11,	0,4,	SpriteSheet.smallNum);
+    public static Symbol smallNum5 = new Symbol(30,	12,14,	0,4,	SpriteSheet.smallNum);
+    public static Symbol smallNum6 = new Symbol(30,	15,17,	0,4,	SpriteSheet.smallNum);
+    public static Symbol smallNum7 = new Symbol(30,	18,20,	0,4,	SpriteSheet.smallNum);
+    public static Symbol smallNum8 = new Symbol(30,	21,23,	0,4,	SpriteSheet.smallNum);
+    public static Symbol smallNum9 = new Symbol(30,	24,26,	0,4,	SpriteSheet.smallNum);
+    public static Symbol smallNum0 = new Symbol(30,	27,29,	0,4,	SpriteSheet.smallNum);
+
     public Symbol(int sheetBaseWidth, int xfrom,int xuntil,int yfrom,int yuntil, SpriteSheet sheet) {
         this.WIDTH = (xuntil-xfrom)+1;
         this.HEIGHT = (yuntil-yfrom)+1;
