@@ -15,7 +15,6 @@ public class S_TwinFlames extends Skill {
 
     public S_TwinFlames(Hero hero) {
         super(hero);
-        this.name = "Twin Flames";
         this.iconPath = "/res/icons/twinflames.png";
         addSubscriptions();
         setToInitial();
@@ -35,7 +34,7 @@ public class S_TwinFlames extends Skill {
 
     @Override
     protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/res/sprites/action_w.png", this.name, new int[]{15, 30, 45});
+        this.hero.anim.setupAnimation(this.hero.basePath + "/res/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
     }
 
     @Override
@@ -50,6 +49,12 @@ public class S_TwinFlames extends Skill {
             target.addEffect(new Burning(-1, 1), this.hero);
         }
     }
+
+    @Override
+    public String getName() {
+        return "Twin Flames";
+    }
+
     @Override
     public void addSubscriptions() {
 

@@ -18,7 +18,6 @@ public class S_Combustion extends Skill {
 
     public S_Combustion(Hero hero) {
         super(hero);
-        this.name = "Combustion";
         this.iconPath = "/res/icons/combustion.png";
         addSubscriptions();
         setToInitial();
@@ -40,7 +39,7 @@ public class S_Combustion extends Skill {
 
     @Override
     protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/res/sprites/action_w.png", this.name, new int[]{15, 30, 45});
+        this.hero.anim.setupAnimation(this.hero.basePath + "/res/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
     }
 
     @Override
@@ -50,6 +49,11 @@ public class S_Combustion extends Skill {
     @Override
     public void addSubscriptions() {
         Connector.addSubscription(Connector.BASE_DMG_CHANGES, new Connection(this, DmgChangesPayload.class,"dmgChanges"));
+    }
+
+    @Override
+    public String getName() {
+        return "Combustion";
     }
 
     public void dmgChanges(DmgChangesPayload pl) {

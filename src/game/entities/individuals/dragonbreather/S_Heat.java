@@ -1,4 +1,4 @@
-package game.entities.individuals.burner;
+package game.entities.individuals.dragonbreather;
 
 import game.entities.Hero;
 import game.skills.Skill;
@@ -22,9 +22,14 @@ public class S_Heat extends Skill {
         super.setToInitial();
         this.tags = List.of(SkillTag.SETUP);
         this.targetType = TargetType.ARENA;
-        this.faithCost = 5;
+        this.manaCost = 7;
+        this.cdMax = 5;
     }
 
+    @Override
+    public String getName() {
+        return "Heat";
+    }
     @Override
     protected void initAnimation() {
         this.hero.anim.setupAnimation(this.hero.basePath + "/res/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
@@ -34,11 +39,6 @@ public class S_Heat extends Skill {
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
         this.hero.arena.setGlobalEffect(new Heat());
-    }
-
-    @Override
-    public String getName() {
-        return "Heat";
     }
 
     @Override

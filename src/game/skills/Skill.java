@@ -24,7 +24,6 @@ public abstract class Skill {
     private static int counter;
     public int id;
     public final Hero hero;
-    public String name;
     public String description;
     protected int[] iconPixels;
     protected String iconPath;
@@ -110,12 +109,12 @@ public abstract class Skill {
         this.enhancementId = 0;
         this.cdMax = 0;
         this.canMiss = true;
-        if (SpriteLibrary.sprites.containsKey(this.name)) {
-            this.iconPixels = SpriteLibrary.sprites.get(this.name);
+        if (SpriteLibrary.sprites.containsKey(this.getName())) {
+            this.iconPixels = SpriteLibrary.sprites.get(this.getName());
         } else {
             this.iconPixels = SpriteLibrary.sprite(Property.SKILL_ICON_SIZE,Property.SKILL_ICON_SIZE,Property.SKILL_ICON_SIZE,Property.SKILL_ICON_SIZE,
                     this.hero.basePath + this.iconPath, 0);
-            SpriteLibrary.sprites.put(this.name, this.iconPixels);
+            SpriteLibrary.sprites.put(this.getName(), this.iconPixels);
         }
     }
 
@@ -154,7 +153,7 @@ public abstract class Skill {
         }
     }
     public void perform() {
-        this.hero.playAnimation(this.name);
+        this.hero.playAnimation(this.getName());
         this.hero.payForSkill(this);
         this.setCdCurrent(this.getCdMax());
         this.justCast = true;
@@ -172,7 +171,7 @@ public abstract class Skill {
                     || this.targetType.equals(TargetType.SINGLE_ALLY_IN_FRONT)) {
                 this.individualResolve(arenaTarget);
             } else {
-                Logger.logLn("Resolve " + this.name + " for " + arenaTarget.getName());
+                Logger.logLn("Resolve " + this.getName() + " for " + arenaTarget.getName());
                 int evasion = arenaTarget.getStat( Stat.EVASION);
                 Logger.logLn("evasion:"+evasion);
                 int acc = hero.getStat(Stat.ACCURACY);
@@ -229,6 +228,7 @@ public abstract class Skill {
                 .setCast(cast);
         Connector.fireTopic(Connector.CRITICAL_TRIGGER, criticalTriggerPayload);
     }
+
     public void fireDmgTrigger(Hero target, Skill cast, int damageDone) {
         DmgTriggerPayload dmgTriggerPayload = new DmgTriggerPayload()
                 .setTarget(target)
@@ -569,6 +569,8 @@ public abstract class Skill {
         return iconPixels;
     }
 
+    public abstract String getName();
+
     public String getCostString() {
         if (this.isPassive()) {
             return "Passive";
@@ -602,7 +604,7 @@ public abstract class Skill {
         return "\nSkill{" +
                 "id=" + id +
                 ", Hero=" + hero.getName() +
-                ", name='" + name + '\'' +
+                ", name='" + getName() + '\'' +
                 ", distance=" + distance +
                 ", targetType=" + targetType +
                 ", targetRadius=" + targetRadius +

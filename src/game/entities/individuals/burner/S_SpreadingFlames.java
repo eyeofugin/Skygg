@@ -1,13 +1,10 @@
 package game.entities.individuals.burner;
 
 import game.entities.Hero;
-import game.entities.Multiplier;
-import game.skills.DamageType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.Burning;
-import utils.MyMaths;
 
 import java.util.List;
 import java.util.Random;
@@ -16,7 +13,6 @@ public class S_SpreadingFlames extends Skill {
 
     public S_SpreadingFlames(Hero hero) {
         super(hero);
-        this.name = "Spreading Flames";
         this.iconPath = "/res/icons/spreadingflames.png";
         addSubscriptions();
         setToInitial();
@@ -32,7 +28,7 @@ public class S_SpreadingFlames extends Skill {
 
     @Override
     protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/res/sprites/action_w.png", this.name, new int[]{15, 30, 45});
+        this.hero.anim.setupAnimation(this.hero.basePath + "/res/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
     }
 
     @Override
@@ -54,6 +50,11 @@ public class S_SpreadingFlames extends Skill {
         if (enemyBurningStacks > 4) {
             this.hero.addResource(Stat.CURRENT_FAITH, Stat.FAITH, 3);
         }
+    }
+
+    @Override
+    public String getName() {
+        return "Spreading Flames";
     }
 
     @Override

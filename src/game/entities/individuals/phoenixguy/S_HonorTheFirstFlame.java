@@ -14,7 +14,6 @@ public class S_HonorTheFirstFlame extends Skill {
 
     public S_HonorTheFirstFlame(Hero hero) {
         super(hero);
-        this.name = "Honor the Flames";
         this.iconPath = "/res/icons/honorthefirstflame.png";
         addSubscriptions();
         setToInitial();
@@ -23,7 +22,6 @@ public class S_HonorTheFirstFlame extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.RESTOCK);
         this.passive = true;
     }
     @Override
@@ -37,6 +35,11 @@ public class S_HonorTheFirstFlame extends Skill {
     @Override
     public void addSubscriptions() {
         Connector.addSubscription(Connector.EFFECT_DMG_TRIGGER, new Connection(this, DmgTriggerPayload.class, "dmgTrigger"));
+    }
+
+    @Override
+    public String getName() {
+        return "Honor the flame";
     }
 
     public void dmgTrigger(DmgTriggerPayload pl) {

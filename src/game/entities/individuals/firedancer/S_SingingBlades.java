@@ -1,4 +1,4 @@
-package game.entities.individuals.burner;
+package game.entities.individuals.firedancer;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
@@ -11,48 +11,49 @@ import utils.MyMaths;
 
 import java.util.List;
 
-public class S_Fireball extends Skill {
+public class S_SingingBlades extends Skill {
 
-    public S_Fireball(Hero hero) {
+    public S_SingingBlades(Hero hero) {
         super(hero);
-        this.iconPath ="/res/icons/fireball.png";
+        this.iconPath = "/res/icons/singingblades.png";
         addSubscriptions();
         setToInitial();
         initAnimation();
     }
+
     @Override
     public void setToInitial() {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG);
-        this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.1));
+        this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.15),
+                new Multiplier(Stat.FINESSE, 0.4));
         this.targetType = TargetType.SINGLE;
-        this.distance = 3;
-        this.dmg = 5;
-        this.damageType = DamageType.MAGIC;
+        this.distance = 2;
+        this.dmg = 4;
+        this.countAsHits = 2;
+        this.damageType = DamageType.NORMAL;
     }
 
-    @Override
     protected void initAnimation() {
         this.hero.anim.setupAnimation(this.hero.basePath + "/res/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
     }
-
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Gets 3 Favor, (10+Favor) chance to burn";
+        return "2 Hits, (FIN+FAITH)% chance to burn.";
     }
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
-        int magic = this.hero.getStat(Stat.CURRENT_FAITH);
-        if (MyMaths.success(magic + 10)) {
+        int magic = this.hero.getStat(Stat.MAGIC);
+        int finesse = this.hero.getStat(Stat.FINESSE);
+        if (MyMaths.success(magic + finesse)) {
             target.addEffect(new Burning(-1, 1), this.hero);
         }
-        this.hero.addResource(Stat.CURRENT_FAITH, Stat.FAITH, 3);
     }
 
     @Override
     public String getName() {
-        return "Fireball";
+        return "Singing Blades";
     }
 
     @Override

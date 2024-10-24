@@ -1,4 +1,4 @@
-package game.entities.individuals.burner;
+package game.entities.individuals.firedancer;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
@@ -11,24 +11,23 @@ import utils.MyMaths;
 
 import java.util.List;
 
-public class S_Fireball extends Skill {
+public class S_RushOfHeat extends Skill {
 
-    public S_Fireball(Hero hero) {
+    public S_RushOfHeat(Hero hero) {
         super(hero);
-        this.iconPath ="/res/icons/fireball.png";
+        this.iconPath = "/res/icons/rushofheat.png";
         addSubscriptions();
         setToInitial();
         initAnimation();
     }
+
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.DMG);
-        this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.1));
-        this.targetType = TargetType.SINGLE;
-        this.distance = 3;
-        this.dmg = 5;
-        this.damageType = DamageType.MAGIC;
+        this.tags = List.of(SkillTag.RESTOCK);
+        this.targetType = TargetType.SELF;
+        this.effects = List.of(new Burning(-1,3));
+        this.cdMax = 3;
     }
 
     @Override
@@ -38,21 +37,18 @@ public class S_Fireball extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Gets 3 Favor, (10+Favor) chance to burn";
+        return "Get 3 burn; +15 Favor";
     }
+
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
-        int magic = this.hero.getStat(Stat.CURRENT_FAITH);
-        if (MyMaths.success(magic + 10)) {
-            target.addEffect(new Burning(-1, 1), this.hero);
-        }
-        this.hero.addResource(Stat.CURRENT_FAITH, Stat.FAITH, 3);
+        this.hero.addResource(Stat.CURRENT_FAITH, Stat.FAITH, 15);
     }
 
     @Override
     public String getName() {
-        return "Fireball";
+        return "Rush of Heat";
     }
 
     @Override

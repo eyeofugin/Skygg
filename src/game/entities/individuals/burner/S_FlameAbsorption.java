@@ -17,7 +17,6 @@ public class S_FlameAbsorption extends Skill {
 
     public S_FlameAbsorption(Hero hero) {
         super(hero);
-        this.name = "Flame Absorption";
         this.iconPath = "/res/icons/flameabsorption.png";
         addSubscriptions();
         setToInitial();
@@ -43,8 +42,13 @@ public class S_FlameAbsorption extends Skill {
     }
 
     @Override
+    public String getName() {
+        return "Flame Absorption";
+    }
+
+    @Override
     protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/res/sprites/action_w.png", this.name, new int[]{15, 30, 45});
+        this.hero.anim.setupAnimation(this.hero.basePath + "/res/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
     }
 
     @Override

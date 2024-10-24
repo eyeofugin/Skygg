@@ -256,6 +256,11 @@ public class Arena extends GUIElement {
         this.activeSkill = null;
         this.nextAction = null;
     }
+    public void moveTo(Hero e, int targetPos) {
+        int toGo = Math.abs(e.getPosition()-targetPos);
+        int dir = e.getPosition() < targetPos ? 1:-1;
+        move(e,toGo,dir);
+    }
     public void move(Hero e, int toGo, int dir) {
         if (toGo>0) {
             int targetPos = e.getPosition()+dir;

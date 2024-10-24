@@ -12,7 +12,6 @@ public class S_PhoenixFlames extends Skill {
 
     public S_PhoenixFlames(Hero hero) {
         super(hero);
-        this.name = "Phoenix Flames";
         this.iconPath = "/res/icons/phoenixflames.png";
         setToInitial();
         initAnimation();
@@ -37,8 +36,13 @@ public class S_PhoenixFlames extends Skill {
     }
 
     @Override
+    public String getName() {
+        return "Phoenix Flames";
+    }
+
+    @Override
     protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/res/sprites/action_w.png", this.name, new int[]{15, 30, 45});
+        this.hero.anim.setupAnimation(this.hero.basePath + "/res/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
     }
 
     @Override

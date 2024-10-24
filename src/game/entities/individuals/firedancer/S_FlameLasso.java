@@ -1,4 +1,4 @@
-package game.entities.individuals.burner;
+package game.entities.individuals.firedancer;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
@@ -11,48 +11,47 @@ import utils.MyMaths;
 
 import java.util.List;
 
-public class S_Fireball extends Skill {
+public class S_FlameLasso extends Skill {
 
-    public S_Fireball(Hero hero) {
+    public S_FlameLasso(Hero hero) {
         super(hero);
-        this.iconPath ="/res/icons/fireball.png";
+        this.iconPath = "/res/icons/flamelasso.png";
         addSubscriptions();
         setToInitial();
         initAnimation();
     }
+
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.DMG);
-        this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.1));
+        this.tags = List.of(SkillTag.DMG, SkillTag.PEEL);
+        this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.1),
+                new Multiplier(Stat.FAITH, 0.1));
         this.targetType = TargetType.SINGLE;
-        this.distance = 3;
-        this.dmg = 5;
+        this.distance = 4;
+        this.dmg = 1;
         this.damageType = DamageType.MAGIC;
+        this.faithCost = 10;
+        this.cdMax = 5;
     }
 
-    @Override
     protected void initAnimation() {
         this.hero.anim.setupAnimation(this.hero.basePath + "/res/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
     }
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Gets 3 Favor, (10+Favor) chance to burn";
+        return "Pull 2";
     }
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
-        int magic = this.hero.getStat(Stat.CURRENT_FAITH);
-        if (MyMaths.success(magic + 10)) {
-            target.addEffect(new Burning(-1, 1), this.hero);
-        }
-        this.hero.addResource(Stat.CURRENT_FAITH, Stat.FAITH, 3);
+        this.hero.arena.move(target, 2, target.isEnemy()?-1:1);
     }
 
     @Override
     public String getName() {
-        return "Fireball";
+        return "Flame Lasso";
     }
 
     @Override

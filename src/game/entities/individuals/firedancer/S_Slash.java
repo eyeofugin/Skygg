@@ -1,8 +1,8 @@
-package game.entities.individuals.phoenixguy;
+package game.entities.individuals.firedancer;
 
 import framework.connector.Connection;
 import framework.connector.Connector;
-import framework.connector.payloads.DmgChangesPayload;
+import framework.connector.payloads.DmgTriggerPayload;
 import game.entities.Hero;
 import game.entities.Multiplier;
 import game.skills.DamageType;
@@ -14,11 +14,11 @@ import utils.MyMaths;
 
 import java.util.List;
 
-public class S_Fireblast extends Skill {
+public class S_Slash extends Skill {
 
-    public S_Fireblast(Hero hero) {
+    public S_Slash(Hero hero) {
         super(hero);
-        this.iconPath = "/res/icons/fireblast.png";
+        this.iconPath = "/res/icons/slash.png";
         addSubscriptions();
         setToInitial();
         initAnimation();
@@ -28,47 +28,49 @@ public class S_Fireblast extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG);
-        this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.15));
+        this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.1),
+                new Multiplier(Stat.FINESSE, 0.1));
         this.targetType = TargetType.SINGLE;
-        this.distance = 3;
-        this.dmg = 8;
-        this.damageType = DamageType.MAGIC;
-    }
-
-    protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/res/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
+        this.distance = 2;
+        this.dmg = 3;
+        this.damageType = DamageType.NORMAL;
     }
 
     @Override
-    public String getDescriptionFor(Hero hero) {
-        return "Mid dmg, double power if target under 50% life. 20+ Magic% to burn, get 3 favor";
+    protected void initAnimation() {
+        this.hero.anim.setupAnimation(this.hero.basePath + "/res/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
     }
-
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
         int magic = this.hero.getStat(Stat.MAGIC);
-        if (MyMaths.success(magic + 20)) {
+        int finesse = this.hero.getStat(Stat.FINESSE);
+        if (MyMaths.success(magic + finesse)) {
             target.addEffect(new Burning(-1, 1), this.hero);
         }
-        this.hero.addResource(Stat.CURRENT_FAITH, Stat.FAITH, 3);
     }
 
     @Override
     public String getName() {
-        return "Fireblast";
+        return "Slash";
+    }
+
+    @Override
+    public String getDescriptionFor(Hero hero) {
+        return "(FIN+FAITH)% chance to burn. Gain 50% damage as favor";
     }
 
     @Override
     public void addSubscriptions() {
-        Connector.addSubscription(Connector.BASE_DMG_CHANGES, new Connection(this,  DmgChangesPayload.class, "dmgChanges"));
+        Connector.addSubscription(Connector.DMG_TRIGGER, new Connection(this, DmgTriggerPayload.class, "dmgTrigger"));
     }
 
-    public void dmgChanges(DmgChangesPayload pl) {
-        if (pl.caster != null && pl.target != null) {
-            if (pl.caster == this.hero && (pl.target.getCurrentLifePercentage() < 50)) {
-                pl.dmg*=2;
-            }
+    public void dmgTrigger(DmgTriggerPayload pl) {
+        if (pl.cast != null &&
+                pl.cast.hero != null &&
+                pl.cast.hero.equals(this.hero) &&
+                pl.cast.equals(this)) {
+            this.hero.addResource(Stat.CURRENT_FAITH, Stat.FAITH, (int) (0.5 * pl.dmgDone));
         }
     }
 }

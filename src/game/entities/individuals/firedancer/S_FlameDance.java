@@ -1,17 +1,16 @@
-package game.entities.individuals.burner;
+package game.entities.individuals.firedancer;
 
 import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.TargetType;
-import game.skills.changeeffects.globals.Heat;
 
 import java.util.List;
 
-public class S_Heat extends Skill {
+public class S_FlameDance extends Skill {
 
-    public S_Heat(Hero hero) {
+    public S_FlameDance(Hero hero) {
         super(hero);
-        this.iconPath = "/res/icons/heat.png";
+        this.iconPath = "/res/icons/flamedance.png";
         addSubscriptions();
         setToInitial();
         initAnimation();
@@ -20,30 +19,31 @@ public class S_Heat extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.SETUP);
-        this.targetType = TargetType.ARENA;
+        this.tags = List.of(SkillTag.MOVE, SkillTag.BUFF);
+        this.targetType = TargetType.SINGLE_ALLY;
+        this.distance = 1;
         this.faithCost = 5;
+        this.actionCost = 0;
     }
 
-    @Override
     protected void initAnimation() {
         this.hero.anim.setupAnimation(this.hero.basePath + "/res/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
     }
-
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
-        this.hero.arena.setGlobalEffect(new Heat());
+        int targetPosition = target.getPosition();
+        this.hero.arena.moveTo(this.hero, targetPosition);
     }
 
     @Override
     public String getName() {
-        return "Heat";
+        return "Flame Dance";
     }
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Summon Heat Effect";
+        return "No action cost; Move 1; +1FIN";
     }
 
     @Override

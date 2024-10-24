@@ -1,4 +1,4 @@
-package game.entities.individuals.burner;
+package game.entities.individuals.dragonbreather;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
@@ -11,52 +11,54 @@ import utils.MyMaths;
 
 import java.util.List;
 
-public class S_Fireball extends Skill {
+public class S_DragonBreath extends Skill {
 
-    public S_Fireball(Hero hero) {
+    public S_DragonBreath(Hero hero) {
         super(hero);
-        this.iconPath ="/res/icons/fireball.png";
+        this.iconPath = "/res/icons/dragonbreath.png";
         addSubscriptions();
         setToInitial();
         initAnimation();
     }
+
     @Override
     public void setToInitial() {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG);
-        this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.1));
-        this.targetType = TargetType.SINGLE;
-        this.distance = 3;
-        this.dmg = 5;
+        this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.2));
+        this.targetType = TargetType.LINE;
+        this.distance = 2;
+        this.dmg = 7;
         this.damageType = DamageType.MAGIC;
+        this.manaCost =6;
+        this.cdMax = 2;
     }
 
-    @Override
     protected void initAnimation() {
         this.hero.anim.setupAnimation(this.hero.basePath + "/res/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
     }
 
     @Override
-    public String getDescriptionFor(Hero hero) {
-        return "Gets 3 Favor, (10+Favor) chance to burn";
-    }
-    @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
-        int magic = this.hero.getStat(Stat.CURRENT_FAITH);
-        if (MyMaths.success(magic + 10)) {
+        int magic = this.hero.getStat(Stat.MAGIC);
+        if (MyMaths.success(magic + 50)) {
             target.addEffect(new Burning(-1, 1), this.hero);
         }
-        this.hero.addResource(Stat.CURRENT_FAITH, Stat.FAITH, 3);
     }
 
     @Override
-    public String getName() {
-        return "Fireball";
+    public String getDescriptionFor(Hero hero) {
+        return "(50+MAG)% Chance to burn";
     }
 
     @Override
     public void addSubscriptions() {
 
+    }
+
+    @Override
+    public String getName() {
+        return "Dragon Breath";
     }
 }

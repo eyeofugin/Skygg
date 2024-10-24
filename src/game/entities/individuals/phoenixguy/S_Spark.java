@@ -14,7 +14,6 @@ public class S_Spark extends Skill {
 
     public S_Spark(Hero hero) {
         super(hero);
-        this.name = "Spark";
         this.iconPath = "/res/icons/spark.png";
         setToInitial();
         initAnimation();
@@ -41,8 +40,13 @@ public class S_Spark extends Skill {
         }
     }
 
+    @Override
+    public String getName() {
+        return "Spark";
+    }
+
     protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/res/sprites/action_w.png", this.name, new int[]{15, 30, 45});
+        this.hero.anim.setupAnimation(this.hero.basePath + "/res/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
     }
 
     @Override
