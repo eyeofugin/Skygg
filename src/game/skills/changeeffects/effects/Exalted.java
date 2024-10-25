@@ -12,7 +12,7 @@ public class Exalted extends Effect {
         this.name = "Exalted";
         this.stackable = false;
         this.description = "All skills have +1 Range.";
-        this.type = ChangeEffectType.EFFECT;
+        this.type = ChangeEffectType.BUFF;
     }
 
     @Override

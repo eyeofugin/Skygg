@@ -2,17 +2,20 @@ package game.entities;
 
 import framework.Logger;
 import framework.Property;
+import framework.connector.ConnectionPayload;
 import framework.connector.Connector;
 import framework.connector.payloads.ActionInflictionPayload;
 import framework.connector.payloads.CanPerformPayload;
 import framework.connector.payloads.CastChangePayload;
 import framework.connector.payloads.DmgChangesPayload;
+import framework.connector.payloads.DmgToShieldPayload;
 import framework.connector.payloads.DmgTriggerPayload;
 import framework.connector.payloads.EffectAddedPayload;
 import framework.connector.payloads.EffectDmgChangesPayload;
 import framework.connector.payloads.EffectFailurePayload;
 import framework.connector.payloads.EndOfTurnPayload;
 import framework.connector.payloads.HealChangesPayload;
+import framework.connector.payloads.ShieldBrokenPayload;
 import framework.connector.payloads.StartOfTurnPayload;
 import framework.graphics.GUIElement;
 import framework.graphics.text.Color;
@@ -25,6 +28,7 @@ import game.skills.DamageType;
 import game.skills.Effect;
 import game.skills.Skill;
 import game.skills.Stat;
+import game.skills.changeeffects.effects.Immunity;
 import game.skills.changeeffects.statusinflictions.Injured;
 import utils.MyMaths;
 
@@ -35,6 +39,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import static java.util.Map.entry;
+
 public abstract class Hero extends GUIElement {
 
     public Arena arena;
@@ -43,6 +49,7 @@ public abstract class Hero extends GUIElement {
     protected Map<String, int[][]> sprites = new HashMap<>();
     public String basePath = "";
 
+    protected static int idCounter;
     protected int id;
     protected String name;
     protected Skill[] skills;
@@ -57,10 +64,12 @@ public abstract class Hero extends GUIElement {
     private boolean enemy;
 
     protected Hero(String name) {
+        this.id = idCounter++;
         this.width = 64;
         this.height = 90;
         this.pixels = new int[this.width*this.height];
         this.name = name;
+        statBase();
     }
 
     public Hero(String name, Map<Stat, Integer> stats, Skill[] skills) {
@@ -87,6 +96,33 @@ public abstract class Hero extends GUIElement {
     protected abstract void initSkills();
     protected abstract void initStats();
 
+    private void statBase() {
+        this.stats.put(Stat.MAGIC, 0);
+        this.stats.put(Stat.FORCE, 0);
+        this.stats.put(Stat.STAMINA, 0);
+        this.stats.put(Stat.ENDURANCE, 0);
+        this.stats.put(Stat.FINESSE, 0);
+        this.stats.put(Stat.SPEED, 0);
+
+        //ResourceStats
+        this.stats.put(Stat.LIFE, 0);
+        this.stats.put(Stat.CURRENT_LIFE, 0);
+        this.stats.put(Stat.LIFE_REGAIN, 0);
+
+        this.stats.put(Stat.FAITH, 0);
+        this.stats.put(Stat.CURRENT_FAITH, 0);
+
+        this.stats.put(Stat.MANA, 0);
+        this.stats.put(Stat.CURRENT_MANA, 0);
+
+        this.stats.put(Stat.MAX_ACTION, 1);
+        this.stats.put(Stat.CURRENT_ACTION, 1);
+
+        this.stats.put(Stat.CRIT_CHANCE, 0);
+        this.stats.put(Stat.ACCURACY, 100);
+        this.stats.put(Stat.EVASION, 0);
+        this.stats.put(Stat.SHIELD,0);
+    }
     @Override
     public void update(int frame) {
         this.anim.animate();
@@ -105,9 +141,24 @@ public abstract class Hero extends GUIElement {
         fillWithGraphicsSize(0, 0, 64, 64, image, false);
     }
     private void renderBars() {
-        fillWithGraphicsSize(0, 65, 64, 5, getBar(64, 5, getResourcePercentage(Stat.LIFE), Color.GREEN, Color.DARKRED), false);
+        fillWithGraphicsSize(0, 65, 64, 5, getBar(64, 5, 0, getResourcePercentage(Stat.LIFE), Color.GREEN, Color.DARKRED), false);
+        if (this.getStat(Stat.SHIELD)>0) {
+            fillWithGraphicsSize(0,65,64,5,getShieldBar(), false);
+        }
         if (this.secondaryResource != null) {
-            fillWithGraphicsSize(0, 71, 64, 5, getBar(64, 5, getResourcePercentage(this.secondaryResource), getResourceColor(this.secondaryResource), Color.DARKRED), false);
+            fillWithGraphicsSize(0, 71, 64, 5, getBar(64, 5, 0, getResourcePercentage(this.secondaryResource), getResourceColor(this.secondaryResource), Color.DARKRED), false);
+        }
+    }
+    private int[] getShieldBar() {
+        double currentLifePercentage = getResourcePercentage(Stat.LIFE);
+        int missingLifePercentage = getMissingLifePercentage();
+        double shieldPercentage = (double)getStat(Stat.SHIELD) / getStat(Stat.LIFE);
+        int lifeFill = (int)(64 * currentLifePercentage);
+
+        if (missingLifePercentage < shieldPercentage) {
+            return getBar(64,5,0,1.0-shieldPercentage,Color.VOID,Color.DARKYELLOW);
+        } else {
+            return getBar(64,5,lifeFill,shieldPercentage,Color.DARKYELLOW,Color.VOID);
         }
     }
     private void renderEffects() {
@@ -309,6 +360,9 @@ public abstract class Hero extends GUIElement {
         }
     }
     private boolean getEffectFailure(Effect effect, Hero caster) {
+        if (hasPermanentEffect(Immunity.class) > 0) {
+            return true;
+        }
         EffectFailurePayload payload = new EffectFailurePayload()
                 .setEffect(effect)
                 .setCaster(caster);
@@ -391,8 +445,13 @@ public abstract class Hero extends GUIElement {
         Logger.logLn("Paid action:"+s.getActionCost());
     }
 
-    public void cleanse() {
-        this.effects = new ArrayList<>();
+    public void removeNegativeEffects() {
+        for (Effect effect : this.effects) {
+            if (effect.type.equals(Effect.ChangeEffectType.DEBUFF) ||
+                effect.type.equals(Effect.ChangeEffectType.STATUS_INFLICTION)) {
+                this.removeEffect(effect);
+            }
+        }
     }
 
     public int simulateHealInPercentages(Hero caster, int heal, Skill skill) {
@@ -432,6 +491,32 @@ public abstract class Hero extends GUIElement {
         System.out.println("dmg:"+result);
         Logger.logLn("1play dmg animation of " + this.name + "/"+this.id);
         playAnimation("damaged", true);
+        int shield = getStat(Stat.SHIELD);
+        if (shield > 0) {
+            int dmgToShield;
+            boolean broken = false;
+            if (shield < result) {
+                this.changeStatTo(Stat.SHIELD, 0);
+                result -= shield;
+                dmgToShield = shield;
+                broken = true;
+            } else {
+                this.addResource(Stat.SHIELD, Stat.LIFE,-1*result);
+                dmgToShield = result;
+                result = 0;
+            }
+
+            DmgToShieldPayload dmgToShieldPayload = new DmgToShieldPayload()
+                    .setTarget(this)
+                    .setDmg(dmgToShield);
+            Connector.fireTopic(Connector.DMG_TO_SHIELD, dmgToShieldPayload);
+
+            if (broken) {
+                ShieldBrokenPayload pl = new ShieldBrokenPayload()
+                        .setTarget(this);
+                Connector.fireTopic(Connector.SHIELD_BROKEN, pl);
+            }
+        }
         addResource(Stat.CURRENT_LIFE, Stat.LIFE, -1*result);
         return result;
     }

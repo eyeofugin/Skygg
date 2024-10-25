@@ -312,30 +312,27 @@ public class GUIElement {
     public void background(Color color) {
         Arrays.fill(this.pixels, color.VALUE);
     }
-    protected int[] getBar(int width, int height, double percentage, Color color, Color color2) {
+    protected int[] getBar(int width, int height, int startWidth, double percentage, Color color, Color color2) {
         if (percentage > 1) {
             percentage = 1;
         }
+
         int[] resultPixels = new int[width * height];
         int filledSize = (int) (width * percentage);
+        if (filledSize + startWidth > width) {
+            Logger.logLn("Bar start and fill width too much for space");
+            return resultPixels;
+        }
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 resultPixels[x + y * width] = color2.VALUE;
             }
         }
-        for (int x = 0; x < filledSize; x++) {
+        for (int x = startWidth; x < startWidth+filledSize; x++) {
             for (int y = 0; y < height; y++) {
                 resultPixels[x + y * width] = color.VALUE;
             }
         }
-//        for (int i = 0; i < width; i++) {
-//            resultPixels[i] = Color.WHITE.VALUE;
-//            resultPixels[i + (height - 1) * width] = Color.WHITE.VALUE;
-//        }
-//        for (int i = 0; i < height; i++) {
-//            resultPixels[i * width] = Color.WHITE.VALUE;
-//            resultPixels[width - 1 + i * width] = Color.WHITE.VALUE;
-//        }
         return resultPixels;
     }
     protected void writeBar(int xFrom, int xUntil, int yFrom, int yUntil, double percentage, Color color, Color color2) {

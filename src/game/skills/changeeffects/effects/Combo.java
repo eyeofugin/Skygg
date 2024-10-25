@@ -8,7 +8,7 @@ public class Combo extends Effect {
         this.name = "Combo";
         this.stackable = false;
         this.description = "Combo.";
-        this.type = ChangeEffectType.EFFECT;
+        this.type = ChangeEffectType.BUFF;
     }
     @Override
     public Effect getNew() {

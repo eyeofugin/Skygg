@@ -12,7 +12,6 @@ public class AllyHeal extends Skill {
 
     public AllyHeal(Hero hero) {
         super(hero);
-        this.name = "Spark";
         this.iconPath = "/res/icons/spark.png";
         setToInitial();
         initAnimation();
@@ -45,7 +44,7 @@ public class AllyHeal extends Skill {
                 break;
 
         }
-        this.hero.anim.setupAnimation(path, this.name, new int[]{15, 30, 45, 60});
+        this.hero.anim.setupAnimation(path, this.getName(), new int[]{15, 30, 45, 60});
     }
 
     @Override
@@ -55,4 +54,9 @@ public class AllyHeal extends Skill {
 
     @Override
     public void addSubscriptions() {}
+
+    @Override
+    public String getName() {
+        return "Allyheal";
+    }
 }

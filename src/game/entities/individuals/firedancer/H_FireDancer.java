@@ -6,7 +6,7 @@ import game.skills.Skill;
 import game.skills.Stat;
 
 public class H_FireDancer extends Hero {
-    protected H_FireDancer() {
+    public H_FireDancer() {
         super("Fire Dancer");
         this.initBasePath("firedancer");
         this.secondaryResource = Stat.FAITH;
@@ -68,5 +68,7 @@ public class H_FireDancer extends Hero {
         this.stats.put(Stat.CURRENT_ACTION, 1);
 
         this.stats.put(Stat.CRIT_CHANCE, 10);
+
+        this.stats.put(Stat.SHIELD,0);
     }
 }

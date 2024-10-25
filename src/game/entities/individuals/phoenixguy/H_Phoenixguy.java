@@ -70,5 +70,7 @@ public class H_Phoenixguy extends Hero {
 
 
         this.stats.put(Stat.CRIT_CHANCE, 0);
+
+        this.stats.put(Stat.SHIELD,0);
     }
 }

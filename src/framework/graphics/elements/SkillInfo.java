@@ -14,7 +14,7 @@ public class SkillInfo extends GUIElement {
     }
     @Override
     public int[] render() {
-        int[] skillNamePixels = getTextLine(this.skill.name, this.width, 10, 1,
+        int[] skillNamePixels = getTextLine(this.skill.getName(), this.width, 10, 1,
                 TextAlignment.LEFT, Color.VOID, Color.WHITE);
         fillWithGraphicsSize(0, 0, this.width, 10, skillNamePixels, false);
         String costString = "Cost:" + skill.getCostString();

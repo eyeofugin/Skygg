@@ -29,6 +29,8 @@ public enum Stat {
     FAITH("Max", "FAI"),
     CURRENT_FAITH("Faith", "CFA"),
 
+    SHIELD("Shield", "SHI"),
+
     CRIT_CHANCE("Crit Chance", "CRI");
 
     private final String translationString;

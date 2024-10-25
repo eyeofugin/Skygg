@@ -54,7 +54,7 @@ public class ArenaAIController {
             Logger.logLn("no moves?");
         } else {
             Skill s = bestAction.skill;
-            Logger.logLn("AI will perform " + s.name + "/" + bestAction.rating + " at position " + bestAction.targets[0].getPosition());
+            Logger.logLn("AI will perform " + s.getName() + "/" + bestAction.rating + " at position " + bestAction.targets[0].getPosition());
             this.arena.activeSkill = s;
             this.arena.activeSkill.setTargets(List.of(bestAction.targets));
 
@@ -69,7 +69,7 @@ public class ArenaAIController {
     private void evaluateSkills() {
         for (Skill s: this.arena.activeHero.getSkills()) {
             if (s != null) {
-                Logger.aiLogln("evaluate:" +s.name);
+                Logger.aiLogln("evaluate:" +s.getName());
                 if ( !this.arena.activeHero.canPerform(s)) {
                     Logger.aiLogln("ai cannot perform");
                     continue;

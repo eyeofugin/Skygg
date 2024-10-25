@@ -45,6 +45,8 @@ public class DUMMY extends Hero {
 
         this.stats.put(Stat.CRIT_CHANCE, 0);
 
+        this.stats.put(Stat.SHIELD,0);
+
     }
 
     @Override

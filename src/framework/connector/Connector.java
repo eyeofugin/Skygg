@@ -26,6 +26,8 @@ public class Connector {
     public static String EFFECT_FAILURE = "EFFECT_FAILURE";
     public static String EFFECT_ADDED = "EFFECT_ADDED";
     public static String ACTION_INFLICTION = "ACTION_INFLICTION";
+    public static String SHIELD_BROKEN = "SHIELD_BROKEN";
+    public static String DMG_TO_SHIELD = "DMG_TO_SHIELD";
 
     public static String PREPARE_UPDATE = "PREPARE_UPDATE";
     public static String UPDATE = "UPDATE";

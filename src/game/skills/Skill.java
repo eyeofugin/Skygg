@@ -39,6 +39,8 @@ public abstract class Skill {
     protected List<Effect> effects = new ArrayList<>();
     protected List<Effect> casterEffects = new ArrayList<>();
 
+    protected List<Resource> targetResources = new ArrayList<>();
+
     protected List<Multiplier> dmgMultipliers = new ArrayList<>();
     protected List<Multiplier> healMultipliers = new ArrayList<>();
 
@@ -131,7 +133,7 @@ public abstract class Skill {
 
     //SKILL LOGIC
     public void baseDamageChanges(Hero target, Hero caster){
-        if (this.dmg > 0) {
+        if (this.dmg > 0 || !this.dmgMultipliers.isEmpty()) {
             DmgChangesPayload dmgChangesPayload = new DmgChangesPayload()
                     .setDmg(this.dmg)
                     .setSkill(this)
@@ -142,7 +144,7 @@ public abstract class Skill {
         }
     }
     public void baseHealChanges(Hero target, Hero caster) {
-        if (this.heal > 0) {
+        if (this.heal > 0 || !this.healMultipliers.isEmpty()) {
             BaseHealChangesPayload baseHealChangesPayload = new BaseHealChangesPayload()
                     .setHeal(this.heal)
                     .setSkill(this)
@@ -300,26 +302,6 @@ public abstract class Skill {
             if (possibleTarget == null) {
                 baseTargets[i] = -1;
             }
-//            if (this.targetType.equals(TargetType.SINGLE)) {
-//                Hero possibleTarget = this.hero.arena.getAtPosition(baseTargets[i]);
-//                if (possibleTarget!=null) {
-//                    TargetModePayload targetModePayload = new TargetModePayload();
-//                    Connector.fireTopic(Connector.TARGET_MODE, targetModePayload);
-//
-//                    TargetMode targetMode = targetModePayload.targetMode;
-//                    if (targetMode!=null) {
-//                        if (targetMode.equals(TargetMode.MUST_NOT)) {
-//                            baseTargets[i]=-1;
-//                        } else if (targetMode.equals(TargetMode.MUST)) {
-//                            for (int j = 0; j < baseTargets.length; j++) {
-//                                if (baseTargets[j] != baseTargets[i]) {
-//                                    baseTargets[j] = -1;
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
             if (this.targetType.equals(TargetType.LINE)) {
                 if (position == baseTargets[i]) {
                     baseTargets[i] = -1;
@@ -567,6 +549,14 @@ public abstract class Skill {
 
     public int[] getIconPixels() {
         return iconPixels;
+    }
+
+    public List<Resource> getTargetResources() {
+        return targetResources;
+    }
+
+    public void setTargetResources(List<Resource> targetResources) {
+        this.targetResources = targetResources;
     }
 
     public abstract String getName();

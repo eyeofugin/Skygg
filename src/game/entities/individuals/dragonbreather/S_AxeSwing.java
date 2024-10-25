@@ -13,8 +13,6 @@ import java.util.List;
 
 public class S_AxeSwing extends Skill {
 
-    private int bleedingCounter = 0;
-
     public S_AxeSwing(Hero hero) {
         super(hero);
         this.iconPath = "/res/icons/axeswing.png";

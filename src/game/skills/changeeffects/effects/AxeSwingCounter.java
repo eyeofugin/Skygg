@@ -10,6 +10,7 @@ public class AxeSwingCounter extends Effect {
         this.stackable = true;
         this.stacks = stacks;
         this.description = "Amount of Axe Swings.";
+        this.type = ChangeEffectType.BUFF;
     }
 
     @Override

@@ -4,11 +4,10 @@ import game.entities.Animator;
 import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.Stat;
-import game.skills.changeeffects.effects.AxeSwingCounter;
 
 public class H_DragonBreather extends Hero {
 
-    protected H_DragonBreather() {
+    public H_DragonBreather() {
         super("Dragon Breather");
         this.initBasePath("dragonbreather");
         this.secondaryResource = Stat.MANA;
@@ -70,5 +69,7 @@ public class H_DragonBreather extends Hero {
         this.stats.put(Stat.CURRENT_ACTION, 1);
 
         this.stats.put(Stat.CRIT_CHANCE, 0);
+
+        this.stats.put(Stat.SHIELD,0);
     }
 }

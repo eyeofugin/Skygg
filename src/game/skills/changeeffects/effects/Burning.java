@@ -12,7 +12,7 @@ public class Burning extends Effect {
         this.stackable = true;
         this.stacks = stacks;
         this.description = "Loses 1 health per stack each turn.";
-        this.type = ChangeEffectType.EFFECT;
+        this.type = ChangeEffectType.DEBUFF;
     }
 
     @Override

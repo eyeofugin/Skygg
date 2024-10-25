@@ -12,7 +12,8 @@ import java.util.Map;
 public abstract class Effect {
     public enum ChangeEffectType {
         STATUS_INFLICTION,
-        EFFECT
+        BUFF,
+        DEBUFF;
     }
 
     public int turns = -1;

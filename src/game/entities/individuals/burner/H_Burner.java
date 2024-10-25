@@ -61,12 +61,5 @@ public class H_Burner extends Hero {
         this.stats.put(Stat.LIFE_REGAIN, 1);
 
         this.stats.put(Stat.FAITH, 15);
-        this.stats.put(Stat.CURRENT_FAITH, 0);
-
-        this.stats.put(Stat.MANA, 0);
-        this.stats.put(Stat.CURRENT_MANA, 0);
-
-        this.stats.put(Stat.MAX_ACTION, 1);
-        this.stats.put(Stat.CURRENT_ACTION, 1);
     }
 }

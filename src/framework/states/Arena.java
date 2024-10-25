@@ -244,7 +244,7 @@ public class Arena extends GUIElement {
             this.activeTargets = getEntitiesAt(this.pointers);
             this.activeSkill.setTargets(java.util.List.of(this.activeTargets));
         }
-        Logger.logLn("Player will perform " + this.activeSkill.name + " at position " + this.activePointer);
+        Logger.logLn("Player will perform " + this.activeSkill.getName() + " at position " + this.activePointer);
         //allEntities.onPerform(skill, targets);
         this.activeSkill.perform();
         this.pointers = new int[0];

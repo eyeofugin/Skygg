@@ -14,7 +14,7 @@ public class Bar extends GUIElement {
     @Override
     public int[] render() {
         background(Color.VOID);
-        int[] barPixels = getBar(this.width, this.height, this.hero.getResourcePercentage(resource), color, Color.BLACK);
+        int[] barPixels = getBar(this.width, this.height, 0, this.hero.getResourcePercentage(resource), color, Color.BLACK);
         int[] barStringPixels = getTextLine(this.hero.getResourceString(resource), this.width, this.height, 1, Color.WHITE);
         fill(barPixels);
         fill(barStringPixels);
