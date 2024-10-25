@@ -16,6 +16,7 @@ import framework.connector.payloads.EffectFailurePayload;
 import framework.connector.payloads.EndOfTurnPayload;
 import framework.connector.payloads.HealChangesPayload;
 import framework.connector.payloads.ShieldBrokenPayload;
+import framework.connector.payloads.ShieldChangesPayload;
 import framework.connector.payloads.StartOfTurnPayload;
 import framework.graphics.GUIElement;
 import framework.graphics.text.Color;
@@ -173,7 +174,7 @@ public abstract class Hero extends GUIElement {
 //            effect.addStacksToSprite(sprite);
             fillWithGraphicsSize(effectsX, effectsY, Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE,
                     sprite, false, null,
-                    effect.type.equals(Effect.ChangeEffectType.EFFECT) ? Color.DARKYELLOW : Color.RED);
+                    effect.type.equals(Effect.ChangeEffectType.BUFF) ? Color.DARKGREEN : Color.RED);
             if (effect.stackable) {
                 int[] stacks = getSmallNumTextLine(effect.stacks+"", Property.EFFECT_ICON_SIZE, this.editor.smallNumHeight, TextAlignment.RIGHT, Color.VOID, Color.BLACK);
                 fillWithGraphicsSize(effectsX +1, effectsY + (Property.EFFECT_ICON_SIZE-2), Property.EFFECT_ICON_SIZE, this.editor.smallNumHeight,
@@ -476,6 +477,12 @@ public abstract class Hero extends GUIElement {
         addResource(Stat.CURRENT_LIFE, Stat.LIFE, resultHeal);
     }
 
+    public void shield(int shield) {
+        ShieldChangesPayload pl = new ShieldChangesPayload()
+                .setShield(shield);
+        Connector.fireTopic(Connector.SHIELD_CHANGES, pl);
+        addResource(Stat.SHIELD, Stat.LIFE, pl.shield);
+    }
     public int damage(Hero caster, int damage, DamageType dmgType, int lethality, Skill skill) {
 
         int def = getStat(getDefenseStatFor(dmgType));
@@ -501,7 +508,7 @@ public abstract class Hero extends GUIElement {
                 dmgToShield = shield;
                 broken = true;
             } else {
-                this.addResource(Stat.SHIELD, Stat.LIFE,-1*result);
+                this.shield(-1*result);
                 dmgToShield = result;
                 result = 0;
             }

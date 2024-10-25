@@ -3,9 +3,11 @@ package game.skills;
 public abstract class GlobalEffect {
 
     private final String name;
+    private final String description;
 
-    protected GlobalEffect(String name) {
+    protected GlobalEffect(String name, String description) {
         this.name = name;
+        this.description = description;
     }
 
     public abstract void initSubscriptions();
@@ -13,5 +15,9 @@ public abstract class GlobalEffect {
 
     public String getName() {
         return name;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

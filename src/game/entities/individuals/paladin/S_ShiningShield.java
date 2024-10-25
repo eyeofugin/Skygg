@@ -19,7 +19,7 @@ public class S_ShiningShield extends Skill {
         addSubscriptions();
         setToInitial();
         initAnimation();
-        this.hero.addResource(Stat.SHIELD, Stat.LIFE,this.hero.getStat(Stat.LIFE) * 10 / 100);
+        this.hero.shield(this.hero.getStat(Stat.LIFE) * 10 / 100);
     }
 
     @Override

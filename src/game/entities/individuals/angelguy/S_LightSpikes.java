@@ -48,7 +48,7 @@ public class S_LightSpikes extends Skill {
     }
     public void dmgTrigger(DmgTriggerPayload pl) {
         if (this.equals(pl.cast)) {
-            this.hero.addResource(Stat.CURRENT_LIFE, Stat.LIFE, pl.dmgDone*10/100);
+            this.hero.heal(pl.cast.hero, pl.dmgDone*10/100, this);
         }
     }
 

@@ -332,6 +332,9 @@ public class Arena extends GUIElement {
                 case FIRST_TWO_ENEMIES:
                     this.pointers = this.activeHero.isEnemy()?new int[]{2,3}:new int[]{4,5};
                     break;
+                case ARENA:
+                    this.pointers = new int[]{0,1,2,3,4,5,6,7};
+                    break;
             }
             this.performSkill();
         }

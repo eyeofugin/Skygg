@@ -1,14 +1,18 @@
-package game.entities.individuals.divinemage;
+package game.entities.individuals.thehealer;
 
 import game.entities.Hero;
+import game.entities.Multiplier;
 import game.skills.Skill;
+import game.skills.Stat;
 import game.skills.TargetType;
 
-public class S_HealingGleam extends Skill {
+import java.util.List;
 
-    public S_HealingGleam(Hero hero) {
+public class S_ImbueWithLight extends Skill {
+
+    public S_ImbueWithLight(Hero hero) {
         super(hero);
-        this.iconPath = "/res/icons/healinggleam.png";
+        this.iconPath = "/res/icons/imbuewithlight.png";
         addSubscriptions();
         setToInitial();
         initAnimation();
@@ -17,10 +21,11 @@ public class S_HealingGleam extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.targetType = TargetType.LINE;
-        this.distance = 4;
-        this.cdMax = 4;
-        this.faithCost = 15;
+        this.targetType = TargetType.ALL_ALLY;
+        this.cdMax = 2;
+        this.manaCost = 10;
+        this.heal = 0;
+        this.healMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.3));
     }
 
     @Override
@@ -28,14 +33,8 @@ public class S_HealingGleam extends Skill {
         this.hero.anim.setupAnimation(this.hero.basePath + "/res/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
     }
     @Override
-    public void applySkillEffects(Hero target) {
-        super.applySkillEffects(target);
-        target.removeNegativeEffects();
-    }
-
-    @Override
     public String getDescriptionFor(Hero hero) {
-        return "Heal all status effects and debuffs;";
+        return "30%MAG heal";
     }
 
     @Override
@@ -45,6 +44,6 @@ public class S_HealingGleam extends Skill {
 
     @Override
     public String getName() {
-        return "Healing Gleam";
+        return "Imbue with light";
     }
 }

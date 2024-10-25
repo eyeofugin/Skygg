@@ -4,12 +4,15 @@ import framework.Engine;
 import framework.graphics.GUIElement;
 import game.entities.Hero;
 import game.entities.HeroTeam;
+import game.entities.individuals.angelguy.H_AngelGuy;
 import game.entities.individuals.burner.H_Burner;
 import game.entities.individuals.dev.dummy.DUMMY;
+import game.entities.individuals.divinemage.H_DivineMage;
 import game.entities.individuals.dragonbreather.H_DragonBreather;
 import game.entities.individuals.firedancer.H_FireDancer;
 import game.entities.individuals.paladin.H_Paladin;
 import game.entities.individuals.phoenixguy.H_Phoenixguy;
+import game.entities.individuals.thehealer.H_TheHealer;
 
 public class StateManager {
 
@@ -19,16 +22,17 @@ public class StateManager {
     public StateManager(Engine e) {
         this.e = e;
         Arena arena = new Arena(e);
-        H_Burner hero = new H_Burner();
+        H_AngelGuy hero = new H_AngelGuy();
         hero.enterArena(false, 1, arena);
 
-        H_FireDancer hero3 = new H_FireDancer();
+        H_TheHealer hero3 = new H_TheHealer();
         hero3.enterArena(false, 2, arena);
 
-        H_DragonBreather hero2 = new H_DragonBreather();
+        H_DivineMage hero2 = new H_DivineMage();
         hero2.enterArena(false,3, arena);
 
         H_Paladin paladin = new H_Paladin();
+        paladin.enterArena(false, 0, arena);
 
 
 //        H_Phoenixguy hero = new H_Phoenixguy();
@@ -45,7 +49,7 @@ public class StateManager {
 
         HeroTeam friends = new HeroTeam(1, false,
                 new Hero[]{
-                        null,
+                        paladin,
                         hero,
                         hero3,
                         hero2});

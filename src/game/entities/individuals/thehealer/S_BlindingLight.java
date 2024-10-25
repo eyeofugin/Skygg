@@ -1,14 +1,17 @@
-package game.entities.individuals.divinemage;
+package game.entities.individuals.thehealer;
 
 import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.TargetType;
+import game.skills.changeeffects.statusinflictions.Blinded;
 
-public class S_HealingGleam extends Skill {
+import java.util.List;
 
-    public S_HealingGleam(Hero hero) {
+public class S_BlindingLight extends Skill {
+
+    public S_BlindingLight(Hero hero) {
         super(hero);
-        this.iconPath = "/res/icons/healinggleam.png";
+        this.iconPath = "/res/icons/blindinglight.png";
         addSubscriptions();
         setToInitial();
         initAnimation();
@@ -17,25 +20,21 @@ public class S_HealingGleam extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.targetType = TargetType.LINE;
-        this.distance = 4;
-        this.cdMax = 4;
-        this.faithCost = 15;
+        this.targetType = TargetType.SINGLE;
+        this.distance = 5;
+        this.cdMax = 3;
+        this.manaCost = 5;
+        this.effects = List.of(new Blinded(3));
     }
 
     @Override
     protected void initAnimation() {
         this.hero.anim.setupAnimation(this.hero.basePath + "/res/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
     }
-    @Override
-    public void applySkillEffects(Hero target) {
-        super.applySkillEffects(target);
-        target.removeNegativeEffects();
-    }
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Heal all status effects and debuffs;";
+        return "Blinds";
     }
 
     @Override
@@ -45,6 +44,6 @@ public class S_HealingGleam extends Skill {
 
     @Override
     public String getName() {
-        return "Healing Gleam";
+        return "Blinding Light";
     }
 }

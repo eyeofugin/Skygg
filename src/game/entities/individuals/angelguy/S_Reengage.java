@@ -13,7 +13,7 @@ public class S_Reengage extends Skill {
 
     public S_Reengage(Hero hero) {
         super(hero);
-        this.iconPath = "/res/icons/spark.png";
+        this.iconPath = "/res/icons/reengage.png";
         setToInitial();
         initAnimation();
     }

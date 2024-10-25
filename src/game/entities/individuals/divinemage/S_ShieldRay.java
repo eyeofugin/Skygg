@@ -25,7 +25,7 @@ public class S_ShieldRay extends Skill {
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
-        target.addResource(Stat.SHIELD, Stat.LIFE, this.hero.getStat(Stat.CURRENT_FAITH) * 50 / 100);
+        target.shield(this.hero.getStat(Stat.CURRENT_FAITH) * 50 / 100);
     }
     @Override
     protected void initAnimation() {

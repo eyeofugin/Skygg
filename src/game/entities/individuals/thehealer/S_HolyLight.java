@@ -1,14 +1,14 @@
-package game.entities.individuals.divinemage;
+package game.entities.individuals.thehealer;
 
 import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.TargetType;
 
-public class S_HealingGleam extends Skill {
+public class S_HolyLight extends Skill {
 
-    public S_HealingGleam(Hero hero) {
+    public S_HolyLight(Hero hero) {
         super(hero);
-        this.iconPath = "/res/icons/healinggleam.png";
+        this.iconPath = "/res/icons/holylight.png";
         addSubscriptions();
         setToInitial();
         initAnimation();
@@ -17,25 +17,19 @@ public class S_HealingGleam extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.targetType = TargetType.LINE;
-        this.distance = 4;
+        this.targetType = TargetType.ARENA;
         this.cdMax = 4;
-        this.faithCost = 15;
+        this.manaCost = 6;
     }
 
     @Override
     protected void initAnimation() {
         this.hero.anim.setupAnimation(this.hero.basePath + "/res/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
     }
-    @Override
-    public void applySkillEffects(Hero target) {
-        super.applySkillEffects(target);
-        target.removeNegativeEffects();
-    }
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Heal all status effects and debuffs;";
+        return "Summons the holy light effect";
     }
 
     @Override
@@ -45,6 +39,6 @@ public class S_HealingGleam extends Skill {
 
     @Override
     public String getName() {
-        return "Healing Gleam";
+        return "Holy Light";
     }
 }

@@ -29,7 +29,7 @@ public class S_HolyShield extends Skill {
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
-        target.addResource(Stat.SHIELD, Stat.LIFE, 3);
+        target.shield(3);
     }
     @Override
     protected void initAnimation() {

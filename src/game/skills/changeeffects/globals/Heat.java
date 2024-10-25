@@ -9,7 +9,7 @@ import game.skills.changeeffects.effects.Burning;
 public class Heat extends GlobalEffect {
 
     public Heat() {
-        super("Heat");
+        super("Heat", "Doubles burning dmg");
         initSubscriptions();
     }
 
