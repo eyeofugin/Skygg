@@ -46,8 +46,4 @@ public class S_Heat extends Skill {
         return "Summon Heat Effect";
     }
 
-    @Override
-    public void addSubscriptions() {
-
-    }
 }

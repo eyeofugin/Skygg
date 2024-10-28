@@ -23,18 +23,6 @@ public class Rooted extends Effect {
 
     @Override
     public void addSubscriptions() {
-        Connector.addSubscription(Connector.CAN_PERFORM, new Connection(this, CanPerformPayload.class, "canPerform"));
-    }
 
-    public void canPerform(CanPerformPayload canPerformPayload) {
-        if (!canPerformPayload.success) {
-            return;
-        }
-        Skill skill = canPerformPayload.skill;
-        if (skill != null && skill.hero.equals(this.hero)) {
-            if (skill.tags.contains(Skill.SkillTag.MOVE)) {
-                canPerformPayload.success = false;
-            }
-        }
     }
 }

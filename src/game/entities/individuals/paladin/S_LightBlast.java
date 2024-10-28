@@ -6,8 +6,6 @@ import game.skills.DamageType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
-import game.skills.changeeffects.effects.AxeSwingCounter;
-import game.skills.changeeffects.statusinflictions.Bleeding;
 
 import java.util.List;
 
@@ -35,6 +33,7 @@ public class S_LightBlast extends Skill {
     }
     @Override
     protected void initAnimation() {
+        this.hero.anim.setupAnimation(this.hero.basePath + "/res/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
 
     }
 
@@ -48,10 +47,6 @@ public class S_LightBlast extends Skill {
         return "Push 1 back";
     }
 
-    @Override
-    public void addSubscriptions() {
-
-    }
 
     @Override
     public String getName() {

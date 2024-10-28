@@ -31,7 +31,8 @@ public enum Stat {
 
     SHIELD("Shield", "SHI"),
 
-    CRIT_CHANCE("Crit Chance", "CRI");
+    CRIT_CHANCE("Crit Chance", "CRI"),
+    LETHALITY("Lethality", "LET");
 
     private final String translationString;
     private final String iconKey;

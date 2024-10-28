@@ -45,9 +45,4 @@ public class S_Heat extends Skill {
     public String getDescriptionFor(Hero hero) {
         return "Summon Heat Effect";
     }
-
-    @Override
-    public void addSubscriptions() {
-
-    }
 }

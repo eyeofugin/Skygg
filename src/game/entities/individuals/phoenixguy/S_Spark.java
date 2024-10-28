@@ -54,6 +54,4 @@ public class S_Spark extends Skill {
         return "Deal low dmg. Gets 5 Favor, if combo gain extra 7.";
     }
 
-    @Override
-    public void addSubscriptions() {}
 }

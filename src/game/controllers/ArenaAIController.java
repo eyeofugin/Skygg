@@ -505,7 +505,7 @@ public class ArenaAIController {
         List<Hero[]> preFilter = new ArrayList<>();
         List<Hero[]> result = new ArrayList<>();
         switch (s.getTargetType()) {
-            case SINGLE, SINGLE_ALLY, SINGLE_ALLY_IN_FRONT -> setSingleTargetGroups(s, preFilter);
+            case SINGLE, SINGLE_ALLY, SINGLE_ALLY_IN_FRONT, SINGLE_ALLY_BEHIND -> setSingleTargetGroups(s, preFilter);
             case LINE -> setLineTargetGroups(s, preFilter);
             case SELF -> preFilter.add(new Hero[]{this.arena.activeHero});
             case ALL -> setAllTargetGroups(preFilter);

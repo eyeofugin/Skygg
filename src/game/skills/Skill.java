@@ -23,6 +23,7 @@ public abstract class Skill {
 
     private static int counter;
     public int id;
+    public String name;
     public final Hero hero;
     public String description;
     protected int[] iconPixels;
@@ -68,7 +69,8 @@ public abstract class Skill {
             TargetType.SELF,
             TargetType.ALL_ALLY,
             TargetType.SINGLE_ALLY,
-            TargetType.SINGLE_ALLY_IN_FRONT
+            TargetType.SINGLE_ALLY_IN_FRONT,
+            TargetType.SINGLE_ALLY_BEHIND
     );
 
 //AI
@@ -111,6 +113,7 @@ public abstract class Skill {
         this.enhancementId = 0;
         this.cdMax = 0;
         this.canMiss = true;
+        this.countAsHits = 1;
         if (SpriteLibrary.sprites.containsKey(this.getName())) {
             this.iconPixels = SpriteLibrary.sprites.get(this.getName());
         } else {
@@ -129,7 +132,9 @@ public abstract class Skill {
     }
     protected abstract void  initAnimation();
     public abstract String getDescriptionFor(Hero hero);
-    public abstract void addSubscriptions();
+    public void addSubscriptions() {
+
+    };
 
     //SKILL LOGIC
     public void baseDamageChanges(Hero target, Hero caster){
@@ -170,7 +175,8 @@ public abstract class Skill {
     public void resolve() {
         for (Hero arenaTarget : targets) {
             if (this.targetType.equals(TargetType.SINGLE_ALLY)
-                    || this.targetType.equals(TargetType.SINGLE_ALLY_IN_FRONT)) {
+                    || this.targetType.equals(TargetType.SINGLE_ALLY_IN_FRONT)
+                    || this.targetType.equals(TargetType.SINGLE_ALLY_BEHIND)) {
                 this.individualResolve(arenaTarget);
             } else {
                 Logger.logLn("Resolve " + this.getName() + " for " + arenaTarget.getName());
@@ -198,7 +204,7 @@ public abstract class Skill {
         Logger.logLn("After multipliers:" + dmg);
         DamageType dt = this.getDamageType();
         Logger.logLn("DT:" + dt);
-//        int lethality = this.hero.getStat( Stat.LETHALITY, this);
+        int lethality = this.hero.getStat( Stat.LETHALITY);
         for (int i = 0; i < getCountsAsHits(); i++) {
             int dmgPerHit = dmg;
             Logger.logLn("Hit no:" + i+1);
@@ -212,14 +218,14 @@ public abstract class Skill {
                 }
             }
             if (dmgPerHit>0) {
-                int doneDamage = target.damage(this.hero, dmgPerHit, dt, 0, this);
+                int doneDamage = target.damage(this.hero, dmgPerHit, dt, lethality, this);
                 Logger.logLn("done damage:"+doneDamage);
                 this.fireDmgTrigger(target,this, doneDamage);
             }
             int heal = this.getHeal();
             Logger.logLn("Heal:" + heal);
             if (heal > 0) {
-                target.heal(this.hero, heal, this);
+                target.heal(this.hero, heal, this, false);
             }
             this.applySkillEffects(target);
         }
@@ -291,6 +297,14 @@ public abstract class Skill {
             baseTargets = Arrays.stream(baseTargets).filter(i->i<4 && i>position).toArray();
         } else if (this.hero.isEnemy() && this.targetType.equals(TargetType.SINGLE_ALLY_IN_FRONT)) {
             baseTargets = Arrays.stream(baseTargets).filter(i->i>3 && i<position).toArray();
+        } else if (this.targetType.equals(TargetType.ENEMY_LINE)) {
+            baseTargets = this.hero.isEnemy()?new int[]{0,1,2,3}:new int[]{4,5,6,7};
+        } else if (this.targetType.equals(TargetType.SINGLE_ALLY_BEHIND)) {
+            if (this.hero.isEnemy()) {
+                baseTargets = Arrays.stream(baseTargets).filter(i->i>4 && i>position).toArray();
+            } else {
+                baseTargets = Arrays.stream(baseTargets).filter(i->i<3 && i<position).toArray();
+            }
         }
         int range = this.distance;
         for (int i = 0; i < baseTargets.length; i++) {
@@ -559,7 +573,9 @@ public abstract class Skill {
         this.targetResources = targetResources;
     }
 
-    public abstract String getName();
+    public String getName() {
+        return this.name;
+    }
 
     public String getCostString() {
         if (this.isPassive()) {

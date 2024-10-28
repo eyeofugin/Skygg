@@ -4,6 +4,7 @@ public enum TargetType {
     SINGLE,
     SINGLE_ALLY,
     SINGLE_ALLY_IN_FRONT,
+    SINGLE_ALLY_BEHIND,
     SELF,
     ONE_RDM,
     TWO_RDM,
@@ -14,5 +15,5 @@ public enum TargetType {
     LINE,
     FIRST_TWO_ENEMIES,
     FIRST_ENEMY,
-    ARENA
+    ENEMY_LINE, ARENA
 }

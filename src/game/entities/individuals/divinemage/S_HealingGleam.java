@@ -37,12 +37,6 @@ public class S_HealingGleam extends Skill {
     public String getDescriptionFor(Hero hero) {
         return "Heal all status effects and debuffs;";
     }
-
-    @Override
-    public void addSubscriptions() {
-
-    }
-
     @Override
     public String getName() {
         return "Healing Gleam";

@@ -58,11 +58,6 @@ public class S_RighteousHammer extends Skill {
     }
 
     @Override
-    public void addSubscriptions() {
-
-    }
-
-    @Override
     public String getName() {
         return "Righteous Hammer";
     }

@@ -50,8 +50,4 @@ public class S_PhoenixFlames extends Skill {
         return "Enter exalted mode for 3 turns. +1 Range on skills. All enemies get 3 Burning stacks.";
     }
 
-    @Override
-    public void addSubscriptions() {
-
-    }
 }

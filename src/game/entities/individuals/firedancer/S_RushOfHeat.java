@@ -1,13 +1,10 @@
 package game.entities.individuals.firedancer;
 
 import game.entities.Hero;
-import game.entities.Multiplier;
-import game.skills.DamageType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.Burning;
-import utils.MyMaths;
 
 import java.util.List;
 
@@ -49,10 +46,5 @@ public class S_RushOfHeat extends Skill {
     @Override
     public String getName() {
         return "Rush of Heat";
-    }
-
-    @Override
-    public void addSubscriptions() {
-
     }
 }

@@ -1,13 +1,9 @@
 package game.entities.individuals.paladin;
 
 import game.entities.Hero;
-import game.entities.Multiplier;
-import game.skills.DamageType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
-import game.skills.changeeffects.effects.AxeSwingCounter;
-import game.skills.changeeffects.statusinflictions.Bleeding;
 
 import java.util.List;
 
@@ -39,18 +35,13 @@ public class S_DivineArmor extends Skill {
 
     @Override
     protected void initAnimation() {
+        this.hero.anim.setupAnimation(this.hero.basePath + "/res/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
     }
 
     @Override
     public String getDescriptionFor(Hero hero) {
         return "+3END +1STA";
     }
-
-    @Override
-    public void addSubscriptions() {
-
-    }
-
     @Override
     public String getName() {
         return "Divine Armor";

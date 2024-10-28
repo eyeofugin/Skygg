@@ -38,11 +38,6 @@ public class S_InnerFire extends Skill {
     }
 
     @Override
-    public void addSubscriptions() {
-
-    }
-
-    @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
         this.hero.addToStat(Stat.FORCE, 5);

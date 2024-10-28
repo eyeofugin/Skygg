@@ -1,5 +1,7 @@
 package game.entities;
 
+import framework.connector.Connector;
+import framework.connector.payloads.DeathTriggerPayload;
 import game.skills.Stat;
 
 import java.util.ArrayList;
@@ -36,6 +38,9 @@ public class HeroTeam {
             if (this.heroes[i] != null && this.heroes[i].getStat(Stat.CURRENT_LIFE) < 1) {
                 this.deadHeroes.add(this.heroes[i]);
                 removed.add(this.heroes[i]);
+                DeathTriggerPayload pl = new DeathTriggerPayload()
+                        .setDead(this.heroes[i]);
+                Connector.fireTopic(Connector.DEATH_TRIGGER, pl);
                 this.heroes[i] = null;
                 for (int j = i - fillUpDirection; j >= 0 && j < this.heroes.length; j-=fillUpDirection) {
                     if (this.heroes[j] != null) {

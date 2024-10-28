@@ -41,10 +41,6 @@ public class S_HolyShield extends Skill {
         return "All allies get 3 shield";
     }
 
-    @Override
-    public void addSubscriptions() {
-
-    }
 
     @Override
     public String getName() {

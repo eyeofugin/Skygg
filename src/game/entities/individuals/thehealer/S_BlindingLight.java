@@ -37,10 +37,6 @@ public class S_BlindingLight extends Skill {
         return "Blinds";
     }
 
-    @Override
-    public void addSubscriptions() {
-
-    }
 
     @Override
     public String getName() {

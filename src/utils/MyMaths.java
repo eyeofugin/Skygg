@@ -16,7 +16,8 @@ public class MyMaths {
     }
 
     public static int getDamage(int att, int def, int lethal) {
-        return (int) (rdmize(att) * ((dmgEqualizer + (lethal / 2)) / (dmgEqualizer + (double) rdmize(def))));
+        int defResult = def - (def*lethal/100);
+        return (int) (rdmize(att) * (dmgEqualizer / (dmgEqualizer + (double) rdmize(defResult))));
     }
 
     static private int rdmize(int a) {

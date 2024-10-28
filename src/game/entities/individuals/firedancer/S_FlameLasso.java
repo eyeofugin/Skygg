@@ -6,8 +6,6 @@ import game.skills.DamageType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
-import game.skills.changeeffects.effects.Burning;
-import utils.MyMaths;
 
 import java.util.List;
 
@@ -52,10 +50,5 @@ public class S_FlameLasso extends Skill {
     @Override
     public String getName() {
         return "Flame Lasso";
-    }
-
-    @Override
-    public void addSubscriptions() {
-
     }
 }

@@ -38,11 +38,6 @@ public class S_ImbueWithLight extends Skill {
     }
 
     @Override
-    public void addSubscriptions() {
-
-    }
-
-    @Override
     public String getName() {
         return "Imbue with light";
     }

@@ -53,11 +53,6 @@ public class S_DragonBreath extends Skill {
     }
 
     @Override
-    public void addSubscriptions() {
-
-    }
-
-    @Override
     public String getName() {
         return "Dragon Breath";
     }

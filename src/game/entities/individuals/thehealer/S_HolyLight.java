@@ -32,10 +32,6 @@ public class S_HolyLight extends Skill {
         return "Summons the holy light effect";
     }
 
-    @Override
-    public void addSubscriptions() {
-
-    }
 
     @Override
     public String getName() {

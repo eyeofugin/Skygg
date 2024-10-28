@@ -19,14 +19,15 @@ import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
 
+import game.skills.changeeffects.effects.Scoped;
+import game.skills.changeeffects.statusinflictions.Rooted;
+import utils.HeroQueue;
 import utils.MyMaths;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Queue;
 import java.util.Random;
 import java.util.stream.Stream;
 
@@ -38,7 +39,7 @@ public class Arena extends GUIElement {
     private final HUD hud;
     public ArenaAIController aiController;
 
-    public Queue<Hero> order = new LinkedList<>();
+    public HeroQueue order = new HeroQueue();
 
     public enum Status {
         TARGET_CHOICE,
@@ -178,6 +179,8 @@ public class Arena extends GUIElement {
                 this.pointers = getSingleTargets();
             } else if (this.activeSkill.getTargetType().equals(TargetType.LINE)) {
                 this.pointers = getLineTargets();
+            } else if (this.activeSkill.getTargetType().equals(TargetType.ENEMY_LINE)) {
+                this.pointers = getEnemyLineTargets();
             }
         }
     }
@@ -213,8 +216,7 @@ public class Arena extends GUIElement {
     private void endOfTurn() {
         Logger.logLn("endOfTurn()");
         this.activeHero.endOfTurn();
-        Hero lastActiveUnit = this.order.remove();
-        this.order.add(lastActiveUnit);
+        this.order.sendToBack(this.activeHero);
 //        for(Hero e: this.getAllLivingEntities()) {
 //            Logger.logLn(e.toString());
 //        }
@@ -256,12 +258,19 @@ public class Arena extends GUIElement {
         this.activeSkill = null;
         this.nextAction = null;
     }
+    public void stun(Hero target) {
+        this.order.sendToBack(target);
+    }
     public void moveTo(Hero e, int targetPos) {
         int toGo = Math.abs(e.getPosition()-targetPos);
         int dir = e.getPosition() < targetPos ? 1:-1;
         move(e,toGo,dir);
     }
     public void move(Hero e, int toGo, int dir) {
+        if (e.hasPermanentEffect(Rooted.class) > 0 ||
+            e.hasPermanentEffect(Scoped.class) > 0) {
+            return;
+        }
         if (toGo>0) {
             int targetPos = e.getPosition()+dir;
             int indexOffset = e.isEnemy() ? 4:0;
@@ -278,6 +287,11 @@ public class Arena extends GUIElement {
             HeroTeam group = e.isEnemy() ? this.enemies : this.friends;
             int oldPosition = e.getPosition();
             Hero switchWith = group.heroes[targetPos-indexOffset];
+
+            if (switchWith.hasPermanentEffect(Rooted.class) > 0 ||
+                switchWith.hasPermanentEffect(Scoped.class) > 0) {
+                return;
+            }
 
             switchWith.setPosition(oldPosition);
             e.setPosition(targetPos);
@@ -396,6 +410,18 @@ public class Arena extends GUIElement {
         int index = 0;
         for (int j = Math.min(this.activePointer,casterPosition); j <= Math.max(this.activePointer,casterPosition);j++) {
             if (j!=casterPosition) {
+                targets[index] = j;
+                index++;
+            }
+        }
+        return targets;
+    }
+    private int[] getEnemyLineTargets() {
+        int firstEnemyPosition = this.activeHero.isEnemy()?3:4;
+        int[] targets = new int[Math.abs(firstEnemyPosition-this.activePointer)];
+        int index = 0;
+        for (int j = Math.min(this.activePointer,firstEnemyPosition); j <= Math.max(this.activePointer,firstEnemyPosition);j++) {
+            if (j!=firstEnemyPosition) {
                 targets[index] = j;
                 index++;
             }

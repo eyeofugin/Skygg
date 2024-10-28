@@ -42,11 +42,6 @@ public class S_PiercingLight extends Skill {
     }
 
     @Override
-    public void addSubscriptions() {
-
-    }
-
-    @Override
     public String getName() {
         return "Piercing Light";
     }

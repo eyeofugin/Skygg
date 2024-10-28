@@ -4,7 +4,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Connector {
@@ -35,6 +34,7 @@ public class Connector {
     public static String START_OF_TURN = "START_OF_TURN";
     public static String END_OF_TURN = "END_OF_TURN";
     public static String START_OF_MATCH = "START_OF_MATCH";
+    public static String DEATH_TRIGGER = "DEATH_TRIGGER";
 
     public static Map<String, ArrayList<Connection>> subscriptions = new HashMap<>();
 

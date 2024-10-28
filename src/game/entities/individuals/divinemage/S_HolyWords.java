@@ -39,11 +39,6 @@ public class S_HolyWords extends Skill {
     }
 
     @Override
-    public void addSubscriptions() {
-
-    }
-
-    @Override
     public String getName() {
         return "";
     }

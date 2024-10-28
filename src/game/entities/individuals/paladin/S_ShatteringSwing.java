@@ -53,10 +53,6 @@ public class S_ShatteringSwing extends Skill {
         return "2*FOR chance to injure";
     }
 
-    @Override
-    public void addSubscriptions() {
-
-    }
 
     @Override
     public String getName() {

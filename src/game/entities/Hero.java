@@ -2,7 +2,6 @@ package game.entities;
 
 import framework.Logger;
 import framework.Property;
-import framework.connector.ConnectionPayload;
 import framework.connector.Connector;
 import framework.connector.payloads.ActionInflictionPayload;
 import framework.connector.payloads.CanPerformPayload;
@@ -39,9 +38,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-
-import static java.util.Map.entry;
-
 public abstract class Hero extends GUIElement {
 
     public Arena arena;
@@ -58,6 +54,7 @@ public abstract class Hero extends GUIElement {
     protected String portraitName;
 
     protected Map<Stat, Integer> stats = new HashMap<>();
+    protected Map<Stat, Integer> statChanges = new HashMap<>();
     protected List<Effect> effects = new ArrayList<>();
     protected Stat secondaryResource;
 
@@ -123,6 +120,7 @@ public abstract class Hero extends GUIElement {
         this.stats.put(Stat.ACCURACY, 100);
         this.stats.put(Stat.EVASION, 0);
         this.stats.put(Stat.SHIELD,0);
+        this.stats.put(Stat.LETHALITY,0);
     }
     @Override
     public void update(int frame) {
@@ -210,7 +208,19 @@ public abstract class Hero extends GUIElement {
     }
 
     public void addToStat(Stat stat, int value) {
-        this.stats.put(stat, Math.max(this.stats.get(stat) + value, 0));
+        int val = Math.max(this.stats.get(stat) + value, 0);
+        this.statChanges.put(stat, val);
+        this.stats.put(stat, val);
+    }
+
+    public Map<Stat, Integer> getStatChanges() {
+        return this.statChanges;
+    }
+    public Map<Stat, Integer> getStats() {
+        return this.stats;
+    }
+    public void applyStatChanges(Map<Stat, Integer> changes) {
+        this.stats.putAll(changes);
     }
 
     public void addResource(Stat currentStat, Stat maxStat, int value) {
@@ -281,7 +291,7 @@ public abstract class Hero extends GUIElement {
         if (this.hasPermanentEffect(Injured.class) > 0) {
             return;
         }
-        heal(this, heal, null);
+        heal(this, heal, null, true);
         changeStatTo(Stat.CURRENT_ACTION, this.stats.get(Stat.MAX_ACTION));
     }
     private void setActions() {
@@ -311,6 +321,13 @@ public abstract class Hero extends GUIElement {
     private void removeEffect(Effect effect) {
         effect.removeEffect();
         this.effects.remove(effect);
+    }
+    public <T extends Effect> void removeStack(Class<T> clazz) {
+        for (Effect effect : this.effects) {
+            if (effect.getClass().equals(clazz)) {
+                effect.removeStack();
+            }
+        }
     }
     public <T extends Effect> int getPermanentEffectStacks(Class<T> clazz) {
         int amount = 0;
@@ -462,18 +479,19 @@ public abstract class Hero extends GUIElement {
                 .setSkill(skill)
                 .setHeal(heal);
         Connector.fireTopic(Connector.HEAL_CHANGES, healChangesPayload);
-        int pureHeal = healChangesPayload.getHeal();
+        int pureHeal = healChangesPayload.heal;
         int actualHeal = Math.min(pureHeal, this.stats.get(Stat.LIFE) - this.stats.get(Stat.CURRENT_LIFE));
         return actualHeal * 100 / this.stats.get(Stat.LIFE);
     }
-    public void heal(Hero caster, int heal, Skill skill) {
+    public void heal(Hero caster, int heal, Skill skill, boolean regen) {
         HealChangesPayload healChangesPayload = new HealChangesPayload()
                 .setCaster(caster)
                 .setTarget(this)
                 .setSkill(skill)
-                .setHeal(heal);
+                .setHeal(heal)
+                .setRegen(regen);
         Connector.fireTopic(Connector.HEAL_CHANGES, healChangesPayload);
-        int resultHeal = healChangesPayload.getHeal();
+        int resultHeal = healChangesPayload.heal;
         addResource(Stat.CURRENT_LIFE, Stat.LIFE, resultHeal);
     }
 

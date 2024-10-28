@@ -54,9 +54,4 @@ public class S_TwinFlames extends Skill {
     public String getName() {
         return "Twin Flames";
     }
-
-    @Override
-    public void addSubscriptions() {
-
-    }
 }

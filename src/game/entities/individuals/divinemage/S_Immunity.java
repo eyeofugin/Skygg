@@ -37,10 +37,6 @@ public class S_Immunity extends Skill {
         return "Gains immunity for 3 turns";
     }
 
-    @Override
-    public void addSubscriptions() {
-
-    }
 
     @Override
     public String getName() {

@@ -51,11 +51,6 @@ public class S_SpearOfLight extends Skill {
     }
 
     @Override
-    public void addSubscriptions() {
-
-    }
-
-    @Override
     public String getName() {
         return "Spear of Light";
     }

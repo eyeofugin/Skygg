@@ -56,11 +56,6 @@ public class S_Reengage extends Skill {
     }
 
     @Override
-    public void addSubscriptions() {
-
-    }
-
-    @Override
     public String getName() {
         return "Reengage";
     }

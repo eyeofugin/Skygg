@@ -46,8 +46,4 @@ public class S_FlameDance extends Skill {
         return "No action cost; Move 1; +1FIN";
     }
 
-    @Override
-    public void addSubscriptions() {
-
-    }
 }

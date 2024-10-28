@@ -54,9 +54,4 @@ public class S_Fireball extends Skill {
     public String getName() {
         return "Fireball";
     }
-
-    @Override
-    public void addSubscriptions() {
-
-    }
 }

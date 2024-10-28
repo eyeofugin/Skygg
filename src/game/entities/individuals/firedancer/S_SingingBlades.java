@@ -56,8 +56,4 @@ public class S_SingingBlades extends Skill {
         return "Singing Blades";
     }
 
-    @Override
-    public void addSubscriptions() {
-
-    }
 }

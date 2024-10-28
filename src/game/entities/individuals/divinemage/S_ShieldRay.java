@@ -39,11 +39,6 @@ public class S_ShieldRay extends Skill {
     }
 
     @Override
-    public void addSubscriptions() {
-
-    }
-
-    @Override
     public String getName() {
         return "Shield Ray";
     }

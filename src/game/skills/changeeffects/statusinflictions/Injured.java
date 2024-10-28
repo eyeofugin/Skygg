@@ -1,5 +1,8 @@
 package game.skills.changeeffects.statusinflictions;
 
+import framework.connector.Connection;
+import framework.connector.Connector;
+import framework.connector.payloads.HealChangesPayload;
 import game.skills.Effect;
 
 public class Injured extends Effect {
@@ -18,6 +21,12 @@ public class Injured extends Effect {
 
     @Override
     public void addSubscriptions() {
+        Connector.addSubscription(Connector.EOT_HEAL_CHANGES, new Connection(this, HealChangesPayload.class, "healChanges"));
+    }
 
+    public void healChanges(HealChangesPayload pl) {
+        if (this.hero.equals(pl.target)) {
+            pl.heal *= 0;
+        }
     }
 }

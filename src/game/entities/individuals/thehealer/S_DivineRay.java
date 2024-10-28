@@ -31,7 +31,7 @@ public class S_DivineRay extends Skill {
         if (target.isEnemy() == this.hero.isEnemy()) {
             this.heal = amnt;
             this.baseHealChanges(target, this.hero);
-            target.heal(this.hero, amnt, this);
+            target.heal(this.hero, amnt, this, false);
         } else {
             this.dmg = amnt;
             this.baseDamageChanges(target, this.hero);
@@ -51,10 +51,6 @@ public class S_DivineRay extends Skill {
         return "ally? heal 20%mag: 20%mag divine dmg";
     }
 
-    @Override
-    public void addSubscriptions() {
-
-    }
 
     @Override
     public String getName() {

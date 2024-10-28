@@ -34,12 +34,6 @@ public class S_Prayer extends Skill {
     public String getDescriptionFor(Hero hero) {
         return "Gain 9 Faith";
     }
-
-    @Override
-    public void addSubscriptions() {
-
-    }
-
     @Override
     public String getName() {
         return "Prayer";
