@@ -13,7 +13,8 @@ public class H_Paladin extends Hero {
         this.secondaryResource = Stat.FAITH;
         initAnimator();
         initSkills();
-        initStats();
+        this.initStats();
+        setLevel(1);
     }
 
     @Override
@@ -39,25 +40,5 @@ public class H_Paladin extends Hero {
                 new S_ShiningShield(this),
                 new S_ShatteringSwing(this)
         };
-    }
-
-    @Override
-    protected void initStats() {
-        //StatStats
-        this.stats.put(Stat.MAGIC, 3);
-        this.stats.put(Stat.FORCE, 7);
-        this.stats.put(Stat.STAMINA, 12);
-        this.stats.put(Stat.ENDURANCE, 19);
-        this.stats.put(Stat.FINESSE, 1);
-        this.stats.put(Stat.ACCURACY, 100);
-        this.stats.put(Stat.SPEED, 2);
-
-        //ResourceStats
-        this.stats.put(Stat.LIFE, 45);
-        this.stats.put(Stat.CURRENT_LIFE, 45);
-        this.stats.put(Stat.LIFE_REGAIN, 4);
-
-        this.stats.put(Stat.FAITH, 10);
-        this.stats.put(Stat.CURRENT_FAITH, 0);
     }
 }

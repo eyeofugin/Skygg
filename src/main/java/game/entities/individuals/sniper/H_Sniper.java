@@ -3,7 +3,6 @@ package game.entities.individuals.sniper;
 import game.entities.Animator;
 import game.entities.Hero;
 import game.skills.Skill;
-import game.skills.Stat;
 
 public class H_Sniper extends Hero {
     public H_Sniper() {
@@ -12,6 +11,7 @@ public class H_Sniper extends Hero {
         initAnimator();
         initSkills();
         initStats();
+        setLevel(1);
     }
 
     @Override
@@ -37,22 +37,5 @@ public class H_Sniper extends Hero {
                 new S_Cloaked(this),
                 new S_SmokeGrenade(this)
         };
-    }
-
-    @Override
-    protected void initStats() {
-
-        this.stats.put(Stat.MAGIC, 1);
-        this.stats.put(Stat.FORCE, 1);
-        this.stats.put(Stat.STAMINA, 3);
-        this.stats.put(Stat.ENDURANCE, 3);
-        this.stats.put(Stat.FINESSE, 14);
-        this.stats.put(Stat.SPEED, 12);
-
-        //ResourceStats
-        this.stats.put(Stat.LIFE, 8);
-        this.stats.put(Stat.CURRENT_LIFE, 8);
-        this.stats.put(Stat.LIFE_REGAIN, 1);
-
     }
 }

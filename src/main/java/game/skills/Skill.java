@@ -116,12 +116,12 @@ public abstract class Skill {
         this.cdMax = 0;
         this.canMiss = true;
         this.countAsHits = 1;
-        if (SpriteLibrary.sprites.containsKey(this.getName())) {
-            this.iconPixels = SpriteLibrary.sprites.get(this.getName());
+        if (SpriteLibrary.hasSprite(this.getName())) {
+            this.iconPixels = SpriteLibrary.getSprite(this.getName());
         } else {
             this.iconPixels = SpriteLibrary.sprite(Property.SKILL_ICON_SIZE,Property.SKILL_ICON_SIZE,Property.SKILL_ICON_SIZE,Property.SKILL_ICON_SIZE,
                     this.hero.basePath + this.iconPath, 0);
-            SpriteLibrary.sprites.put(this.getName(), this.iconPixels);
+            SpriteLibrary.addSprite(this.getName(), this.iconPixels);
         }
     }
 
@@ -594,16 +594,16 @@ public abstract class Skill {
         builder.append("Target:");
         switch (this.targetType) {
             case SINGLE -> {
-                builder.append(this.distance).append(" Any");
+                builder.append("Any");
             }
             case SINGLE_ALLY -> {
-                builder.append(this.distance).append(" Ally");
+                builder.append("Ally");
             }
             case SINGLE_ALLY_IN_FRONT -> {
-                builder.append(this.distance).append(" Ally front");
+                builder.append("Ally front");
             }
             case SINGLE_ALLY_BEHIND -> {
-                builder.append(this.distance).append(" Ally behind");
+                builder.append("Ally behind");
             }
             case SELF -> {
                 builder.append("Self");
@@ -627,7 +627,7 @@ public abstract class Skill {
                 builder.append("All allies");
             }
             case LINE -> {
-                builder.append(this.distance).append(" Line");
+                builder.append("Line");
             }
             case FIRST_TWO_ENEMIES -> {
                 builder.append("First two enemies");
@@ -636,7 +636,7 @@ public abstract class Skill {
                 builder.append("First enemy");
             }
             case ENEMY_LINE -> {
-                builder.append(this.distance).append(" Enemy line");
+                builder.append("Enemy line");
             }
             case ARENA -> {
                 builder.append("Arena");
@@ -647,33 +647,33 @@ public abstract class Skill {
     public String getDmgOrHealString() {
         StringBuilder builder = new StringBuilder();
         if (this.dmg != 0 || !this.dmgMultipliers.isEmpty()) {
-            builder.append("DMG:");
+            builder.append("DMG: ");
             if (this.dmg != 0) {
                 builder.append(this.dmg);
             }
             if (!this.dmgMultipliers.isEmpty()) {
-                builder.append("+");
                 for (Multiplier mult : this.dmgMultipliers) {
+                    builder.append(" + ");
                     String profColor = mult.prof.getColorKey();
                     builder.append(profColor);
                     builder.append((int)(mult.percentage*100))
-                            .append("%")
+                            .append("% ")
                             .append(mult.prof.getIconString())
                             .append("{000} ");
                 }
             }
         } else if (this.heal != 0 || !this.healMultipliers.isEmpty()) {
-            builder.append("HEAL:");
+            builder.append("HEAL: ");
             if (this.heal != 0) {
                 builder.append(this.heal);
             }
             if (!this.healMultipliers.isEmpty()) {
-                builder.append("+");
                 for (Multiplier mult : this.healMultipliers) {
+                    builder.append(" + ");
                     String profColor = mult.prof.getColorKey();
                     builder.append(profColor);
                     builder.append((int)(mult.percentage*100))
-                            .append("%")
+                            .append("% ")
                             .append(mult.prof.getIconString())
                             .append("{000} ");
                 }

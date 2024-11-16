@@ -14,6 +14,7 @@ public class H_Burner extends Hero {
         this.initAnimator();
         this.initSkills();
         this.initStats();
+        this.setLevel(1);
     }
 
     @Override
@@ -39,27 +40,5 @@ public class H_Burner extends Hero {
                 new S_Heat(this),
                 new S_TwinFlames(this)
         };
-    }
-
-    @Override
-    protected void initStats() {
-
-        //StatStats
-        this.stats.put(Stat.MAGIC, 15);
-        this.stats.put(Stat.FORCE, 3);
-        this.stats.put(Stat.STAMINA, 3);
-        this.stats.put(Stat.ENDURANCE, 2);
-        this.stats.put(Stat.FINESSE, 1);
-        this.stats.put(Stat.SPEED, 13);
-
-        this.stats.put(Stat.ACCURACY, 100);
-        this.stats.put(Stat.EVASION, 0);
-
-        //ResourceStats
-        this.stats.put(Stat.LIFE, 13);
-        this.stats.put(Stat.CURRENT_LIFE, 13);
-        this.stats.put(Stat.LIFE_REGAIN, 1);
-
-        this.stats.put(Stat.FAITH, 15);
     }
 }

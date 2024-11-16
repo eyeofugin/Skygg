@@ -13,7 +13,8 @@ public class H_Rifle extends Hero {
         this.initBasePath("rifle");
         initAnimator();
         initSkills();
-        initStats();
+        this.initStats();
+        setLevel(1);
     }
 
     @Override
@@ -40,23 +41,5 @@ public class H_Rifle extends Hero {
                 new S_Skip(this)
 //                new S_Barrage(this)
         };
-    }
-
-    @Override
-    protected void initStats() {
-
-        this.stats.put(Stat.MAGIC, 1);
-        this.stats.put(Stat.FORCE, 1);
-        this.stats.put(Stat.STAMINA, 5);
-        this.stats.put(Stat.ENDURANCE, 6);
-        this.stats.put(Stat.FINESSE, 16);
-        this.stats.put(Stat.SPEED, 14);
-
-        //ResourceStats
-        this.stats.put(Stat.LIFE, 14);
-        this.stats.put(Stat.CURRENT_LIFE, 14);
-        this.stats.put(Stat.LIFE_REGAIN, 1);
-
-        this.stats.put(Stat.CRIT_CHANCE, 10);
     }
 }

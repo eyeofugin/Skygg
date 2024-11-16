@@ -13,7 +13,8 @@ public class H_DivineMage extends Hero {
         this.secondaryResource = Stat.FAITH;
         initAnimator();
         initSkills();
-        initStats();
+        this.initStats();
+        setLevel(1);
     }
 
     @Override
@@ -39,23 +40,5 @@ public class H_DivineMage extends Hero {
                 new S_HealingGleam(this),
                 new S_Immunity(this)
         };
-    }
-
-    @Override
-    protected void initStats() {
-        //StatStats
-        this.stats.put(Stat.MAGIC, 12);
-        this.stats.put(Stat.FORCE, 1);
-        this.stats.put(Stat.STAMINA, 3);
-        this.stats.put(Stat.ENDURANCE, 4);
-        this.stats.put(Stat.FINESSE, 1);
-        this.stats.put(Stat.SPEED, 1);
-
-        //ResourceStats
-        this.stats.put(Stat.LIFE, 10);
-        this.stats.put(Stat.CURRENT_LIFE, 10);
-        this.stats.put(Stat.LIFE_REGAIN, 2);
-
-        this.stats.put(Stat.FAITH, 18);
     }
 }

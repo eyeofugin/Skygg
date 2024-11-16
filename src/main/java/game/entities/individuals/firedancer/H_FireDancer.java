@@ -12,7 +12,8 @@ public class H_FireDancer extends Hero {
         this.secondaryResource = Stat.FAITH;
         initAnimator();
         initSkills();
-        initStats();
+        this.initStats();
+        setLevel(1);
     }
 
     @Override
@@ -39,36 +40,5 @@ public class H_FireDancer extends Hero {
                 new S_RushOfHeat(this),
                 new S_SingingBlades(this)
         };
-    }
-
-    @Override
-    protected void initStats() {
-        //StatStats
-        this.stats.put(Stat.MAGIC, 9);
-        this.stats.put(Stat.FORCE, 5);
-        this.stats.put(Stat.STAMINA, 4);
-        this.stats.put(Stat.ENDURANCE, 3);
-        this.stats.put(Stat.FINESSE, 12);
-        this.stats.put(Stat.SPEED, 16);
-        this.stats.put(Stat.ACCURACY, 100);
-        this.stats.put(Stat.EVASION, 0);
-
-        //ResourceStats
-        this.stats.put(Stat.LIFE, 15);
-        this.stats.put(Stat.CURRENT_LIFE, 15);
-        this.stats.put(Stat.LIFE_REGAIN, 1);
-
-        this.stats.put(Stat.FAITH, 15);
-        this.stats.put(Stat.CURRENT_FAITH, 0);
-
-        this.stats.put(Stat.MANA, 0);
-        this.stats.put(Stat.CURRENT_MANA, 0);
-
-        this.stats.put(Stat.MAX_ACTION, 1);
-        this.stats.put(Stat.CURRENT_ACTION, 1);
-
-        this.stats.put(Stat.CRIT_CHANCE, 10);
-
-        this.stats.put(Stat.SHIELD,0);
     }
 }

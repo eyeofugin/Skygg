@@ -12,7 +12,8 @@ public class H_TheHealer extends Hero {
         this.secondaryResource = Stat.MANA;
         initAnimator();
         initSkills();
-        initStats();
+        this.initStats();
+        setLevel(1);
     }
 
     @Override
@@ -38,25 +39,5 @@ public class H_TheHealer extends Hero {
                 new S_HolyLight(this),
                 new S_ImbueWithLight(this)
         };
-    }
-
-    @Override
-    protected void initStats() {
-
-        this.stats.put(Stat.MAGIC, 12);
-        this.stats.put(Stat.FORCE, 1);
-        this.stats.put(Stat.STAMINA, 2);
-        this.stats.put(Stat.ENDURANCE, 2);
-        this.stats.put(Stat.FINESSE, 1);
-        this.stats.put(Stat.SPEED, 11);
-
-        //ResourceStats
-        this.stats.put(Stat.LIFE, 9);
-        this.stats.put(Stat.CURRENT_LIFE, 9);
-        this.stats.put(Stat.LIFE_REGAIN, 1);
-
-        this.stats.put(Stat.MANA, 18);
-        this.stats.put(Stat.CURRENT_MANA, 18);
-        this.stats.put(Stat.MANA_REGAIN, 5);
     }
 }

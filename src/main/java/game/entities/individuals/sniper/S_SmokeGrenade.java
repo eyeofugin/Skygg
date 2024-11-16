@@ -54,7 +54,7 @@ public class S_SmokeGrenade extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Get Smokescreen for 1 turn; if combo: 2 turns";
+        return "Get Smokescreen for 1 turn. if combo: 2 turns";
     }
 
 

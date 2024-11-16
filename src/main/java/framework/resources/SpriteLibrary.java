@@ -24,6 +24,7 @@ import game.skills.changeeffects.statusinflictions.Disenchanted;
 import game.skills.changeeffects.statusinflictions.Injured;
 import game.skills.changeeffects.statusinflictions.Rooted;
 import game.skills.changeeffects.statusinflictions.Taunted;
+import game.skills.genericskills.S_Skip;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -33,7 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SpriteLibrary {
-    public static Map<String, int[]> sprites = new HashMap<>();
+    private static Map<String, int[]> sprites = new HashMap<>();
     public static Map<String, int[]> portraits = new HashMap<>();
     public static Map<String, int[]> skills = new HashMap<>();
 
@@ -41,8 +42,17 @@ public class SpriteLibrary {
     public static void load() {
         sprites.put("scene01", sprite(640,360, 320, 180, "battlescene/scene01.png", 0));
         sprites.put("arrow_down", sprite(32,32,32,32,"icons/gui/arrowsmall.png", 90));
+        sprites.put("scrollArrowActive_r", sprite(8,8,8,8,"icons/gui/scrollarrowActive.png", 0));
+        sprites.put("scrollArrowActive_l", sprite(8,8,8,8,"icons/gui/scrollarrowActive.png", 180));
+        sprites.put("scrollArrowInactive_r", sprite(8,8,8,8,"icons/gui/scrollArrowInactive.png", 0));
+        sprites.put("scrollArrowInactive_l", sprite(8,8,8,8,"icons/gui/scrollArrowInactive.png", 180));
+
         sprites.put("arrow", sprite(12,12,12,12,"icons/gui/arrow.png", 90));
         sprites.put("arrow_right", sprite(12,12,12,12,"icons/gui/arrow_right.png", 0));
+        sprites.put("stats", sprite(16,16,16,16,"icons/gui/stats.png", 0));
+        sprites.put("effects", sprite(16,16,16,16,"icons/gui/effects.png", 0));
+        sprites.put("items", sprite(16,16,16,16,"icons/gui/items.png", 0));
+
         sprites.put(Burning.class.getName(), sprite(Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,
                 "icons/effect/burning.png", 0));
         sprites.put(Combo.class.getName(), sprite(Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,
@@ -89,7 +99,21 @@ public class SpriteLibrary {
                 "icons/effect/swiftstrikecounter.png", 0));
         sprites.put(Heat.class.getName(), sprite(Property.GLOBAL_EFFECT_WIDTH, Property.GLOBAL_EFFECT_HEIGHT,Property.GLOBAL_EFFECT_WIDTH,Property.GLOBAL_EFFECT_HEIGHT,
                 "icons/effect/heat.png", 0));
+        sprites.put(S_Skip.class.getName(), sprite(Property.SKILL_ICON_SIZE, Property.SKILL_ICON_SIZE,Property.SKILL_ICON_SIZE,Property.SKILL_ICON_SIZE,
+                "icons/skills/skip.png", 0));
 
+    }
+
+    public static boolean hasSprite(String name) {
+        return sprites.containsKey(name);
+    }
+
+    public static void addSprite(String name, int[] sprite) {
+        SpriteLibrary.sprites.put(name, sprite);
+    }
+
+    public static int[] getSprite(String name) {
+        return SpriteLibrary.sprites.get(name).clone();
     }
 
     public static int[] sprite(int targetW, int targetH, int w, int h, String path,int flip) {

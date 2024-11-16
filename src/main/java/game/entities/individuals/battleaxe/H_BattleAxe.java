@@ -10,9 +10,10 @@ public class H_BattleAxe extends Hero {
     public H_BattleAxe() {
         super("Battle Axe");
         this.initBasePath("battleaxe");
-        initAnimator();
-        initSkills();
-        initStats();
+        this.initAnimator();
+        this.initSkills();
+        this.initStats();
+        this.setLevel(1);
     }
 
     @Override
@@ -38,21 +39,5 @@ public class H_BattleAxe extends Hero {
                 new S_Kick(this),
                 new S_Bloodlust(this)
         };
-    }
-
-    @Override
-    protected void initStats() {
-        //StatStats
-        this.stats.put(Stat.MAGIC, 1);
-        this.stats.put(Stat.FORCE, 17);
-        this.stats.put(Stat.STAMINA, 12);
-        this.stats.put(Stat.ENDURANCE, 11);
-        this.stats.put(Stat.FINESSE, 2);
-        this.stats.put(Stat.SPEED, 3);
-
-        //ResourceStats
-        this.stats.put(Stat.LIFE, 32);
-        this.stats.put(Stat.CURRENT_LIFE, 32);
-        this.stats.put(Stat.LIFE_REGAIN, 2);
     }
 }

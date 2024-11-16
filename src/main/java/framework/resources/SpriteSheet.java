@@ -1,6 +1,7 @@
 package framework.resources;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URI;
@@ -13,6 +14,7 @@ public class SpriteSheet {
 
     public static SpriteSheet fonts5x8 = new SpriteSheet("fonts/FontsMid.png",50,60);
     public static SpriteSheet smallNum = new SpriteSheet("fonts/smallnum.png",30,5);
+    public static SpriteSheet fonts8x = new SpriteSheet("fonts/8x/8xfonts.png", 64, 32);
 
     public SpriteSheet(String path, int width, int height) {
         this.HEIGHT = height;

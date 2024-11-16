@@ -67,7 +67,7 @@ public class Arena extends GUIElement {
 
     private final int[] friendXPos = new int[]{30, 98, 166, 234};
     private final int[] enemyXPos = new int[]{342, 410, 478, 546};
-    private final int heroYPos = 110;
+    private final int heroYPos = 80;
 
     public Arena(Engine e) {
         super(Engine.X, Engine.Y);
@@ -417,7 +417,7 @@ public class Arena extends GUIElement {
     }
 
     private void renderBackGround() {
-        int[] canvas = SpriteLibrary.sprites.get("scene01");
+        int[] canvas = SpriteLibrary.getSprite("scene01");
         fillWithGraphicsSize(0,0,640,360,canvas, null);
     }
 
@@ -454,7 +454,7 @@ public class Arena extends GUIElement {
             } else {
                 x = friendXPos[j];
             }
-            int[] pointer = SpriteLibrary.sprites.get("arrow_down");
+            int[] pointer = SpriteLibrary.getSprite("arrow_down");
             fillWithGraphicsSize(x + (64 / 2 - 16), heroYPos - (32), 32, 32, pointer, null);
         }
     }
@@ -477,7 +477,7 @@ public class Arena extends GUIElement {
     }
     private void renderArenaEffect() {
         if (this.globalEffect != null) {
-            int[] effectPixels = SpriteLibrary.sprites.get(Heat.class.getName());
+            int[] effectPixels = SpriteLibrary.getSprite(Heat.class.getName());
             fillWithGraphicsSize(this.width-40, 8, Property.GLOBAL_EFFECT_WIDTH, Property.GLOBAL_EFFECT_HEIGHT, effectPixels, Color.WHITE);
         }
     }

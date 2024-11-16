@@ -13,7 +13,8 @@ public class H_DragonBreather extends Hero {
         this.secondaryResource = Stat.MANA;
         initAnimator();
         initSkills();
-        initStats();
+        this.initStats();
+        setLevel(1);
     }
 
     @Override
@@ -39,37 +40,5 @@ public class H_DragonBreather extends Hero {
                 new S_Heat(this),
                 new S_InnerFire(this)
         };
-    }
-
-    @Override
-    protected void initStats() {
-        //StatStats
-        this.stats.put(Stat.MAGIC, 4);
-        this.stats.put(Stat.FORCE, 10);
-        this.stats.put(Stat.STAMINA, 14);
-        this.stats.put(Stat.ENDURANCE, 18);
-        this.stats.put(Stat.FINESSE, 1);
-        this.stats.put(Stat.ACCURACY, 100);
-        this.stats.put(Stat.EVASION, 0);
-        this.stats.put(Stat.SPEED, 4);
-
-        //ResourceStats
-        this.stats.put(Stat.LIFE, 35);
-        this.stats.put(Stat.CURRENT_LIFE, 35);
-        this.stats.put(Stat.LIFE_REGAIN, 2);
-
-        this.stats.put(Stat.FAITH, 0);
-        this.stats.put(Stat.CURRENT_FAITH, 0);
-
-        this.stats.put(Stat.MANA, 15);
-        this.stats.put(Stat.CURRENT_MANA, 15);
-        this.stats.put(Stat.MANA_REGAIN, 2);
-
-        this.stats.put(Stat.MAX_ACTION, 1);
-        this.stats.put(Stat.CURRENT_ACTION, 1);
-
-        this.stats.put(Stat.CRIT_CHANCE, 0);
-
-        this.stats.put(Stat.SHIELD,0);
     }
 }

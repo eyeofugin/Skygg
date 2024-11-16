@@ -14,29 +14,29 @@ public class SkillInfo extends GUIElement {
     }
     @Override
     public int[] render() {
-        int[] skillNamePixels = getTextLine(this.skill.getName(), this.width/2, 10, 1,
+        int[] skillNamePixels = getTextLine(this.skill.getName(), this.width/2, 10,
                 TextAlignment.LEFT, Color.VOID, Color.WHITE);
-        fillWithGraphicsSize(0, 0, this.width/2, 10, skillNamePixels, false);
+        fillWithGraphicsSize(0, 0, this.width/2, 8, skillNamePixels, false);
 
         String costString = skill.getCostString();
-        int[] costPixels = getTextLine(costString, this.width/2, 10, 1,
+        int[] costPixels = getTextLine(costString, this.width/2, 10,
                 TextAlignment.RIGHT, Color.VOID, Color.WHITE);
-        fillWithGraphicsSize(this.width/2, 0, this.width/2, 10, costPixels, false);
+        fillWithGraphicsSize(this.width/2, 0, this.width/2, 8, costPixels, false);
 
         String dmgOrHealString = skill.getDmgOrHealString();
-        int[] dmgOrHealPixels = getTextLine(dmgOrHealString, this.width/2, 10, 1,
+        int[] dmgOrHealPixels = getTextLine(dmgOrHealString, this.width/2, 10,
                 TextAlignment.LEFT, Color.VOID, Color.WHITE);
-        fillWithGraphicsSize(0, 12, this.width/2, 10, dmgOrHealPixels, false);
+        fillWithGraphicsSize(0, 8, this.width/2, 8, dmgOrHealPixels, false);
 
         String targetString = skill.getTargetString();
-        int[] targetStringPixels = getTextLine(targetString, this.width/2, 10, 1,
+        int[] targetStringPixels = getTextLine(targetString, this.width/2, 10,
                 TextAlignment.RIGHT, Color.VOID, Color.WHITE);
-        fillWithGraphicsSize(this.width/2, 12,this.width/2, 10, targetStringPixels, false);
+        fillWithGraphicsSize(this.width/2, 9,this.width/2, 8, targetStringPixels, false);
 
 
-        int[] descriptionPixels = getTextBlock(this.skill.getDescriptionFor(this.skill.hero), this.width, 1, TextAlignment.LEFT, Color.VOID, Color.WHITE);
+        int[] descriptionPixels = getTextBlock(this.skill.getDescriptionFor(this.skill.hero), this.width, Color.VOID, Color.WHITE);
         int height = descriptionPixels.length / this.width;
-        fillWithGraphicsSize(0, 24,  this.width, height, descriptionPixels, false);
+        fillWithGraphicsSize(0, 18,  this.width, height, descriptionPixels, false);
         return pixels;
     }
 }

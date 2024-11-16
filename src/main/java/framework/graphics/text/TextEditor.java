@@ -1,6 +1,7 @@
 package framework.graphics.text;
 
 import framework.Property;
+import framework.graphics.GUIElement;
 import game.skills.Stat;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class TextEditor {
     public static TextEditorConfig conf5x8 = new TextEditorConfig(5,8, 3, 5);
     private final HashMap<String, int[]> smallNumeric;
     private final HashMap<String,int[]> symbols;
+    private final HashMap<String, Symbol> symbolMap;
     private final HashMap<String,String> iconCodes = new HashMap<>();
     private static final HashMap<String,String> staticIconCodes = new HashMap<>();
 
@@ -35,6 +37,7 @@ public class TextEditor {
         this.smallNumHeight = conf.getSmallNumHeight();
         this.smallNumWidth = conf.getSmallNumWidth();
         this.symbols = fillSymbols5x8();
+        this.symbolMap = fillSymbolMap();
         this.smallNumeric = fillSmallNumeric();
         fillIconMap();
     }
@@ -80,6 +83,104 @@ public class TextEditor {
         symbols.put("8", Symbol.smallNum8.pixels);
         symbols.put("9", Symbol.smallNum9.pixels);
         symbols.put("0", Symbol.smallNum0.pixels);
+        return symbols;
+    }
+
+    private HashMap<String, Symbol> fillSymbolMap() {
+        HashMap<String, Symbol> symbols = new HashMap<>();
+
+        symbols.put("1", Symbol.onex8);
+        symbols.put("2", Symbol.twox8);
+        symbols.put("3", Symbol.threex8);
+        symbols.put("4", Symbol.fourx8);
+        symbols.put("5", Symbol.fivex8);
+        symbols.put("6", Symbol.sixx8);
+        symbols.put("7", Symbol.sevenx8);
+        symbols.put("8", Symbol.eightx8);
+        symbols.put("9", Symbol.ninex8);
+        symbols.put("0", Symbol.zerox8);
+        symbols.put("a", Symbol.ax8);
+        symbols.put("b", Symbol.bx8);
+        symbols.put("c", Symbol.cx8);
+        symbols.put("d", Symbol.dx8);
+        symbols.put("e", Symbol.ex8);
+        symbols.put("f", Symbol.fx8);
+        symbols.put("g", Symbol.gx8);
+        symbols.put("h", Symbol.hx8);
+        symbols.put("i", Symbol.ix8);
+        symbols.put("j", Symbol.jx8);
+        symbols.put("k", Symbol.kx8);
+        symbols.put("l", Symbol.lx8);
+        symbols.put("m", Symbol.mx8);
+        symbols.put("n", Symbol.nx8);
+        symbols.put("o", Symbol.ox8);
+        symbols.put("p", Symbol.px8);
+        symbols.put("q", Symbol.qx8);
+        symbols.put("r", Symbol.rx8);
+        symbols.put("s", Symbol.sx8);
+        symbols.put("t", Symbol.tx8);
+        symbols.put("u", Symbol.ux8);
+        symbols.put("v", Symbol.vx8);
+        symbols.put("w", Symbol.wx8);
+        symbols.put("x", Symbol.xx8);
+        symbols.put("y", Symbol.yx8);
+        symbols.put("z", Symbol.zx8);
+        symbols.put("A", Symbol.Ax8);
+        symbols.put("B", Symbol.Bx8);
+        symbols.put("C", Symbol.Cx8);
+        symbols.put("D", Symbol.Dx8);
+        symbols.put("E", Symbol.Ex8);
+        symbols.put("F", Symbol.Fx8);
+        symbols.put("G", Symbol.Gx8);
+        symbols.put("H", Symbol.Hx8);
+        symbols.put("I", Symbol.Ix8);
+        symbols.put("J", Symbol.Jx8);
+        symbols.put("K", Symbol.Kx8);
+        symbols.put("L", Symbol.Lx8);
+        symbols.put("M", Symbol.Mx8);
+        symbols.put("N", Symbol.Nx8);
+        symbols.put("O", Symbol.Ox8);
+        symbols.put("P", Symbol.Px8);
+        symbols.put("Q", Symbol.Qx8);
+        symbols.put("R", Symbol.Rx8);
+        symbols.put("S", Symbol.Sx8);
+        symbols.put("T", Symbol.Tx8);
+        symbols.put("U", Symbol.Ux8);
+        symbols.put("V", Symbol.Vx8);
+        symbols.put("W", Symbol.Wx8);
+        symbols.put("X", Symbol.Xx8);
+        symbols.put("Y", Symbol.Yx8);
+        symbols.put("Z", Symbol.Zx8);
+        symbols.put(".", Symbol.pointx8);
+        symbols.put(",", Symbol.commax8);
+        symbols.put("/", Symbol.slashx8);
+        symbols.put("(", Symbol.bracketopenx8);
+        symbols.put(")", Symbol.bracketclosex8);
+        symbols.put("+", Symbol.plusx8);
+        symbols.put(":", Symbol.colonx8);
+        symbols.put(">", Symbol.moreThanx8);
+        symbols.put("<", Symbol.lessThanx8);
+        symbols.put("-", Symbol.minusx8);
+        symbols.put("=", Symbol.equalsx8);
+        symbols.put("%", Symbol.percentagex8);
+        symbols.put(" ", Symbol.spacex8);
+        symbols.put(Stat.MANA.getIconKey(), Symbol.mana);
+        symbols.put(TURN_KEY, Symbol.turn);
+        symbols.put(TURN_CD_KEY, Symbol.turnCD);
+        symbols.put(Stat.FAITH.getIconKey(), Symbol.faith);
+        symbols.put(Stat.LIFE.getIconKey(), Symbol.life);
+        symbols.put(Stat.MAGIC.getIconKey(), Symbol.magic);
+        symbols.put(Stat.FINESSE.getIconKey(), Symbol.finesse);
+        symbols.put(Stat.FORCE.getIconKey(), Symbol.force);
+        symbols.put(Stat.STAMINA.getIconKey(), Symbol.stamina);
+        symbols.put(Stat.ENDURANCE.getIconKey(), Symbol.endurance);
+        symbols.put(Stat.SPEED.getIconKey(), Symbol.speed);
+        symbols.put(Stat.SHIELD.getIconKey(), Symbol.shield);
+        symbols.put(Stat.CRIT_CHANCE.getIconKey(), Symbol.critchance);
+        symbols.put(Stat.EVASION.getIconKey(), Symbol.evasion);
+        symbols.put(Stat.LETHALITY.getIconKey(), Symbol.lethality);
+        symbols.put(Stat.ACCURACY.getIconKey(), Symbol.accuracy);
+
         return symbols;
     }
     private HashMap<String,int[]> fillSymbols5x8() {
@@ -272,6 +373,118 @@ public class TextEditor {
         }
         return result;
     }
+
+    public int[] getTextLineNew(String text, int targetWidth, int targetHeight,int fontSize, TextAlignment alignment,
+                                 Color backGround, Color font) {
+
+        int bgValue = backGround.VALUE;
+
+        int[] result = new int[targetWidth*targetHeight];
+        Arrays.fill(result, bgValue);
+
+        if (text == null) {
+            return result;
+        }
+
+        List<Symbol> textSymbols =getSymbols(text, font, bgValue);
+
+        int textWidth = getTextWidth(textSymbols);
+
+        int[] rawText = getLineFromSymbols(textSymbols,textWidth, bgValue);
+
+        int horizontalPadding = targetWidth - textWidth;
+        int xStart = 0;
+        if (horizontalPadding > 0 && !alignment.equals(TextAlignment.LEFT)) {
+            if (alignment.equals(TextAlignment.CENTER)) {
+                xStart = horizontalPadding / 2;
+            } else if (alignment.equals(TextAlignment.RIGHT)) {
+                xStart = horizontalPadding;
+            }
+        }
+        int xEnd = xStart + textWidth;
+        int rawTextX = 0;
+        for (int x = xStart; x < xEnd && x < targetWidth; x++) {
+            for (int y = 0; y < this.charHeight; y++) {
+                result[x + y * targetWidth] = rawText[rawTextX + y * textWidth];
+            }
+            rawTextX++;
+        }
+        return result;
+    }
+
+    public int[] getLineFromSymbols(List<Symbol> textSymbols, int textWidth, int bgValue) {
+        int[] rawText = new int[this.charHeight*textWidth];
+        int writePointer = 0;
+        int symbolCounter = 1;
+        for (Symbol symbol : textSymbols) {
+            int index = 0;
+            for (int y = 0; y < this.charHeight; y++) {
+                for (int x = writePointer; x < writePointer + symbol.WIDTH; x++) {
+                    int colorVal = symbol.pixels[index++];
+                    if (symbol.primaryColor != null) {
+                        colorVal = colorVal == Color.WHITE.VALUE ? symbol.primaryColor : colorVal;
+                    }
+                    if (symbol.secondaryColor != null) {
+                        colorVal = colorVal == Color.BLACK.VALUE ? symbol.secondaryColor : colorVal;
+                    }
+                    rawText[x + y * textWidth] = colorVal;
+                }
+            }
+            writePointer += symbol.WIDTH;
+
+            if (symbolCounter != textSymbols.size()) {
+                for (int i = 0; i < this.charHeight; i++) {
+                    rawText[writePointer + i * textWidth] = bgValue;
+                }
+                writePointer++;
+                symbolCounter++;
+            }
+        }
+
+        return rawText;
+    }
+
+    public List<Symbol> getSymbols(String text, Color font, int bgValue) {
+
+        List<Symbol> textSymbols = new ArrayList<>();
+        char[] textArray = new char[text.length()];
+        text.getChars(0, text.length(), textArray, 0);
+        int fontValue = font.VALUE;
+
+        for (int charIndex = 0; charIndex < textArray.length; charIndex++) {
+            char character = textArray[charIndex];
+            if (character == '{') {
+                fontValue = getColor(charIndex, textArray, font).VALUE;
+                charIndex+=4;
+            } else {
+                Symbol symbol;
+                if (character == '[') {
+                    symbol = getSpecialCharacter(charIndex, textArray);
+                    charIndex+=4;
+                } else {
+                    symbol = this.symbolMap.get(String.valueOf(character)).copy();
+                }
+                if (symbol != null) {
+                    symbol.primaryColor = fontValue;
+                    symbol.secondaryColor = bgValue;
+                    textSymbols.add(symbol);
+                } else {
+                    textSymbols.add(this.symbolMap.get(" ").copy());
+                }
+            }
+        }
+        return textSymbols;
+    }
+
+    public int getTextWidth(List<Symbol> symbols) {
+        int textWidth = 0;
+        for (Symbol symbol : symbols) {
+            textWidth += symbol.WIDTH;
+        }
+        textWidth += symbols.size()-1;
+        return Math.max(textWidth, 0);
+    }
+
     public int[] getTextLine(String text, int targetWidth, int targetHeight,
                              int fontSize, TextAlignment alignment,
                              Color backGroundColor, Color fontColor) {
@@ -290,11 +503,7 @@ public class TextEditor {
         int multiplier;
         int xmultiplier = targetWidth / resultWidth;
         int ymultiplier = targetHeight / this.charHeight;
-        if (xmultiplier < ymultiplier) {
-            multiplier = xmultiplier;
-        } else {
-            multiplier = ymultiplier;
-        }
+        multiplier = Math.min(xmultiplier, ymultiplier);
 
         if(multiplier > fontSize && fontSize > 0) {
             multiplier = fontSize;
@@ -328,27 +537,27 @@ public class TextEditor {
             rightOverhead = 5;
             leftOverhead = widthOverhead - 5;
         }
-
-        for (int row = 0; row < topOverhead; row++) {
-            for (int column = 0; column < targetWidth; column++) {
-                result[column + row * targetWidth] = backgroundColor;
-            }
-        }
-        for (int row = (targetHeight - bottomOverhead) - 1; row < targetHeight; row++) {
-            for (int column = 0; column < targetWidth; column++) {
-                result[column + row * targetWidth] = backgroundColor;
-            }
-        }
-        for (int row = 0; row < targetHeight; row++) {
-            for (int column = 0; column < leftOverhead; column++) {
-                result[column + row * targetWidth] = backgroundColor;
-            }
-        }
-        for (int row = 0; row < targetHeight; row++) {
-            for (int column = (targetWidth - rightOverhead) - 1; column < targetWidth; column++) {
-                result[column + row * targetWidth] = backgroundColor;
-            }
-        }
+//
+//        for (int row = 0; row < topOverhead; row++) {
+//            for (int column = 0; column < targetWidth; column++) {
+//                result[column + row * targetWidth] = backgroundColor;
+//            }
+//        }
+//        for (int row = (targetHeight - bottomOverhead) - 1; row < targetHeight; row++) {
+//            for (int column = 0; column < targetWidth; column++) {
+//                result[column + row * targetWidth] = backgroundColor;
+//            }
+//        }
+//        for (int row = 0; row < targetHeight; row++) {
+//            for (int column = 0; column < leftOverhead; column++) {
+//                result[column + row * targetWidth] = backgroundColor;
+//            }
+//        }
+//        for (int row = 0; row < targetHeight; row++) {
+//            for (int column = (targetWidth - rightOverhead) - 1; column < targetWidth; column++) {
+//                result[column + row * targetWidth] = backgroundColor;
+//            }
+//        }
 
         int lastWrittenWidth = 0;
         text.getChars(0, text.length(), textArray, 0);
@@ -487,6 +696,13 @@ public class TextEditor {
         }
         return symbols.get(specialSymbolCode.toString());
     }
+    private Symbol getSpecialCharacter(int index, char[] textArray) {
+        StringBuilder specialSymbolCode = new StringBuilder();
+        for(int i = index+1; i < index+4; i++) {
+            specialSymbolCode.append(textArray[i]);
+        }
+        return symbolMap.get(specialSymbolCode.toString()).copy();
+    }
     private Color getColor(int index, char[] textArray, Color fontColor) {
         StringBuilder codeBuilder = new StringBuilder();
         for(int i = index+1; i < index+4; i++) {
@@ -559,6 +775,9 @@ public class TextEditor {
         }
 
         return button;
+    }
+    public Symbol getSymbol(String symbolKey) {
+        return this.symbolMap.get(symbolKey).copy();
     }
     protected int[] getTextBlock(String text, int maxWidth, int fontSize, TextAlignment alignment, Color background, Color font) {
         String[] rows = splitRows(text, maxWidth, fontSize);

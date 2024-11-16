@@ -29,7 +29,7 @@ public class StateManager {
 
     public StateManager(Engine e) {
         this.e = e;
-        H_BattleAxe ba = new H_BattleAxe();
+        H_AngelGuy ba = new H_AngelGuy();
         Arena arena = new Arena(e);
         H_Sniper hero0 = new H_Sniper();
         hero0.enterArena(0, arena);
@@ -42,6 +42,7 @@ public class StateManager {
 
         H_Paladin hero3 = new H_Paladin();
         hero3.enterArena(3, arena);
+        hero3.addToStat(Stat.ACCURACY, 100);
 
 
         H_DragonBreather dummy1 = new H_DragonBreather();

@@ -19,9 +19,9 @@ public enum Stat {
     LETHALITY("Lethality", "LET", "{001}"),
 
 
-    LIFE("Max", "LIF", "{006}"),
-    LIFE_REGAIN("Regain", "LRE", "{006}"),
-    CURRENT_LIFE("Life", "CLI", "{006}"),
+    LIFE("Max", "LIF", "{009}"),
+    LIFE_REGAIN("Regain", "LRE", "{009}"),
+    CURRENT_LIFE("Life", "CLI", "{009}"),
 
     MANA("Max", "MAN", "{011}"),
     MANA_REGAIN("Regain", "MRE", "{011}"),

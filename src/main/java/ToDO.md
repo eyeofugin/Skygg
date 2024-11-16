@@ -1,4 +1,5 @@
-+ Levels
++ hero overview
++ battle log
 + reduce to 4 abilities (different sets in the future)
 + equipments
 + draft

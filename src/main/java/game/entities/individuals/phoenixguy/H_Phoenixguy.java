@@ -13,7 +13,8 @@ public class H_Phoenixguy extends Hero {
         this.secondaryResource = Stat.FAITH;
         initAnimator();
         initSkills();
-        initStats();
+        this.initStats();
+        setLevel(1);
     }
 
     @Override
@@ -39,38 +40,5 @@ public class H_Phoenixguy extends Hero {
                 new S_HonorTheFirstFlame(this),
                 new S_Combustion(this)
         };
-    }
-
-    @Override
-    protected void initStats() {
-        //StatStats
-        this.stats.put(Stat.MAGIC, 18);
-        this.stats.put(Stat.FORCE, 6);
-        this.stats.put(Stat.STAMINA, 3);
-        this.stats.put(Stat.ENDURANCE, 4);
-        this.stats.put(Stat.FINESSE, 1);
-        this.stats.put(Stat.ACCURACY, 100);
-        this.stats.put(Stat.EVASION, 0);
-        this.stats.put(Stat.SPEED, 10);
-
-        //ResourceStats
-        this.stats.put(Stat.LIFE, 15);
-        this.stats.put(Stat.CURRENT_LIFE, 15);
-        this.stats.put(Stat.LIFE_REGAIN, 1);
-
-        this.stats.put(Stat.FAITH, 20);
-        this.stats.put(Stat.CURRENT_FAITH, 0);
-
-        this.stats.put(Stat.MANA, 0);
-        this.stats.put(Stat.CURRENT_MANA, 0);
-
-        this.stats.put(Stat.MAX_ACTION, 1);
-        this.stats.put(Stat.CURRENT_ACTION, 1);
-
-
-
-        this.stats.put(Stat.CRIT_CHANCE, 0);
-
-        this.stats.put(Stat.SHIELD,0);
     }
 }

@@ -1,0 +1,14 @@
+{
+  "1": {
+    "MAGIC" : 15,
+    "FORCE" : 3,
+    "STAMINA" : 3,
+    "ENDURANCE" : 2,
+    "FINESSE" : 1,
+    "SPEED" : 13,
+    "LIFE" : 13,
+    "CURRENT_LIFE" : 13,
+    "LIFE_REGAIN" : 1,
+    "FAITH" : 15
+  }
+}

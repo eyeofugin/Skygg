@@ -13,6 +13,7 @@ public class H_TheWizard extends Hero {
         initAnimator();
         initSkills();
         initStats();
+        setLevel(1);
     }
 
     @Override
@@ -38,26 +39,5 @@ public class H_TheWizard extends Hero {
                 new S_AetherStep(this),
                 new S_ArcaneBombardment(this)
         };
-    }
-
-    @Override
-    protected void initStats() {
-        //StatStats
-        this.stats.put(Stat.MAGIC, 19);
-        this.stats.put(Stat.FORCE, 2);
-        this.stats.put(Stat.STAMINA, 2);
-        this.stats.put(Stat.ENDURANCE, 3);
-        this.stats.put(Stat.FINESSE, 1);
-        this.stats.put(Stat.ACCURACY, 100);
-        this.stats.put(Stat.SPEED, 11);
-
-        //ResourceStats
-        this.stats.put(Stat.LIFE, 10);
-        this.stats.put(Stat.CURRENT_LIFE, 10);
-        this.stats.put(Stat.LIFE_REGAIN, 1);
-
-        this.stats.put(Stat.MANA, 25);
-        this.stats.put(Stat.CURRENT_MANA, 25);
-        this.stats.put(Stat.MANA_REGAIN, 2);
     }
 }

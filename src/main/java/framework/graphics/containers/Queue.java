@@ -35,7 +35,7 @@ public class Queue extends GUIElement {
         Iterator<Hero> doneThisTUrn = queue.doneThisTurn.iterator();
         while (doneThisTUrn.hasNext()) {
             Hero hero = doneThisTUrn.next();
-            int[] heroPortrait = getTextLine(hero.getName().substring(0,2), Property.PORTRAIT_SIZE, Property.PORTRAIT_SIZE, 1, Color.WHITE);
+            int[] heroPortrait = getTextLine(hero.getName().substring(0,2), Property.PORTRAIT_SIZE, Property.PORTRAIT_SIZE, Color.WHITE);
             this.fillWithGraphicsSize(xOff, 0, Property.PORTRAIT_SIZE, Property.PORTRAIT_SIZE, heroPortrait, Color.WHITE);
             if (doneThisTUrn.hasNext()) {
                 xOff += Property.PORTRAIT_SIZE + SPACE_WIDTH;
@@ -44,14 +44,14 @@ public class Queue extends GUIElement {
             }
         }
 
-        int[] arrow = SpriteLibrary.sprites.get("arrow_right");
+        int[] arrow = SpriteLibrary.getSprite("arrow_right");
         this.fillWithGraphicsSize(xOff, 4, 12, 12, arrow, false);
         xOff += 12;
 
         Iterator<Hero> upThisTurn = queue.upThisTurn.iterator();
         while (upThisTurn.hasNext()) {
             Hero hero = upThisTurn.next();
-            int[] heroPortrait = getTextLine(hero.getName().substring(0,2), Property.PORTRAIT_SIZE, Property.PORTRAIT_SIZE, 1, Color.WHITE);
+            int[] heroPortrait = getTextLine(hero.getName().substring(0,2), Property.PORTRAIT_SIZE, Property.PORTRAIT_SIZE, Color.WHITE);
             this.fillWithGraphicsSize(xOff, 0, Property.PORTRAIT_SIZE, Property.PORTRAIT_SIZE, heroPortrait, Color.WHITE);
             if (upThisTurn.hasNext()) {
                 xOff += Property.PORTRAIT_SIZE + SPACE_WIDTH;

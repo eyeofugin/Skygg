@@ -24,7 +24,7 @@ public class ActiveAbilitiesCard extends GUIElement {
     public ActiveAbilitiesCard(Engine e, Arena arena) {
         super(Property.ACTIVE_ABILITY_WIDTH, Property.ACTIVE_ABILITY_HEIGHT);
         this.x = Property.ACTIVE_ABILITY_X;
-        this.y = Property.ACTIVE_ABILITY_Y;
+        this.y = Property.HUD_BOXES_Y;
         this.engine = e;
         this.arena = arena;
     }
@@ -88,7 +88,6 @@ public class ActiveAbilitiesCard extends GUIElement {
         }
     }
     private void activateIcon() {
-        System.out.println("Activate Icon");
         for (GUIElement skillIcon : this.skillIcons) {
             skillIcon.removeBorder();
         }
@@ -111,6 +110,9 @@ public class ActiveAbilitiesCard extends GUIElement {
         }
         fillWithGraphicsSize(this.skillInfo.getX(), this.skillInfo.getY(), this.skillInfo.getWidth(), this.skillInfo.getHeight(),
                 this.skillInfo.render(), this.skillInfo.isSimpleBorder());
+        if (this.active) {
+            addBorder(this.width, this.height, this.pixels, Color.WHITE);
+        }
         return this.pixels;
     }
 

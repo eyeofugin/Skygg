@@ -11,7 +11,7 @@ public class TextField extends GUIElement {
 
     @Override
     public int[] render() {
-        fill(getTextLine(string, width, height, textSize, TextAlignment.LEFT, Color.VOID, fontColor));
+        fill(getTextLine(string, width, height, TextAlignment.LEFT, Color.VOID, fontColor));
         return pixels;
     }
 

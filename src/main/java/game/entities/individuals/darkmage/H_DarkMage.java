@@ -19,7 +19,8 @@ public class H_DarkMage extends Hero {
         this.secondaryResource = Stat.MANA;
         initAnimator();
         initSkills();
-        initStats();
+        this.initStats();
+        setLevel(1);
     }
 
     @Override
@@ -45,26 +46,5 @@ public class H_DarkMage extends Hero {
                 new S_LifeForceSharing(this),
                 new S_Deathpact(this)
         };
-    }
-
-    @Override
-    protected void initStats() {
-        //StatStats
-        this.stats.put(Stat.MAGIC, 13);
-        this.stats.put(Stat.FORCE, 2);
-        this.stats.put(Stat.STAMINA, 2);
-        this.stats.put(Stat.ENDURANCE, 4);
-        this.stats.put(Stat.FINESSE, 1);
-        this.stats.put(Stat.ACCURACY, 100);
-        this.stats.put(Stat.SPEED, 11);
-
-        //ResourceStats
-        this.stats.put(Stat.LIFE, 12);
-        this.stats.put(Stat.CURRENT_LIFE, 12);
-        this.stats.put(Stat.LIFE_REGAIN, 1);
-
-        this.stats.put(Stat.MANA, 13);
-        this.stats.put(Stat.CURRENT_MANA, 13);
-        this.stats.put(Stat.MANA_REGAIN, 2);
     }
 }

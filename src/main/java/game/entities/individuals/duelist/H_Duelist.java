@@ -12,7 +12,8 @@ public class H_Duelist extends Hero {
         this.initBasePath("duelist");
         initAnimator();
         initSkills();
-        initStats();
+        this.initStats();
+        setLevel(1);
     }
 
     @Override
@@ -38,24 +39,5 @@ public class H_Duelist extends Hero {
                 new S_AllOut(this),
                 new S_SwirlingBlades(this)
         };
-    }
-
-    @Override
-    protected void initStats() {
-        //StatStats
-        this.stats.put(Stat.MAGIC, 1);
-        this.stats.put(Stat.FORCE, 3);
-        this.stats.put(Stat.STAMINA, 10);
-        this.stats.put(Stat.ENDURANCE, 10);
-        this.stats.put(Stat.FINESSE, 10);
-        this.stats.put(Stat.ACCURACY, 100);
-        this.stats.put(Stat.SPEED, 9);
-
-        //ResourceStats
-        this.stats.put(Stat.LIFE, 25);
-        this.stats.put(Stat.CURRENT_LIFE, 25);
-        this.stats.put(Stat.LIFE_REGAIN, 1);
-
-        this.stats.put(Stat.CRIT_CHANCE, 5);
     }
 }

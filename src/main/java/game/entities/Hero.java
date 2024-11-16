@@ -30,6 +30,7 @@ import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.changeeffects.effects.Immunity;
 import game.skills.changeeffects.statusinflictions.Injured;
+import utils.FileWalker;
 import utils.MyMaths;
 
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ import java.util.Map;
 import java.util.Objects;
 public abstract class Hero extends GUIElement {
 
+    private static final String STAT_PATH = "/data/stats.json";
     public Arena arena;
     public Animator anim;
     public HeroTeam team;
@@ -54,7 +56,7 @@ public abstract class Hero extends GUIElement {
     protected String portraitName;
 
     protected int level = 1;
-    protected List<Map<Stat, Integer>> levelStats = new ArrayList<>();
+    protected Map<Integer, Map<Stat, Integer>> levelStats = new HashMap<>();
     protected Map<Stat, Integer> stats = new HashMap<>();
     protected Map<Stat, Integer> statChanges = new HashMap<>();
     protected List<Effect> effects = new ArrayList<>();
@@ -70,16 +72,7 @@ public abstract class Hero extends GUIElement {
         this.height = 110;
         this.pixels = new int[this.width*this.height];
         this.name = name;
-        statBase();
-    }
-
-    public Hero(String name, Map<Stat, Integer> stats, Skill[] skills) {
-        this.width = 64;
-        this.height = 90;
-        this.pixels = new int[this.width*this.height];
-        this.name = name;
-        this.stats = stats;
-        this.skills = skills;
+        this.stats.putAll(statBase());
     }
 
     public void enterArena(int position, Arena arena) {
@@ -94,35 +87,43 @@ public abstract class Hero extends GUIElement {
 
     protected abstract void initAnimator();
     protected abstract void initSkills();
-    protected abstract void initStats();
+    protected void initStats() {
+        for (Map.Entry<Integer, Map<Stat, Integer>> level : loadLevelStats().entrySet()) {
+            Map<Stat, Integer> levelStats = this.statBase();
+            levelStats.putAll(level.getValue());
+            this.levelStats.put(level.getKey(), levelStats);
+        }
+    };
 
-    private void statBase() {
-        this.stats.put(Stat.MAGIC, 0);
-        this.stats.put(Stat.FORCE, 0);
-        this.stats.put(Stat.STAMINA, 0);
-        this.stats.put(Stat.ENDURANCE, 0);
-        this.stats.put(Stat.FINESSE, 0);
-        this.stats.put(Stat.SPEED, 0);
+    protected Map<Stat, Integer> statBase() {
+        Map<Stat, Integer> base = new HashMap<>();
+        base.put(Stat.MAGIC, 0);
+        base.put(Stat.FORCE, 0);
+        base.put(Stat.STAMINA, 0);
+        base.put(Stat.ENDURANCE, 0);
+        base.put(Stat.FINESSE, 0);
+        base.put(Stat.SPEED, 0);
 
         //ResourceStats
-        this.stats.put(Stat.LIFE, 0);
-        this.stats.put(Stat.CURRENT_LIFE, 0);
-        this.stats.put(Stat.LIFE_REGAIN, 0);
+        base.put(Stat.LIFE, 0);
+        base.put(Stat.CURRENT_LIFE, 0);
+        base.put(Stat.LIFE_REGAIN, 0);
 
-        this.stats.put(Stat.FAITH, 0);
-        this.stats.put(Stat.CURRENT_FAITH, 0);
+        base.put(Stat.FAITH, 0);
+        base.put(Stat.CURRENT_FAITH, 0);
 
-        this.stats.put(Stat.MANA, 0);
-        this.stats.put(Stat.CURRENT_MANA, 0);
+        base.put(Stat.MANA, 0);
+        base.put(Stat.CURRENT_MANA, 0);
 
-        this.stats.put(Stat.MAX_ACTION, 1);
-        this.stats.put(Stat.CURRENT_ACTION, 1);
+        base.put(Stat.MAX_ACTION, 1);
+        base.put(Stat.CURRENT_ACTION, 1);
 
-        this.stats.put(Stat.CRIT_CHANCE, 0);
-        this.stats.put(Stat.ACCURACY, 100);
-        this.stats.put(Stat.EVASION, 0);
-        this.stats.put(Stat.SHIELD,0);
-        this.stats.put(Stat.LETHALITY,0);
+        base.put(Stat.CRIT_CHANCE, 0);
+        base.put(Stat.ACCURACY, 100);
+        base.put(Stat.EVASION, 0);
+        base.put(Stat.SHIELD,0);
+        base.put(Stat.LETHALITY,0);
+        return base;
     }
     @Override
     public void update(int frame) {
@@ -171,7 +172,7 @@ public abstract class Hero extends GUIElement {
         int paddingX = 2;
         int paddingY = 5;
         for (Effect effect : this.effects) {
-            int[] sprite = SpriteLibrary.sprites.get(effect.getClass().getName());
+            int[] sprite = SpriteLibrary.getSprite(effect.getClass().getName());
 
             fillWithGraphicsSize(effectsX, yf, Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE,
                     sprite, false, null, Color.VOID);
@@ -195,37 +196,42 @@ public abstract class Hero extends GUIElement {
                 effectsX += Property.EFFECT_ICON_SIZE + paddingX;
             }
         }
-        for (Map.Entry<Stat, Integer> statChange : this.statChanges.entrySet()) {
-            if (Stat.nonResourceStats.contains(statChange.getKey())) {
-                Color borderColor  = statChange.getValue() > 0 ? Color.GREEN : Color.RED;
-                int [] stat = getTextLine(statChange.getKey().getIconString(), Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE,
-                        1, Color.WHITE);
-                fillWithGraphicsSize(effectsX, yf, Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE, stat, borderColor);
-
-                paintedEffects++;
-
-                if (paintedEffects % 6 == 0) {
-                    yf += Property.EFFECT_ICON_SIZE + paddingY;
-                    effectsX = 0;
-                } else {
-                    effectsX += Property.EFFECT_ICON_SIZE + paddingX;
-                }
-            }
-        }
+//        for (Map.Entry<Stat, Integer> statChange : this.statChanges.entrySet()) {
+//            if (Stat.nonResourceStats.contains(statChange.getKey())) {
+//                Color borderColor  = statChange.getValue() > 0 ? Color.GREEN : Color.RED;
+//                int [] stat = getTextLine(statChange.getKey().getIconString(), Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE,
+//                       Color.WHITE);
+//                fillWithGraphicsSize(effectsX, yf, Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE, stat, borderColor);
+//
+//                paintedEffects++;
+//
+//                if (paintedEffects % 6 == 0) {
+//                    yf += Property.EFFECT_ICON_SIZE + paddingY;
+//                    effectsX = 0;
+//                } else {
+//                    effectsX += Property.EFFECT_ICON_SIZE + paddingX;
+//                }
+//            }
+//        }
     }
 
 //StatMagic
 
     public void addLevel() {
-        if (this.levelStats.size() == this.level) {
+        if (this.levelStats.get(this.level + 1) == null) {
+            Logger.logLn("Level to set too high.");
             return;
         }
         this.level++;
         this.setLevel(this.level);
     }
     public void setLevel(int level) {
+        if (this.levelStats.get(level) == null) {
+            Logger.logLn("Level to set too high.");
+            return;
+        }
         this.statChanges = new HashMap<>();
-        this.stats = this.levelStats.get(level - 1);
+        this.stats = this.levelStats.get(level);
     }
     public int getStat(Stat stat) {
         if (stat == null) {
@@ -248,6 +254,12 @@ public abstract class Hero extends GUIElement {
     public Map<Stat, Integer> getStatChanges() {
         return this.statChanges;
     }
+    public int getStatChange(Stat stat) {
+        if (this.statChanges.containsKey(stat)) {
+            return this.statChanges.get(stat);
+        }
+        return 0;
+    }
     public Map<Stat, Integer> getStats() {
         return this.stats;
     }
@@ -267,11 +279,7 @@ public abstract class Hero extends GUIElement {
         int max = this.getStat(maxStat);
         if (result < 0) {
             this.changeStatTo(currentStat, 0);
-        } else if ( result <= max) {
-            this.changeStatTo(currentStat, result);
-        } else {
-            this.changeStatTo(currentStat, max);
-        }
+        } else this.changeStatTo(currentStat, Math.min(result, max));
     }
 
     public void addResources(List<Resource> resources) {
@@ -294,15 +302,12 @@ public abstract class Hero extends GUIElement {
         if (resource == null) {
             return 0.0;
         }
-        switch (resource) {
-            case LIFE:
-                return ((double)this.getStat(Stat.CURRENT_LIFE)) / this.getStat(Stat.LIFE);
-            case MANA:
-                return ((double)this.getStat(Stat.CURRENT_MANA)) / this.getStat(Stat.MANA);
-            case FAITH:
-                return ((double)this.getStat(Stat.CURRENT_FAITH)) / this.getStat(Stat.FAITH);
-        }
-        return 0.0;
+        return switch (resource) {
+            case LIFE -> ((double) this.getStat(Stat.CURRENT_LIFE)) / this.getStat(Stat.LIFE);
+            case MANA -> ((double) this.getStat(Stat.CURRENT_MANA)) / this.getStat(Stat.MANA);
+            case FAITH -> ((double) this.getStat(Stat.CURRENT_FAITH)) / this.getStat(Stat.FAITH);
+            default -> 0.0;
+        };
     }
     public int getCurrentLifePercentage() {
         return this.stats.get(Stat.CURRENT_LIFE) * 100 / this.stats.get(Stat.LIFE);
@@ -416,7 +421,7 @@ public abstract class Hero extends GUIElement {
                 }
             }
         }
-        if (!added) {
+        if (!added && this.effects.size() != 12) {
             Effect newEffect = effect.getNew();
             newEffect.origin = caster;
             newEffect.hero = this;
@@ -658,6 +663,20 @@ public abstract class Hero extends GUIElement {
             default -> "";
         };
     }
+
+//Loading
+
+    protected Map<Integer, Map<Stat, Integer>> loadLevelStats() {
+
+        Map<Integer, Map<Stat, Integer>> statJson = FileWalker.getStatJson(this.basePath + STAT_PATH);
+        if (statJson != null) {
+            return statJson;
+        }
+        return new HashMap<>();
+    }
+
+
+//GetterSetter
 
     private String getFaithString() {
         return this.stats.get(Stat.CURRENT_FAITH) + "/" + this.stats.get(Stat.FAITH);

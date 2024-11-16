@@ -3,11 +3,13 @@ package framework.graphics;
 import framework.Logger;
 import framework.Property;
 import framework.graphics.text.Color;
+import framework.graphics.text.Symbol;
 import framework.graphics.text.TextAlignment;
 import framework.graphics.text.TextEditor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 public class GUIElement {
@@ -55,6 +57,15 @@ public class GUIElement {
         this.pixels = new int[width*height];
     }
 
+    public static int[] setBackGround(int[] pixels, Color color) {
+        for (int i = 0; i < pixels.length; i++) {
+            if (pixels[i] == Color.VOID.VALUE) {
+                pixels[i] = color.VALUE;
+            }
+        }
+        return pixels;
+    }
+
     public void update(int frame) {}
     public int[] render() {
         renderChildren();
@@ -83,114 +94,184 @@ public class GUIElement {
             }
         }
     }
-    protected int[] getTextBlock(String text, int maxWidth, int fontSize, TextAlignment alignment, Color background, Color font) {
-        String[] rows = splitRows(text, maxWidth, fontSize);
-        int[] result = new int[0];
-        for (String s : rows) {
-            int[] rowPixels = getTextLine(s, maxWidth, 10 * fontSize, fontSize, alignment, background, font);
-            int[] newPixels = new int[result.length + rowPixels.length];
-            System.arraycopy(result, 0, newPixels, 0, result.length);
-            System.arraycopy(rowPixels, 0, newPixels, result.length, rowPixels.length);
-            result = newPixels;
-        }
-        return result;
-    }
-
-    private String[] splitRows(String text, int width, int fontSize) {
-        int stringWidth = getStringWidth(text, fontSize);
-        boolean hasLineBreaks = text.contains("[br]");
-        if (stringWidth > width || hasLineBreaks) {
-            return splitAt(width, text, fontSize);
-        } else {
-            return new String[]{text};
-        }
-    }
-
-    private int getStringWidth(String s, int fontSize) {
-        int chars = s.length();
-        if (s.contains("[")) {
-            int charcounter = 0;
-            char[] stringChars = new char[s.length()];
-            s.getChars(0, s.length() - 1, stringChars, 0);
-            boolean inBrackets = false;
-            for (char c : stringChars) {
-                if (c == '[') {
-                    inBrackets = true;
-                    charcounter++;
-                } else if (c == ']') {
-                    inBrackets = false;
-                } else if (inBrackets) {
-                    charcounter++;
+    protected int[] getTextBlock(String text, int maxWidth, Color background, Color font) {
+        List<Symbol> symbols = editor.getSymbols(text, font, background.VALUE);
+        List<List<Symbol>> rows = splitRows(symbols, maxWidth);
+        int[] result = new int[maxWidth * rows.size()*8];
+        int rowIndex = 0;
+        for (List<Symbol> row : rows) {
+            int textWidth = editor.getTextWidth(row);
+            int[] rowPixels = editor.getLineFromSymbols(row, textWidth, background.VALUE);
+            int yFrom = rowIndex*8;
+            for (int x = 0; x < textWidth; x++) {
+                int ySource = 0;
+                for (int y = yFrom; y < yFrom + 8; y++) {
+                    result[x + y * maxWidth] = rowPixels[x + ySource * textWidth];
+                    ySource++;
                 }
             }
-            chars -= charcounter;
-        }
-        return chars * ((Property.BASE_CHAR_DISTANCE + getCharWidth()) * fontSize);
-    }
-
-    private String[] splitAt(int split, String s, int fontSize) {
-        List<String> result = new ArrayList<>();
-        String[] splitWhole = s.split(" ");
-        int loopcheck = 0;
-        while (hasEntries(splitWhole) && loopcheck<10) {
-            result.add(getNextRow(splitWhole, split, fontSize));
-            loopcheck++;
-        }
-        return getArray(result);
-    }
-
-    private boolean hasEntries(String[] split) {
-        for (String s : split) {
-            if (!s.equals(" ")) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private String getNextRow(String[] splitted, int split, int fontSize) {
-        String newS = "";
-        int index = getFirstFilled(splitted);
-        while (getStringWidth(newS, fontSize) + getStringWidth(splitted[index], fontSize) + 5 < split) {
-            if (splitted[index].equals("[br]")) {
-                splitted[index] = " ";
-                return newS + " ";
-            }
-            newS += splitted[index] + " ";
-            splitted[index] = " ";
-            index++;
-            if (index == splitted.length) {
-                return newS;
-            }
-        }
-        return newS;
-    }
-
-    private int getFirstFilled(String[] split) {
-        for (int i = 0; i < split.length; i++) {
-            if (!split[i].equals(" ")) {
-                return i;
-            }
-        }
-        return 0;
-    }
-
-    private String[] getArray(List<String> list) {
-        String[] result = new String[list.size()];
-        for (int i = 0; i < list.size(); i++) {
-            result[i] = list.get(i);
+            rowIndex++;
         }
         return result;
     }
+
+    private List<List<Symbol>> splitRows(List<Symbol> fullList, int maxWidth) {
+        int width = editor.getTextWidth(fullList);
+        if (width > maxWidth) {
+            return splitAt(maxWidth, fullList);
+        } else {
+            return List.of(fullList);
+        }
+    }
+
+    private List<List<Symbol>> splitAt(int maxWidth, List<Symbol> symbols) {
+        List<List<Symbol>> result = new ArrayList<>();
+        List<List<Symbol>> splitByWhiteSpace = splitByWhiteSpace(symbols);
+        int loopCheck = 0;
+        while(!splitByWhiteSpace.isEmpty() && loopCheck < 10) {
+            result.add(getNextRow(splitByWhiteSpace, maxWidth));
+            loopCheck++;
+        }
+        return result;
+    }
+
+    private List<List<Symbol>> splitByWhiteSpace(List<Symbol> symbols) {
+        List<List<Symbol>> result = new ArrayList<>();
+        List<Symbol> currentWord = new ArrayList<>();
+
+        for (Symbol symbol : symbols) {
+            if (!symbol.code.equals(" ")) {
+                currentWord.add(symbol);
+            } else {
+                result.add(currentWord);
+                currentWord = new ArrayList<>();
+            }
+        }
+        result.add(currentWord);
+        return result;
+    }
+
+    private List<Symbol> getNextRow(List<List<Symbol>> words, int maxWidth) {
+        List<Symbol> newLine = new ArrayList<>();
+        if (words.isEmpty()) {
+            return newLine;
+        }
+        int index = 0;
+        while (editor.getTextWidth(newLine) + editor.getTextWidth(words.get(index)) + 5 < maxWidth) {
+            newLine.addAll(words.get(index));
+            words.remove(index);
+            newLine.add(editor.getSymbol(" "));
+            if (index == words.size()) {
+                return newLine;
+            }
+        }
+        return newLine;
+    }
+    private boolean noRemainingWords(List<List<Symbol>> words) {
+        for (List<Symbol> word : words) {
+            if (!word.isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
+//    private String[] splitRows(String text, int width, int fontSize) {
+//        int stringWidth = getStringWidth(text, fontSize);
+//        boolean hasLineBreaks = text.contains("[br]");
+//        if (stringWidth > width || hasLineBreaks) {
+//            return splitAt(width, text, fontSize);
+//        } else {
+//            return new String[]{text};
+//        }
+//    }
+
+//    private int getStringWidth(String s, int fontSize) {
+//        int chars = s.length();
+//        if (s.contains("[")) {
+//            int charcounter = 0;
+//            char[] stringChars = new char[s.length()];
+//            s.getChars(0, s.length() - 1, stringChars, 0);
+//            boolean inBrackets = false;
+//            for (char c : stringChars) {
+//                if (c == '[') {
+//                    inBrackets = true;
+//                    charcounter++;
+//                } else if (c == ']') {
+//                    inBrackets = false;
+//                } else if (inBrackets) {
+//                    charcounter++;
+//                }
+//            }
+//            chars -= charcounter;
+//        }
+//        return chars * ((Property.BASE_CHAR_DISTANCE + getCharWidth()) * fontSize);
+//    }
+
+//    private String[] splitAt(int split, String s, int fontSize) {
+//        List<String> result = new ArrayList<>();
+//        String[] splitWhole = s.split(" ");
+//        int loopcheck = 0;
+//        while (hasEntries(splitWhole) && loopcheck<10) {
+//            result.add(getNextRow(splitWhole, split, fontSize));
+//            loopcheck++;
+//        }
+//        return getArray(result);
+//    }
+
+//    private boolean hasEntries(String[] split) {
+//        for (String s : split) {
+//            if (!s.equals(" ")) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+
+
+//
+//    private String getNextRow(String[] splitted, int split, int fontSize) {
+//        String newS = "";
+//        int index = getFirstFilled(splitted);
+//        while (getStringWidth(newS, fontSize) + getStringWidth(splitted[index], fontSize) + 5 < split) {
+//            if (splitted[index].equals("[br]")) {
+//                splitted[index] = " ";
+//                return newS + " ";
+//            }
+//            newS += splitted[index] + " ";
+//            splitted[index] = " ";
+//            index++;
+//            if (index == splitted.length) {
+//                return newS;
+//            }
+//        }
+//        return newS;
+//    }
+//
+//    private int getFirstFilled(String[] split) {
+//        for (int i = 0; i < split.length; i++) {
+//            if (!split[i].equals(" ")) {
+//                return i;
+//            }
+//        }
+//        return 0;
+//    }
+//
+//    private String[] getArray(List<String> list) {
+//        String[] result = new String[list.size()];
+//        for (int i = 0; i < list.size(); i++) {
+//            result[i] = list.get(i);
+//        }
+//        return result;
+//    }
 
     private static int getCharWidth() {
         return new TextEditor(TextEditor.baseConf).charWidth;
     }
-    protected int[] getTextLine(String text, int textWidth, int textHeight, int fontSize, Color fontColor) {
-        return editor.getTextLine(text, textWidth, textHeight, fontSize, TextAlignment.CENTER, Color.VOID, fontColor);
+    protected int[] getTextLine(String text, int textWidth, int textHeight, Color fontColor) {
+        return editor.getTextLineNew(text, textWidth, textHeight,1, TextAlignment.CENTER, Color.VOID, fontColor);
     }
-    protected int[] getTextLine(String text, int textWidth, int textHeight, int fontSize, TextAlignment alignment, Color background, Color fontColor) {
-        return editor.getTextLine(text, textWidth, textHeight, fontSize, alignment, background, fontColor);
+    protected int[] getTextLine(String text, int textWidth, int textHeight, TextAlignment alignment, Color background, Color fontColor) {
+        return editor.getTextLineNew(text, textWidth, textHeight, 1,alignment, background, fontColor);
     }
     protected int[] getSmallNumTextLine(String text, int textWidth, int textHeight, TextAlignment alignment, Color background, Color fontColor) {
         return editor.getSmallNumTextLine(text, textWidth, textHeight, alignment, background, fontColor);
@@ -245,6 +326,17 @@ public class GUIElement {
             int color =  graphics[i];
             if (color != Color.VOID.VALUE) {
                 this.pixels[i] = color;
+            }
+        }
+    }
+    public static void staticFillSize(int xf, int yf, int w, int h, int targetW, int[] target, int[] fill) {
+
+        int yu = yf + h;
+        int xu = xf + w;
+        int index = 0;
+        for (int y = yf; y < yu; y++) {
+            for (int x = xf; x < xu; x++) {
+                target[x + y * targetW] = fill[index];
             }
         }
     }

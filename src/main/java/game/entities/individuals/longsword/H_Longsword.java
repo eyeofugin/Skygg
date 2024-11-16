@@ -12,7 +12,8 @@ public class H_Longsword extends Hero {
         this.initBasePath("longsword");
         initAnimator();
         initSkills();
-        initStats();
+        this.initStats();
+        setLevel(1);
     }
 
     @Override
@@ -38,20 +39,5 @@ public class H_Longsword extends Hero {
                 new S_SupremeDefense(this),
                 new S_Taunt(this)
         };
-    }
-
-    @Override
-    protected void initStats() {
-        this.stats.put(Stat.MAGIC, 1);
-        this.stats.put(Stat.FORCE, 4);
-        this.stats.put(Stat.STAMINA, 16);
-        this.stats.put(Stat.ENDURANCE, 13);
-        this.stats.put(Stat.FINESSE, 4);
-        this.stats.put(Stat.SPEED, 2);
-
-        //ResourceStats
-        this.stats.put(Stat.LIFE, 43);
-        this.stats.put(Stat.CURRENT_LIFE, 43);
-        this.stats.put(Stat.LIFE_REGAIN, 3);
     }
 }

@@ -4,7 +4,6 @@ import game.entities.Animator;
 import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.Stat;
-
 public class H_AngelGuy extends Hero {
 
     public H_AngelGuy() {
@@ -15,6 +14,7 @@ public class H_AngelGuy extends Hero {
         this.initAnimator();
         this.initSkills();
         this.initStats();
+        this.setLevel(1);
     }
 
     @Override
@@ -40,23 +40,5 @@ public class H_AngelGuy extends Hero {
                 new S_HolyShield(this),
                 new S_LightSpikes(this)
         };
-    }
-
-    @Override
-    protected void initStats() {
-
-        //StatStats
-        this.stats.put(Stat.MAGIC, 10);
-        this.stats.put(Stat.FORCE, 10);
-        this.stats.put(Stat.STAMINA, 10);
-        this.stats.put(Stat.ENDURANCE, 10);
-        this.stats.put(Stat.FINESSE, 1);
-        this.stats.put(Stat.SPEED, 9);
-        //ResourceStats
-        this.stats.put(Stat.LIFE, 20);
-        this.stats.put(Stat.CURRENT_LIFE, 20);
-        this.stats.put(Stat.LIFE_REGAIN, 2);
-
-        this.stats.put(Stat.FAITH, 18);
     }
 }
