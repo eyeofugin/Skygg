@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class Effect {
+
     public enum ChangeEffectType {
         STATUS_INFLICTION,
         BUFF,
@@ -19,9 +20,6 @@ public abstract class Effect {
 
     public int turns = -1;
     public int stacks = 1;
-    public int intensity;
-    public int successChance= 100;
-    public List<EffectCondition> conditions;
     public Hero origin;
     public Hero hero;
 
@@ -88,12 +86,22 @@ public abstract class Effect {
         }
     }
 
+    public String getDetailInfo() {
+        if (stackable) {
+            return "Stacks:" + this.stacks + " ";
+        }
+        if (turns > 0) {
+            return "Turns:" + this.turns + " ";
+        }
+        return "";
+
+    }
+
     @Override
     public String toString() {
         return "Effect{" +
                 "turns=" + turns +
                 ", stacks=" + stacks +
-                ", intensity=" + intensity +
                 ", name='" + name + '\'' +
                 ", type=" + type +
                 '}';

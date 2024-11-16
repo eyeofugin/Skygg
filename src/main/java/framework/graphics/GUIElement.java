@@ -337,6 +337,7 @@ public class GUIElement {
         for (int y = yf; y < yu; y++) {
             for (int x = xf; x < xu; x++) {
                 target[x + y * targetW] = fill[index];
+                index++;
             }
         }
     }

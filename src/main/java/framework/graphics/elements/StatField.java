@@ -13,11 +13,12 @@ public class StatField extends GUIElement {
 
     public StatField(Hero hero) {
         this.hero = hero;
-        this.setSize(100, 100);
+        this.setSize(98, 100);
     }
 
     @Override
     public int[] render() {
+        background(Color.VOID);
         renderSide(leftStatArray, 3);
         renderSide(rightStatArray, this.width / 2);
         return pixels;

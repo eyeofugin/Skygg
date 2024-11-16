@@ -7,7 +7,6 @@ import framework.graphics.text.Color;
 import framework.resources.SpriteLibrary;
 import game.entities.Hero;
 import game.skills.Effect;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,26 +14,28 @@ public class EffectField extends GUIElement {
     private final Hero hero;
     private int pointer = 0;
     private int relativePointer = 0;
-    private final int AMOUNT_VISIBLE_EFFECTS = 5;
-    private final int EFFECT_SIZE = 10;
-    private final int BUTTON_SIZE = 8;
-    private final int LEFT_BUTTON_X = 0;
-    private final int RIGHT_BUTTON_X = EFFECT_SIZE * AMOUNT_VISIBLE_EFFECTS;
-    private final int EFFECT_Y = 2;
-    private final int EFFECTS_X_FROM = LEFT_BUTTON_X + BUTTON_SIZE + 2;
+    private static final int WIDTH = 98;
+    private static final int AMOUNT_VISIBLE_EFFECTS = 8;
+    private static final int EFFECT_SIZE = 10;
+    private static final int BUTTON_SIZE = 8;
+    private static final int LEFT_BUTTON_X = 0;
+    private static final int EFFECTS_X_FROM = LEFT_BUTTON_X + BUTTON_SIZE + 2;
+    private static final int RIGHT_BUTTON_X = WIDTH - BUTTON_SIZE;
+    private static final int EFFECT_Y = 2;
+    private static final int EFFECT_INFO_Y = EFFECT_Y + EFFECT_SIZE + 5;
 
     private GUIElement leftArrow;
     private GUIElement rightArrow;
     private GUIElement[] effectIcons;
-    //EffectInfo effectInfo;
-    private Engine engine;
+    EffectInfo effectInfo;
+    private final Engine engine;
 
     public EffectField(Hero hero, Engine engine) {
         this.hero = hero;
         this.effectIcons = new GUIElement[0];
-        this.setSize(100, 100);
+        this.setSize(WIDTH, 100);
         this.engine = engine;
-        this.setArrows(0);
+        recalculateEffectList(0);
     }
     @Override
     public void update(int frame) {
@@ -55,6 +56,7 @@ public class EffectField extends GUIElement {
     private void recalculateEffectList(int dir) {
         this.children.remove(leftArrow);
         this.children.remove(rightArrow);
+        this.children.remove(effectInfo);
 
         List<Effect> effects = this.hero.getEffects();
         setNextPointers(effects.size(), dir);
@@ -62,11 +64,22 @@ public class EffectField extends GUIElement {
         setArrows(effects.size());
 
         setEffects();
+
+        setEffectInfo();
+    }
+
+    private void setEffectInfo() {
+        List<Effect> effectList = this.hero.getEffects();
+        if (effectList.size() > this.relativePointer) {
+            this.effectInfo = new EffectInfo(effectList.get(relativePointer));
+            this.effectInfo.setPosition(2, EFFECT_INFO_Y);
+            this.children.add(this.effectInfo);
+        }
     }
 
     private void setEffects() {
         List<Effect> effects = this.hero.getEffects();
-        this.effectIcons = new GUIElement[Math.min(5, effects.size())];
+        this.effectIcons = new GUIElement[Math.min(AMOUNT_VISIBLE_EFFECTS, effects.size())];
         int relativeFrom = this.relativePointer - this.pointer;
         int xFrom = EFFECTS_X_FROM;
         for (int i = 0; i < this.effectIcons.length; i++) {
@@ -81,7 +94,7 @@ public class EffectField extends GUIElement {
             GUIElement.staticFillSize(1, 1, Property.EFFECT_ICON_SIZE, 8, EFFECT_SIZE, pixels,  SpriteLibrary.getSprite(effect.getClass().getName()));
 
             GUIElement effectElement = new GUIElement();
-            effectElement.setSize(9,9);
+            effectElement.setSize(EFFECT_SIZE,EFFECT_SIZE);
             effectElement.setPosition(xFrom, EFFECT_Y);
             effectElement.setPixels(pixels);
             this.effectIcons[i] = effectElement;
@@ -111,7 +124,8 @@ public class EffectField extends GUIElement {
     private void setNextPointers(int listSize, int dir) {
         int newPointer = this.pointer + dir;
         if (listSize <= this.AMOUNT_VISIBLE_EFFECTS) {
-            this.pointer = Math.min(Math.max(0, newPointer), this.AMOUNT_VISIBLE_EFFECTS -1);
+            int max = Math.max(0,Math.min(this.AMOUNT_VISIBLE_EFFECTS-1, listSize-1));
+            this.pointer = Math.min(Math.max(0, newPointer), max);
             this.relativePointer = this.pointer;
         } else {
             if (newPointer < 0) {
@@ -131,6 +145,7 @@ public class EffectField extends GUIElement {
 
     @Override
     public int[] render() {
+        background(Color.VOID);
         renderChildren();
         renderEffects();
         return this.pixels;
@@ -141,5 +156,4 @@ public class EffectField extends GUIElement {
             fillWithGraphicsSize(effect.getX(), effect.getY(), effect.getWidth(), effect.getHeight(), effect.render(), false);
         }
     }
-
 }
