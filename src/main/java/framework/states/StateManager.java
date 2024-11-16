@@ -20,6 +20,8 @@ import game.entities.individuals.phoenixguy.H_Phoenixguy;
 import game.entities.individuals.rifle.H_Rifle;
 import game.entities.individuals.sniper.H_Sniper;
 import game.entities.individuals.thehealer.H_TheHealer;
+import game.objects.equipments.SimpleBow;
+import game.objects.equipments.SimpleDagger;
 import game.skills.Effect;
 import game.skills.Stat;
 import game.skills.changeeffects.effects.Burning;
@@ -51,6 +53,12 @@ public class StateManager {
 
         H_Paladin hero3 = new H_Paladin();
         hero3.enterArena(3, arena);
+
+        SimpleDagger simpleDagger = new SimpleDagger();
+        simpleDagger.equipToHero(hero0);
+
+        SimpleBow simpleBow = new SimpleBow();
+        simpleBow.equipToHero(hero0);
 
 
         H_DragonBreather dummy1 = new H_DragonBreather();

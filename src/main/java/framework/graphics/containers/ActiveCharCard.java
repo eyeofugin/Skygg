@@ -85,7 +85,7 @@ public class ActiveCharCard extends GUIElement {
     }
 
     private void activateItems() {
-        this.items = new ItemField(this.activeHero);
+        this.items = new ItemField(this.activeHero, engine);
         this.items.setPosition(16,30);
         this.items.setActive(true);
         this.children.add(this.items);

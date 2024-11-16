@@ -40,6 +40,19 @@ public class FileWalker {
         return null;
     }
 
+    public static Map<Stat, Integer> getEquipmentStatJson(String path) {
+        try {
+            String json = loadJson(path);
+            if (json != null) {
+                ObjectMapper objectMapper = new ObjectMapper();
+                return objectMapper.readValue(json, new TypeReference<>() {});
+            }
+        } catch (Exception e) {
+            Logger.logLn(e.getMessage());
+        }
+        return null;
+    }
+
     private static String loadJson(String path) {
         try {
             URL jsonURL = FileWalker.class.getClassLoader().getResource(path);

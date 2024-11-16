@@ -1,15 +1,27 @@
 package game.objects;
 
+import framework.graphics.text.Color;
 import game.entities.Hero;
 import game.skills.Stat;
+import utils.FileWalker;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class Equipment {
 
+    protected final String packageName;
     protected Map<Stat, Integer> statBonus = new HashMap<>();
-    private Hero hero;
-    private boolean active;
+    protected Hero hero;
+    protected boolean active;
+    protected final String description;
+    protected final String name;
+
+    public Equipment(String packageName, String description, String name) {
+        this.packageName = packageName;
+        this.description = description;
+        this.name = name;
+    }
 
     public void equipToHero(Hero hero) {
         this.hero = hero;
@@ -42,6 +54,38 @@ public class Equipment {
         statChange(1);
         this.active = true;
     }
+    protected Map<Stat, Integer> loadStatBonus() {
+        Map<Stat, Integer> result = FileWalker.getEquipmentStatJson("equipments/" + this.packageName + "/stats.json");
+        if (result != null) {
+            return result;
+        }
+        return new HashMap<>();
+    }
 
+    public String getName() {
+        return this.name;
+    }
+    public String getDescription() {
+        return this.description;
+    }
+    public String getStatBonusString() {
+        if (statBonus == null || statBonus.isEmpty()) {
+            return "";
+        }
+        StringBuilder builder = new StringBuilder();
+        for (Map.Entry<Stat, Integer> entry : statBonus.entrySet()) {
+            builder.append(entry.getKey().getColorKey());
+            if (entry.getValue()>0) {
+                builder.append(Color.MEDIUMGREEN.getCodeString());
+                builder.append("+");
+            } else {
+                builder.append(Color.DARKRED.getCodeString());
+            }
+            builder.append(entry.getValue()).append(" ");
+            builder.append(entry.getKey().getIconString());
+            builder.append(" ");
+        }
+        return builder.toString();
+    }
 
 }

@@ -260,14 +260,8 @@ public abstract class Skill {
     protected int getHealMultiBonus() {
         return this.getMultiplierBonus(this.healMultipliers);
     }
-    public String getHealMultiplierString(Hero e) {
-        return getMultiString(e, this.healMultipliers);
-    }
     protected int getDmgMultiBonus() {
         return this.getMultiplierBonus(this.dmgMultipliers);
-    }
-    public String getDmgMultiplierString(Hero e) {
-        return getMultiString(e, this.dmgMultipliers);
     }
     protected int getMultiplierBonus(List<Multiplier> multipliers) {
         if(multipliers ==null) {
@@ -278,21 +272,6 @@ public abstract class Skill {
             result +=(int)( m.percentage * this.hero.getStat(m.prof));
         }
         return result;
-    }
-    public String getMultiString(Hero e, List<Multiplier> multipliers) {
-        if (multipliers == null) {
-            return "";
-        }
-        StringBuilder result = new StringBuilder();
-        for (Multiplier m : multipliers) {
-            result.append("(")
-                    .append(m.percentage)
-                    .append("[").append(m.prof.getIconKey()).append("]")
-                    .append("=")
-                    .append((int)(m.percentage * e.getStat(m.prof)))
-                    .append(")");
-        }
-        return result.toString();
     }
     public int[] setupTargetMatrix() {
         int[] baseTargets = new int[]{0,1,2,3,4,5,6,7};

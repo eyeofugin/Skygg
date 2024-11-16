@@ -49,7 +49,6 @@ public class EffectField extends GUIElement {
                     recalculateEffectList(1);
                 }
             }
-            updateChildren(frame);
         }
     }
 
@@ -91,7 +90,8 @@ public class EffectField extends GUIElement {
             if (active) {
                 GUIElement.addBorder(EFFECT_SIZE,EFFECT_SIZE, pixels, Color.WHITE);
             }
-            GUIElement.staticFillSize(1, 1, Property.EFFECT_ICON_SIZE, 8, EFFECT_SIZE, pixels,  SpriteLibrary.getSprite(effect.getClass().getName()));
+            GUIElement.staticFillSize(1, 1, Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE,
+                    EFFECT_SIZE, pixels,  SpriteLibrary.getSprite(effect.getClass().getName()));
 
             GUIElement effectElement = new GUIElement();
             effectElement.setSize(EFFECT_SIZE,EFFECT_SIZE);

@@ -1,6 +1,8 @@
 package framework.resources;
 
 import framework.Property;
+import game.objects.equipments.SimpleBow;
+import game.objects.equipments.SimpleDagger;
 import game.skills.changeeffects.effects.AxeSwingCounter;
 import game.skills.changeeffects.effects.BlastingCounter;
 import game.skills.changeeffects.effects.Blight;
@@ -28,6 +30,7 @@ import game.skills.genericskills.S_Skip;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.beans.SimpleBeanInfo;
 import java.io.File;
 import java.net.URI;
 import java.util.HashMap;
@@ -101,7 +104,10 @@ public class SpriteLibrary {
                 "icons/effect/heat.png", 0));
         sprites.put(S_Skip.class.getName(), sprite(Property.SKILL_ICON_SIZE, Property.SKILL_ICON_SIZE,Property.SKILL_ICON_SIZE,Property.SKILL_ICON_SIZE,
                 "icons/skills/skip.png", 0));
-
+        sprites.put(SimpleDagger.class.getName(), sprite(Property.EQUIPMENT_ICON_SIZE, Property.EQUIPMENT_ICON_SIZE, Property.EQUIPMENT_ICON_SIZE, Property.EQUIPMENT_ICON_SIZE,
+                "equipments/simpledagger/sprite.png",0));
+        sprites.put(SimpleBow.class.getName(), sprite(Property.EQUIPMENT_ICON_SIZE, Property.EQUIPMENT_ICON_SIZE, Property.EQUIPMENT_ICON_SIZE, Property.EQUIPMENT_ICON_SIZE,
+                "equipments/simplebow/sprite.png",0));
     }
 
     public static boolean hasSprite(String name) {
