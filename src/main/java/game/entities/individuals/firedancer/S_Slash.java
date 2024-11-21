@@ -35,6 +35,7 @@ public class S_Slash extends Skill {
         this.dmg = 3;
         this.damageType = DamageType.NORMAL;
         this.primary = true;
+        this.faithGain = true;
     }
 
     @Override

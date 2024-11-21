@@ -34,6 +34,13 @@ public class S_InnerFire extends Skill {
     }
 
     @Override
+    public int getAIRating(Hero target) {
+        int rating = 10;
+        rating -= this.hero.getMissingLifePercentage() / 20;
+        return rating;
+    }
+
+    @Override
     public String getDescriptionFor(Hero hero) {
         return "+5"+Stat.FORCE.getIconString()+", +4"+Stat.ENDURANCE.getIconString()+", +3"+Stat.MAGIC.getIconString();
     }

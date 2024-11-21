@@ -25,11 +25,17 @@ public class S_RushOfHeat extends Skill {
         this.targetType = TargetType.SELF;
         this.effects = List.of(new Burning(3));
         this.cdMax = 3;
+        this.faithGain = true;
     }
 
     @Override
     protected void initAnimation() {
         this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
+    }
+
+    @Override
+    public int getAIRating(Hero target) {
+        return -1* this.hero.getMissingLifePercentage() / 25;
     }
 
     @Override

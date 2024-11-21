@@ -29,6 +29,8 @@ public class S_Spark extends Skill {
         this.dmg = 5;
         this.damageType =  DamageType.MAGIC;
         this.primary = true;
+        this.faithGain = true;
+        this.comboEnabled = true;
     }
 
     @Override

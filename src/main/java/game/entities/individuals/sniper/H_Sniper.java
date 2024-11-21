@@ -3,6 +3,7 @@ package game.entities.individuals.sniper;
 import game.entities.Animator;
 import game.entities.Hero;
 import game.skills.Skill;
+import game.skills.genericskills.S_Skip;
 
 public class H_Sniper extends Hero {
     public H_Sniper() {
@@ -12,6 +13,7 @@ public class H_Sniper extends Hero {
         initSkills();
         initStats();
         setLevel(1);
+        effectiveRange = 4;
     }
 
     @Override
@@ -34,8 +36,9 @@ public class H_Sniper extends Hero {
                 new S_ChemShot(this),
                 new S_BlindingShot(this),
                 new S_GotYourBack(this),
-                new S_Cloaked(this),
-                new S_SmokeGrenade(this)
+//                new S_Cloaked(this),
+                new S_SmokeGrenade(this),
+                new S_Skip(this)
         };
     }
 }

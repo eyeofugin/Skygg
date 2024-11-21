@@ -34,6 +34,19 @@ public class S_Dispel extends Skill {
         this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
 
     }
+
+    @Override
+    public int getAIRating(Hero target) {
+        if (target.getSecondaryResource() == null) {
+            return -2;
+        } else if (target.getSecondaryResource() == Stat.MANA) {
+            return 5;
+        } else {
+            return 3;
+        }
+    }
+
+
     @Override
     public String getDescriptionFor(Hero hero) {
         return "Target loses 25% of their max secondary resource (Faith/Mana)";

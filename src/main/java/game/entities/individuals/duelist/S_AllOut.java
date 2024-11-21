@@ -4,6 +4,7 @@ import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
+import game.skills.changeeffects.effects.Burning;
 
 import java.util.List;
 
@@ -32,6 +33,14 @@ public class S_AllOut extends Skill {
         this.hero.addToStat(Stat.FINESSE, 5);
         this.hero.addToStat(Stat.SPEED, 2);
     }
+
+    @Override
+    public int getAIRating(Hero target) {
+        int rating = 5;
+        rating -= this.hero.getMissingLifePercentage() / 20;
+        return rating;
+    }
+
 
     @Override
     protected void initAnimation() {

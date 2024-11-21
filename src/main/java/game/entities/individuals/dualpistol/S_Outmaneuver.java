@@ -34,6 +34,24 @@ public class S_Outmaneuver extends Skill {
     }
 
     @Override
+    public int getAIRating(Hero target) {
+        int rating = 0;
+        if (this.hero.hasPermanentEffect(Combo.class) > 0) {
+            rating++;
+        }
+        if (target.getPosition() == target.team.getFirstPosition()) {
+            return --rating;
+        }
+        if (target.getCurrentLifePercentage() < 50) {
+            rating += 2;
+        }
+        if (this.hero.arena.getAtPosition(target.team.getFirstPosition()).getCurrentLifePercentage() < 50) {
+            rating -= 2;
+        }
+        return rating;
+    }
+
+    @Override
     protected void initAnimation() {
         this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
     }

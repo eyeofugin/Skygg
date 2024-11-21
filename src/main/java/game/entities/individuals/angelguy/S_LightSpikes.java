@@ -11,6 +11,7 @@ import game.skills.Stat;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.Combo;
 import game.skills.changeeffects.effects.Exalted;
+import jdk.jfr.Percentage;
 
 import java.util.List;
 
@@ -32,6 +33,17 @@ public class S_LightSpikes extends Skill {
         this.cdMax = 4;
         this.faithCost = 7;
         this.damageType = DamageType.MAGIC;
+    }
+
+    @Override
+    public int getAIRating(Hero target) {
+        if (this.hero.getCurrentLifePercentage() < 25) {
+            return 2;
+        }
+        if (this.hero.getCurrentLifePercentage() < 50) {
+            return 1;
+        }
+        return 0;
     }
 
     @Override

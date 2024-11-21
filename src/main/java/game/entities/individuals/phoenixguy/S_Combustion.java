@@ -38,6 +38,11 @@ public class S_Combustion extends Skill {
     }
 
     @Override
+    public int getAIRating(Hero target) {
+        return target.getPermanentEffectStacks(Burning.class);
+    }
+
+    @Override
     protected void initAnimation() {
         this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
     }

@@ -38,6 +38,11 @@ public class S_AetherStep extends Skill {
     }
 
     @Override
+    public int getAIRating(Hero target) {
+        return getRollRating(target);
+    }
+
+    @Override
     public String getName() {
         return "Aether Step";
     }

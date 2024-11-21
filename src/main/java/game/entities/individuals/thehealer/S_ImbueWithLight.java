@@ -27,7 +27,10 @@ public class S_ImbueWithLight extends Skill {
         this.heal = 0;
         this.healMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.3));
     }
-
+    @Override
+    public int getAIRating(Hero target) {
+        return target.getMissingLifePercentage() / 50;
+    }
     @Override
     protected void initAnimation() {
         this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});

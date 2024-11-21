@@ -66,6 +66,8 @@ public abstract class Hero extends GUIElement {
 
     private int yf = 0;
 
+    public int effectiveRange = 0;
+
     protected Hero(String name) {
         this.id = idCounter++;
         this.width = 64;
@@ -125,6 +127,12 @@ public abstract class Hero extends GUIElement {
         base.put(Stat.LETHALITY,0);
         return base;
     }
+
+
+    public int getLastEffectivePosition() {
+        return this.team.getFirstPosition() - (effectiveRange * this.team.fillUpDirection);
+    }
+
     @Override
     public void update(int frame) {
         this.anim.animate();
@@ -640,8 +648,6 @@ public abstract class Hero extends GUIElement {
                 .setEffect(effect);
         Connector.fireTopic(Connector.EFFECT_DMG_TRIGGER, dmgTriggerPayload);
     }
-
-
 //GUI
     public void playAnimation(String anim) {
         this.playAnimation(anim, true);
@@ -794,4 +800,5 @@ public abstract class Hero extends GUIElement {
     public boolean isTeam2() {
         return this.team.teamNumber==2;
     }
+
 }

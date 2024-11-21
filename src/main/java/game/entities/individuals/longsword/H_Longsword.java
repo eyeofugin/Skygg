@@ -4,6 +4,7 @@ import game.entities.Animator;
 import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.Stat;
+import game.skills.genericskills.S_Skip;
 
 public class H_Longsword extends Hero {
 
@@ -14,6 +15,7 @@ public class H_Longsword extends Hero {
         initSkills();
         this.initStats();
         setLevel(1);
+        this.effectiveRange = 2;
     }
 
     @Override
@@ -36,8 +38,9 @@ public class H_Longsword extends Hero {
                 new S_Swing(this),
                 new S_Stab(this),
                 new S_Steadfast(this),
-                new S_SupremeDefense(this),
-                new S_Taunt(this)
+//                new S_SupremeDefense(this),
+                new S_Taunt(this),
+                new S_Skip(this)
         };
     }
 }

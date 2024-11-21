@@ -24,6 +24,7 @@ public class S_SpreadingFlames extends Skill {
         this.tags = List.of(SkillTag.DMG);
         this.targetType = TargetType.ALL_ENEMY;
         this.cdMax = 3;
+        this.faithGain = true;
     }
 
     @Override
@@ -34,6 +35,11 @@ public class S_SpreadingFlames extends Skill {
     @Override
     public String getDescriptionFor(Hero hero) {
         return "For each enemy burn stack, give another burn stack randomly. if at least 5 stacks were given this way, +5" + Stat.FAITH.getIconString();
+    }
+
+    @Override
+    public int getAIRating(Hero target) {
+        return target.getPermanentEffectStacks(Burning.class) / 3;
     }
 
     @Override

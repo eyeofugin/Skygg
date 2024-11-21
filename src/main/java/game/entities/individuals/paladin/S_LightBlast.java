@@ -38,6 +38,22 @@ public class S_LightBlast extends Skill {
     }
 
     @Override
+    public int getAIRating(Hero target) {
+        int rating = 0;
+        if (target.getCurrentLifePercentage() > 75) {
+            rating++;
+        }
+        Hero targetBehind = this.hero.arena.getAtPosition(target.getPosition()-1);
+        if (targetBehind != null) {
+            rating += targetBehind.getMissingLifePercentage() / 25;
+        }
+        if (target.getPosition() == target.getLastEffectivePosition()) {
+            rating +=5;
+        }
+        return rating;
+    }
+
+    @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
         this.hero.arena.move(target, 1, target.isTeam2()?1:-1);

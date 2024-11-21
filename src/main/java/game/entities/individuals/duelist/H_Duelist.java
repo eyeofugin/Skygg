@@ -4,6 +4,7 @@ import game.entities.Animator;
 import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.Stat;
+import game.skills.genericskills.S_Skip;
 
 public class H_Duelist extends Hero {
 
@@ -14,6 +15,7 @@ public class H_Duelist extends Hero {
         initSkills();
         this.initStats();
         setLevel(1);
+        this.effectiveRange = 2;
     }
 
     @Override
@@ -37,7 +39,8 @@ public class H_Duelist extends Hero {
                 new S_Mobilize(this),
                 new S_Lifesteal(this),
                 new S_AllOut(this),
-                new S_SwirlingBlades(this)
+                new S_Skip(this)
+//                new S_SwirlingBlades(this)
         };
     }
 }

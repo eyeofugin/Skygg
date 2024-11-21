@@ -30,6 +30,13 @@ public class S_Fireball extends Skill {
         this.dmg = 5;
         this.damageType = DamageType.MAGIC;
         this.primary = true;
+        this.faithGain = true;
+    }
+
+    @Override
+    public int getAIRating(Hero target) {
+        double faithHave = this.hero.getResourcePercentage(Stat.CURRENT_FAITH);
+        return faithHave < 0.5 ? 1: 0;
     }
 
     @Override

@@ -30,6 +30,12 @@ public class S_FlameDance extends Skill {
     protected void initAnimation() {
         this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
     }
+
+    @Override
+    public int getAIRating(Hero target) {
+        return getRollRating(target);
+    }
+
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);

@@ -10,6 +10,7 @@ import game.entities.individuals.paladin.S_ShiningShield;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.changeeffects.effects.DarkSecrets;
+import game.skills.genericskills.S_Skip;
 
 public class H_DarkMage extends Hero {
 
@@ -21,6 +22,7 @@ public class H_DarkMage extends Hero {
         initSkills();
         this.initStats();
         setLevel(1);
+        this.effectiveRange = 4;
     }
 
     @Override
@@ -44,7 +46,8 @@ public class H_DarkMage extends Hero {
                 new S_DarkSecrets(this),
                 new S_DarkSchemes(this),
                 new S_LifeForceSharing(this),
-                new S_Deathpact(this)
+//                new S_Deathpact(this)
+                new S_Skip(this)
         };
     }
 }

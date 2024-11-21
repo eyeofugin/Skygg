@@ -6,6 +6,7 @@ import game.skills.DamageType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
+import game.skills.changeeffects.effects.Burning;
 import game.skills.changeeffects.effects.Combo;
 import game.skills.changeeffects.effects.SwiftStrikeCounter;
 
@@ -32,6 +33,11 @@ public class S_SwiftStrike extends Skill {
         this.dmg = 3;
         this.damageType = DamageType.NORMAL;
         this.primary = true;
+    }
+
+    @Override
+    public int getAIRating(Hero target) {
+        return this.hero.getPermanentEffectStacks(SwiftStrikeCounter.class) > 0? 1: 0;
     }
 
     @Override

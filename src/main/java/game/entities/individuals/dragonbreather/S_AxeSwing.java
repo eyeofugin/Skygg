@@ -44,6 +44,14 @@ public class S_AxeSwing extends Skill {
         }
     }
 
+    @Override
+    public int getAIRating(Hero target) {
+        if (this.hero.hasPermanentEffect(AxeSwingCounter.class) == 2) {
+            return 2;
+        }
+        return 0;
+    }
+
     protected void initAnimation() {
         this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
     }

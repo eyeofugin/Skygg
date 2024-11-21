@@ -4,6 +4,7 @@ import game.entities.Animator;
 import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.Stat;
+import game.skills.genericskills.S_Skip;
 
 public class H_Burner extends Hero {
 
@@ -15,6 +16,7 @@ public class H_Burner extends Hero {
         this.initSkills();
         this.initStats();
         this.setLevel(1);
+        this.effectiveRange = 3;
     }
 
     @Override
@@ -38,7 +40,8 @@ public class H_Burner extends Hero {
                 new S_SpreadingFlames(this),
                 new S_FlameAbsorption(this),
                 new S_Heat(this),
-                new S_TwinFlames(this)
+//                new S_TwinFlames(this)
+                new S_Skip(this)
         };
     }
 }

@@ -56,6 +56,23 @@ public class S_Reengage extends Skill {
     }
 
     @Override
+    public int getAIRating(Hero target) {
+        int rating = 0;
+        if (this.hero.getPosition() == this.hero.team.getFirstPosition()) {
+            return 1;
+        }
+        if (target.getPosition() == this.hero.team.getFirstPosition()) {
+            rating++;
+        }
+        rating += target.getMissingLifePercentage() / 25;
+        rating -= this.hero.getMissingLifePercentage() / 20;
+        if (this.hero.getLastEffectivePosition() < this.hero.getPosition()) {
+            rating += 10;
+        }
+        return rating;
+    }
+
+    @Override
     public String getName() {
         return "Reengage";
     }

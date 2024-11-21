@@ -4,6 +4,7 @@ import game.entities.Animator;
 import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.Stat;
+import game.skills.genericskills.S_Skip;
 
 public class H_Phoenixguy extends Hero {
 
@@ -15,6 +16,7 @@ public class H_Phoenixguy extends Hero {
         initSkills();
         this.initStats();
         setLevel(1);
+        this.effectiveRange = 3;
     }
 
     @Override
@@ -38,7 +40,8 @@ public class H_Phoenixguy extends Hero {
                 new S_Fireblast(this),
                 new S_PhoenixFlames(this),
                 new S_HonorTheFirstFlame(this),
-                new S_Combustion(this)
+                new S_Skip(this)
+//                new S_Combustion(this)
         };
     }
 }

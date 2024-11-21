@@ -23,6 +23,7 @@ public class S_DivineRay extends Skill {
         this.distance = 2;
         this.primary = true;
     }
+
     @Override
     public void individualResolve(Hero target) {
         int amnt = this.hero.getStat(Stat.MAGIC) * 20 / 100;
@@ -37,6 +38,11 @@ public class S_DivineRay extends Skill {
             this.fireDmgTrigger(target, this, doneDmg);
         }
         this.applySkillEffects(target);
+    }
+
+    @Override
+    public int getAIRating(Hero target) {
+        return target.getMissingLifePercentage() / 25;
     }
     @Override
     protected void initAnimation() {

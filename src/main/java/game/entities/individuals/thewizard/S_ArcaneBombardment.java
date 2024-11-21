@@ -34,6 +34,7 @@ public class S_ArcaneBombardment extends Skill {
         this.cdMax = 10;
         this.manaCost = 25;
         this.damageType = DamageType.MAGIC;
+        this.comboEnabled = true;
     }
     @Override
     protected void initAnimation() {

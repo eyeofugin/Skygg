@@ -31,6 +31,7 @@ public class S_Headsmash extends Skill {
         this.dmg = 1;
         this.cdMax = 3;
         this.damageType = DamageType.NORMAL;
+        this.comboEnabled = true;
     }
 
     @Override
@@ -44,7 +45,6 @@ public class S_Headsmash extends Skill {
             this.hero.addEffect(new Combo(), this.hero);
         }
     }
-
     protected void initAnimation() {
         this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
     }

@@ -42,6 +42,11 @@ public class S_AwesomeAxe extends Skill {
         }
     }
 
+    @Override
+    public int getAIRating(Hero target) {
+        return 1;
+    }
+
     protected void initAnimation() {
         this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
     }

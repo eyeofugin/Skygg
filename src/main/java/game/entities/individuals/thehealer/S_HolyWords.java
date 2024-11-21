@@ -27,7 +27,10 @@ public class S_HolyWords extends Skill {
         this.manaCost = 3;
         this.healMultipliers = List.of(new Multiplier(Stat.LIFE, 0.5));
     }
-
+    @Override
+    public int getAIRating(Hero target) {
+        return target.getMissingLifePercentage() / 25;
+    }
     @Override
     protected void initAnimation() {
         this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});

@@ -4,6 +4,7 @@ import game.entities.Animator;
 import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.Stat;
+import game.skills.genericskills.S_Skip;
 
 public class H_DragonBreather extends Hero {
 
@@ -15,6 +16,7 @@ public class H_DragonBreather extends Hero {
         initSkills();
         this.initStats();
         setLevel(1);
+        this.effectiveRange = 2;
     }
 
     @Override
@@ -38,7 +40,8 @@ public class H_DragonBreather extends Hero {
                 new S_DragonBreath(this),
                 new S_BlazingSkin(this),
                 new S_Heat(this),
-                new S_InnerFire(this)
+//                new S_InnerFire(this)
+                new S_Skip(this)
         };
     }
 }

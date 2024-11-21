@@ -4,6 +4,7 @@ import game.entities.Animator;
 import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.Stat;
+import game.skills.genericskills.S_Skip;
 
 public class H_TheWizard extends Hero {
     public H_TheWizard() {
@@ -14,6 +15,7 @@ public class H_TheWizard extends Hero {
         initSkills();
         initStats();
         setLevel(1);
+        effectiveRange = 3;
     }
 
     @Override
@@ -34,10 +36,11 @@ public class H_TheWizard extends Hero {
     protected void initSkills() {
         this.skills = new Skill[]{
                 new S_MysticShot(this),
-                new S_ChainLightning(this),
+//                new S_ChainLightning(this),
                 new S_Dispel(this),
                 new S_AetherStep(this),
-                new S_ArcaneBombardment(this)
+                new S_ArcaneBombardment(this),
+                new S_Skip(this)
         };
     }
 }

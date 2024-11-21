@@ -4,6 +4,7 @@ import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.Scoped;
+import jdk.jfr.Percentage;
 
 public class S_UseTheScope extends Skill {
 
@@ -31,6 +32,17 @@ public class S_UseTheScope extends Skill {
             this.hero.removePermanentEffectOfClass(Scoped.class);
         } else {
             this.hero.addEffect(new Scoped(), this.hero);
+        }
+    }
+
+    @Override
+    public int getAIRating(Hero target) {
+        if (!active) {
+            return 5;
+        } else if (this.hero.getPosition() > this.hero.getLastEffectivePosition()) {
+            return 5;
+        } else {
+            return 0;
         }
     }
 

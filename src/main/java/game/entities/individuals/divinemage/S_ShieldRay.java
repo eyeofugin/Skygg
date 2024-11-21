@@ -25,12 +25,16 @@ public class S_ShieldRay extends Skill {
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
-        target.shield(this.hero.getStat(Stat.CURRENT_FAITH) * 50 / 100);
+        target.shield(getShield());
     }
     @Override
     protected void initAnimation() {
         this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
+    }
 
+    @Override
+    public int getShield() {
+        return this.hero.getStat(Stat.CURRENT_FAITH) * 50 / 100;
     }
 
     @Override

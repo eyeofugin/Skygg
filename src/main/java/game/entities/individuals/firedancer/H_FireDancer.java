@@ -4,6 +4,7 @@ import game.entities.Animator;
 import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.Stat;
+import game.skills.genericskills.S_Skip;
 
 public class H_FireDancer extends Hero {
     public H_FireDancer() {
@@ -14,6 +15,7 @@ public class H_FireDancer extends Hero {
         initSkills();
         this.initStats();
         setLevel(1);
+        this.effectiveRange = 2;
     }
 
     @Override
@@ -38,7 +40,8 @@ public class H_FireDancer extends Hero {
                 new S_FlameLasso(this),
                 new S_FlameDance(this),
                 new S_RushOfHeat(this),
-                new S_SingingBlades(this)
+                new S_Skip(this)
+//                new S_SingingBlades(this)
         };
     }
 }

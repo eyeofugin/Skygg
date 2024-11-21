@@ -33,6 +33,7 @@ public class S_WideSwing extends Skill {
         this.damageType = DamageType.NORMAL;
         this.cdMax = 3;
         this.ultimate = true;
+        this.comboEnabled = true;
     }
 
     @Override
@@ -43,6 +44,11 @@ public class S_WideSwing extends Skill {
             target.addEffect(new Bleeding(1), this.hero);
             target.addEffect(new Injured(1), this.hero);
         }
+    }
+
+    @Override
+    public int getAIRating(Hero target) {
+        return 1;
     }
 
     protected void initAnimation() {

@@ -3,7 +3,7 @@ package game.entities.individuals.battleaxe;
 import game.entities.Animator;
 import game.entities.Hero;
 import game.skills.Skill;
-import game.skills.Stat;
+import game.skills.genericskills.S_Skip;
 
 public class H_BattleAxe extends Hero {
 
@@ -14,6 +14,7 @@ public class H_BattleAxe extends Hero {
         this.initSkills();
         this.initStats();
         this.setLevel(1);
+        this.effectiveRange = 2;
     }
 
     @Override
@@ -34,10 +35,11 @@ public class H_BattleAxe extends Hero {
     protected void initSkills() {
         this.skills = new Skill[]{
                 new S_AwesomeAxe(this),
-                new S_WideSwing(this),
+//                new S_WideSwing(this),
                 new S_Headsmash(this),
                 new S_Kick(this),
-                new S_Bloodlust(this)
+                new S_Bloodlust(this),
+                new S_Skip(this)
         };
     }
 }

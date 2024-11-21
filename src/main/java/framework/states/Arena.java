@@ -51,6 +51,7 @@ public class Arena extends GUIElement {
         WAIT_ON_AI,
         WAIT_ON_HUD
     }
+    public boolean pvp = true;
     public Status status = Status.WAIT_ON_HUD;
     public String nextAction = null;
     public int activePointer = 0;
@@ -69,12 +70,15 @@ public class Arena extends GUIElement {
     private final int[] enemyXPos = new int[]{342, 410, 478, 546};
     private final int heroYPos = 80;
 
-    public Arena(Engine e) {
+    public Arena(Engine e, boolean pvp) {
         super(Engine.X, Engine.Y);
         this.engine = e;
         this.hud = new HUD(e);
         this.hud.setArena(this);
-        this.aiController = new ArenaAIController(this);
+        this.pvp = pvp;
+        if (!this.pvp) {
+            this.aiController = new ArenaAIController(this);
+        }
     }
 
     public void setTeams(HeroTeam friend, HeroTeam enemies) {
@@ -199,9 +203,13 @@ public class Arena extends GUIElement {
         this.updateEntities();
         this.activeHero.prepareCast();
         if (this.activeHero.getStat(Stat.CURRENT_ACTION) > 0) {
-            this.status = Status.WAIT_ON_HUD;
-            this.hud.activateTeamOverview();
-            this.hud.setActiveHero(this.activeHero);
+            if (!this.pvp && this.activeHero.isTeam2()) {
+                aiTurn();
+            } else {
+                this.status = Status.WAIT_ON_HUD;
+                this.hud.activateTeamOverview();
+                this.hud.setActiveHero(this.activeHero);
+            }
         } else {
             endOfTurn();
         }
@@ -250,6 +258,7 @@ public class Arena extends GUIElement {
     private void aiTurn() {
         Logger.logLn("aiTurn()");
         this.status = Status.WAIT_ON_AI;
+//        this.activeHero.aiTurn();
         this.aiController.turn();
     }
 

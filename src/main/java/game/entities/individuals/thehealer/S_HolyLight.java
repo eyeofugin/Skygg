@@ -1,8 +1,10 @@
 package game.entities.individuals.thehealer;
 
+import framework.states.Arena;
 import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.TargetType;
+import game.skills.changeeffects.effects.Burning;
 
 public class S_HolyLight extends Skill {
 
@@ -21,7 +23,10 @@ public class S_HolyLight extends Skill {
         this.cdMax = 4;
         this.manaCost = 6;
     }
-
+    @Override
+    public int getAIArenaRating(Arena arena) {
+        return -2;
+    }
     @Override
     protected void initAnimation() {
         this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});

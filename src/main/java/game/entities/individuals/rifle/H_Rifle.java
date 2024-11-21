@@ -15,6 +15,7 @@ public class H_Rifle extends Hero {
         initSkills();
         this.initStats();
         setLevel(1);
+        effectiveRange = 3;
     }
 
     @Override
@@ -35,11 +36,11 @@ public class H_Rifle extends Hero {
     protected void initSkills() {
         this.skills = new Skill[] {
                 new S_Blasting(this),
-                new S_UseTheScope(this),
+                new S_Barrage(this),
+//                new S_UseTheScope(this),
                 new S_Engage(this),
                 new S_Retreat(this),
                 new S_Skip(this)
-//                new S_Barrage(this)
         };
     }
 }

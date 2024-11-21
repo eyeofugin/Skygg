@@ -11,7 +11,7 @@ import java.util.Objects;
 
 public class HeroTeam {
 
-    private final int fillUpDirection;
+    public final int fillUpDirection;
     public  Hero[] heroes;
     public  List<Hero> deadHeroes = new ArrayList<>();
     public final int teamNumber;
@@ -31,9 +31,12 @@ public class HeroTeam {
         Arrays.stream(this.heroes).filter(Objects::nonNull).forEach(e -> e.update(frame));
     }
 
+    private int getEnemyOffset() {
+        return this.teamNumber==2 ? this.heroes.length: 0;
+    }
+
     public List<Hero> removeTheDead() {
         List<Hero> removed = new ArrayList<>();
-        int enemyOffset = this.teamNumber==2 ? 4: 0;
         for (int i = 0; i < this.heroes.length; i++) {
             if (this.heroes[i] != null && this.heroes[i].getStat(Stat.CURRENT_LIFE) < 1) {
                 this.deadHeroes.add(this.heroes[i]);
@@ -45,7 +48,7 @@ public class HeroTeam {
                 for (int j = i - fillUpDirection; j >= 0 && j < this.heroes.length; j-=fillUpDirection) {
                     if (this.heroes[j] != null) {
                         this.heroes[j+fillUpDirection] = this.heroes[j];
-                        this.heroes[j+fillUpDirection].setPosition(enemyOffset + j+fillUpDirection);
+                        this.heroes[j+fillUpDirection].setPosition(getEnemyOffset() + j+fillUpDirection);
                         this.heroes[j] = null;
                     }
                 }
@@ -74,5 +77,12 @@ public class HeroTeam {
 
     public void setDeadHeroes(List<Hero> deadHeroes) {
         this.deadHeroes = deadHeroes;
+    }
+
+    public int getFirstPosition() {
+        return fillUpDirection > 0 ? this.heroes.length-1: getEnemyOffset();
+    }
+    public int getLastPosition() {
+        return fillUpDirection > 0 ? 0: this.heroes.length + getEnemyOffset() - 1;
     }
 }

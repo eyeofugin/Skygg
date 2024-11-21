@@ -28,6 +28,11 @@ public class S_PhoenixFlames extends Skill {
     }
 
     @Override
+    public int getAIRating(Hero target) {
+        return 10;
+    }
+
+    @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
         for (Hero hero : this.hero.getEnemies()) {

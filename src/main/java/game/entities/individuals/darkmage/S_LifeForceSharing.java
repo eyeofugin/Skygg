@@ -29,8 +29,16 @@ public class S_LifeForceSharing extends Skill {
     @Override
     protected void initAnimation() {
         this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
-
     }
+
+    @Override
+    public int getAIRating(Hero target) {
+        int rating = 0;
+        rating -= this.hero.getMissingLifePercentage() / 50;
+        rating += target.getMissingLifePercentage() / 15;
+        return rating;
+    }
+
     @Override
     public String getDescriptionFor(Hero hero) {
         return "heal ally for 1/4 max life";

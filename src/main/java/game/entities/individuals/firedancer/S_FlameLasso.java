@@ -38,6 +38,20 @@ public class S_FlameLasso extends Skill {
     }
 
     @Override
+    public int getAIRating(Hero target) {
+        int rating = 0;
+        rating+=target.getMissingLifePercentage() / 25;
+        Hero targetInFront = this.hero.arena.getAtPosition(target.getPosition()+1);
+        if (targetInFront != null) {
+            rating += targetInFront.getCurrentLifePercentage() < 75 ? 1: 0;
+            if (targetInFront.getPosition() == targetInFront.getLastEffectivePosition()) {
+                rating +=5;
+            }
+        }
+        return rating;
+    }
+
+    @Override
     public String getDescriptionFor(Hero hero) {
         return "Pull 2";
     }

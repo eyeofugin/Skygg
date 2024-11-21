@@ -25,11 +25,12 @@ public class S_HolyShield extends Skill {
         this.targetType = TargetType.ALL_ALLY;
         this.cdMax = 1;
         this.faithCost = 4;
+        this.shield = 3;
     }
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
-        target.shield(3);
+        target.shield(this.shield);
     }
     @Override
     protected void initAnimation() {

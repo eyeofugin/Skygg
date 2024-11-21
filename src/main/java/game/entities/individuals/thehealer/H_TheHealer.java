@@ -4,6 +4,7 @@ import game.entities.Animator;
 import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.Stat;
+import game.skills.genericskills.S_Skip;
 
 public class H_TheHealer extends Hero {
     public H_TheHealer() {
@@ -14,6 +15,7 @@ public class H_TheHealer extends Hero {
         initSkills();
         this.initStats();
         setLevel(1);
+        effectiveRange = 4;
     }
 
     @Override
@@ -36,8 +38,9 @@ public class H_TheHealer extends Hero {
                 new S_DivineRay(this),
                 new S_HolyWords(this),
                 new S_BlindingLight(this),
-                new S_HolyLight(this),
-                new S_ImbueWithLight(this)
+//                new S_HolyLight(this),
+                new S_ImbueWithLight(this),
+                new S_Skip(this)
         };
     }
 }

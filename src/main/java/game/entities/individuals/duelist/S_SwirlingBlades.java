@@ -33,6 +33,7 @@ public class S_SwirlingBlades extends Skill {
         this.dmg = 2;
         this.cdMax = 2;
         this.damageType = DamageType.NORMAL;
+        this.comboEnabled = true;
     }
 
     @Override

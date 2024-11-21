@@ -1,6 +1,7 @@
 package game.entities.individuals.divinemage;
 
 import game.entities.Hero;
+import game.skills.Effect;
 import game.skills.Skill;
 import game.skills.TargetType;
 
@@ -22,6 +23,18 @@ public class S_HealingGleam extends Skill {
         this.cdMax = 4;
         this.faithCost = 15;
         this.ultimate = true;
+    }
+
+    @Override
+    public int getAIRating(Hero target) {
+        int rating = 0;
+        for (Effect effect : target.getEffects()) {
+            if (effect.type != null && effect.type.equals(Effect.ChangeEffectType.DEBUFF) ||
+                effect.type.equals(Effect.ChangeEffectType.STATUS_INFLICTION)) {
+                rating += 2;
+            }
+        }
+        return rating;
     }
 
     @Override

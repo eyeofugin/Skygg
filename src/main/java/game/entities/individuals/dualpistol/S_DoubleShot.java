@@ -12,7 +12,6 @@ import java.util.List;
 
 public class S_DoubleShot extends Skill {
 
-    private int shot = 0;
     public S_DoubleShot(Hero hero) {
         super(hero);
         this.iconPath = "/icons/doubleshot.png";
@@ -30,7 +29,6 @@ public class S_DoubleShot extends Skill {
         this.countAsHits = 2;
         this.dmg = 3;
         this.dmgMultipliers = List.of(new Multiplier(Stat.FINESSE, 0.5));
-        this.shot = 0;
         this.damageType = DamageType.NORMAL;
     }
 

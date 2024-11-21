@@ -37,6 +37,11 @@ public class S_FlameAbsorption extends Skill {
     }
 
     @Override
+    public int getAIRating(Hero target) {
+        return target.getPermanentEffectStacks(Burning.class) / 3;
+    }
+
+    @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
         target.removePermanentEffectOfClass(Burning.class);

@@ -30,6 +30,8 @@ public class S_SpearOfLight extends Skill {
         this.dmg = 4;
         this.damageType = DamageType.MAGIC;
         this.primary = true;
+        this.comboEnabled = true;
+        this.faithGain = true;
     }
     @Override
     public void applySkillEffects(Hero target) {
@@ -45,7 +47,6 @@ public class S_SpearOfLight extends Skill {
         this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
 
     }
-
     @Override
     public String getDescriptionFor(Hero hero) {
         return "+3" +Stat.FAITH.getIconString() + ", if combo gain extra 5"+Stat.FAITH.getIconString()+".";

@@ -1,9 +1,13 @@
 package game.entities.individuals.dualpistol;
 
+import com.sun.source.tree.Scope;
 import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
+import game.skills.changeeffects.effects.Combo;
+import game.skills.changeeffects.effects.Scoped;
+import game.skills.changeeffects.statusinflictions.Rooted;
 
 public class S_Roll extends Skill {
 
@@ -31,6 +35,12 @@ public class S_Roll extends Skill {
     public String getDescriptionFor(Hero hero) {
         return "Move 1, +5 Evasion";
     }
+
+    @Override
+    public int getAIRating(Hero target) {
+        return getRollRating(target);
+    }
+
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);

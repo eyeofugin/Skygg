@@ -1,5 +1,6 @@
 package game.entities.individuals.darkmage;
 
+import framework.graphics.containers.ActiveCharCard;
 import game.entities.Hero;
 import game.entities.Multiplier;
 import game.skills.DamageType;
@@ -33,6 +34,26 @@ public class S_DarkSchemes extends Skill {
     protected void initAnimation() {
         this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
 
+    }
+
+    @Override
+    public int getAIRating(Hero target) {
+        Map<Stat, Integer> statChanges = target.getStatChanges();
+        if (statChanges.isEmpty()) {
+            return -3;
+        }
+        int positiveValue = 0;
+        for (Map.Entry<Stat, Integer> stat : statChanges.entrySet()) {
+            if (stat != null) {
+                if (stat.getKey().equals(Stat.ACCURACY)) {
+                    positiveValue += stat.getValue() / 10;
+                } else {
+                    positiveValue += stat.getValue();
+                }
+            }
+        }
+        int weighted = positiveValue / 2;
+        return target.isTeam2() ? -1 * weighted : weighted;
     }
 
     @Override

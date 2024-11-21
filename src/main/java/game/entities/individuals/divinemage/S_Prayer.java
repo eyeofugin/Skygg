@@ -24,6 +24,7 @@ public class S_Prayer extends Skill {
         this.targetType = TargetType.SELF;
         this.targetResources = List.of(new Resource(Stat.CURRENT_FAITH, Stat.FAITH, 9));
         this.primary = true;
+        this.faithGain = true;
     }
     @Override
     protected void initAnimation() {

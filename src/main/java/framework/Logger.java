@@ -1,8 +1,8 @@
 package framework;
 
 public class Logger {
-    private static final boolean DEBUG = true;
-    private static final boolean AIDEBUG = false;
+    private static final boolean DEBUG = false;
+    private static final boolean AIDEBUG = true;
 
     public static void logLn(String s) {
         if (DEBUG) {

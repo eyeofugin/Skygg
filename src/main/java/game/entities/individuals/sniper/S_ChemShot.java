@@ -23,11 +23,17 @@ public class S_ChemShot extends Skill {
         this.targetType = TargetType.SINGLE;
         this.distance = 4;
         this.primary = true;
+        this.allowAllyForSingle = true;
     }
 
     @Override
     protected void initAnimation() {
         this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
+    }
+
+    @Override
+    public int getAIRating(Hero target) {
+        return target.getMissingLifePercentage() / 25;
     }
 
     @Override

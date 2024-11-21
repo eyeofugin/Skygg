@@ -4,6 +4,7 @@ import game.entities.Animator;
 import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.Stat;
+import game.skills.genericskills.S_Skip;
 
 public class H_DivineMage extends Hero {
 
@@ -15,6 +16,7 @@ public class H_DivineMage extends Hero {
         initSkills();
         this.initStats();
         setLevel(1);
+        this.effectiveRange = 4;
     }
 
     @Override
@@ -37,8 +39,9 @@ public class H_DivineMage extends Hero {
                 new S_Prayer(this),
                 new S_ShieldRay(this),
                 new S_HolyWords(this),
-                new S_HealingGleam(this),
-                new S_Immunity(this)
+//                new S_HealingGleam(this),
+                new S_Immunity(this),
+                new S_Skip(this)
         };
     }
 }

@@ -40,6 +40,20 @@ public class S_Retreat extends Skill {
     }
 
     @Override
+    public int getAIRating(Hero target) {
+        int rating = 0;
+        if (this.hero.getPosition() == this.hero.team.getLastPosition()) {
+            return -1;
+        }
+        rating -= target.getMissingLifePercentage() / 25;
+        rating += this.hero.getMissingLifePercentage() / 20;
+        if (this.hero.getLastEffectivePosition() > target.getPosition()) {
+            rating -= 10;
+        }
+        return rating;
+    }
+
+    @Override
     public String getDescriptionFor(Hero hero) {
         return "Move 1 back If combo: +10 Evasion";
     }

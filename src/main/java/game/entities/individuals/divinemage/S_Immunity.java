@@ -33,6 +33,12 @@ public class S_Immunity extends Skill {
     }
 
     @Override
+    public int getAIRating(Hero target) {
+        int posBonus = target.team.getLastPosition() - target.getPosition();
+        return 3 + posBonus;
+    }
+
+    @Override
     public String getDescriptionFor(Hero hero) {
         return "Gains immunity for 3 turns";
     }

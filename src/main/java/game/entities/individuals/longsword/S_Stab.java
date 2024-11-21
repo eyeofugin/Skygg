@@ -43,6 +43,7 @@ public class S_Stab extends Skill {
     public String getDescriptionFor(Hero hero) {
         return "30%+"+Stat.FORCE.getIconString()+" Chance to injure";
     }
+
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);

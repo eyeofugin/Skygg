@@ -4,6 +4,7 @@ import game.entities.Animator;
 import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.Stat;
+import game.skills.genericskills.S_Skip;
 
 public class H_DualPistol extends Hero {
 
@@ -14,6 +15,7 @@ public class H_DualPistol extends Hero {
         initSkills();
         this.initStats();
         setLevel(1);
+        this.effectiveRange = 3;
     }
 
     @Override
@@ -34,10 +36,11 @@ public class H_DualPistol extends Hero {
     protected void initSkills() {
         this.skills = new Skill[] {
                 new S_QuickShot(this),
-                new S_DoubleShot(this),
+//                new S_DoubleShot(this),
                 new S_FocusedFire(this),
                 new S_Outmaneuver(this),
-                new S_Roll(this)
+                new S_Roll(this),
+                new S_Skip(this)
         };
     }
 }

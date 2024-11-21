@@ -41,18 +41,18 @@ public class StateManager {
 
     public StateManager(Engine e) {
         this.e = e;
-        Arena arena = new Arena(e);
+        Arena arena = new Arena(e, false);
         H_Sniper hero0 = new H_Sniper();
         hero0.enterArena(0, arena);
 
         H_Rifle hero1 = new H_Rifle();
         hero1.enterArena( 1, arena);
 
-        H_Longsword hero2 = new H_Longsword();
-        hero2.enterArena(2, arena);
+        H_AngelGuy hero3 = new H_AngelGuy();
+        hero3.enterArena(2, arena);
 
-        H_Paladin hero3 = new H_Paladin();
-        hero3.enterArena(3, arena);
+        H_Longsword hero2 = new H_Longsword();
+        hero2.enterArena(3, arena);
 
         SimpleDagger simpleDagger = new SimpleDagger();
         simpleDagger.equipToHero(hero0);
@@ -79,6 +79,7 @@ public class StateManager {
         HeroTeam enemies = new HeroTeam(-1,
                 new Hero[]{dummy1,dummy2,dummy3,dummy4}, 2);
         arena.setTeams(friends, enemies);
+
         activeScene = arena;
 
     }

@@ -33,6 +33,12 @@ public class S_Fireblast extends Skill {
         this.distance = 3;
         this.dmg = 8;
         this.damageType = DamageType.MAGIC;
+        this.faithGain = true;
+    }
+
+    @Override
+    public int getAIRating(Hero target) {
+        return (target.getMissingLifePercentage() / 50) * 2;
     }
 
     protected void initAnimation() {

@@ -4,6 +4,8 @@ import game.entities.Animator;
 import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.Stat;
+import game.skills.genericskills.S_Skip;
+
 public class H_AngelGuy extends Hero {
 
     public H_AngelGuy() {
@@ -15,6 +17,7 @@ public class H_AngelGuy extends Hero {
         this.initSkills();
         this.initStats();
         this.setLevel(1);
+        this.effectiveRange = 2;
     }
 
     @Override
@@ -36,9 +39,10 @@ public class H_AngelGuy extends Hero {
         this.skills = new Skill[] {
                 new S_SpearOfLight(this),
                 new S_Reengage(this),
-                new S_PiercingLight(this),
+//                new S_PiercingLight(this),
                 new S_HolyShield(this),
-                new S_LightSpikes(this)
+                new S_LightSpikes(this),
+                new S_Skip(this)
         };
     }
 }

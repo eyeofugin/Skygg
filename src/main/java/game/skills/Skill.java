@@ -10,8 +10,11 @@ import framework.connector.payloads.DmgTriggerPayload;
 import framework.graphics.text.Color;
 import framework.graphics.text.TextEditor;
 import framework.resources.SpriteLibrary;
+import framework.states.Arena;
 import game.entities.Hero;
 import game.entities.Multiplier;
+import game.skills.changeeffects.effects.Scoped;
+import game.skills.changeeffects.statusinflictions.Rooted;
 import utils.MyMaths;
 
 import java.util.ArrayList;
@@ -55,9 +58,7 @@ public abstract class Skill {
     protected int accuracy = 100;
     public int dmg = 0;
     public int heal = 0;
-    protected int powerPercentage = 0;
-    protected int summonId = 0;
-    protected int enhancementId = 0;
+    public int shield = 0;
     protected int cdMax = 0;
     protected int cdCurrent = 0;
     protected boolean justCast = false;
@@ -66,6 +67,9 @@ public abstract class Skill {
     protected int countAsHits = 1;
     protected boolean primary = false;
     protected boolean ultimate = false;
+    protected boolean comboEnabled = false;
+    protected boolean faithGain = false;
+    public boolean allowAllyForSingle = false;
 
     public static List<TargetType> MAX_ACC_TARGET_TYPES = List.of(
             TargetType.SELF,
@@ -77,7 +81,32 @@ public abstract class Skill {
 
 //AI
     public List<SkillTag> tags = new ArrayList<>();
-    public int getAIRating(Hero target, int beatDownMeter){return 0;}
+    public int getAIRating(Hero target){return 0;}
+    public int getAIArenaRating(Arena arena) {return 0;}
+
+    protected int getRollRating(Hero target) {
+        if (this.hero.hasPermanentEffect(Rooted.class) > 0 ||
+                this.hero.hasPermanentEffect(Scoped.class) > 0 ||
+                target.hasPermanentEffect(Rooted.class) > 0 ||
+                target.hasPermanentEffect(Scoped.class) > 0) {
+            return -5;
+        }
+        int lastEffectivePosition = this.hero.getLastEffectivePosition();
+        int targetLifeAdvantage = target.getStat(Stat.CURRENT_LIFE) - this.hero.getStat(Stat.CURRENT_LIFE);
+
+        if (target.getPosition() > this.hero.getPosition()) { //ROll Back
+            if (this.hero.getPosition() == lastEffectivePosition) {
+                return -10;
+            }
+            return targetLifeAdvantage / 2;
+
+        } else {
+            if (target.getPosition() == lastEffectivePosition) { // ROLL FORWARD
+                return 10;
+            }
+            return targetLifeAdvantage / 2 * -1;
+        }
+    }
 
     public enum SkillTag {
         DMG,
@@ -110,10 +139,9 @@ public abstract class Skill {
         this.accuracy = 100;
         this.dmg = 0;
         this.heal = 0;
-        this.powerPercentage = 0;
-        this.summonId = 0;
-        this.enhancementId = 0;
         this.cdMax = 0;
+        this.shield = 0;
+        this.comboEnabled = false;
         this.canMiss = true;
         this.countAsHits = 1;
         if (SpriteLibrary.hasSprite(this.getName())) {
@@ -478,30 +506,6 @@ public abstract class Skill {
         this.dmg = power;
     }
 
-    public int getPowerPercentage() {
-        return powerPercentage;
-    }
-
-    public void setPowerPercentage(int powerPercentage) {
-        this.powerPercentage = powerPercentage;
-    }
-
-    public int getSummonId() {
-        return summonId;
-    }
-
-    public void setSummonId(int summonId) {
-        this.summonId = summonId;
-    }
-
-    public int getEnhancementId() {
-        return enhancementId;
-    }
-
-    public void setEnhancementId(int enhancementId) {
-        this.enhancementId = enhancementId;
-    }
-
     public int getCdMax() {
         return cdMax;
     }
@@ -563,6 +567,18 @@ public abstract class Skill {
 
     public String getName() {
         return this.name;
+    }
+
+    public int getShield() {
+        return shield;
+    }
+
+    public boolean isComboEnabled() {
+        return comboEnabled;
+    }
+
+    public boolean isFaithGain() {
+        return faithGain;
     }
 
     public String getTargetString() {
@@ -722,7 +738,6 @@ public abstract class Skill {
                 ", accuracy=" + accuracy +
                 ", dmg=" + dmg +
                 ", heal=" + heal +
-                ", powerPercentage=" + powerPercentage +
                 ", cdMax=" + cdMax +
                 ", cdCurrent=" + cdCurrent +
                 ", blockedTurns=" + blockedTurns +
