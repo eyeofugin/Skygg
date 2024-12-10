@@ -25,7 +25,7 @@ public class S_Kick extends Skill {
         this.tags = List.of(SkillTag.DMG, SkillTag.PEEL);
         this.dmgMultipliers = List.of(new Multiplier(Stat.FORCE, 0.1));
         this.targetType = TargetType.SINGLE;
-        this.distance = 2;
+        this.distance = 1;
         this.dmg = 3;
         this.cdMax = 4;
         this.damageType = DamageType.NORMAL;

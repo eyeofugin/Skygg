@@ -27,7 +27,7 @@ public class S_AwesomeAxe extends Skill {
         this.tags = List.of(SkillTag.DMG);
         this.dmgMultipliers = List.of(new Multiplier(Stat.FORCE, 0.2), new Multiplier(Stat.FINESSE, 0.1));
         this.targetType = TargetType.SINGLE;
-        this.distance = 2;
+        this.distance = 1;
         this.dmg = 5;
         this.damageType = DamageType.NORMAL;
         this.primary = true;

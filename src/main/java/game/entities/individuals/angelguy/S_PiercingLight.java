@@ -25,7 +25,7 @@ public class S_PiercingLight extends Skill {
         this.targetType = TargetType.LINE;
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.3));
         this.dmg = 3;
-        this.distance = 4;
+        this.distance = 2;
         this.cdMax = 2;
         this.faithCost = 6;
         this.damageType = DamageType.MAGIC;

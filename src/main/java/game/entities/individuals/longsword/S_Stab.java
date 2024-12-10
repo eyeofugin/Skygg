@@ -25,7 +25,7 @@ public class S_Stab extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.LINE;
-        this.distance = 3;
+        this.distance = 2;
         this.damageType = DamageType.NORMAL;
         this.dmg = 5;
         this.cdMax = 3;

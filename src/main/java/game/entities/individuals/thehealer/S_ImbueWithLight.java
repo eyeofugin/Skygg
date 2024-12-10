@@ -24,6 +24,7 @@ public class S_ImbueWithLight extends Skill {
         this.targetType = TargetType.ALL_ALLY;
         this.cdMax = 2;
         this.manaCost = 10;
+        
         this.heal = 0;
         this.healMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.3));
     }

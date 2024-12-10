@@ -28,7 +28,7 @@ public class S_Barrage extends Skill {
         this.effects = List.of(new Injured(1));
         this.targetType = TargetType.ENEMY_LINE;
         this.dmg = 3;
-        this.distance = 4;
+        this.distance = 2;
         this.damageType = DamageType.NORMAL;
         this.cdMax = 3;
     }

@@ -144,9 +144,10 @@ public class Symbol {
     public static Symbol ninex8=		new Symbol("9", 64,	51,54,	24,31,	SpriteSheet.fonts8x);
 
     public static Symbol pointx8 =		new Symbol(".","fonts/8x/point.png",2,8);
-    public static Symbol starx8 =		new Symbol(".","fonts/8x/star.png",2,8);
+    public static Symbol starx8 =		new Symbol("*","fonts/8x/star.png",2,8);
     public static Symbol slashx8 = 	new Symbol("/","fonts/8x/slash.png",3,8);
     public static Symbol colonx8 =     new Symbol(":","fonts/8x/colon.png",2,8);
+    public static Symbol semicolonx8 =     new Symbol(";","fonts/8x/semicolon.png",2,8);
     public static Symbol moreThanx8 =  new Symbol(">","fonts/8x/more.png",3,8);
     public static Symbol lessThanx8 =  new Symbol("<","fonts/8x/less.png",3,8);
     public static Symbol bracketopenx8 = new Symbol("(","fonts/8x/bracketOpen.png",2,8);

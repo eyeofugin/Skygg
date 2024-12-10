@@ -29,7 +29,7 @@ public class S_RighteousHammer extends Skill {
         this.tags = List.of(SkillTag.DMG);
         this.dmgMultipliers = List.of(new Multiplier(Stat.FORCE, 0.15));
         this.targetType = TargetType.SINGLE;
-        this.distance = 2;
+        this.distance = 1;
         this.dmg = 3;
         this.damageType = DamageType.NORMAL;
         this.primary = true;

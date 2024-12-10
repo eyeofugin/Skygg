@@ -24,7 +24,7 @@ public class S_DoubleShot extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.SINGLE;
-        this.distance = 3;
+        this.distance = 2;
         this.cdMax = 2;
         this.countAsHits = 2;
         this.dmg = 3;

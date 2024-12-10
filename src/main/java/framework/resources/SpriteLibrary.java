@@ -55,6 +55,8 @@ public class SpriteLibrary {
         sprites.put("stats", sprite(16,16,16,16,"icons/gui/stats.png", 0));
         sprites.put("effects", sprite(16,16,16,16,"icons/gui/effects.png", 0));
         sprites.put("items", sprite(16,16,16,16,"icons/gui/items.png", 0));
+        sprites.put("action", sprite(5,5,5,5,"icons/gui/action.png", 0));
+
 
         sprites.put(Burning.class.getName(), sprite(Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,
                 "icons/effect/burning.png", 0));

@@ -5,6 +5,7 @@ import framework.connector.Connector;
 import framework.connector.payloads.CanPerformPayload;
 import game.skills.Effect;
 import game.skills.Skill;
+import game.skills.genericskills.S_Skip;
 
 public class Taunted extends Effect {
     public Taunted(int turns) {
@@ -27,7 +28,7 @@ public class Taunted extends Effect {
 
     public void performCheck(CanPerformPayload payload) {
         if (payload.skill.hero.equals(this.hero) && payload.success) {
-            if (!payload.skill.tags.contains(Skill.SkillTag.DMG)) {
+            if (!payload.skill.tags.contains(Skill.SkillTag.DMG) && !(payload.skill instanceof S_Skip)) {
                 payload.success = false;
             }
         }

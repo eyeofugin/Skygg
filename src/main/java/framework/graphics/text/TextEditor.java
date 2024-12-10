@@ -164,6 +164,7 @@ public class TextEditor {
         symbols.put(")", Symbol.bracketclosex8);
         symbols.put("+", Symbol.plusx8);
         symbols.put(":", Symbol.colonx8);
+        symbols.put(";", Symbol.semicolonx8);
         symbols.put(">", Symbol.moreThanx8);
         symbols.put("<", Symbol.lessThanx8);
         symbols.put("-", Symbol.minusx8);

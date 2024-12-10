@@ -74,7 +74,7 @@ public class StateManager {
     public void joinArena(Hero[] draftedHeroes) {
         Arena arena = new Arena(this.e, false);
         for (Hero hero: draftedHeroes) {
-            hero.enterArena(hero.getDraftChoice(), arena); // TODO change on 3v3 change
+            hero.enterArena(hero.getDraftChoice()-1, arena);
             hero.removeFromDraft();
         }
         HeroTeam friends = new HeroTeam(1, draftedHeroes, 1);

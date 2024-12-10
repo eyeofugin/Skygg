@@ -140,7 +140,7 @@ public class GUIElement {
         List<Symbol> currentWord = new ArrayList<>();
 
         for (Symbol symbol : symbols) {
-            if (!symbol.code.equals(" ")) {
+            if (symbol.code == null || !symbol.code.equals(" ")) {
                 currentWord.add(symbol);
             } else {
                 result.add(currentWord);

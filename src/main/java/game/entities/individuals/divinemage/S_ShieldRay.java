@@ -19,7 +19,7 @@ public class S_ShieldRay extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.LINE;
-        this.distance = 3;
+        this.distance = 2;
         this.faithCost = 4;
     }
     @Override

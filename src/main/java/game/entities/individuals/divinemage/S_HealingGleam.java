@@ -19,7 +19,7 @@ public class S_HealingGleam extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.LINE;
-        this.distance = 4;
+        this.distance = 2;
         this.cdMax = 4;
         this.faithCost = 15;
         this.ultimate = true;

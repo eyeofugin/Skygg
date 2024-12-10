@@ -30,7 +30,7 @@ public class S_Fireblast extends Skill {
         this.tags = List.of(SkillTag.DMG);
         this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.15));
         this.targetType = TargetType.SINGLE;
-        this.distance = 3;
+        this.distance = 2;
         this.dmg = 8;
         this.damageType = DamageType.MAGIC;
         this.faithGain = true;

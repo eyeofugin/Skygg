@@ -27,7 +27,7 @@ public class S_QuickShot extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.SINGLE;
-        this.distance = 3;
+        this.distance = 2;
         this.dmg = 2;
         this.dmgMultipliers = List.of(new Multiplier(Stat.FINESSE, 0.4));
         this.damageType = DamageType.NORMAL;

@@ -40,7 +40,7 @@ public class S_RushOfHeat extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Get 3 burn; +15"+Stat.FAITH.getIconString();
+        return "Get 3 burn. +15"+Stat.FAITH.getIconString();
     }
 
     @Override

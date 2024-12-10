@@ -26,7 +26,7 @@ public class S_Swing extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.SINGLE;
-        this.distance = 2;
+        this.distance = 1;
         this.damageType = DamageType.NORMAL;
         this.dmg = 5;
         this.dmgMultipliers = List.of(new Multiplier(Stat.FORCE, 0.1));

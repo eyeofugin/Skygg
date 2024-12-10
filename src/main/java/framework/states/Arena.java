@@ -66,8 +66,8 @@ public class Arena extends GUIElement {
     public HeroTeam enemies;
     public GlobalEffect globalEffect;
 
-    private final int[] friendXPos = new int[]{30, 98, 166, 234};
-    private final int[] enemyXPos = new int[]{342, 410, 478, 546};
+    private final int[] friendXPos = new int[]{98, 166, 234};
+    private final int[] enemyXPos = new int[]{342, 410, 478};
     private final int heroYPos = 80;
 
     public Arena(Engine e, boolean pvp) {
@@ -297,13 +297,13 @@ public class Arena extends GUIElement {
         }
         if (toGo>0) {
             int targetPos = e.getPosition()+dir;
-            int indexOffset = e.isTeam2() ? 4:0;
+            int indexOffset = e.isTeam2() ? 3:0;
 
-            if ((e.isTeam2() && (targetPos == 3 || targetPos == 8)) ||
-                    (!e.isTeam2() && (targetPos == -1 || targetPos == 4))) {
+            if ((e.isTeam2() && (targetPos == 2 || targetPos == 6)) ||
+                    (!e.isTeam2() && (targetPos == -1 || targetPos == 3))) {
                 return;
             }
-            if ((e.isTeam2() && (this.enemies.heroes.length <= targetPos-4 || this.enemies.heroes[targetPos-4] == null)) ||
+            if ((e.isTeam2() && (this.enemies.heroes.length <= targetPos-3 || this.enemies.heroes[targetPos-3] == null)) ||
                     !e.isTeam2() && (this.friends.heroes.length <= targetPos || this.friends.heroes[targetPos] == null)) {
                 return;
             }
@@ -343,11 +343,11 @@ public class Arena extends GUIElement {
             this.matrixPointer = startIndex;
         } else {
             Random rand = new Random();
-            int from = this.activeHero.isTeam2()?0:4;
-            int until = this.activeHero.isTeam2()?3:7;
+            int from = this.activeHero.isTeam2()?0:3;
+            int until = this.activeHero.isTeam2()?2:5;
             switch (this.activeSkill.getTargetType()) {
                 case ALL:
-                    this.pointers = new int[]{0,1,2,3,4,5,6,7};
+                    this.pointers = new int[]{0,1,2,3,4,5};
                     break;
                 case SELF:
                     this.pointers = new int[]{this.activeHero.getPosition()};
@@ -362,16 +362,16 @@ public class Arena extends GUIElement {
                     this.pointers = MyMaths.getIntArrayWithExclusiveRandValues(from, until, 3);
                     break;
                 case ALL_ALLY:
-                    this.pointers = this.activeHero.isTeam2()?new int[]{4,5,6,7}:new int[]{0,1,2,3};
+                    this.pointers = this.activeHero.isTeam2()?new int[]{3,4,5}:new int[]{0,1,2};
                     break;
                 case ALL_ENEMY:
-                    this.pointers = this.activeHero.isTeam2()?new int[]{0,1,2,3}:new int[]{4,5,6,7};
+                    this.pointers = this.activeHero.isTeam2()?new int[]{0,1,2}:new int[]{3,4,5};
                     break;
                 case FIRST_ENEMY:
-                    this.pointers = this.activeHero.isTeam2()?new int[]{3}:new int[]{4};
+                    this.pointers = this.activeHero.isTeam2()?new int[]{2}:new int[]{3};
                     break;
                 case FIRST_TWO_ENEMIES:
-                    this.pointers = this.activeHero.isTeam2()?new int[]{2,3}:new int[]{4,5};
+                    this.pointers = this.activeHero.isTeam2()?new int[]{1,2}:new int[]{3,4};
                     break;
                 case ARENA:
                     this.pointers = new int[]{};
@@ -458,8 +458,8 @@ public class Arena extends GUIElement {
     private void renderPointer() {
         for (int j : pointers) {
             int x;
-            if (j > 3) {
-                x = enemyXPos[j - 4];
+            if (j > 2) {
+                x = enemyXPos[j - 3];
             } else {
                 x = friendXPos[j];
             }
@@ -476,7 +476,7 @@ public class Arena extends GUIElement {
         }
         for (Hero hero: enemies.heroes) {
             if (hero != null) {
-                int x = enemyXPos[hero.getPosition() - 4];
+                int x = enemyXPos[hero.getPosition() - 3];
                 fillWithGraphicsSize(x, heroYPos, hero.getWidth(), hero.getHeight(), hero.render(), this.activeHero.equals(hero));
             }
         }

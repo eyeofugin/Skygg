@@ -26,7 +26,7 @@ public class S_FlameLasso extends Skill {
         this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.1),
                 new Multiplier(Stat.FAITH, 0.1));
         this.targetType = TargetType.SINGLE;
-        this.distance = 4;
+        this.distance = 3;
         this.dmg = 1;
         this.damageType = DamageType.MAGIC;
         this.faithCost = 10;

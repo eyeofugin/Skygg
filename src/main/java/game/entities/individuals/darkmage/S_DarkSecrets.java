@@ -24,7 +24,7 @@ public class S_DarkSecrets extends Skill {
         this.tags = List.of(SkillTag.BUFF);
         this.targetType = TargetType.SINGLE_ALLY;
         this.effects = List.of(new DarkSecrets());
-        this.distance = 3;
+        this.distance = 2;
         this.cdMax = 3;
         this.manaCost = 5;
     }

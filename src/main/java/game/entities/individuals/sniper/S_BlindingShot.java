@@ -24,7 +24,7 @@ public class S_BlindingShot extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.SINGLE;
-        this.distance = 4;
+        this.distance = 3;
         this.cdMax = 3;
         this.damageType = DamageType.NORMAL;
         this.dmg = 1;

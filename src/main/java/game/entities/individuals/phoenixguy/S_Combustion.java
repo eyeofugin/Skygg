@@ -30,7 +30,7 @@ public class S_Combustion extends Skill {
         this.tags = List.of(SkillTag.DMG);
         this.targetType = TargetType.SINGLE;
         this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.15));
-        this.distance = 3;
+        this.distance = 2;
         this.dmg = 4;
         this.damageType = DamageType.MAGIC;
         this.cdMax = 1;

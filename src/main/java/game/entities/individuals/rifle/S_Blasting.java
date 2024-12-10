@@ -26,7 +26,7 @@ public class S_Blasting extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.SINGLE;
-        this.distance = 3;
+        this.distance = 2;
         this.dmg = 5;
         this.dmgMultipliers = List.of(new Multiplier(Stat.FINESSE, 0.3));
         this.damageType = DamageType.NORMAL;

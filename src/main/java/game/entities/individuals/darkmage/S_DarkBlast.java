@@ -23,7 +23,7 @@ public class S_DarkBlast extends Skill {
         this.tags = List.of(SkillTag.DMG);
         this.targetType = TargetType.SINGLE;
         this.effects = List.of(new Blight(1));
-        this.distance = 5;
+        this.distance = 3;
         this.primary = true;
     }
     @Override

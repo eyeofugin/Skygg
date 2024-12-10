@@ -27,7 +27,7 @@ public class S_ShatteringSwing extends Skill {
         this.tags = List.of(SkillTag.DMG);
         this.dmgMultipliers = List.of(new Multiplier(Stat.FORCE, 0.5));
         this.targetType = TargetType.SINGLE;
-        this.distance = 2;
+        this.distance = 1;
         this.dmg = 5;
         this.cdMax = 1;
         this.faithCost = 5;

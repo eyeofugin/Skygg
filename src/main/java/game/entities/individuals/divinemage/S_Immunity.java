@@ -26,6 +26,7 @@ public class S_Immunity extends Skill {
         this.cdMax = 3;
         this.faithCost = 5;
         this.effects = List.of(new Immunity(3));
+        this.distance = 2;
     }
     @Override
     protected void initAnimation() {

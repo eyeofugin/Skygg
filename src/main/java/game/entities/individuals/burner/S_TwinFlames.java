@@ -45,7 +45,7 @@ public class S_TwinFlames extends Skill {
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
         int magic = this.hero.getStat(Stat.MAGIC);
-        if (MyMaths.success(magic + 30)) {
+        if (MyMaths.success(magic + 50)) {
             target.addEffect(new Burning(1), this.hero);
         }
     }

@@ -22,7 +22,7 @@ public class S_LifeForceSharing extends Skill {
         super.setToInitial();
         this.tags = List.of(SkillTag.HEAL);
         this.targetType = TargetType.SINGLE_ALLY;
-        this.distance = 3;
+        this.distance = 2;
         this.cdMax = 1;
         this.lifeCost = 4;
     }

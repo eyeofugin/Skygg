@@ -33,7 +33,7 @@ public class Blinded extends Effect {
             if (skill.getTargetType().equals(TargetType.SINGLE)
                     || skill.getTargetType().equals(TargetType.LINE)
                     || skill.getTargetType().equals(TargetType.ENEMY_LINE)) {
-                skill.setDistance(skill.getDistance() - 1);
+                skill.setDistance(1);
             }
         }
     }

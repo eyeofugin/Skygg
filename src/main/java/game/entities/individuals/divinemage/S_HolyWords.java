@@ -27,7 +27,7 @@ public class S_HolyWords extends Skill {
         this.healMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.5));
         this.cdMax = 1;
         this.faithCost = 6;
-        this.distance = 3;
+        this.distance = 2;
     }
     @Override
     protected void initAnimation() {

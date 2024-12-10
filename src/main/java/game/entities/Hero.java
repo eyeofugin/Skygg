@@ -165,6 +165,12 @@ public abstract class Hero extends GUIElement {
             fillWithGraphicsSize(0, yf, 64, 3, getBar(64, 3, 0, getResourcePercentage(this.secondaryResource), getResourceColor(this.secondaryResource), Color.DARKRED), false);
             yf+=4;
         }
+        int actionYF = 2;
+        for (int i = 0; i < this.getStat(Stat.CURRENT_ACTION); i++) {
+            int[] action = SpriteLibrary.getSprite("action");
+            fillWithGraphicsSize(2, actionYF, 5,5,action,false);
+            actionYF += 7;
+        }
     }
     private int[] getShieldBar() {
         double currentLifePercentage = getResourcePercentage(Stat.LIFE);

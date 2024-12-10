@@ -95,11 +95,11 @@ public class DraftBuilder {
     public static HeroTeam getRandomEnemyTeam(Arena arena) {
         Hero[] heroes = new Hero[3];
         heroes[0] = getRandomFrontLiner(new ArrayList<>());
-        heroes[0].enterArena(4, arena);
+        heroes[0].enterArena(3, arena);
         heroes[1] = getRandomMiddleLiner(new ArrayList<>());
-        heroes[1].enterArena(5, arena);
+        heroes[1].enterArena(4, arena);
         heroes[2] = getRandomBackLiner(new ArrayList<>());
-        heroes[2].enterArena(6, arena);
+        heroes[2].enterArena(5, arena);
 
         return new HeroTeam(-1, heroes, 2);
     }

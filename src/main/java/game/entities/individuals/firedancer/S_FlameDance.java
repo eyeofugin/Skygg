@@ -50,7 +50,7 @@ public class S_FlameDance extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "No action cost; Move 1; +1"+ Stat.FINESSE.getIconString();
+        return "No action cost. Move 1. +1"+ Stat.FINESSE.getIconString();
     }
 
 }
