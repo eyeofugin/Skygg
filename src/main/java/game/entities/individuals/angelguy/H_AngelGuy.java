@@ -8,9 +8,10 @@ import game.skills.genericskills.S_Skip;
 
 public class H_AngelGuy extends Hero {
 
+    public static final String NAME = "Angel Guy";
     public H_AngelGuy() {
 
-        super("Angel Guy");
+        super(NAME);
         this.initBasePath("angelguy");
         this.secondaryResource = Stat.FAITH;
         this.initAnimator();
@@ -29,8 +30,8 @@ public class H_AngelGuy extends Hero {
         anim.setupAnimation(this.basePath + "/sprites/idle_w.png", "idle", new int[]{40,80});
         anim.setupAnimation(this.basePath + "/sprites/damaged_w.png", "damaged", new int[]{3,6,9,12});
 
-        anim.defaultAnim = "idle";
-        anim.currentAnim = anim.defaultAnim;
+        anim.setDefaultAnim("idle");
+        anim.currentAnim = anim.getDefaultAnim();
         anim.onLoop = true;
     }
 

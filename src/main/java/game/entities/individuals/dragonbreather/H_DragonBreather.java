@@ -28,8 +28,8 @@ public class H_DragonBreather extends Hero {
         anim.setupAnimation(this.basePath + "/sprites/idle_w.png", "idle", new int[]{40,80});
         anim.setupAnimation(this.basePath + "/sprites/damaged_w.png", "damaged", new int[]{3,6,9,12});
 
-        anim.defaultAnim = "idle";
-        anim.currentAnim = anim.defaultAnim;
+        anim.setDefaultAnim("idle");
+        anim.currentAnim = anim.getDefaultAnim();
         anim.onLoop = true;
     }
 

@@ -38,6 +38,9 @@ public class SpriteUtils {
         return newImage;
     }
     public static int[] flipHorizontal(int[] p, int sideSize) {
+        if (p == null) {
+            return new int[0];
+        }
         int[] copy = new int[p.length];
         int index = 0;
         for (int y = 0; y < sideSize; y++) {

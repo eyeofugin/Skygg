@@ -8,8 +8,9 @@ import game.skills.genericskills.S_Skip;
 
 public class H_Burner extends Hero {
 
+    public final static String NAME = "Burner";
     public H_Burner() {
-        super("Burner");
+        super(NAME);
         this.initBasePath("burner");
         this.secondaryResource = Stat.FAITH;
         this.initAnimator();
@@ -28,8 +29,8 @@ public class H_Burner extends Hero {
         anim.setupAnimation(this.basePath + "/sprites/idle_w.png", "idle", new int[]{40,80});
         anim.setupAnimation(this.basePath + "/sprites/damaged_w.png", "damaged", new int[]{3,6,9,12});
 
-        anim.defaultAnim = "idle";
-        anim.currentAnim = anim.defaultAnim;
+        anim.setDefaultAnim("idle");
+        anim.currentAnim = anim.getDefaultAnim();
         anim.onLoop = true;
     }
 

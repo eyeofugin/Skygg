@@ -7,13 +7,19 @@ import framework.graphics.GUIElement;
 import framework.graphics.elements.SkillInfo;
 import framework.graphics.text.Color;
 import framework.states.Arena;
+import framework.states.Draft;
 import game.entities.Hero;
 import game.skills.Skill;
 
 public class ActiveAbilitiesCard extends GUIElement {
-
+    private enum Mode{
+        ARENA,
+        DRAFT;
+    }
     public Engine engine;
     public Arena arena;
+    public Draft draft;
+    private Mode mode;
     private Hero activeHero;
     public int abilityPointer = 0;
     public int maxAbilityPointer = 0;
@@ -27,6 +33,16 @@ public class ActiveAbilitiesCard extends GUIElement {
         this.y = Property.HUD_BOXES_Y;
         this.engine = e;
         this.arena = arena;
+        this.mode = Mode.ARENA;
+    }
+
+    public ActiveAbilitiesCard(Engine e, Draft draft) {
+        super(Property.ACTIVE_ABILITY_WIDTH, Property.ACTIVE_ABILITY_HEIGHT);
+        this.x = Property.ACTIVE_ABILITY_X;
+        this.y = Property.HUD_BOXES_Y;
+        this.engine = e;
+        this.draft = draft;
+        this.mode = Mode.DRAFT;
     }
 
     @Override
@@ -44,7 +60,7 @@ public class ActiveAbilitiesCard extends GUIElement {
                     this.activateIcon();
                 }
             }
-            if (engine.keyB._enterPressed) {
+            if (engine.keyB._enterPressed && this.mode.equals(Mode.ARENA)) {
                 act();
             }
         }

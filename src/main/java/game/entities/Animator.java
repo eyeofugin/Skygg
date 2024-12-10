@@ -11,7 +11,7 @@ public class Animator {
 
     public Map<String, Animation> animations = new HashMap<>();
     public String currentAnim;
-    public String defaultAnim;
+    private String defaultAnim;
     public boolean onLoop;
     public int animationCounter = 0;
     public int width;
@@ -49,5 +49,12 @@ public class Animator {
             this.waitFor = waitFor;
             onLoop = false;
         }
+    }
+    public void setDefaultAnim(String defaultAnim) {
+        this.defaultAnim = defaultAnim;
+        this.image = this.animations.get(this.defaultAnim).getImage(0);
+    }
+    public String getDefaultAnim() {
+        return this.defaultAnim;
     }
 }

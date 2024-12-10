@@ -56,6 +56,7 @@ public abstract class Hero extends GUIElement {
     protected String portraitName;
 
     protected int level = 1;
+    protected int draftChoice = 0;
     protected Map<Integer, Map<Stat, Integer>> levelStats = new HashMap<>();
     protected Map<Stat, Integer> stats = new HashMap<>();
     protected Map<Stat, Integer> statChanges = new HashMap<>();
@@ -144,22 +145,25 @@ public abstract class Hero extends GUIElement {
         yf = 65;
         renderBars();
         renderEffects();
+        renderDraftInfo();
         return pixels;
     }
 
     private void renderImage() {
-        int[] image = this.team.teamNumber==2 ? SpriteUtils.flipHorizontal(this.anim.image, 64) : this.anim.image;
+        boolean flipHorizontal = this.team == null || this.team.teamNumber == 2;
+        int[] image = flipHorizontal ? SpriteUtils.flipHorizontal(this.anim.image, 64) : this.anim.image;
+
         fillWithGraphicsSize(0, 0, 64, 64, image, false);
     }
     private void renderBars() {
-        fillWithGraphicsSize(0, yf, 64, 5, getBar(64, 5, 0, getResourcePercentage(Stat.LIFE), Color.GREEN, Color.DARKRED), false);
+        fillWithGraphicsSize(0, yf, 64, 3, getBar(64, 3, 0, getResourcePercentage(Stat.LIFE), Color.GREEN, Color.DARKRED), false);
         if (this.getStat(Stat.SHIELD)>0) {
-            fillWithGraphicsSize(0,yf,64,5,getShieldBar(), false);
+            fillWithGraphicsSize(0,yf,64,3,getShieldBar(), false);
         }
-        yf+=6;
+        yf+=4;
         if (this.secondaryResource != null) {
-            fillWithGraphicsSize(0, yf, 64, 5, getBar(64, 5, 0, getResourcePercentage(this.secondaryResource), getResourceColor(this.secondaryResource), Color.DARKRED), false);
-            yf+=6;
+            fillWithGraphicsSize(0, yf, 64, 3, getBar(64, 3, 0, getResourcePercentage(this.secondaryResource), getResourceColor(this.secondaryResource), Color.DARKRED), false);
+            yf+=4;
         }
     }
     private int[] getShieldBar() {
@@ -169,9 +173,9 @@ public abstract class Hero extends GUIElement {
         int lifeFill = (int)(64 * currentLifePercentage);
 
         if (missingLifePercentage < shieldPercentage) {
-            return getBar(64,5,0,1.0-shieldPercentage,Color.VOID,Color.DARKYELLOW);
+            return getBar(64,3,0,1.0-shieldPercentage,Color.VOID,Color.DARKYELLOW);
         } else {
-            return getBar(64,5,lifeFill,shieldPercentage,Color.DARKYELLOW,Color.VOID);
+            return getBar(64,3,lifeFill,shieldPercentage,Color.DARKYELLOW,Color.VOID);
         }
     }
     private void renderEffects() {
@@ -221,6 +225,13 @@ public abstract class Hero extends GUIElement {
 //                }
 //            }
 //        }
+    }
+
+    private void renderDraftInfo() {
+        if (this.draftChoice != 0) {
+            int[] draftChoiceNumberPixels = getTextLine(this.draftChoice+"", 10,10, Color.RED);
+            fillWithGraphicsSize(this.width-10,0,10,10,draftChoiceNumberPixels, false);
+        }
     }
 
 //StatMagic
@@ -668,6 +679,16 @@ public abstract class Hero extends GUIElement {
             case FAITH -> getFaithString();
             default -> "";
         };
+    }
+
+    public void draft(int draftChoice) {
+        this.draftChoice = draftChoice;
+    }
+    public void removeFromDraft() {
+        this.draftChoice = 0;
+    }
+    public int getDraftChoice() {
+        return this.draftChoice;
     }
 
 //Loading

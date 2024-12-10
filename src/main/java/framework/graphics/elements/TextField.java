@@ -8,10 +8,16 @@ public class TextField extends GUIElement {
     protected String string;
     protected int textSize;
     protected Color fontColor;
+    protected boolean small;
+    protected TextAlignment alignment = TextAlignment.LEFT;
 
     @Override
     public int[] render() {
-        fill(getTextLine(string, width, height, TextAlignment.LEFT, Color.VOID, fontColor));
+        if (!small) {
+            fill(getTextLine(string, width, height, alignment, Color.VOID, fontColor));
+        } else {
+            fill(getSmallNumTextLine(string, width, height, alignment, Color.VOID, fontColor));
+        }
         return pixels;
     }
 
@@ -25,5 +31,13 @@ public class TextField extends GUIElement {
 
     public void setFontColor(Color fontColor) {
         this.fontColor = fontColor;
+    }
+
+    public void setSmall(boolean small) {
+        this.small = small;
+    }
+
+    public void setAlignment(TextAlignment alignment) {
+        this.alignment = alignment;
     }
 }

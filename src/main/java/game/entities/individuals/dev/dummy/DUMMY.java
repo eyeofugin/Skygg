@@ -78,8 +78,8 @@ public class DUMMY extends Hero {
         anim.setupAnimation(idlePath, "idle", new int[]{50,100,150,200});
         anim.setupAnimation(damagedPath, "damaged", new int[]{5,10,15,20});
 
-        anim.defaultAnim = "idle";
-        anim.currentAnim = anim.defaultAnim;
+        anim.setDefaultAnim("idle");
+        anim.currentAnim = anim.getDefaultAnim();
         anim.onLoop = true;
     }
 

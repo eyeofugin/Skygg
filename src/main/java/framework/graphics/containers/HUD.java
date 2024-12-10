@@ -4,13 +4,16 @@ import framework.Engine;
 import framework.graphics.GUIElement;
 import framework.graphics.text.Color;
 import framework.states.Arena;
+import framework.states.Draft;
 import game.entities.Hero;
 
 
 public class HUD extends GUIElement {
     Engine e;
     Arena arena;
+    Draft draft;
     TeamArenaOverview arenaOv;
+    TeamDraftOverview draftOV;
 
     public HUD(Engine e) {
         super(Engine.X, Engine.Y);
@@ -20,6 +23,9 @@ public class HUD extends GUIElement {
     public void update(int frame) {
         if (this.arenaOv!=null){
             this.arenaOv.update(frame);
+        }
+        if (this.draftOV!=null){
+            this.draftOV.update(frame);
         }
     }
     public int[] render() {
@@ -32,13 +38,29 @@ public class HUD extends GUIElement {
         this.arenaOv = new TeamArenaOverview(e, arena);
         this.children.add(arenaOv);
     }
-    public void setActiveHero(Hero e) {
-        this.arenaOv.setActiveHero(e);
+    public void setDraft(Draft draft) {
+        this.draft = draft;
+        this.draftOV = new TeamDraftOverview(e, draft);
+        this.children.add(draftOV);
     }
-    public void activateTeamOverview() {
+    public void setActiveHero(Hero e) {
+        if (this.arenaOv != null) {
+            this.arenaOv.setActiveHero(e);
+        }
+        if (this.draftOV != null) {
+            this.draftOV.setActiveHero(e);
+        }
+    }
+    public void activateTeamArenaOv() {
         this.arenaOv.activate();
     }
     public void disableTeamArenaOV() {
         this.arenaOv.deactivate();
+    }
+    public void activateTeamDraftOV() {
+        this.draftOV.activate();
+    }
+    public void disableTeamDraftOV() {
+        this.draftOV.deactivate();
     }
 }

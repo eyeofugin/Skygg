@@ -113,9 +113,9 @@ public class Engine extends JPanel implements Runnable{
 
         Engine e;
         public boolean upPressed, downPressed, leftPressed, rightPressed, close, enterPressed, backPressed,
-                shoulderLeftPressed, shoulderRightPressed;
+                shoulderLeftPressed, shoulderRightPressed, contextPressed;
         public boolean _upPressed, _downPressed, _leftPressed, _rightPressed, _close, _enterPressed, _backPressed,
-                _shoulderLeftPressed, _shoulderRightPressed;
+                _shoulderLeftPressed, _shoulderRightPressed, _contextPressed;
         public KeyBoard(Engine e) {
             this.e = e;
         }
@@ -160,6 +160,10 @@ public class Engine extends JPanel implements Runnable{
                 if (!backPressed) {_backPressed=true;}
                 backPressed = true;
             }
+            if (code == KeyEvent.VK_I) {
+                if (!contextPressed) {_contextPressed=true;}
+                contextPressed = true;
+            }
             if (code == KeyEvent.VK_ESCAPE) {
                 close = true;
             }
@@ -174,6 +178,7 @@ public class Engine extends JPanel implements Runnable{
             this._upPressed = false;
             this._close = false;
             this._backPressed = false;
+            this._contextPressed = false;
         }
 
         @Override
@@ -203,6 +208,9 @@ public class Engine extends JPanel implements Runnable{
             }
             if (code == KeyEvent.VK_BACK_SPACE) {
                 backPressed = false;
+            }
+            if (code == KeyEvent.VK_I) {
+                contextPressed = false;
             }
         }
     }

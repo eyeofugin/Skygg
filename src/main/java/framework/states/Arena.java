@@ -154,7 +154,7 @@ public class Arena extends GUIElement {
         setPointerArray();
         if (engine.keyB._backPressed) {
             this.status = Status.WAIT_ON_HUD;
-            this.hud.activateTeamOverview();
+            this.hud.activateTeamArenaOv();
             this.activeSkill.setToInitial();
             this.pointers = new int[0];
             this.targetMatrix = new int[0];
@@ -207,7 +207,7 @@ public class Arena extends GUIElement {
                 aiTurn();
             } else {
                 this.status = Status.WAIT_ON_HUD;
-                this.hud.activateTeamOverview();
+                this.hud.activateTeamArenaOv();
                 this.hud.setActiveHero(this.activeHero);
             }
         } else {

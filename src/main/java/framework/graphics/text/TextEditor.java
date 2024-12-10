@@ -83,6 +83,11 @@ public class TextEditor {
         symbols.put("8", Symbol.smallNum8.pixels);
         symbols.put("9", Symbol.smallNum9.pixels);
         symbols.put("0", Symbol.smallNum0.pixels);
+        symbols.put("/", Symbol.smallNumSlash.pixels);
+        symbols.put("(", Symbol.smallNumBracketOpen.pixels);
+        symbols.put(")", Symbol.smallNumBracketClose.pixels);
+        symbols.put("+", Symbol.smallNumPlus.pixels);
+
         return symbols;
     }
 
@@ -152,6 +157,7 @@ public class TextEditor {
         symbols.put("Y", Symbol.Yx8);
         symbols.put("Z", Symbol.Zx8);
         symbols.put(".", Symbol.pointx8);
+        symbols.put("*", Symbol.starx8);
         symbols.put(",", Symbol.commax8);
         symbols.put("/", Symbol.slashx8);
         symbols.put("(", Symbol.bracketopenx8);
@@ -332,16 +338,14 @@ public class TextEditor {
         int symbolNr = 1;
         for (int charindex = 0; charindex < textArray.length; charindex++) {
             char symbol = textArray[charindex];
-            if (Character.isDigit(symbol)) {
 
-                int[] symbolarray = smallNumeric.get((symbol+""));
-                int index = 0;
+            int[] symbolarray = smallNumeric.get((symbol+""));
+            int index = 0;
 
-                for (int y = 0; y < this.smallNumHeight; y++) {
-                    for (int x = lastWrittenWidth; x < lastWrittenWidth + this.smallNumWidth; x++) {
-                        word[x + y * resultWidth] = symbolarray[index];
-                        index++;
-                    }
+            for (int y = 0; y < this.smallNumHeight; y++) {
+                for (int x = lastWrittenWidth; x < lastWrittenWidth + this.smallNumWidth; x++) {
+                    word[x + y * resultWidth] = symbolarray[index];
+                    index++;
                 }
             }
 
@@ -462,6 +466,10 @@ public class TextEditor {
                     symbol = getSpecialCharacter(charIndex, textArray);
                     charIndex+=4;
                 } else {
+                    Symbol _sym = this.symbolMap.get(String.valueOf(character));
+                    if (_sym == null) {
+                        System.out.println(character);
+                    }
                     symbol = this.symbolMap.get(String.valueOf(character)).copy();
                 }
                 if (symbol != null) {

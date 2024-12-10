@@ -144,6 +144,7 @@ public class Symbol {
     public static Symbol ninex8=		new Symbol("9", 64,	51,54,	24,31,	SpriteSheet.fonts8x);
 
     public static Symbol pointx8 =		new Symbol(".","fonts/8x/point.png",2,8);
+    public static Symbol starx8 =		new Symbol(".","fonts/8x/star.png",2,8);
     public static Symbol slashx8 = 	new Symbol("/","fonts/8x/slash.png",3,8);
     public static Symbol colonx8 =     new Symbol(":","fonts/8x/colon.png",2,8);
     public static Symbol moreThanx8 =  new Symbol(">","fonts/8x/more.png",3,8);
@@ -198,6 +199,10 @@ public class Symbol {
     public static Symbol smallNum8 = new Symbol(30,	21,23,	0,4,	SpriteSheet.smallNum);
     public static Symbol smallNum9 = new Symbol(30,	24,26,	0,4,	SpriteSheet.smallNum);
     public static Symbol smallNum0 = new Symbol(30,	27,29,	0,4,	SpriteSheet.smallNum);
+    public static Symbol smallNumSlash = new Symbol("fonts/smallNumSlash.png", 3, 5);
+    public static Symbol smallNumBracketOpen = new Symbol("fonts/smallNumBracketOpen.png", 3, 5);
+    public static Symbol smallNumBracketClose = new Symbol("fonts/smallNumBracketClose.png", 3, 5);
+    public static Symbol smallNumPlus = new Symbol("fonts/smallNumPlus.png", 3, 5);
 
     public Symbol(int w, int h) {
         this.WIDTH = w;
