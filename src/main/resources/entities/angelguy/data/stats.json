@@ -9,6 +9,11 @@
     "LIFE" : 20,
     "CURRENT_LIFE" : 20,
     "LIFE_REGAIN" : 2,
-    "FAITH" : 18
+    "FAITH" : 18,
+    "NORMAL_DEF": 11,
+    "HEAT_DEF": 12,
+    "FROST_DEF": 8,
+    "LIGHT_DEF": 14,
+    "DARK_DEF": 14
   }
 }

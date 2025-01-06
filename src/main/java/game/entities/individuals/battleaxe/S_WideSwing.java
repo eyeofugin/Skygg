@@ -1,7 +1,12 @@
 package game.entities.individuals.battleaxe;
 
+import framework.connector.Connection;
+import framework.connector.Connector;
+import framework.connector.payloads.BaseDmgChangesPayload;
+import framework.connector.payloads.DmgChangesPayload;
 import game.entities.Hero;
 import game.entities.Multiplier;
+import game.skills.DamageMode;
 import game.skills.DamageType;
 import game.skills.Skill;
 import game.skills.Stat;
@@ -26,28 +31,34 @@ public class S_WideSwing extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG);
-        this.dmgMultipliers = List.of(new Multiplier(Stat.FORCE, 0.1), new Multiplier(Stat.FINESSE,0.2));
         this.targetType = TargetType.LINE;
         this.distance = 2;
-        this.dmg = 4;
         this.damageType = DamageType.NORMAL;
-        this.cdMax = 3;
+        this.damageMode = DamageMode.PHYSICAL;
         this.ultimate = true;
-        this.comboEnabled = true;
     }
 
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
-        if (this.hero.hasPermanentEffect(Combo.class) > 0) {
-            this.hero.removePermanentEffectOfClass(Combo.class);
-            target.addEffect(new Bleeding(1), this.hero);
-            target.addEffect(new Injured(1), this.hero);
-        }
+        target.addEffect(new Bleeding(1), this.hero);
+    }
+    @Override
+    public int getDmg(Hero target) {
+        int currentLife = this.hero.getCurrentLifePercentage();
+        return (100-currentLife) / 7;
+    }
+
+    @Override
+    public boolean performCheck(Hero hero) {
+        return hero.getCurrentLifePercentage() < 40;
     }
 
     @Override
     public int getAIRating(Hero target) {
+        if (this.hero.getCurrentLifePercentage() > 40) {
+            return -10;
+        }
         return 1;
     }
 
@@ -56,7 +67,7 @@ public class S_WideSwing extends Skill {
     }
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "if combo: bleed and injure";
+        return "scales with missing health. Can only activate under 40% Max life.";
     }
 
     @Override

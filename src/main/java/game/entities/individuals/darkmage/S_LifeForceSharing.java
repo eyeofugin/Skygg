@@ -1,6 +1,7 @@
 package game.entities.individuals.darkmage;
 
 import game.entities.Hero;
+import game.entities.Multiplier;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -21,9 +22,9 @@ public class S_LifeForceSharing extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.tags = List.of(SkillTag.HEAL);
+        this.healMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.5));
         this.targetType = TargetType.SINGLE_ALLY;
         this.distance = 2;
-        this.cdMax = 1;
         this.lifeCost = 4;
     }
     @Override
@@ -41,13 +42,9 @@ public class S_LifeForceSharing extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "heal ally for 1/4 max life";
+        return "heal ally for 50% Magic";
     }
-    @Override
-    public void applySkillEffects(Hero target) {
-        super.applySkillEffects(target);
-        target.heal(this.hero, target.getStat(Stat.LIFE)/4, this, false);
-    }
+
     @Override
     public String getName() {
         return "Life Force Sharing";

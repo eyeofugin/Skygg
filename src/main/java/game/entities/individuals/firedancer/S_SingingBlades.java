@@ -2,11 +2,13 @@ package game.entities.individuals.firedancer;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
+import game.skills.DamageMode;
 import game.skills.DamageType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.Burning;
+import game.skills.changeeffects.effects.Combo;
 import utils.MyMaths;
 
 import java.util.List;
@@ -25,13 +27,13 @@ public class S_SingingBlades extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG);
-        this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.15),
-                new Multiplier(Stat.FINESSE, 0.4));
+        this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.15),
+                new Multiplier(Stat.POWER, 0.4));
         this.targetType = TargetType.SINGLE;
-        this.distance = 2;
-        this.dmg = 4;
-        this.countAsHits = 2;
+        this.distance = 3;
+        this.dmg = 2;
         this.damageType = DamageType.NORMAL;
+        this.damageMode = DamageMode.PHYSICAL;
     }
 
     protected void initAnimation() {
@@ -39,15 +41,14 @@ public class S_SingingBlades extends Skill {
     }
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "2 Hits, ("+Stat.FINESSE.getIconString()+"+"+Stat.MAGIC.getIconString()+")% chance to burn.";
+        return "Burns. If target has less than half their life, gain combo.";
     }
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
-        int magic = this.hero.getStat(Stat.MAGIC);
-        int finesse = this.hero.getStat(Stat.FINESSE);
-        if (MyMaths.success(magic + finesse)) {
-            target.addEffect(new Burning(1), this.hero);
+        target.addEffect(new Burning(1), this.hero);
+        if (target.getResourcePercentage(Stat.CURRENT_LIFE) < 50) {
+            this.hero.addEffect(new Combo(), this.hero);
         }
     }
 

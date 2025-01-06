@@ -3,13 +3,16 @@ package game.entities.individuals.phoenixguy;
 import framework.connector.Connection;
 import framework.connector.Connector;
 import framework.connector.payloads.DmgChangesPayload;
+import framework.connector.payloads.GlobalEffectChangePayload;
 import game.entities.Hero;
 import game.entities.Multiplier;
+import game.skills.DamageMode;
 import game.skills.DamageType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.Burning;
+import game.skills.changeeffects.globals.Heat;
 import utils.MyMaths;
 
 import java.util.List;
@@ -30,10 +33,11 @@ public class S_Fireblast extends Skill {
         this.tags = List.of(SkillTag.DMG);
         this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.15));
         this.targetType = TargetType.SINGLE;
+        this.effects = List.of(new Burning(1));
         this.distance = 2;
         this.dmg = 8;
-        this.damageType = DamageType.MAGIC;
-        this.faithGain = true;
+        this.damageType = DamageType.HEAT;
+        this.damageMode = DamageMode.MAGICAL;
     }
 
     @Override
@@ -47,19 +51,8 @@ public class S_Fireblast extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Mid dmg, double power if target under 50% life. 20+ Magic% to burn, get 3 favor";
+        return "Double power if target under 50% life. Burns.";
     }
-
-    @Override
-    public void applySkillEffects(Hero target) {
-        super.applySkillEffects(target);
-        int magic = this.hero.getStat(Stat.MAGIC);
-        if (MyMaths.success(magic + 20)) {
-            target.addEffect(new Burning( 1), this.hero);
-        }
-        this.hero.addResource(Stat.CURRENT_FAITH, Stat.FAITH, 3);
-    }
-
     @Override
     public String getName() {
         return "Fireblast";

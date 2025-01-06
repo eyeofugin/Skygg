@@ -22,8 +22,7 @@ public class S_AetherStep extends Skill {
         this.tags = List.of(SkillTag.MOVE);
         this.targetType = TargetType.SINGLE_ALLY;
         this.distance = 1;
-        this.cdMax = 0;
-        this.manaCost = 10;
+        this.manaCost = 5;
         this.actionCost = 0;
     }
 
@@ -49,7 +48,7 @@ public class S_AetherStep extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "No action cost. Move 1";
+        return "Free Action. Move 1";
     }
 
 }

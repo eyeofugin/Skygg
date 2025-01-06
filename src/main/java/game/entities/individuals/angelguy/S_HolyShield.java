@@ -30,7 +30,7 @@ public class S_HolyShield extends Skill {
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
-        target.shield(this.shield);
+        target.shield(this.shield, this.hero);
     }
     @Override
     protected void initAnimation() {

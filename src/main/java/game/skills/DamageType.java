@@ -2,6 +2,9 @@ package game.skills;
 
 public enum DamageType {
     NORMAL,
-    MAGIC,
-    EFFECT;
+    HEAT,
+    FROST,
+    DARK,
+    LIGHT,
+    TRUE;
 }

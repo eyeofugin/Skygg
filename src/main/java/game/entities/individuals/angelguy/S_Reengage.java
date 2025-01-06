@@ -2,6 +2,7 @@ package game.entities.individuals.angelguy;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
+import game.skills.DamageMode;
 import game.skills.DamageType;
 import game.skills.Skill;
 import game.skills.Stat;
@@ -22,25 +23,27 @@ public class S_Reengage extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG, SkillTag.MOVE);
-        this.dmgMultipliers = List.of(new Multiplier(Stat.FORCE, 0.1));
+        this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.1));
         this.targetType = TargetType.SINGLE_ALLY;
         this.distance = 1;
         this.dmg = 1;
         this.damageType = DamageType.NORMAL;
+        this.damageMode = DamageMode.PHYSICAL;
+        this.cdMax = 4;
     }
 
     @Override
     protected void individualResolve(Hero target) {
         this.hero.arena.moveTo(this.hero, target.getPosition());
         this.baseDamageChanges(target, this.hero);
-        int dmg = getDmgWithMulti();
+        int dmg = getDmgWithMulti(target);
         int position = this.hero.getPosition();
-        int ownPosition = this.hero.isTeam2()?4:3;
-        int enemyPosition = this.hero.isTeam2()?3:4;
+        int ownPosition = this.hero.isTeam2()?3:2;
+        int enemyPosition = this.hero.isTeam2()?2:3;
         if (position == ownPosition) {
             Hero enemy = this.hero.arena.getAtPosition(enemyPosition);
             if (enemy!=null) {
-                enemy.damage(this.hero,dmg,this.damageType,0,this);
+                enemy.damage(this.hero,dmg,this.damageMode, this.damageType,0,this);
             }
         }
     }

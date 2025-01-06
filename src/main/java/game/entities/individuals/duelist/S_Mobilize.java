@@ -2,6 +2,7 @@ package game.entities.individuals.duelist;
 
 import game.entities.Hero;
 import game.skills.Skill;
+import game.skills.Stat;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.Combo;
 
@@ -39,12 +40,13 @@ public class S_Mobilize extends Skill {
         super.applySkillEffects(target);
         int targetPosition = target.getPosition();
         this.hero.arena.moveTo(this.hero, targetPosition);
-        this.hero.addEffect(new Combo(), this.hero);
-        target.addEffect(new Combo(), this.hero);
+        if (this.hero.hasPermanentEffect(Combo.class) > 0) {
+            this.hero.addToStat(Stat.POWER, 1);
+        }
     }
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Self and ally switched with gain combo";
+        return "Move 1. Combo: +1 Power";
     }
 
     @Override

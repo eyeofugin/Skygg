@@ -5,6 +5,7 @@ import framework.connector.Connector;
 import framework.connector.payloads.DmgTriggerPayload;
 import game.entities.Hero;
 import game.entities.Multiplier;
+import game.skills.DamageMode;
 import game.skills.DamageType;
 import game.skills.Skill;
 import game.skills.Stat;
@@ -30,9 +31,9 @@ public class S_LightSpikes extends Skill {
         this.targetType = TargetType.ALL_ENEMY;
         this.dmg = 5;
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.5));
-        this.cdMax = 4;
-        this.faithCost = 7;
-        this.damageType = DamageType.MAGIC;
+        this.cdMax = 2;
+        this.damageType = DamageType.LIGHT;
+        this.damageMode = DamageMode.MAGICAL;
     }
 
     @Override
@@ -53,7 +54,7 @@ public class S_LightSpikes extends Skill {
     }
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Heal for 10% of the damage done";
+        return "Heal for each halo stack 10% of the damage dealt";
     }
 
     @Override
@@ -62,7 +63,10 @@ public class S_LightSpikes extends Skill {
     }
     public void dmgTrigger(DmgTriggerPayload pl) {
         if (this.equals(pl.cast)) {
-            this.hero.heal(pl.cast.hero, pl.dmgDone*10/100, this, false);
+            int halo = this.hero.getStat(Stat.CURRENT_HALO);
+            if (halo > 0) {
+                this.hero.heal(pl.cast.hero, pl.dmgDone*10*halo/100, this, false);
+            }
         }
     }
 

@@ -4,7 +4,6 @@ import game.entities.Animator;
 import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.Stat;
-import game.skills.genericskills.S_Skip;
 
 public class H_Paladin extends Hero {
 
@@ -35,13 +34,14 @@ public class H_Paladin extends Hero {
 
     @Override
     protected void initSkills() {
-        this.skills = new Skill[]{
-                new S_RighteousHammer(this),
-//                new S_LightBlast(this),
-                new S_DivineArmor(this),
-                new S_ShiningShield(this),
+        this.primary = new Skill[]{
                 new S_ShatteringSwing(this),
-                new S_Skip(this)
+                new S_QuickPrayer(this)
         };
+        this.tactical = new Skill[]{
+                new S_LightBlast(this), new S_LightPillar(this),
+                new S_ShieldAssault(this), new S_FierceGlow(this)
+        };
+        this.ult = new S_HoliestShield(this);
     }
 }

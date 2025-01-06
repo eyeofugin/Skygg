@@ -5,10 +5,13 @@ import framework.connector.Connector;
 import framework.connector.payloads.DmgTriggerPayload;
 import game.entities.Hero;
 import game.skills.Skill;
-import game.skills.changeeffects.effects.Steadfast;
+import game.skills.Stat;
 
 
 public class S_Steadfast extends Skill {
+
+
+    private int stacks = 0;
 
     public S_Steadfast(Hero hero) {
         super(hero);
@@ -31,7 +34,7 @@ public class S_Steadfast extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Get 2 Steadfast stack, when get damage. start of turn lose a stack. Steadfast: 10% dmg reduction";
+        return "+1 Stamina when receiving damage (+10 max)";
     }
 
     @Override
@@ -40,8 +43,9 @@ public class S_Steadfast extends Skill {
     }
 
     public void dmgTrigger(DmgTriggerPayload pl) {
-        if (this.hero.equals(pl.target)) {
-            this.hero.addEffect(new Steadfast(2), this.hero);
+        if (this.hero.equals(pl.target) && this.stacks < 10) {
+            this.hero.addToStat(Stat.STAMINA, 1);
+            stacks++;
         }
     }
 

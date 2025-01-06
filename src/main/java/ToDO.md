@@ -1,2 +1,3 @@
-+ draft
-+ balancing for 3v3
+ + Rework range to position skills (like darkest dungeon, ugh)
+ + More Abilities / Builds
+ + Build Reworks / Balancing

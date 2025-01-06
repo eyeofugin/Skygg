@@ -2,6 +2,7 @@ package game.entities.individuals.paladin;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
+import game.skills.DamageMode;
 import game.skills.DamageType;
 import game.skills.Skill;
 import game.skills.Stat;
@@ -25,13 +26,14 @@ public class S_ShatteringSwing extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG);
-        this.dmgMultipliers = List.of(new Multiplier(Stat.FORCE, 0.5));
+        this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.4));
         this.targetType = TargetType.SINGLE;
         this.distance = 1;
-        this.dmg = 5;
-        this.cdMax = 1;
-        this.faithCost = 5;
+        this.dmg = 2;
+        this.faithGain = true;
         this.damageType = DamageType.NORMAL;
+        this.damageMode = DamageMode.PHYSICAL;
+        this.primary = true;
     }
 
     @Override
@@ -43,14 +45,14 @@ public class S_ShatteringSwing extends Skill {
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
-        if (MyMaths.success(this.hero.getStat(Stat.FORCE) *2)) {
-            target.addEffect(new Injured(3), this.hero);
+        if (MyMaths.success(this.hero.getStat(Stat.CURRENT_FAITH) *2)) {
+            target.arena.stun(target);
         }
     }
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "2*"+Stat.FORCE.getIconString()+" chance to injure";
+        return "2*"+Stat.FAITH.getIconString()+" chance to stun";
     }
 
 

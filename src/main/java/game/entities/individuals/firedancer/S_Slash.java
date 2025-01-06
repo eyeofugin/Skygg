@@ -5,11 +5,14 @@ import framework.connector.Connector;
 import framework.connector.payloads.DmgTriggerPayload;
 import game.entities.Hero;
 import game.entities.Multiplier;
+import game.skills.DamageMode;
 import game.skills.DamageType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.Burning;
+import game.skills.changeeffects.effects.Combo;
+import game.skills.changeeffects.statusinflictions.Bleeding;
 import utils.MyMaths;
 
 import java.util.List;
@@ -28,12 +31,14 @@ public class S_Slash extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG);
-        this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.1),
-                new Multiplier(Stat.FINESSE, 0.1));
+        this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.3),
+                new Multiplier(Stat.POWER, 0.1));
         this.targetType = TargetType.SINGLE;
         this.distance = 2;
         this.dmg = 3;
         this.damageType = DamageType.NORMAL;
+        this.damageMode = DamageMode.PHYSICAL;
+        this.comboEnabled = true;
         this.primary = true;
         this.faithGain = true;
     }
@@ -46,9 +51,12 @@ public class S_Slash extends Skill {
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
         int magic = this.hero.getStat(Stat.MAGIC);
-        int finesse = this.hero.getStat(Stat.FINESSE);
-        if (MyMaths.success(magic + finesse)) {
-            target.addEffect(new Burning(1), this.hero);
+        int power = this.hero.getStat(Stat.POWER);
+        target.addEffect(new Bleeding(1), this.hero);
+        this.hero.addResource(Stat.CURRENT_FAITH, Stat.FAITH, 2, this.hero);
+        if (this.hero.hasPermanentEffect(Combo.class)> 0) {
+            this.hero.removePermanentEffectOfClass(Combo.class);
+            this.hero.addResource(Stat.CURRENT_FAITH, Stat.FAITH, 2, this.hero);
         }
     }
 
@@ -59,20 +67,7 @@ public class S_Slash extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "("+Stat.FINESSE.getIconString()+"+"+Stat.MAGIC.getIconString()+")% chance to burn. Gain 50% damage as "+Stat.FAITH.getIconString();
+        return "Bleeds. +2 Favor per hit. Combo: +2.";
     }
 
-    @Override
-    public void addSubscriptions() {
-        Connector.addSubscription(Connector.DMG_TRIGGER, new Connection(this, DmgTriggerPayload.class, "dmgTrigger"));
-    }
-
-    public void dmgTrigger(DmgTriggerPayload pl) {
-        if (pl.cast != null &&
-                pl.cast.hero != null &&
-                pl.cast.hero.equals(this.hero) &&
-                pl.cast.equals(this)) {
-            this.hero.addResource(Stat.CURRENT_FAITH, Stat.FAITH, (int) (0.5 * pl.dmgDone));
-        }
-    }
 }

@@ -123,12 +123,11 @@ public class ArenaAIController {
         if (cast.getDamageType() != null) {
             int weightedPercentages = 0;
             int lethality = 0; // this.arena.activeHero.getStat(Stat.LETHALITY, cast);
-            int estimatedDamage = cast.getDmgWithMulti();
-            Logger.aiLog(" estimated dmg:"+estimatedDamage);
             for (Hero e : targets) {
+                int estimatedDamage = cast.getDmgWithMulti(e);
                 Logger.aiLog(" target:"+e.getName());
 
-                int dmgPercentage = e.simulateDamageInPercentages(this.arena.activeHero, estimatedDamage, cast.getDamageType(), lethality, cast);
+                int dmgPercentage = e.simulateDamageInPercentages(this.arena.activeHero, estimatedDamage, cast.getDamageMode(), cast.getDamageType(), lethality, cast);
                 if (dmgPercentage >= e.getCurrentLifePercentage()) {
                     Logger.aiLog(" low life bonus!");
                     dmgPercentage *= 5;
@@ -146,9 +145,8 @@ public class ArenaAIController {
     }
     private int getHealRating(Skill cast, Hero[] targets) {
         int weightedPercentages = 0;
-        int estimatedDamage = cast.getHeal();
-        Logger.aiLog(" estimated heal:"+estimatedDamage);
         for (Hero e : targets) {
+            int estimatedDamage = cast.getHealWithMulti(e);
             Logger.aiLog(" target:"+e.getName());
             int healPercentage = e.simulateHealInPercentages(this.arena.activeHero, estimatedDamage, cast);
             if (e.getCurrentLifePercentage() < 30) {

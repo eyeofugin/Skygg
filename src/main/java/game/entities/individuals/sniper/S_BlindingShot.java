@@ -2,6 +2,7 @@ package game.entities.individuals.sniper;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
+import game.skills.DamageMode;
 import game.skills.DamageType;
 import game.skills.Skill;
 import game.skills.Stat;
@@ -27,8 +28,9 @@ public class S_BlindingShot extends Skill {
         this.distance = 3;
         this.cdMax = 3;
         this.damageType = DamageType.NORMAL;
+        this.damageMode = DamageMode.PHYSICAL;
         this.dmg = 1;
-        this.dmgMultipliers = List.of(new Multiplier(Stat.FINESSE, 0.1));
+        this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.1));
         this.effects = List.of(new Blinded(2));
     }
 

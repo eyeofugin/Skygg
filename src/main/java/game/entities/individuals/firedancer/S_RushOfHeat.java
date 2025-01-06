@@ -40,13 +40,13 @@ public class S_RushOfHeat extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Get 3 burn. +15"+Stat.FAITH.getIconString();
+        return "Get 3 burn. +6"+Stat.FAITH.getIconString();
     }
 
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
-        this.hero.addResource(Stat.CURRENT_FAITH, Stat.FAITH, 15);
+        this.hero.addResource(Stat.CURRENT_FAITH, Stat.FAITH, 6, this.hero);
     }
 
     @Override

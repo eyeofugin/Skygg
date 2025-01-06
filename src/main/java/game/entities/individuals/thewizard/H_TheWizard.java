@@ -34,13 +34,17 @@ public class H_TheWizard extends Hero {
 
     @Override
     protected void initSkills() {
-        this.skills = new Skill[]{
-                new S_MysticShot(this),
-//                new S_ChainLightning(this),
-                new S_Dispel(this),
-                new S_AetherStep(this),
-                new S_ArcaneBombardment(this),
-                new S_Skip(this)
+        this.primary = new Skill[]{
+                new S_HailMissile(this),
+                new S_LightningBolt(this)
         };
+        this.tactical = new Skill[]{
+                new S_AetherStep(this),
+                new S_AetherWinds(this),
+                new S_Recharge(this),
+                new S_Dispel(this)
+        };
+        this.ult = new S_LightningStorm(this);
+        this.randomizeSkills();
     }
 }

@@ -1,10 +1,18 @@
 package game.entities.individuals.thehealer;
 
+import framework.connector.Connection;
+import framework.connector.Connector;
+import framework.connector.payloads.EndOfRoundPayload;
+import framework.connector.payloads.ExcessResourcePayload;
 import framework.states.Arena;
 import game.entities.Hero;
 import game.skills.Skill;
+import game.skills.Stat;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.Burning;
+import game.skills.changeeffects.globals.HolyLight;
+
+import java.util.List;
 
 public class S_HolyLight extends Skill {
 
@@ -19,13 +27,28 @@ public class S_HolyLight extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
+        this.tags = List.of(SkillTag.SETUP);
         this.targetType = TargetType.ARENA;
-        this.cdMax = 4;
-        this.manaCost = 6;
+        this.manaCost = 5;
     }
     @Override
     public int getAIArenaRating(Arena arena) {
-        return -2;
+        return 2;
+    }
+    @Override
+    public void applySkillEffects(Hero target) {
+        super.applySkillEffects(target);
+        this.hero.arena.setGlobalEffect(new HolyLight());
+    }
+    @Override
+    public void addSubscriptions() {
+        Connector.addSubscription(Connector.END_OF_ROUND, new Connection(this, EndOfRoundPayload.class, "endOfRound"));
+    }
+
+    public void endOfRound(EndOfRoundPayload pl) {
+        if (pl.arena.globalEffect instanceof HolyLight) {
+            this.hero.addResource(Stat.CURRENT_MANA, Stat.MANA, 1, this.hero);
+        }
     }
     @Override
     protected void initAnimation() {
@@ -34,7 +57,7 @@ public class S_HolyLight extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Summons the holy light effect";
+        return "Passive: +1 Mana per Round during Holy Light. Active: Summon Holy Light";
     }
 
 

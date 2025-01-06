@@ -7,11 +7,16 @@ import java.util.Random;
 public enum Stat {
 
     MAGIC("Magic","MAG", "{013}"),
-    FORCE("Force", "FOR", "{014}"),
-    FINESSE("Finesse", "FIN", "{015}"),
+    POWER("Power", "POW", "{014}"),
     STAMINA("Stamina", "STA", "{016}"),
     ENDURANCE("Endurance", "END", "{017}"),
     SPEED("Speed", "SPE", "{018}"),
+
+    NORMAL_DEF("Normal", "NOD", "{001}"),
+    HEAT_DEF("Heat", "HED", "{001}"),
+    FROST_DEF("Frost", "FRD", "{001}"),
+    DARK_DEF("Dark", "DAD", "{001}"),
+    LIGHT_DEF("Light", "LID", "{001}"),
 
     ACCURACY("Accuracy", "ACC", "{001}"),
     EVASION("Evasion", "EVA", "{001}"),
@@ -30,6 +35,9 @@ public enum Stat {
     FAITH("Max", "FAI", "{007}"),
     CURRENT_FAITH("Faith", "CFA", "{007}"),
 
+    HALO("Max", "HAL", "{007}"),
+    CURRENT_HALO("Halo", "CHA", "{007}"),
+
     SHIELD("Shield", "SHI", "{008}"),
 
 
@@ -41,9 +49,9 @@ public enum Stat {
     private final String iconKey;
     private final String colorKey;
 
-    public static List<Stat> nonResourceStats = List.of(Stat.MAGIC, Stat.FINESSE,
-            Stat.FORCE, Stat.ENDURANCE, Stat.STAMINA, Stat.EVASION, Stat.CRIT_CHANCE,
-            Stat.ACCURACY, Stat.LETHALITY, Stat.SPEED);
+    public static List<Stat> nonResourceStats = List.of(Stat.MAGIC,
+            Stat.POWER, Stat.ENDURANCE, Stat.STAMINA, Stat.EVASION, Stat.CRIT_CHANCE,
+            Stat.ACCURACY, Stat.LETHALITY, Stat.SPEED, Stat.NORMAL_DEF, Stat.HEAT_DEF, Stat.FROST_DEF, Stat.DARK_DEF, Stat.LIGHT_DEF);
 
     Stat(String translationString, String iconKey, String colorKey) {
         this.translationString = translationString;
@@ -66,7 +74,7 @@ public enum Stat {
 
     public static Stat getRdmStat() {
 
-        Stat[] stdStats = new Stat[]{MAGIC, FORCE, ENDURANCE, FINESSE, ACCURACY, EVASION, SPEED};
+        Stat[] stdStats = new Stat[]{MAGIC, POWER, ENDURANCE, ACCURACY, EVASION, SPEED};
         Random random = new Random();
         int rndInt = random.nextInt(7);
         return stdStats[rndInt];

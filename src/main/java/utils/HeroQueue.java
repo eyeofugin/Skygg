@@ -32,7 +32,9 @@ public class HeroQueue {
 
     public void didTurn(Hero activeHero) {
         this.upThisTurn.remove(activeHero);
-        this.doneThisTurn.add(activeHero);
+        if (!this.doneThisTurn.contains(activeHero)) {
+            this.doneThisTurn.add(activeHero);
+        }
     }
     public void restartTurnQueue() {
         this.upThisTurn.addAll(

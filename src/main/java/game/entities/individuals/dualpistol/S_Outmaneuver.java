@@ -4,6 +4,7 @@ import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.Combo;
+import game.skills.changeeffects.statusinflictions.Dazed;
 import game.skills.changeeffects.statusinflictions.Rooted;
 
 public class S_Outmaneuver extends Skill {
@@ -21,7 +22,8 @@ public class S_Outmaneuver extends Skill {
         super.setToInitial();
         this.targetType = TargetType.SINGLE;
         this.distance = 3;
-        this.cdMax = 4;
+        this.cdMax = 5;
+        this.comboEnabled = true;
     }
 
     @Override
@@ -29,7 +31,7 @@ public class S_Outmaneuver extends Skill {
         this.hero.arena.move(target, 1, target.isTeam2()?-1:1);
         if (this.hero.hasPermanentEffect(Combo.class) > 0) {
             this.hero.removePermanentEffectOfClass(Combo.class);
-            target.addEffect(new Rooted(3), this.hero);
+            target.addEffect(new Dazed(1), this.hero);
         }
     }
 
@@ -57,7 +59,7 @@ public class S_Outmaneuver extends Skill {
     }
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "pull 1. if combo: root";
+        return "pull 1. if combo: daze target";
     }
 
     @Override

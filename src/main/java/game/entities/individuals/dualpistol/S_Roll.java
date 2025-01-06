@@ -7,6 +7,7 @@ import game.skills.Stat;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.Combo;
 import game.skills.changeeffects.effects.Scoped;
+import game.skills.changeeffects.statusinflictions.Bleeding;
 import game.skills.changeeffects.statusinflictions.Rooted;
 
 public class S_Roll extends Skill {
@@ -25,6 +26,7 @@ public class S_Roll extends Skill {
         this.targetType = TargetType.SINGLE_ALLY;
         this.distance = 1;
         this.cdMax = 3;
+        this.comboEnabled = true;
     }
 
     @Override
@@ -33,7 +35,7 @@ public class S_Roll extends Skill {
     }
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Move 1, +5 Evasion";
+        return "Move 1, Combo: +2 Speed";
     }
 
     @Override
@@ -46,7 +48,10 @@ public class S_Roll extends Skill {
         super.applySkillEffects(target);
         int targetPosition = target.getPosition();
         this.hero.arena.moveTo(this.hero, targetPosition);
-        this.hero.addToStat(Stat.EVASION, 5);
+        if (this.hero.hasPermanentEffect(Combo.class)> 0) {
+            this.hero.removePermanentEffectOfClass(Combo.class);
+            this.hero.addToStat(Stat.SPEED, 2);
+        }
     }
     @Override
     public String getName() {

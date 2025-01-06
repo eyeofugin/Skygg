@@ -7,6 +7,7 @@ import framework.connector.payloads.BaseHealChangesPayload;
 import framework.connector.payloads.CriticalTriggerPayload;
 import framework.connector.payloads.DmgChangesPayload;
 import framework.connector.payloads.DmgTriggerPayload;
+import framework.connector.payloads.OnPerformPayload;
 import framework.graphics.text.Color;
 import framework.graphics.text.TextEditor;
 import framework.resources.SpriteLibrary;
@@ -14,6 +15,7 @@ import framework.states.Arena;
 import game.entities.Hero;
 import game.entities.Multiplier;
 import game.skills.changeeffects.effects.Scoped;
+import game.skills.changeeffects.effects.Threatening;
 import game.skills.changeeffects.statusinflictions.Rooted;
 import utils.MyMaths;
 
@@ -37,6 +39,7 @@ public abstract class Skill {
     protected int targetRadius = 0;
 
     protected DamageType damageType = null;
+    protected DamageMode damageMode = null;
     protected boolean passive = false;
     protected boolean isMove = false;
     protected List<Effect> movedWithEffects = new ArrayList<>();
@@ -56,6 +59,7 @@ public abstract class Skill {
     protected int actionCost = 1;
     protected int overheatCost = 0;
     protected int accuracy = 100;
+    protected int critChance = 0;
     public int dmg = 0;
     public int heal = 0;
     public int shield = 0;
@@ -108,6 +112,10 @@ public abstract class Skill {
         }
     }
 
+    public boolean performCheck(Hero hero) {
+        return true;
+    }
+
     public enum SkillTag {
         DMG,
         HEAL,
@@ -124,6 +132,7 @@ public abstract class Skill {
         this.hero = hero;
     }
     public void setToInitial() {
+        Logger.logLn("Set to initial");
         this.targetRadius = 0;
         this.passive = false;
         this.isMove = false;
@@ -137,6 +146,7 @@ public abstract class Skill {
         this.overheatCost = 0;
         this.actionCost = 1;
         this.accuracy = 100;
+        this.critChance = 0;
         this.dmg = 0;
         this.heal = 0;
         this.cdMax = 0;
@@ -159,6 +169,7 @@ public abstract class Skill {
         } else if (cdCurrent > 0) {
             cdCurrent--;
         }
+        setToInitial();
     }
     protected abstract void  initAnimation();
     public abstract String getDescriptionFor(Hero hero);
@@ -190,6 +201,9 @@ public abstract class Skill {
         }
     }
     public void perform() {
+        OnPerformPayload pl = new OnPerformPayload()
+                .setSkill(this);
+        Connector.fireTopic(Connector.ON_PERFORM, pl);
         this.hero.playAnimation(this.getName());
         this.hero.payForSkill(this);
         this.setCdCurrent(this.getCdMax());
@@ -206,6 +220,7 @@ public abstract class Skill {
         if (this.targetType.equals(TargetType.ARENA)) {
             this.applySkillEffects(this.hero);
         } else {
+            oncePerActivationEffect();
             for (Hero arenaTarget : targets) {
                 if (this.targetType.equals(TargetType.SINGLE_ALLY)
                         || this.targetType.equals(TargetType.SINGLE_ALLY_IN_FRONT)
@@ -228,24 +243,25 @@ public abstract class Skill {
                 }
             }
         }
-
-        this.setToInitial();
     }
+    protected void oncePerActivationEffect() {}
     protected void individualResolve(Hero target) {
         Logger.logLn("Base DMG:" + this.dmg);
         this.baseDamageChanges(target, this.hero);
         this.baseHealChanges(target, this.hero);
         Logger.logLn("After base dmg changes:" + this.dmg);
-        int dmg = getDmgWithMulti();
+        int dmg = getDmgWithMulti(target);
         Logger.logLn("After multipliers:" + dmg);
         DamageType dt = this.getDamageType();
+        DamageMode dm = this.getDamageMode();
         Logger.logLn("DT:" + dt);
-        int lethality = this.hero.getStat( Stat.LETHALITY);
+        int lethality = this.hero.getStat(Stat.LETHALITY) + this.getLethality();
         for (int i = 0; i < getCountsAsHits(); i++) {
             int dmgPerHit = dmg;
             Logger.logLn("Hit no:" + i+1);
-            if (this.damageType != null && this.damageType.equals(DamageType.NORMAL)) {
+            if (this.damageMode != null && this.damageMode.equals(DamageMode.PHYSICAL)) {
                 int critChance = this.hero.getStat(Stat.CRIT_CHANCE);
+                critChance += this.critChance;
                 Logger.logLn("Crit Chance:"+critChance);
                 if (MyMaths.success(critChance)) {
                     Logger.logLn("Crit!");
@@ -254,11 +270,11 @@ public abstract class Skill {
                 }
             }
             if (dmgPerHit>0) {
-                int doneDamage = target.damage(this.hero, dmgPerHit, dt, lethality, this);
+                int doneDamage = target.damage(this.hero, dmgPerHit, dm, dt, lethality, this);
                 Logger.logLn("done damage:"+doneDamage);
-                this.fireDmgTrigger(target,this, doneDamage);
+                this.fireDmgTrigger(target,this, doneDamage, dm, dt);
             }
-            int heal = this.getHeal();
+            int heal = this.getHealWithMulti(target);
             Logger.logLn("Heal:" + heal);
             if (heal > 0) {
                 target.heal(this.hero, heal, this, false);
@@ -273,17 +289,19 @@ public abstract class Skill {
         Connector.fireTopic(Connector.CRITICAL_TRIGGER, criticalTriggerPayload);
     }
 
-    public void fireDmgTrigger(Hero target, Skill cast, int damageDone) {
+    public void fireDmgTrigger(Hero target, Skill cast, int damageDone, DamageMode dm, DamageType dt) {
         DmgTriggerPayload dmgTriggerPayload = new DmgTriggerPayload()
                 .setTarget(target)
                 .setCast(cast)
-                .setDmgDone(damageDone);
+                .setDmgDone(damageDone)
+                .setDamageMode(dm)
+                .setDamageType(dt);
         Connector.fireTopic(Connector.DMG_TRIGGER, dmgTriggerPayload);
     }
     public void applySkillEffects(Hero target) {
         this.hero.addAllEffects(this.getCasterEffects(), this.hero);
         target.addAllEffects(this.getEffects(), this.hero);
-        target.addResources(this.targetResources);
+        target.addResources(this.targetResources, this.hero);
     }
     protected int getHealMultiBonus() {
         return this.getMultiplierBonus(this.healMultipliers);
@@ -331,8 +349,13 @@ public abstract class Skill {
             Hero possibleTarget = this.hero.arena.getAtPosition(baseTargets[i]);
             if (possibleTarget == null) {
                 baseTargets[i] = -1;
-            }
-            if (this.targetType.equals(TargetType.LINE)) {
+            } else if (this.targetType.equals(TargetType.SINGLE) && possibleTarget.hasPermanentEffect(Threatening.class) > 0) {
+                for (int j = 0; j < baseTargets.length; j++) {
+                    if (baseTargets[j] != baseTargets[i]) {
+                        baseTargets[j] = -1;
+                    }
+                }
+            } else if (this.targetType.equals(TargetType.LINE)) {
                 if (position == baseTargets[i]) {
                     baseTargets[i] = -1;
                 }
@@ -393,6 +416,18 @@ public abstract class Skill {
         this.damageType = damageType;
     }
 
+    public DamageMode getDamageMode() {
+        return damageMode;
+    }
+
+    public void setDamageMode(DamageMode damageMode) {
+        this.damageMode = damageMode;
+    }
+
+    public int getLethality() {
+        return 0;
+    }
+
     public boolean isPassive() {
         return passive;
     }
@@ -450,9 +485,8 @@ public abstract class Skill {
     }
 
 
-
     public int getManaCost() {
-        return manaCost;
+        return 0;
     }
 
 
@@ -489,18 +523,19 @@ public abstract class Skill {
         this.accuracy = accuracy;
     }
 
-    public int getDmg() {
+    public int getDmg(Hero target) {
         return dmg;
     }
-    public int getDmgWithMulti() {
-        return getDmg() + getDmgMultiBonus();
+    public int getDmgWithMulti(Hero target) {
+        return getDmg(target) + getDmgMultiBonus();
     }
 
-    public int getHeal() {
-        int baseHeal = this.heal;
+    public int getHealWithMulti(Hero target) {
+        int baseHeal = this.getHeal(target);
         int multiplierBonus = getHealMultiBonus();
         return baseHeal + multiplierBonus;
     }
+    public int getHeal(Hero target) {return this.heal;}
 
     public void setPower(int power) {
         this.dmg = power;
@@ -548,6 +583,12 @@ public abstract class Skill {
 
     public int getCountsAsHits() {
         return this.countAsHits;
+    }
+    public void setCountsAsHits(int countsAsHits) {
+        this.countAsHits = countsAsHits;
+    }
+    public boolean isPrimary() {
+        return this.primary;
     }
     public String getIcon() {
         return "aa_blaster";

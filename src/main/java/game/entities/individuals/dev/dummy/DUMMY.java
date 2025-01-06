@@ -19,8 +19,8 @@ public class DUMMY extends Hero {
     }
 
     protected void initStats() {
-        this.stats.put(Stat.LIFE, 40);
-        this.stats.put(Stat.CURRENT_LIFE, 40);
+        this.stats.put(Stat.LIFE, 1000);
+        this.stats.put(Stat.CURRENT_LIFE, 1000);
         this.stats.put(Stat.LIFE_REGAIN, 0);
 
         this.stats.put(Stat.MANA, 40);
@@ -35,10 +35,9 @@ public class DUMMY extends Hero {
 
         //
         this.stats.put(Stat.MAGIC, 10);
-        this.stats.put(Stat.FORCE, 10);
+        this.stats.put(Stat.POWER, 10);
         this.stats.put(Stat.STAMINA, 10);
         this.stats.put(Stat.ENDURANCE, 10);
-        this.stats.put(Stat.FINESSE, 10);
         this.stats.put(Stat.ACCURACY, 100);
         this.stats.put(Stat.EVASION, 0);
         this.stats.put(Stat.SPEED, 1);

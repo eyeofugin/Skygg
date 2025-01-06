@@ -5,6 +5,8 @@ import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.genericskills.S_Skip;
 
+import java.nio.charset.CharsetEncoder;
+
 public class H_Sniper extends Hero {
     public H_Sniper() {
         super("Sniper");
@@ -32,13 +34,17 @@ public class H_Sniper extends Hero {
 
     @Override
     protected void initSkills() {
-        this.skills = new Skill[] {
+        this.primary = new Skill[]{
                 new S_ChemShot(this),
+                new S_HardRound(this)
+        };
+        this.tactical = new Skill[]{
                 new S_BlindingShot(this),
                 new S_GotYourBack(this),
-//                new S_Cloaked(this),
                 new S_SmokeGrenade(this),
-                new S_Skip(this)
+                new S_HealingGrenade(this)
         };
+        this.ult = new S_FatalBrew(this);
+        randomizeSkills();
     }
 }

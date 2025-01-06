@@ -5,6 +5,7 @@ import framework.connector.Connector;
 import framework.connector.payloads.CastChangePayload;
 import game.skills.Effect;
 import game.skills.Skill;
+import game.skills.genericskills.S_Skip;
 
 public class Dazed extends Effect {
 
@@ -28,7 +29,7 @@ public class Dazed extends Effect {
 
     public void castChange(CastChangePayload castChangePayload) {
         Skill skill = castChangePayload.skill;
-        if (skill != null && skill.hero.equals(this.hero)) {
+        if (skill != null && skill.hero.equals(this.hero) && !skill.isPassive() && !(skill instanceof S_Skip)) {
             skill.setCdMax(skill.getCdMax() + 1);
         }
     }

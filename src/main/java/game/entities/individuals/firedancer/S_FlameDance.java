@@ -4,6 +4,7 @@ import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
+import game.skills.changeeffects.effects.Burning;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class S_FlameDance extends Skill {
         this.tags = List.of(SkillTag.MOVE, SkillTag.BUFF);
         this.targetType = TargetType.SINGLE_ALLY;
         this.distance = 1;
-        this.faithCost = 5;
+        this.faithCost = 2;
         this.actionCost = 0;
     }
 
@@ -41,6 +42,7 @@ public class S_FlameDance extends Skill {
         super.applySkillEffects(target);
         int targetPosition = target.getPosition();
         this.hero.arena.moveTo(this.hero, targetPosition);
+        this.hero.addEffect(new Burning(1), this.hero);
     }
 
     @Override
@@ -50,7 +52,7 @@ public class S_FlameDance extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "No action cost. Move 1. +1"+ Stat.FINESSE.getIconString();
+        return "Free Action. Move 1. Get a burn stack.";
     }
 
 }

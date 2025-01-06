@@ -27,7 +27,7 @@ public class Blight extends Effect {
 
     public void dmgTrigger(DmgTriggerPayload pl) {
         if (this.hero.equals(pl.target)) {
-            this.hero.addResource(Stat.CURRENT_LIFE, Stat.LIFE, -3*stacks);
+            this.hero.addResource(Stat.CURRENT_LIFE, Stat.LIFE, -3*stacks, pl.cast.hero);
             this.hero.removePermanentEffectOfClass(Blight.class);
         }
     }

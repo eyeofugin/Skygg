@@ -21,10 +21,9 @@ public class S_BlindingLight extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.SINGLE;
-        this.distance = 3;
-        this.cdMax = 3;
+        this.distance = 4;
         this.manaCost = 5;
-        this.effects = List.of(new Blinded(3));
+        this.effects = List.of(new Blinded(2));
     }
 
     @Override
@@ -39,7 +38,7 @@ public class S_BlindingLight extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Blinds";
+        return "Blinds(2)";
     }
 
 

@@ -34,13 +34,15 @@ public class H_DualPistol extends Hero {
 
     @Override
     protected void initSkills() {
-        this.skills = new Skill[] {
-                new S_QuickShot(this),
-//                new S_DoubleShot(this),
-                new S_FocusedFire(this),
-                new S_Outmaneuver(this),
-                new S_Roll(this),
-                new S_Skip(this)
+        this.primary = new Skill[]{
+                new S_DoubleShot(this), new S_CarefulShot(this)
         };
+        this.tactical = new Skill[]{
+                new S_Outmaneuver(this), new S_Roll(this),
+                new S_FocusedFire(this), new S_LuckyShot(this)
+        };
+        this.ult = new S_EagleEye(this);
+        randomizeSkills();
     }
+
 }

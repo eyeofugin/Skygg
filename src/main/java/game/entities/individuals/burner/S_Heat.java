@@ -1,8 +1,13 @@
 package game.entities.individuals.burner;
 
+import framework.connector.Connection;
+import framework.connector.Connector;
+import framework.connector.payloads.EndOfRoundPayload;
+import framework.connector.payloads.GlobalEffectChangePayload;
 import framework.states.Arena;
 import game.entities.Hero;
 import game.skills.Skill;
+import game.skills.Stat;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.Burning;
 import game.skills.changeeffects.globals.Heat;
@@ -40,7 +45,16 @@ public class S_Heat extends Skill {
     protected void initAnimation() {
         this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
     }
+    @Override
+    public void addSubscriptions() {
+        Connector.addSubscription(Connector.END_OF_ROUND, new Connection(this, EndOfRoundPayload.class, "endOfRound"));
+    }
 
+    public void endOfRound(EndOfRoundPayload pl) {
+        if (pl.arena.globalEffect instanceof Heat) {
+            this.hero.addResource(Stat.CURRENT_FAITH, Stat.FAITH, 2, this.hero);
+        }
+    }
     @Override
     public void applySkillEffects(Hero target) {
         this.hero.arena.setGlobalEffect(new Heat());
@@ -53,6 +67,6 @@ public class S_Heat extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Summon Heat Effect. (During heat all Burning damage is doubled)";
+        return "Passive: +2 Favor per turn during heat. Active: Summon Heat Effect.";
     }
 }

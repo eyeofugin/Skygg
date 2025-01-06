@@ -36,13 +36,15 @@ public class H_Burner extends Hero {
 
     @Override
     protected void initSkills() {
-        this.skills = new Skill[] {
-                new S_Fireball(this),
-                new S_SpreadingFlames(this),
-                new S_FlameAbsorption(this),
-                new S_Heat(this),
-//                new S_TwinFlames(this)
-                new S_Skip(this)
+        this.primary = new Skill[]{
+                new S_Spark(this), new S_Burn(this)
         };
+        this.tactical = new Skill[]{
+                new S_FlareUp(this),
+                new S_Heat(this),
+                new S_TwinFlames(this)
+        };
+        this.ult = new S_SpreadingFlames(this);
+        randomizeSkills();
     }
 }

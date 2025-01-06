@@ -14,7 +14,7 @@ import java.awt.image.DataBufferInt;
 public class Engine extends JPanel implements Runnable{
 
     private final JFrame frame;
-    public final int multiplier = 3;
+    public final int multiplier = 1;
     public KeyBoard keyB = new KeyBoard(this);
     private final BufferedImage image = new BufferedImage(Engine.X * multiplier, Engine.Y*multiplier, BufferedImage.TYPE_INT_RGB);
     private final int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();

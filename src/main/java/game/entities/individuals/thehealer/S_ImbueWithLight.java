@@ -22,11 +22,10 @@ public class S_ImbueWithLight extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.ALL_ALLY;
-        this.cdMax = 2;
-        this.manaCost = 10;
-        
-        this.heal = 0;
-        this.healMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.3));
+        this.manaCost = 6;
+        this.healMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.2),
+                new Multiplier(Stat.MANA, 0.2),
+                new Multiplier(Stat.LIFE, 0.2));
     }
     @Override
     public int getAIRating(Hero target) {

@@ -5,6 +5,7 @@ import framework.connector.Connector;
 import framework.connector.payloads.DmgChangesPayload;
 import game.entities.Hero;
 import game.entities.Multiplier;
+import game.skills.DamageMode;
 import game.skills.DamageType;
 import game.skills.Skill;
 import game.skills.Stat;
@@ -29,12 +30,12 @@ public class S_Combustion extends Skill {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG);
         this.targetType = TargetType.SINGLE;
-        this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.15));
+        this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.2));
         this.distance = 2;
-        this.dmg = 4;
-        this.damageType = DamageType.MAGIC;
-        this.cdMax = 1;
-        this.faithCost = 10;
+        this.dmg = 1;
+        this.damageType = DamageType.HEAT;
+        this.damageMode = DamageMode.MAGICAL;
+        this.faithCost = 4;
     }
 
     @Override
@@ -49,7 +50,7 @@ public class S_Combustion extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Low dmg, + 20% for each burning stack";
+        return "+20% damage for each burning stack";
     }
     @Override
     public void addSubscriptions() {

@@ -1,9 +1,13 @@
 package game.entities.individuals.divinemage;
 
 import game.entities.Hero;
+import game.entities.Multiplier;
 import game.skills.Effect;
 import game.skills.Skill;
+import game.skills.Stat;
 import game.skills.TargetType;
+
+import java.util.List;
 
 public class S_HealingGleam extends Skill {
 
@@ -19,9 +23,10 @@ public class S_HealingGleam extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.LINE;
+        this.heal = 0;
+        this.healMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.2));
         this.distance = 2;
-        this.cdMax = 4;
-        this.faithCost = 15;
+        this.faithCost = 12;
         this.ultimate = true;
     }
 
@@ -49,7 +54,7 @@ public class S_HealingGleam extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Heal all status effects and debuffs.";
+        return "Heals and removes all debuffs.";
     }
     @Override
     public String getName() {

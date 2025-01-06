@@ -1,9 +1,9 @@
 package game.entities.individuals.rifle;
 
+import com.sun.jdi.Field;
 import game.entities.Animator;
 import game.entities.Hero;
 import game.skills.Skill;
-import game.skills.Stat;
 import game.skills.genericskills.S_Skip;
 
 public class H_Rifle extends Hero {
@@ -34,13 +34,17 @@ public class H_Rifle extends Hero {
 
     @Override
     protected void initSkills() {
-        this.skills = new Skill[] {
-                new S_Blasting(this),
-                new S_Barrage(this),
-//                new S_UseTheScope(this),
-                new S_Engage(this),
-                new S_Retreat(this),
-                new S_Skip(this)
+        this.primary = new Skill[]{
+                new S_PiercingBolt(this),
+                new S_AnkleShot(this)
         };
+        this.tactical = new Skill[]{
+                new S_Mobilize(this),
+                new S_UseTheScope(this),
+                new S_DoubleShot(this),
+                new S_FieldRations(this)
+        };
+        this.ult = new S_Barrage(this);
+        randomizeSkills();
     }
 }

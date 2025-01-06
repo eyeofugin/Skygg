@@ -26,8 +26,7 @@ public class S_Dispel extends Skill {
         this.tags = List.of(SkillTag.CC);
         this.targetType = TargetType.SINGLE;
         this.distance = 3;
-        this.cdMax = 3;
-        this.manaCost = 3;
+        this.manaCost = 4;
     }
     @Override
     protected void initAnimation() {
@@ -56,10 +55,10 @@ public class S_Dispel extends Skill {
         super.applySkillEffects(target);
         if (target.getSecondaryResource().equals(Stat.MANA)) {
             int resourceLoss = target.getStat(Stat.MANA)/4;
-            target.addResource(Stat.CURRENT_MANA, Stat.MANA, -1*resourceLoss);
+            target.addResource(Stat.CURRENT_MANA, Stat.MANA, -1*resourceLoss, this.hero);
         } else if (target.getSecondaryResource().equals(Stat.FAITH)) {
             int resourceLoss = target.getStat(Stat.FAITH)/4;
-            target.addResource(Stat.CURRENT_FAITH, Stat.FAITH, -1*resourceLoss);
+            target.addResource(Stat.CURRENT_FAITH, Stat.FAITH, -1*resourceLoss, this.hero);
         }
     }
 

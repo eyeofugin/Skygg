@@ -35,13 +35,14 @@ public class H_DivineMage extends Hero {
 
     @Override
     protected void initSkills() {
-        this.skills = new Skill[] {
-                new S_Prayer(this),
-                new S_ShieldRay(this),
-                new S_HolyWords(this),
-//                new S_HealingGleam(this),
-                new S_Immunity(this),
-                new S_Skip(this)
+        this.primary = new Skill[]{
+                new S_Prayer(this), new S_Praise(this)
         };
+        this.tactical = new Skill[]{
+                new S_SummonTheLight(this), new S_Invincibility(this),
+                new S_HolyWords(this), new S_ShieldRay(this)
+        };
+        this.ult = new S_HealingGleam(this);
+        randomizeSkills();
     }
 }

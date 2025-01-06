@@ -2,6 +2,7 @@ package game.entities.individuals.paladin;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
+import game.skills.DamageMode;
 import game.skills.DamageType;
 import game.skills.Skill;
 import game.skills.Stat;
@@ -25,11 +26,11 @@ public class S_LightBlast extends Skill {
         this.tags = List.of(SkillTag.DMG, SkillTag.PEEL);
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.3));
         this.targetType = TargetType.SINGLE;
-        this.distance = 2;
+        this.distance = 1;
         this.dmg = 3;
-        this.cdMax = 3;
         this.faithCost = 5;
-        this.damageType = DamageType.MAGIC;
+        this.damageType = DamageType.LIGHT;
+        this.damageMode = DamageMode.MAGICAL;
     }
     @Override
     protected void initAnimation() {

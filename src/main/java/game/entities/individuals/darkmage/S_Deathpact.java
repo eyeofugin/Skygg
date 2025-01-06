@@ -42,13 +42,11 @@ public class S_Deathpact extends Skill {
     public void deathTrigger(DeathTriggerPayload pl) {
         if (pl.dead.isTeam2() != this.hero.isTeam2()) {
             int targetPosition = switch (pl.dead.getPosition()) {
-                case 0 -> 7;
-                case 1 -> 6;
-                case 2 -> 5;
-                case 3 -> 4;
-                case 4 -> 3;
-                case 5 -> 2;
-                case 6 -> 1;
+                case 0 -> 5;
+                case 1 -> 4;
+                case 2 -> 3;
+                case 3 -> 2;
+                case 4 -> 1;
                 default -> 0;
             };
             Hero target = this.hero.arena.getAtPosition(targetPosition);

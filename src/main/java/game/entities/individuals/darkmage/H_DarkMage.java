@@ -2,14 +2,8 @@ package game.entities.individuals.darkmage;
 
 import game.entities.Animator;
 import game.entities.Hero;
-import game.entities.individuals.paladin.S_DivineArmor;
-import game.entities.individuals.paladin.S_LightBlast;
-import game.entities.individuals.paladin.S_RighteousHammer;
-import game.entities.individuals.paladin.S_ShatteringSwing;
-import game.entities.individuals.paladin.S_ShiningShield;
 import game.skills.Skill;
 import game.skills.Stat;
-import game.skills.changeeffects.effects.DarkSecrets;
 import game.skills.genericskills.S_Skip;
 
 public class H_DarkMage extends Hero {
@@ -41,13 +35,17 @@ public class H_DarkMage extends Hero {
 
     @Override
     protected void initSkills() {
-        this.skills = new Skill[]{
-                new S_DarkBlast(this),
-                new S_DarkSecrets(this),
-                new S_DarkSchemes(this),
-                new S_LifeForceSharing(this),
-//                new S_Deathpact(this)
-                new S_Skip(this)
+        this.primary = new Skill[]{
+                new S_Blight(this),
+                new S_GiftOfTheLeech(this)
         };
+        this.tactical = new Skill[]{
+                new S_LifeForceSharing(this),
+                new S_UnfairAdvantage(this),
+                new S_DarkSecrets(this),
+                new S_DarkSchemes(this)
+        };
+        this.ult = new S_Deathpact(this);
+        randomizeSkills();
     }
 }

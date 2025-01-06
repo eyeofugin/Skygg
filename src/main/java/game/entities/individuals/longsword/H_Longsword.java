@@ -4,6 +4,7 @@ import game.entities.Animator;
 import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.Stat;
+import game.skills.changeeffects.statusinflictions.Taunted;
 import game.skills.genericskills.S_Skip;
 
 public class H_Longsword extends Hero {
@@ -34,13 +35,16 @@ public class H_Longsword extends Hero {
 
     @Override
     protected void initSkills() {
-        this.skills = new Skill[] {
-                new S_Swing(this),
-                new S_Stab(this),
-                new S_Steadfast(this),
-//                new S_SupremeDefense(this),
-                new S_Taunt(this),
-                new S_Skip(this)
+        this.primary = new Skill[]{
+                new S_Stab(this), new S_Swing(this)
         };
+        this.tactical = new Skill[]{
+                new S_Challenge(this),
+                new S_Taunt(this),
+                new S_Cover(this),
+                new S_Steadfast(this)
+        };
+        this.ult = new S_SupremeDefense(this);
+        randomizeSkills();
     }
 }

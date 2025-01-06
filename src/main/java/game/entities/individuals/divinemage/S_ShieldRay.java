@@ -20,12 +20,12 @@ public class S_ShieldRay extends Skill {
         super.setToInitial();
         this.targetType = TargetType.LINE;
         this.distance = 2;
-        this.faithCost = 4;
+        this.faithCost = 3;
     }
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
-        target.shield(getShield());
+        target.shield(getShield(), this.hero);
     }
     @Override
     protected void initAnimation() {

@@ -8,7 +8,7 @@ import game.skills.Stat;
 
 public class StatField extends GUIElement {
     private final Hero hero;
-    private final Stat[] leftStatArray = new Stat[]{Stat.MAGIC, Stat.FINESSE, Stat.FORCE, Stat.STAMINA, Stat.ENDURANCE};
+    private final Stat[] leftStatArray = new Stat[]{Stat.MAGIC, Stat.POWER, Stat.STAMINA, Stat.ENDURANCE};
     private final Stat[] rightStatArray = new Stat[]{Stat.SPEED, Stat.EVASION, Stat.ACCURACY, Stat.CRIT_CHANCE, Stat.LETHALITY};
 
     public StatField(Hero hero) {

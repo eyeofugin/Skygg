@@ -2,10 +2,9 @@ package game.entities.individuals.sniper;
 
 import game.entities.Hero;
 import game.skills.Skill;
-import game.skills.Stat;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.Combo;
-import game.skills.changeeffects.effects.SmokeScreen;
+import game.skills.changeeffects.effects.Cover;
 
 public class S_SmokeGrenade extends Skill {
 
@@ -38,11 +37,7 @@ public class S_SmokeGrenade extends Skill {
     public void resolve() {
         int turns = this.hero.hasPermanentEffect(Combo.class)>0?2:1;
         for (Hero target : this.targets) {
-            if (target.equals(this.hero)) {
-                target.addEffect(new SmokeScreen(turns+1), this.hero);
-            } else {
-                target.addEffect(new SmokeScreen(turns), this.hero);
-            }
+            target.addEffect(new Cover(turns), this.hero);
         }
         this.hero.removePermanentEffectOfClass(Combo.class);
     }

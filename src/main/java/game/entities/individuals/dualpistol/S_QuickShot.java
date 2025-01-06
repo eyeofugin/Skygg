@@ -29,7 +29,7 @@ public class S_QuickShot extends Skill {
         this.targetType = TargetType.SINGLE;
         this.distance = 2;
         this.dmg = 2;
-        this.dmgMultipliers = List.of(new Multiplier(Stat.FINESSE, 0.4));
+        this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.4));
         this.damageType = DamageType.NORMAL;
         this.primary = true;
     }

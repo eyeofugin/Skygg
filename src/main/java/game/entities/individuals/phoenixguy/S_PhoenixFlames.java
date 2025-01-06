@@ -23,8 +23,7 @@ public class S_PhoenixFlames extends Skill {
         this.tags = List.of(SkillTag.BUFF);
         this.targetType = TargetType.SELF;
         this.effects = List.of(new Exalted(3));
-        this.cdMax = 3;
-        this.faithCost = 20;
+        this.faithCost = 8;
     }
 
     @Override
@@ -52,7 +51,7 @@ public class S_PhoenixFlames extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Enter exalted mode for 3 turns. +1 Range on skills. All enemies get 3 Burning stacks.";
+        return "Get Exalted(3). All enemies get 3 Burning stacks.";
     }
 
 }

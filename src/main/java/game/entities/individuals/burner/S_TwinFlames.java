@@ -2,6 +2,7 @@ package game.entities.individuals.burner;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
+import game.skills.DamageMode;
 import game.skills.DamageType;
 import game.skills.Skill;
 import game.skills.Stat;
@@ -26,10 +27,12 @@ public class S_TwinFlames extends Skill {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG);
         this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.4));
+        this.effects = List.of(new Burning(1));
         this.targetType = TargetType.TWO_RDM;
         this.dmg = 2;
-        this.damageType = DamageType.MAGIC;
-        this.faithCost = 4;
+        this.damageType = DamageType.HEAT;
+        this.damageMode = DamageMode.MAGICAL;
+        this.faithCost = 2;
     }
 
     @Override
@@ -39,16 +42,9 @@ public class S_TwinFlames extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "(30+"+Stat.MAGIC.getIconString()+")% chance to burn";
+        return "Burns";
     }
-    @Override
-    public void applySkillEffects(Hero target) {
-        super.applySkillEffects(target);
-        int magic = this.hero.getStat(Stat.MAGIC);
-        if (MyMaths.success(magic + 50)) {
-            target.addEffect(new Burning(1), this.hero);
-        }
-    }
+
 
     @Override
     public String getName() {

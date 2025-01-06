@@ -177,8 +177,7 @@ public class TextEditor {
         symbols.put(Stat.FAITH.getIconKey(), Symbol.faith);
         symbols.put(Stat.LIFE.getIconKey(), Symbol.life);
         symbols.put(Stat.MAGIC.getIconKey(), Symbol.magic);
-        symbols.put(Stat.FINESSE.getIconKey(), Symbol.finesse);
-        symbols.put(Stat.FORCE.getIconKey(), Symbol.force);
+        symbols.put(Stat.POWER.getIconKey(), Symbol.finesse);
         symbols.put(Stat.STAMINA.getIconKey(), Symbol.stamina);
         symbols.put(Stat.ENDURANCE.getIconKey(), Symbol.endurance);
         symbols.put(Stat.SPEED.getIconKey(), Symbol.speed);
@@ -273,8 +272,7 @@ public class TextEditor {
         symbols.put(Stat.FAITH.getIconKey(), Symbol.faith.pixels);
         symbols.put(Stat.LIFE.getIconKey(), Symbol.life.pixels);
         symbols.put(Stat.MAGIC.getIconKey(), Symbol.magic.pixels);
-        symbols.put(Stat.FINESSE.getIconKey(), Symbol.finesse.pixels);
-        symbols.put(Stat.FORCE.getIconKey(), Symbol.force.pixels);
+        symbols.put(Stat.POWER.getIconKey(), Symbol.finesse.pixels);
         symbols.put(Stat.STAMINA.getIconKey(), Symbol.stamina.pixels);
         symbols.put(Stat.ENDURANCE.getIconKey(), Symbol.endurance.pixels);
         symbols.put(Stat.SPEED.getIconKey(), Symbol.speed.pixels);

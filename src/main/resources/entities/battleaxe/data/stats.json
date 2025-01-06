@@ -8,6 +8,11 @@
     "SPEED" : 3,
     "LIFE" : 32,
     "CURRENT_LIFE" : 32,
-    "LIFE_REGAIN" : 2
+    "LIFE_REGAIN" : 2,
+    "NORMAL_DEF": 13,
+    "HEAT_DEF": 10,
+    "FROST_DEF": 10,
+    "LIGHT_DEF": 9,
+    "DARK_DEF": 8
   }
 }

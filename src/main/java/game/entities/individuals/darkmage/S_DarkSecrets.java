@@ -25,8 +25,7 @@ public class S_DarkSecrets extends Skill {
         this.targetType = TargetType.SINGLE_ALLY;
         this.effects = List.of(new DarkSecrets());
         this.distance = 2;
-        this.cdMax = 3;
-        this.manaCost = 5;
+        this.manaCost = 4;
     }
     @Override
     protected void initAnimation() {
@@ -35,7 +34,7 @@ public class S_DarkSecrets extends Skill {
 
     @Override
     public int getAIRating(Hero target) {
-        int highestATKStat = Math.max(Math.max(target.getStat(Stat.MAGIC), target.getStat(Stat.FINESSE)), target.getStat(Stat.FORCE));
+        int highestATKStat = Math.max(target.getStat(Stat.MAGIC), target.getStat(Stat.POWER));
         return highestATKStat / 4;
     }
 

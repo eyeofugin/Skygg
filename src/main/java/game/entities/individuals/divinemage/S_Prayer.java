@@ -7,6 +7,8 @@ import game.skills.Stat;
 import game.skills.TargetType;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class S_Prayer extends Skill {
 
@@ -22,7 +24,7 @@ public class S_Prayer extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.SELF;
-        this.targetResources = List.of(new Resource(Stat.CURRENT_FAITH, Stat.FAITH, 9));
+        this.targetResources = List.of(new Resource(Stat.CURRENT_FAITH, Stat.FAITH, 3));
         this.primary = true;
         this.faithGain = true;
     }
@@ -31,10 +33,18 @@ public class S_Prayer extends Skill {
         this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
 
     }
+    @Override
+    public void applySkillEffects(Hero target) {
+        super.applySkillEffects(target);
+        Optional<Hero> heroUnder50 = this.hero.team.getHeroesAsList().stream().filter(e->e.getCurrentLifePercentage() < 50).findAny();
+        if (heroUnder50.isPresent()) {
+            this.hero.addResource(Stat.CURRENT_FAITH, Stat.FAITH, 3, this.hero);
+        }
+    }
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Gain 9" + Stat.FAITH.getIconString();
+        return "Gain 3 Faith. +3 if an ally is under 50% life";
     }
     @Override
     public String getName() {

@@ -34,13 +34,14 @@ public class H_TheHealer extends Hero {
 
     @Override
     protected void initSkills() {
-        this.skills = new Skill[] {
-                new S_DivineRay(this),
-                new S_HolyWords(this),
-                new S_BlindingLight(this),
-//                new S_HolyLight(this),
-                new S_ImbueWithLight(this),
-                new S_Skip(this)
+        this.primary = new Skill[]{
+                new S_DivineRay(this), new S_LuxBomb(this)
         };
+        this.tactical = new Skill[]{
+                new S_HolyWords(this), new S_BlindingLight(this),
+                new S_HolyLight(this), new S_Cleanse(this)
+        };
+        this.ult = new S_ImbueWithLight(this);
+        randomizeSkills();
     }
 }

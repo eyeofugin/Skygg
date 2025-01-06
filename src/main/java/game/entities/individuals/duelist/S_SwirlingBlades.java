@@ -5,11 +5,13 @@ import framework.connector.Connector;
 import framework.connector.payloads.CastChangePayload;
 import game.entities.Hero;
 import game.entities.Multiplier;
+import game.skills.DamageMode;
 import game.skills.DamageType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.Combo;
+import game.skills.changeeffects.statusinflictions.Dazed;
 
 import java.util.List;
 
@@ -27,13 +29,15 @@ public class S_SwirlingBlades extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG);
-        this.dmgMultipliers = List.of(new Multiplier(Stat.FINESSE, 0.5));
+        this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.5));
         this.targetType = TargetType.SINGLE;
         this.distance = 2;
         this.dmg = 2;
         this.cdMax = 2;
         this.damageType = DamageType.NORMAL;
+        this.damageMode = DamageMode.PHYSICAL;
         this.comboEnabled = true;
+        this.countAsHits = 2;
     }
 
     @Override
@@ -41,6 +45,7 @@ public class S_SwirlingBlades extends Skill {
         super.applySkillEffects(target);
         if (this.hero.hasPermanentEffect(Combo.class) > 0) {
             this.hero.removePermanentEffectOfClass(Combo.class);
+            target.addEffect(new Dazed(2), this.hero);
         }
     }
 
@@ -50,20 +55,7 @@ public class S_SwirlingBlades extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "if combo: counts as 2 hits";
-    }
-
-    @Override
-    public void addSubscriptions() {
-        Connector.addSubscription(Connector.CAST_CHANGE, new Connection(this, CastChangePayload.class, "castChange"));
-    }
-
-    public void castChange(CastChangePayload pl) {
-        if (pl.skill.equals(this)) {
-            if (this.hero.hasPermanentEffect(Combo.class) > 0) {
-                this.countAsHits = 2;
-            }
-        }
+        return "Combo: Daze(2)";
     }
 
     @Override

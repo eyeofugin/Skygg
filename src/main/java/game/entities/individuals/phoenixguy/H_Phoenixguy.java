@@ -35,13 +35,14 @@ public class H_Phoenixguy extends Hero {
 
     @Override
     protected void initSkills() {
-        this.skills = new Skill[] {
-                new S_Spark(this),
-                new S_Fireblast(this),
-                new S_PhoenixFlames(this),
-                new S_HonorTheFirstFlame(this),
-                new S_Skip(this)
-//                new S_Combustion(this)
+        this.primary = new Skill[]{
+                new S_Spark(this), new S_Hotwings(this)
         };
+        this.tactical = new Skill[]{
+                new S_Fireblast(this), new S_AshenHeat(this),
+                new S_HonorTheFirstFlame(this), new S_Combustion(this)
+        };
+        this.ult = new S_PhoenixFlames(this);
+        randomizeSkills();
     }
 }

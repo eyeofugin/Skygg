@@ -2,6 +2,7 @@ package game.entities.individuals.phoenixguy;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
+import game.skills.DamageMode;
 import game.skills.DamageType;
 import game.skills.Skill;
 import game.skills.Stat;
@@ -23,11 +24,12 @@ public class S_Spark extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG);
-        this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.1));
+        this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.1));
         this.targetType = TargetType.SINGLE;
         this.distance = 3;
         this.dmg = 5;
-        this.damageType =  DamageType.MAGIC;
+        this.damageType =  DamageType.HEAT;
+        this.damageMode = DamageMode.MAGICAL;
         this.primary = true;
         this.faithGain = true;
         this.comboEnabled = true;
@@ -36,10 +38,10 @@ public class S_Spark extends Skill {
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
-        this.hero.addResource(Stat.CURRENT_FAITH, Stat.FAITH, 5);
+        this.hero.addResource(Stat.CURRENT_FAITH, Stat.FAITH, 3, this.hero);
         if (this.hero.hasPermanentEffect(Combo.class) > 0) {
             this.hero.removePermanentEffectOfClass(Combo.class);
-            this.hero.addResource(Stat.CURRENT_FAITH, Stat.FAITH,  7);
+            this.hero.addResource(Stat.CURRENT_FAITH, Stat.FAITH, 1, this.hero);
         }
     }
 
@@ -54,7 +56,7 @@ public class S_Spark extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Deal low dmg. Gets 5 Favor, if combo gain extra 7.";
+        return "+3 Favor. Combo: +1 Favor.";
     }
 
 }

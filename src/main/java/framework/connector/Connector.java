@@ -9,6 +9,9 @@ import java.util.Map;
 
 public class Connector {
 
+    public static final String EXCESS_RESOURCE = "EXCESS_RESOURCE";
+    public static String GLOBAL_EFFECT_CHANGE = "GLOBAL_EFFECT_CHANGE";
+    public static boolean active = false;
     public static String CAST_CHANGE = "CAST_CHANGE"; //Replacements like
     public static String TARGET_MODE = "TARGET_MODE"; //return the target viability of a skill's target
     public static String CAN_PERFORM = "CAN_PERFORM";
@@ -54,7 +57,7 @@ public class Connector {
         }
     }
     public static void fireTopic(String topic, ConnectionPayload payload) {
-        if (subscriptions.containsKey(topic)) {
+        if (Connector.active && subscriptions.containsKey(topic)) {
             Iterator<Connection> iter = subscriptions.get(topic).iterator();
             while(iter.hasNext()) {
                 Connection connection = iter.next();

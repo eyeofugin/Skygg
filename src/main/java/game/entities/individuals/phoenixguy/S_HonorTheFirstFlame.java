@@ -43,7 +43,7 @@ public class S_HonorTheFirstFlame extends Skill {
     public void dmgTrigger(DmgTriggerPayload pl) {
         if (pl.target != null && pl.effect != null && pl.effect.getClass().equals(Burning.class)) {
             if (pl.target.isTeam2() != this.hero.isTeam2()) {
-                this.hero.addResource(Stat.CURRENT_FAITH, Stat.FAITH, pl.dmgDone);
+                this.hero.addResource(Stat.CURRENT_FAITH, Stat.FAITH, pl.dmgDone, this.hero);
             }
         }
     }

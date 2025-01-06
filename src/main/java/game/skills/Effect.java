@@ -5,10 +5,19 @@ import framework.connector.Connector;
 import framework.graphics.GUIElement;
 import framework.graphics.text.Color;
 import game.entities.Hero;
+import game.skills.changeeffects.effects.Burning;
+import game.skills.changeeffects.effects.Gifted;
+import game.skills.changeeffects.statusinflictions.Bleeding;
+import game.skills.changeeffects.statusinflictions.Blinded;
+import game.skills.changeeffects.statusinflictions.Dazed;
+import game.skills.changeeffects.statusinflictions.Disenchanted;
+import game.skills.changeeffects.statusinflictions.Injured;
+import game.skills.changeeffects.statusinflictions.Taunted;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public abstract class Effect {
 
@@ -105,5 +114,11 @@ public abstract class Effect {
                 ", name='" + name + '\'' +
                 ", type=" + type +
                 '}';
+    }
+
+    public static Effect getRdmDebuff() {
+        List<Effect> effectList = List.of(new Burning(1), new Injured(1), new Bleeding(1), new Blinded(1), new Dazed(1), new Disenchanted(1), new Taunted(1));
+        Random r = new Random();
+        return effectList.get(r.nextInt(effectList.size()));
     }
 }

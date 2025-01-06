@@ -1,5 +1,6 @@
 package utils;
 
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
@@ -50,5 +51,23 @@ public class MyMaths {
         }else {
             return false;
         }
+    }
+
+    static public int getFromToIncl(int from, int to, List<Integer> exclude) {
+        Random rand = new Random();
+        boolean found = false;
+        if (to - from + 1 <= exclude.size()) {
+            return 0;
+        }
+        int randomInt = 0;
+        int counter = 0;
+        while (!found && counter < 100) {
+            randomInt = rand.nextInt(from, to + 1);
+            if (!exclude.contains(randomInt)) {
+                found = true;
+            }
+            counter++;
+        }
+        return randomInt;
     }
 }

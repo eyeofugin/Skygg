@@ -4,6 +4,7 @@ import game.entities.Animator;
 import game.entities.Hero;
 import game.skills.Skill;
 import game.skills.Stat;
+import game.skills.changeeffects.effects.Gifted;
 import game.skills.genericskills.S_Skip;
 
 public class H_FireDancer extends Hero {
@@ -35,13 +36,17 @@ public class H_FireDancer extends Hero {
 
     @Override
     protected void initSkills() {
-        this.skills = new Skill[] {
+        this.primary = new Skill[]{
                 new S_Slash(this),
-                new S_FlameLasso(this),
-                new S_FlameDance(this),
-                new S_RushOfHeat(this),
-                new S_Skip(this)
-//                new S_SingingBlades(this)
+                new S_FlamingSwing(this)
         };
+        this.tactical = new Skill[]{
+                new S_FlameDance(this),
+                new S_SingingBlades(this),
+                new S_RushOfHeat(this),
+                new S_FlameLasso(this)
+        };
+        this.ult = new S_GiftOfTheFirstFlame(this);
+        randomizeSkills();
     }
 }

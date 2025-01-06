@@ -27,7 +27,6 @@ public class S_DarkSchemes extends Skill {
         this.tags = List.of(SkillTag.PEEL);
         this.targetType = TargetType.SINGLE;
         this.distance = 3;
-        this.cdMax = 5;
         this.manaCost = 10;
     }
     @Override

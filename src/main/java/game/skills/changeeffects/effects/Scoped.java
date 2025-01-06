@@ -4,22 +4,23 @@ import framework.connector.Connection;
 import framework.connector.Connector;
 import framework.connector.payloads.CastChangePayload;
 import game.entities.individuals.rifle.S_Barrage;
-import game.entities.individuals.rifle.S_Blasting;
+import game.entities.individuals.rifle.S_Mobilize;
+import game.entities.individuals.rifle.S_PiercingBolt;
 import game.skills.Effect;
 import game.skills.Skill;
 
 public class Scoped extends Effect {
-    public Scoped() {
-        this.turns = -1;
+    public Scoped(int turns) {
+        this.turns = turns;
         this.name = "Scoped";
         this.stackable = false;
-        this.description = "This hero uses the scoped mode.";
+        this.description = "+1 Range";
         this.type = ChangeEffectType.BUFF;
     }
 
     @Override
     public Effect getNew() {
-        return new Scoped();
+        return new Scoped(this.turns);
     }
     @Override
     public void addSubscriptions() {
@@ -28,10 +29,8 @@ public class Scoped extends Effect {
 
     public void castChange(CastChangePayload castChangePayload) {
         Skill skill = castChangePayload.skill;
-        if (skill != null && skill.hero.equals(this.hero)) {
-            if (skill instanceof S_Barrage || skill instanceof S_Blasting) {
-                skill.setDistance(skill.getDistance() + 1);
-            }
+        if (skill != null && skill.hero.equals(this.hero) && skill.isPrimary()) {
+            skill.setDistance(skill.getDistance() + 1);
         }
     }
 }

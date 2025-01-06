@@ -5,6 +5,7 @@ import framework.Logger;
 import framework.Property;
 import framework.connector.Connector;
 import framework.connector.payloads.EndOfRoundPayload;
+import framework.connector.payloads.GlobalEffectChangePayload;
 import framework.connector.payloads.PrepareUpdatePayload;
 import framework.connector.payloads.StartOfMatchPayload;
 import framework.connector.payloads.UpdatePayload;
@@ -201,7 +202,6 @@ public class Arena extends GUIElement {
         Logger.logLn("resumeTurn()");
         this.removeTheDead();
         this.updateEntities();
-        this.activeHero.prepareCast();
         if (this.activeHero.getStat(Stat.CURRENT_ACTION) > 0) {
             if (!this.pvp && this.activeHero.isTeam2()) {
                 aiTurn();
@@ -233,7 +233,8 @@ public class Arena extends GUIElement {
             hero.endOfRound();
         }
 
-        EndOfRoundPayload endOfTurnPayload = new EndOfRoundPayload();
+        EndOfRoundPayload endOfTurnPayload = new EndOfRoundPayload()
+                .setArena(this);
         Connector.fireTopic(Connector.END_OF_ROUND, endOfTurnPayload);
 
         this.queue.restartTurnQueue();
@@ -252,6 +253,7 @@ public class Arena extends GUIElement {
             Logger.logLn("-----------------------------");
             Logger.logLn("Start turn for " + this.activeHero.getName() + " " + this.activeHero.getPosition());
             this.activeHero.startOfTurn();
+            this.activeHero.prepareCast();
             resumeTurn();
         }
     }
@@ -283,7 +285,7 @@ public class Arena extends GUIElement {
     }
 
     public void stun(Hero target) {
-        this.queue.sendToBack(target);
+        this.queue.didTurn(target);
     }
     public void moveTo(Hero e, int targetPos) {
         int toGo = Math.abs(e.getPosition()-targetPos);
@@ -409,7 +411,12 @@ public class Arena extends GUIElement {
     }
 
     public void setGlobalEffect(GlobalEffect globalEffect) {
+        GlobalEffect oldEffect = this.globalEffect;
         this.globalEffect = globalEffect;
+        GlobalEffectChangePayload globalEffectChangePayload = new GlobalEffectChangePayload()
+                .setEffect(this.globalEffect)
+                .setOldEffect(oldEffect);
+        Connector.fireTopic(Connector.GLOBAL_EFFECT_CHANGE, globalEffectChangePayload);
     }
     //RENDER
 

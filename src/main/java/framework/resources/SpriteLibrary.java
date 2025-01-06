@@ -15,7 +15,7 @@ import game.skills.changeeffects.effects.RegenBoost;
 import game.skills.changeeffects.effects.RegenStop;
 import game.skills.changeeffects.effects.RighteousHammerCounter;
 import game.skills.changeeffects.effects.Scoped;
-import game.skills.changeeffects.effects.SmokeScreen;
+import game.skills.changeeffects.effects.Cover;
 import game.skills.changeeffects.effects.Steadfast;
 import game.skills.changeeffects.effects.SwiftStrikeCounter;
 import game.skills.changeeffects.globals.Heat;
@@ -30,7 +30,6 @@ import game.skills.genericskills.S_Skip;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.beans.SimpleBeanInfo;
 import java.io.File;
 import java.net.URI;
 import java.util.HashMap;
@@ -96,7 +95,7 @@ public class SpriteLibrary {
                 "icons/effect/righteoushammercounter.png", 0));
         sprites.put(Scoped.class.getName(), sprite(Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,
                 "icons/effect/scoped.png", 0));
-        sprites.put(SmokeScreen.class.getName(), sprite(Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,
+        sprites.put(Cover.class.getName(), sprite(Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,
                 "icons/effect/smokescreen.png", 0));
         sprites.put(Steadfast.class.getName(), sprite(Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,
                 "icons/effect/steadfast.png", 0));

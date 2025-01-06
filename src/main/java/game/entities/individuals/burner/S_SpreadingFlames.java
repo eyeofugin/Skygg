@@ -23,8 +23,8 @@ public class S_SpreadingFlames extends Skill {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG);
         this.targetType = TargetType.ALL_ENEMY;
-        this.cdMax = 3;
-        this.faithGain = true;
+        this.faithCost = 6;
+        this.ultimate = true;
     }
 
     @Override
@@ -34,12 +34,12 @@ public class S_SpreadingFlames extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "For each enemy burn stack, give another burn stack randomly. if at least 5 stacks were given this way, +5" + Stat.FAITH.getIconString();
+        return "For each enemy burn stack, give another burn stack randomly.";
     }
 
     @Override
     public int getAIRating(Hero target) {
-        return target.getPermanentEffectStacks(Burning.class) / 3;
+        return target.getPermanentEffectStacks(Burning.class) / 2;
     }
 
     @Override
@@ -52,9 +52,6 @@ public class S_SpreadingFlames extends Skill {
             int enemyIndex = random.nextInt(amntEnemies);
             Hero enemy = enemies.get(enemyIndex);
             enemy.addEffect(new Burning(1), this.hero);
-        }
-        if (enemyBurningStacks > 4) {
-            this.hero.addResource(Stat.CURRENT_FAITH, Stat.FAITH, 3);
         }
     }
 

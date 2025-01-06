@@ -30,7 +30,7 @@ public class S_AllOut extends Skill {
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
         this.hero.addToStat(Stat.ENDURANCE, -3);
-        this.hero.addToStat(Stat.FINESSE, 5);
+        this.hero.addToStat(Stat.POWER, 5);
         this.hero.addToStat(Stat.SPEED, 2);
     }
 
@@ -49,7 +49,7 @@ public class S_AllOut extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "5"+Stat.FINESSE.getIconString()+", 2"+Stat.SPEED.getIconString()+", -3"+Stat.ENDURANCE.getIconString();
+        return "5"+Stat.POWER.getIconString()+", 2"+Stat.SPEED.getIconString()+", -3"+Stat.ENDURANCE.getIconString();
     }
 
     @Override

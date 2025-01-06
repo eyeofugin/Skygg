@@ -3,7 +3,6 @@ package game.entities.individuals.duelist;
 import game.entities.Animator;
 import game.entities.Hero;
 import game.skills.Skill;
-import game.skills.Stat;
 import game.skills.genericskills.S_Skip;
 
 public class H_Duelist extends Hero {
@@ -34,13 +33,14 @@ public class H_Duelist extends Hero {
 
     @Override
     protected void initSkills() {
-        this.skills = new Skill[]{
-                new S_SwiftStrike(this),
-                new S_Mobilize(this),
-                new S_Lifesteal(this),
-                new S_AllOut(this),
-                new S_Skip(this)
-//                new S_SwirlingBlades(this)
+        this.primary = new Skill[]{
+                new S_Slash(this), new S_Reposte(this)
         };
+        this.tactical = new Skill[]{
+                new S_Mobilize(this), new S_GiveMeYourWorst(this),
+                new S_AllOut(this), new S_SwirlingBlades(this)
+        };
+        this.ult = new S_DuelistDance(this);
+        randomizeSkills();
     }
 }

@@ -25,8 +25,7 @@ public class S_HolyWords extends Skill {
         this.targetType = TargetType.SINGLE_ALLY;
         this.heal = 0;
         this.healMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.5));
-        this.cdMax = 1;
-        this.faithCost = 6;
+        this.faithCost = 2;
         this.distance = 2;
     }
     @Override
