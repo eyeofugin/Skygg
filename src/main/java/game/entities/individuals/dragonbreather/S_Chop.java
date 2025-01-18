@@ -18,7 +18,7 @@ public class S_Chop extends Skill {
 
     public S_Chop(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/chop.png";
+        this.iconPath = "/icons/axeswing.png";
         addSubscriptions();
         setToInitial();
         initAnimation();

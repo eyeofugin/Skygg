@@ -16,7 +16,7 @@ public class S_DragonScales extends Skill {
 
     public S_DragonScales(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/dragonscales.png";
+        this.iconPath = "/icons/blazingskin.png";
         addSubscriptions();
         setToInitial();
         initAnimation();

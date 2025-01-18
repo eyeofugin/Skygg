@@ -12,7 +12,7 @@ public class S_Invincibility extends Skill {
 
     public S_Invincibility(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/immunity.png";
+        this.iconPath = "/icons/invincibility.png";
         addSubscriptions();
         setToInitial();
         initAnimation();
