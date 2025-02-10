@@ -29,8 +29,8 @@ public class S_LuckyShot extends Skill {
         super.setToInitial();
         this.targetType = TargetType.SINGLE;
         this.distance = 3;
-        this.dmg = 1;
-        this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.2));
+        this.dmg = 3;
+        this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.05));
         this.cdMax = 2;
         this.damageType = DamageType.NORMAL;
         this.damageMode = DamageMode.PHYSICAL;

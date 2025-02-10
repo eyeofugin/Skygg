@@ -66,7 +66,7 @@ public class S_GiftOfTheFirstFlame extends Skill {
     }
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Passive: As long as you have at least 5 burn stacks, primary skills count as 2 hits. Active: Get 2 Burn stacks, remove all other debuffs. For 2 turns, all attacks deal +20% damage.";
+        return "Passive: As long as you have at least 5 burn stacks, primary skills count as 2 hits. Active: Get 2 Burn stacks, remove all other debuffs.";
     }
 
     @Override

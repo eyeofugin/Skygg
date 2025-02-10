@@ -30,8 +30,8 @@ public class S_SingingBlades extends Skill {
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.15),
                 new Multiplier(Stat.POWER, 0.4));
         this.targetType = TargetType.SINGLE;
-        this.distance = 3;
-        this.dmg = 2;
+        this.distance = 2;
+        this.dmg = 10;
         this.damageType = DamageType.NORMAL;
         this.damageMode = DamageMode.PHYSICAL;
     }
@@ -41,12 +41,12 @@ public class S_SingingBlades extends Skill {
     }
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Burns. If target has less than half their life, gain combo.";
+        return "2 Burns. If target has less than half their life, gain combo.";
     }
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
-        target.addEffect(new Burning(1), this.hero);
+        target.addEffect(new Burning(2), this.hero);
         if (target.getResourcePercentage(Stat.CURRENT_LIFE) < 50) {
             this.hero.addEffect(new Combo(), this.hero);
         }

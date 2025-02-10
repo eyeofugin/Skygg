@@ -26,7 +26,7 @@ public class S_Burn extends Skill {
         super.setToInitial();
         this.tags = List.of(SkillTag.CC);
         this.targetType = TargetType.SINGLE;
-        this.effects = List.of(new Burning(2));
+        this.effects = List.of(new Burning(4));
         this.distance = 3;
         this.primary = true;
         this.faithGain = true;
@@ -39,7 +39,7 @@ public class S_Burn extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Gets 2"+Stat.FAITH.getIconString()+". Give 2 Burn stacks.";
+        return "Gets 2"+Stat.FAITH.getIconString()+". Give 4 Burn stacks.";
     }
     @Override
     public void applySkillEffects(Hero target) {

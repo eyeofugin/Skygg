@@ -28,10 +28,9 @@ public class S_LightningBolt extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG);
-        this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.3));
+        this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.7));
         this.targetType = TargetType.SINGLE;
         this.distance = 2;
-        this.dmg = 4;
         this.damageType = DamageType.HEAT;
         this.damageMode = DamageMode.MAGICAL;
         this.primary = true;

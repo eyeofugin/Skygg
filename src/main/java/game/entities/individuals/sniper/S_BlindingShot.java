@@ -29,7 +29,7 @@ public class S_BlindingShot extends Skill {
         this.cdMax = 3;
         this.damageType = DamageType.NORMAL;
         this.damageMode = DamageMode.PHYSICAL;
-        this.dmg = 1;
+        this.dmg = 8;
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.1));
         this.effects = List.of(new Blinded(2));
     }

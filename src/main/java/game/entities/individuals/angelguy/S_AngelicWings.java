@@ -36,6 +36,7 @@ public class S_AngelicWings extends Skill {
         super.applySkillEffects(target);
         target.addEffect(new Cover(2), this.hero);
         target.addEffect(new Combo(), this.hero);
+        this.hero.heal(this.hero, 5 + (int)(this.hero.getStat(Stat.ENDURANCE)*0.1), this, false);
     }
     @Override
     protected void initAnimation() {
@@ -44,7 +45,7 @@ public class S_AngelicWings extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Gives cover and combo";
+        return "Gives cover and combo. Heals self for 5 + 10% END";
     }
 
 

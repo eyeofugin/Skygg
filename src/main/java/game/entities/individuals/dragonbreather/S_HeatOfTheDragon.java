@@ -49,9 +49,9 @@ public class S_HeatOfTheDragon extends Skill {
 
     public void globalEffectChange(GlobalEffectChangePayload pl) {
         if (pl.oldEffect instanceof Heat) {
-            this.hero.addToStat(Stat.ENDURANCE, -2);
+            this.hero.addToStat(Stat.ENDURANCE, -10);
         } else if (pl.effect instanceof Heat) {
-            this.hero.addToStat(Stat.ENDURANCE, 2);
+            this.hero.addToStat(Stat.ENDURANCE, 10);
         }
     }
 
@@ -72,7 +72,7 @@ public class S_HeatOfTheDragon extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Summon Heat Effect. +2 Endurance in heat.";
+        return "Summon Heat Effect. +10 Endurance in heat.";
     }
 
 }

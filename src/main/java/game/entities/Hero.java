@@ -32,6 +32,7 @@ import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.changeeffects.effects.Immunity;
 import game.skills.changeeffects.effects.Invincible;
+import game.skills.changeeffects.statusinflictions.Dazed;
 import game.skills.changeeffects.statusinflictions.Injured;
 import game.skills.genericskills.S_Skip;
 import utils.FileWalker;
@@ -468,6 +469,10 @@ public abstract class Hero extends GUIElement {
         if (getEffectFailure(effect, caster)) {
             return;
         }
+        if (effect instanceof Dazed && this.hasPermanentEffect(Dazed.class) > 0) {
+            this.removePermanentEffectOfClass(Dazed.class);
+            this.arena.stun(this);
+        }
         boolean added = false;
         boolean newlyAdded = false;
         for (Effect effectHave : effects) {
@@ -640,7 +645,7 @@ public abstract class Hero extends GUIElement {
 
         int def = getStat(getDefenseStatFor(dmgMode));
         int armor = getStat(getArmorStatFor(dmgType));
-        int result = MyMaths.getDamage(damage, def+armor, lethality);
+        int result = MyMaths.getDamage(damage, def, armor, lethality);
         DmgChangesPayload dmgChangesPayload = new DmgChangesPayload()
                 .setCaster(caster)
                 .setTarget(this)
@@ -714,7 +719,7 @@ public abstract class Hero extends GUIElement {
     public int simulateDamageInPercentages(Hero caster, int damage, DamageMode dmgMode, DamageType dmgType, int lethality, Skill skill) {
         int def = getStat(getDefenseStatFor(dmgMode));
         int armor = getStat(getArmorStatFor(dmgType));
-        int result = MyMaths.getDamage(damage, def+armor, lethality);
+        int result = MyMaths.getDamage(damage, def, armor, lethality);
         DmgChangesPayload dmgChangesPayload = new DmgChangesPayload()
                 .setCaster(caster)
                 .setTarget(this)

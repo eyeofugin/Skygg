@@ -26,10 +26,10 @@ public class S_VoidLeech extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG);
-        this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.1), new Multiplier(Stat.LIFE, 0.1));
+        this.dmgMultipliers = List.of(new Multiplier(Stat.LIFE, 0.05));
         this.targetType = TargetType.SINGLE;
         this.distance = 2;
-        this.dmg = 3;
+        this.dmg = 5;
         this.damageType = DamageType.DARK;
         this.damageMode = DamageMode.PHYSICAL;
         this.primary = true;
@@ -46,16 +46,16 @@ public class S_VoidLeech extends Skill {
         Stat resource = target.getSecondaryResource();
         if (resource != null) {
             switch (resource) {
-                case MANA -> target.addResource(Stat.CURRENT_MANA, Stat.MANA, -1, this.hero);
-                case FAITH -> target.addResource(Stat.CURRENT_FAITH, Stat.FAITH, -1, this.hero);
-                case HALO -> target.addResource(Stat.CURRENT_HALO, Stat.HALO, -1, this.hero);
+                case MANA -> target.addResource(Stat.CURRENT_MANA, Stat.MANA, -2, this.hero);
+                case FAITH -> target.addResource(Stat.CURRENT_FAITH, Stat.FAITH, -2, this.hero);
+                case HALO -> target.addResource(Stat.CURRENT_HALO, Stat.HALO, -2, this.hero);
             }
         }
-        this.hero.addResource(Stat.CURRENT_MANA, Stat.MANA, 1, this.hero);
+        this.hero.addResource(Stat.CURRENT_MANA, Stat.MANA, 2, this.hero);
     }
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Target loses 1 of secondary resource. +1 Mana.";
+        return "Target loses 2 of secondary resource. +2 Mana.";
     }
 
 

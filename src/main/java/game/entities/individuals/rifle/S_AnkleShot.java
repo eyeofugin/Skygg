@@ -26,8 +26,8 @@ public class S_AnkleShot extends Skill {
         super.setToInitial();
         this.targetType = TargetType.SINGLE;
         this.distance = 3;
-        this.dmg = 2;
-        this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.2));
+        this.dmg = 11;
+        this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.1));
         this.damageType = DamageType.NORMAL;
         this.damageMode = DamageMode.PHYSICAL;
         this.primary = true;

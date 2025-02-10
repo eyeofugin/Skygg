@@ -44,12 +44,12 @@ public class S_Recharge extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Gain 50% Magic as mana";
+        return "Gain 40% Magic as mana";
     }
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
-        int manaRegain = this.hero.getStat(Stat.MAGIC) / 2;
+        int manaRegain = this.hero.getStat(Stat.MAGIC) * 4 / 10;
         this.hero.addResource(Stat.CURRENT_MANA, Stat.MANA, manaRegain, this.hero);
     }
 

@@ -29,7 +29,7 @@ public class S_Headsmash extends Skill {
         this.tags = List.of(SkillTag.DMG);
         this.dmgMultipliers = List.of(new Multiplier(Stat.STAMINA, 0.3));
         this.targetType = TargetType.SINGLE;
-        this.distance = 1;
+        this.distance = 4;
         this.dmg = 1;
         this.cdMax = 2;
         this.damageMode = DamageMode.PHYSICAL;
@@ -43,7 +43,8 @@ public class S_Headsmash extends Skill {
         if (this.hero.hasPermanentEffect(Combo.class) > 0) {
             this.hero.removePermanentEffectOfClass(Combo.class);
             target.addEffect(new Bleeding(1), this.hero);
-            this.hero.arena.stun(target);
+            target.addEffect(new Dazed(2), this.hero);
+//            this.hero.arena.stun(target);
         } else {
             this.hero.addEffect(new Dazed(2), this.hero);
             this.hero.addEffect(new Combo(), this.hero);
@@ -55,7 +56,7 @@ public class S_Headsmash extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "combo: stun,bleed target; no combo: daze self and get combo";
+        return "combo: daze,bleed target; no combo: daze self and get combo";
     }
 
 

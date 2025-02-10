@@ -32,7 +32,7 @@ public class S_BlazingCleaver extends Skill {
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.1), new Multiplier(Stat.MAGIC, 0.3));
         this.targetType = TargetType.SINGLE;
         this.distance = 2;
-        this.dmg = 2;
+        this.dmg = 14;
         this.damageType = DamageType.HEAT;
         this.damageMode = DamageMode.PHYSICAL;
         this.primary = true;

@@ -30,7 +30,7 @@ public class S_Avalanche extends Skill {
         this.tags = List.of(SkillTag.DMG);
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.2));
         this.targetType = TargetType.ALL_ENEMY;
-        this.dmg = 2;
+        this.dmg = 10;
         this.effects = List.of(new Frost(1));
         this.damageType = DamageType.FROST;
         this.damageMode = DamageMode.MAGICAL;

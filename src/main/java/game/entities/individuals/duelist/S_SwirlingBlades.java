@@ -29,7 +29,7 @@ public class S_SwirlingBlades extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG);
-        this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.5));
+        this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.4));
         this.targetType = TargetType.SINGLE;
         this.distance = 2;
         this.dmg = 2;
@@ -37,7 +37,7 @@ public class S_SwirlingBlades extends Skill {
         this.damageType = DamageType.NORMAL;
         this.damageMode = DamageMode.PHYSICAL;
         this.comboEnabled = true;
-        this.countAsHits = 2;
+        this.countAsHits = 3;
     }
 
     @Override

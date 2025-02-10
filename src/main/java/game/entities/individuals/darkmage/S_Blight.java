@@ -26,7 +26,7 @@ public class S_Blight extends Skill {
         this.tags = List.of(SkillTag.DMG);
         this.targetType = TargetType.SINGLE;
         this.damageMode = DamageMode.MAGICAL;
-        this.damageType = DamageType.DARK;
+        this.damageType = DamageType.TRUE;
         this.distance = 3;
         this.primary = true;
     }
@@ -37,12 +37,12 @@ public class S_Blight extends Skill {
 
     @Override
     public int getDmg(Hero target) {
-        return target.getStat(Stat.LIFE) / 10;
+        return target.getStat(Stat.ENDURANCE) / 2;
     }
 
     @Override
     public String getDmgOrHealString() {
-        return "10% Target Max Life";
+        return "True damage equal to 50% of targets endurance";
     }
 
     @Override
@@ -52,6 +52,6 @@ public class S_Blight extends Skill {
 
     @Override
     public String getName() {
-        return "Blight";
+        return "Dark Blast";
     }
 }

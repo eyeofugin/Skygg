@@ -27,12 +27,12 @@ public class S_IceClaw extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG);
-        this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.1),
-                new Multiplier(Stat.MANA, 0.1),
-                new Multiplier(Stat.MAGIC, 0.1));
+        this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.15),
+                new Multiplier(Stat.MANA, 0.15),
+                new Multiplier(Stat.MAGIC, 0.15));
         this.targetType = TargetType.SINGLE;
         this.distance = 2;
-        this.dmg = 1;
+        this.dmg = 8;
         this.damageType = DamageType.FROST;
         this.damageMode = DamageMode.PHYSICAL;
         this.primary = true;

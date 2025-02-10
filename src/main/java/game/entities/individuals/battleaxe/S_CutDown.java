@@ -32,7 +32,7 @@ public class S_CutDown extends Skill {
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.2));
         this.targetType = TargetType.SINGLE;
         this.distance = 1;
-        this.dmg = 4;
+        this.dmg = 9;
         this.damageMode = DamageMode.PHYSICAL;
         this.damageType = DamageType.NORMAL;
         this.primary = true;

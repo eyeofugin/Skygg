@@ -27,8 +27,8 @@ public class S_DoubleShot extends Skill {
         this.distance = 2;
         this.primary = true;
         this.countAsHits = 2;
-        this.dmg = 3;
-        this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.5));
+        this.dmg = 6;
+        this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.1));
         this.damageType = DamageType.NORMAL;
         this.damageMode = DamageMode.PHYSICAL;
     }

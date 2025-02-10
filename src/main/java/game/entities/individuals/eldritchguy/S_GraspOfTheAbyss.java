@@ -29,7 +29,7 @@ public class S_GraspOfTheAbyss extends Skill {
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.2));
         this.targetType = TargetType.SINGLE;
         this.distance = 1;
-        this.dmg = 1;
+        this.dmg = 8;
         this.damageType = DamageType.TRUE;
         this.damageMode = DamageMode.PHYSICAL;
         this.comboEnabled = true;

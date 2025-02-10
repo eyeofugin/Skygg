@@ -38,13 +38,13 @@ public class S_HoliestShield extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Passive: Get a 5% Life shield that regenerates completely at the start of your turn. Active: +5 Endurance";
+        return "Passive: Get a 5% Life shield that regenerates completely at the start of your turn. Active: +20%(Current life) Endurance";
     }
 
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
-        target.addToStat(Stat.ENDURANCE, 5);
+        target.addToStat(Stat.ENDURANCE, target.getStat(Stat.CURRENT_LIFE)/2);
     }
 
     @Override

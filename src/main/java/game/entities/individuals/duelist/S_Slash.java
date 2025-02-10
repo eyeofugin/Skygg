@@ -30,7 +30,7 @@ public class S_Slash extends Skill {
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.2), new Multiplier(Stat.SPEED, 0.5));
         this.targetType = TargetType.SINGLE;
         this.distance = 2;
-        this.dmg = 3;
+        this.dmg = 7;
         this.damageType = DamageType.NORMAL;
         this.damageMode = DamageMode.PHYSICAL;
         this.primary = true;

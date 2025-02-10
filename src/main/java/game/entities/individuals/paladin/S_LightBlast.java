@@ -24,10 +24,10 @@ public class S_LightBlast extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG, SkillTag.PEEL);
-        this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.3));
+        this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.4));
         this.targetType = TargetType.SINGLE;
         this.distance = 1;
-        this.dmg = 3;
+        this.dmg = 2;
         this.faithCost = 5;
         this.damageType = DamageType.LIGHT;
         this.damageMode = DamageMode.MAGICAL;

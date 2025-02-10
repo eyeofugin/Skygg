@@ -12,7 +12,7 @@ public class Taunted extends Effect {
         this.turns = turns;
         this.name = "Taunted";
         this.stackable = false;
-        this.description = "Can only use skills that to dmg.";
+        this.description = "Can only use skills that do dmg.";
         this.type = ChangeEffectType.STATUS_INFLICTION;
 
     }

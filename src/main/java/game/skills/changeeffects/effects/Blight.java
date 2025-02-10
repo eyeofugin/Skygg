@@ -12,7 +12,7 @@ public class Blight extends Effect {
         this.name = "Blight";
         this.stackable = true;
         this.stacks = stacks;
-        this.description = "When receiving dmg, remove blight stacks and get 3 dmg per stack.";
+        this.description = "When receiving dmg, remove blight stacks and get 5 dmg per stack.";
         this.type = ChangeEffectType.DEBUFF;
     }
     @Override
@@ -27,7 +27,7 @@ public class Blight extends Effect {
 
     public void dmgTrigger(DmgTriggerPayload pl) {
         if (this.hero.equals(pl.target)) {
-            this.hero.addResource(Stat.CURRENT_LIFE, Stat.LIFE, -3*stacks, pl.cast.hero);
+            this.hero.addResource(Stat.CURRENT_LIFE, Stat.LIFE, -5*stacks, pl.cast.hero);
             this.hero.removePermanentEffectOfClass(Blight.class);
         }
     }

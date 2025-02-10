@@ -25,6 +25,7 @@ public class S_BerserkerRage extends Skill {
         super.setToInitial();
         this.tags = List.of(SkillTag.BUFF);
         this.targetType = TargetType.SELF;
+        this.lifeCost = 15;
         this.cdMax = 3;
         this.comboEnabled = true;
     }
@@ -32,7 +33,6 @@ public class S_BerserkerRage extends Skill {
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
-        this.hero.addToStat(Stat.CURRENT_LIFE, -1*this.hero.getStat(Stat.LIFE)/4);
         this.hero.addEffect(new LifeSteal(2), this.hero);
         this.hero.addEffect(new Threatening(2), this.hero);
         if (this.hero.hasPermanentEffect(Combo.class) > 0) {
@@ -54,7 +54,7 @@ public class S_BerserkerRage extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Lose 1/4 max life. Gain lifesteal for 2 turns. Gain threatening. Combo: Enemies lose all shields.";
+        return "Lose 15 life. Gain lifesteal for 2 turns. Gain threatening. Combo: Enemies lose all shields.";
     }
 
 

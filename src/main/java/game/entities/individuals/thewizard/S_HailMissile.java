@@ -26,10 +26,10 @@ public class S_HailMissile extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG);
-        this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.3));
+        this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.5));
         this.targetType = TargetType.SINGLE;
         this.distance = 3;
-        this.dmg = 2;
+        this.dmg = 4;
         this.damageType = DamageType.FROST;
         this.damageMode = DamageMode.MAGICAL;
         this.comboEnabled = true;

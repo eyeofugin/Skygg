@@ -30,7 +30,7 @@ public class S_Stab extends Skill {
         this.distance = 2;
         this.damageType = DamageType.NORMAL;
         this.damageMode = DamageMode.PHYSICAL;
-        this.dmg = 2;
+        this.dmg = 4;
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.2));
         this.effects = List.of(new Bleeding(1));
         this.primary = true;

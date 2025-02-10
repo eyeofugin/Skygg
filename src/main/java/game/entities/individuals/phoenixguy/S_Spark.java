@@ -27,7 +27,7 @@ public class S_Spark extends Skill {
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.1));
         this.targetType = TargetType.SINGLE;
         this.distance = 3;
-        this.dmg = 5;
+        this.dmg = 12;
         this.damageType =  DamageType.HEAT;
         this.damageMode = DamageMode.MAGICAL;
         this.primary = true;

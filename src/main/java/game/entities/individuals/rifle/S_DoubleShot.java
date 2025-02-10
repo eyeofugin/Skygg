@@ -30,7 +30,7 @@ public class S_DoubleShot extends Skill {
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
-        this.hero.addEffect(new DoubleShot(2), this.hero);
+        this.hero.addEffect(new DoubleShot(3), this.hero);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class S_DoubleShot extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Passive: -1 CD for Barrage. Active: Primary Skills count as two hits.";
+        return "Passive: -1 CD for Barrage. Active: Primary Skills count as two hits. For 3 turns";
     }
 
     @Override

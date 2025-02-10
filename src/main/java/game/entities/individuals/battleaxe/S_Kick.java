@@ -61,7 +61,7 @@ public class S_Kick extends Skill {
     }
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Push 1;";
+        return "Push 1, target loses shield;";
     }
 
     @Override

@@ -10,12 +10,14 @@ import game.entities.individuals.duelist.S_Reposte;
 import game.entities.individuals.duelist.S_Slash;
 import game.entities.individuals.duelist.S_SwirlingBlades;
 import game.skills.Skill;
+import game.skills.Stat;
 
 public class H_EldritchGuy extends Hero {
 
     public H_EldritchGuy() {
         super("Eldritch Guy");
         this.initBasePath("eldritchguy");
+        this.secondaryResource = Stat.MANA;
         initAnimator();
         initSkills();
         this.initStats();

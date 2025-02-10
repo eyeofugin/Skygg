@@ -53,6 +53,6 @@ public class S_ShieldAssault extends Skill {
 
     @Override
     public String getName() {
-        return "Righteous Hammer";
+        return "Shield Assault";
     }
 }

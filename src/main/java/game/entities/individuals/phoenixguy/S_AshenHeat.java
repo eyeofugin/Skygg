@@ -35,7 +35,7 @@ public class S_AshenHeat extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Summon Heat Effect. +5 Speed in heat.";
+        return "Summon Heat Effect. +8 Speed in heat.";
     }
 
     @Override
@@ -45,9 +45,9 @@ public class S_AshenHeat extends Skill {
 
     public void globalEffectChange(GlobalEffectChangePayload pl) {
         if (pl.oldEffect instanceof Heat) {
-            this.hero.addToStat(Stat.SPEED, -5);
+            this.hero.addToStat(Stat.SPEED, -8);
         } else if (pl.effect instanceof Heat) {
-            this.hero.addToStat(Stat.SPEED, 5);
+            this.hero.addToStat(Stat.SPEED, 8);
         }
     }
     @Override

@@ -27,11 +27,11 @@ public class S_FrostBreath extends Skill {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG);
         this.effects = List.of(new Frost(1));
-        this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.1),
-                new Multiplier(Stat.MANA, 0.1));
+        this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.2),
+                new Multiplier(Stat.MANA, 0.3));
         this.targetType = TargetType.LINE;
         this.distance = 2;
-        this.dmg = 1;
+        this.dmg = 5;
         this.damageType = DamageType.FROST;
         this.damageMode = DamageMode.MAGICAL;
         this.manaCost = 4;

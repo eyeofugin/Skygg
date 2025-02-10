@@ -41,12 +41,12 @@ public class S_Mobilize extends Skill {
         int targetPosition = target.getPosition();
         this.hero.arena.moveTo(this.hero, targetPosition);
         if (this.hero.hasPermanentEffect(Combo.class) > 0) {
-            this.hero.addToStat(Stat.POWER, 1);
+            this.hero.addToStat(Stat.POWER, this.hero.getStat(Stat.POWER)/10);
         }
     }
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Move 1. Combo: +1 Power";
+        return "Move 1. Combo: +10% Power";
     }
 
     @Override

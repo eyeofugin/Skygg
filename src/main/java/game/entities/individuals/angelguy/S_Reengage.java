@@ -23,10 +23,10 @@ public class S_Reengage extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG, SkillTag.MOVE);
-        this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.1));
+        this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.1), new Multiplier(Stat.ENDURANCE, 0.1));
         this.targetType = TargetType.SINGLE_ALLY;
         this.distance = 1;
-        this.dmg = 1;
+        this.dmg = 4;
         this.damageType = DamageType.NORMAL;
         this.damageMode = DamageMode.PHYSICAL;
         this.cdMax = 4;

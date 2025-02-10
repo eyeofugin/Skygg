@@ -33,7 +33,7 @@ public class S_HorrificGlare extends Skill {
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
-        target.addToStat(Stat.ENDURANCE, -1);
+        target.addToStat(Stat.ENDURANCE, -1 * target.getStat(Stat.ENDURANCE)/5);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class S_HorrificGlare extends Skill {
     }
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "-1 Endurance, Daze(1).";
+        return "-20% Endurance, Daze(1).";
     }
 
     @Override

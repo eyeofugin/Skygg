@@ -1,19 +1,18 @@
 {
   "1": {
-    "MAGIC" : 12,
-    "FORCE" : 1,
-    "STAMINA" : 3,
+    "MAGIC" : 10,
+    "POWER" : 1,
+    "STAMINA" : 4,
     "ENDURANCE" : 4,
-    "FINESSE" : 1,
     "SPEED" : 10,
-    "LIFE" : 10,
-    "CURRENT_LIFE" : 10,
-    "LIFE_REGAIN" : 2,
+    "LIFE" : 40,
+    "CURRENT_LIFE" : 40,
+    "LIFE_REGAIN" : 4,
     "FAITH" : 18,
-    "NORMAL_DEF": 10,
-    "HEAT_DEF": 10,
-    "FROST_DEF": 10,
-    "LIGHT_DEF": 10,
-    "DARK_DEF": 10
+    "NORMAL_DEF": 4,
+    "HEAT_DEF": 5,
+    "FROST_DEF": 4,
+    "LIGHT_DEF": 8,
+    "DARK_DEF": 1
   }
 }

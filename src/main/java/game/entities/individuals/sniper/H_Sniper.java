@@ -9,7 +9,7 @@ import java.nio.charset.CharsetEncoder;
 
 public class H_Sniper extends Hero {
     public H_Sniper() {
-        super("Sniper");
+        super("Longbow");
         this.initBasePath("sniper");
         initAnimator();
         initSkills();

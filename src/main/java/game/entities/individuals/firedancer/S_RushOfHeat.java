@@ -23,7 +23,7 @@ public class S_RushOfHeat extends Skill {
         super.setToInitial();
         this.tags = List.of(SkillTag.RESTOCK);
         this.targetType = TargetType.SELF;
-        this.effects = List.of(new Burning(3));
+        this.effects = List.of(new Burning(4));
         this.cdMax = 3;
         this.faithGain = true;
     }
@@ -40,7 +40,7 @@ public class S_RushOfHeat extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Get 3 burn. +6"+Stat.FAITH.getIconString();
+        return "Get 4 burn. +6"+Stat.FAITH.getIconString();
     }
 
     @Override

@@ -28,10 +28,10 @@ public class S_DragonBreath extends Skill {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG);
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.5));
-        this.effects = List.of(new Burning(2));
+        this.effects = List.of(new Burning(4));
         this.targetType = TargetType.LINE;
         this.distance = 2;
-        this.dmg = 2;
+        this.dmg = 8;
         this.damageType = DamageType.HEAT;
         this.damageMode = DamageMode.MAGICAL;
         this.manaCost = 6;

@@ -21,7 +21,7 @@ public class S_ChemShot extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.SINGLE;
-        this.distance = 3;
+        this.distance = 4;
         this.primary = true;
         this.allowAllyForSingle = true;
     }
@@ -53,6 +53,6 @@ public class S_ChemShot extends Skill {
 
     @Override
     public String getName() {
-        return "Chem Shot";
+        return "Chemical arrow";
     }
 }

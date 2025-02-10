@@ -30,8 +30,8 @@ public class S_Swing extends Skill {
         this.distance = 1;
         this.damageType = DamageType.NORMAL;
         this.damageMode = DamageMode.PHYSICAL;
-        this.dmg = 4;
-        this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.1));
+        this.dmg = 3;
+        this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.25));
         this.effects = List.of(new Injured(1));
         this.primary = true;
     }

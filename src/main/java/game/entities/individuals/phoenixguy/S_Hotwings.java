@@ -25,7 +25,7 @@ public class S_Hotwings extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG);
-        this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.3));
+        this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.5));
         this.targetType = TargetType.SINGLE;
         this.effects = List.of(new Burning(1));
         this.distance = 2;

@@ -32,7 +32,7 @@ public class S_UnnaturalDefenses extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "+1 Endurance when receiving non-normal damage";
+        return "+2 Endurance when receiving non-normal damage";
     }
 
     @Override
@@ -42,7 +42,7 @@ public class S_UnnaturalDefenses extends Skill {
 
     public void dmgTrigger(DmgTriggerPayload pl) {
         if (this.hero.equals(pl.target) && !pl.damageType.equals(DamageType.NORMAL)) {
-            this.hero.addToStat(Stat.ENDURANCE, 1);
+            this.hero.addToStat(Stat.ENDURANCE, 2);
         }
     }
 

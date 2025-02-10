@@ -12,7 +12,7 @@ public class H_AngelGuy extends Hero {
 
         super(NAME);
         this.initBasePath("angelguy");
-        this.secondaryResource = Stat.FAITH;
+        this.secondaryResource = Stat.HALO;
         this.initAnimator();
         this.initSkills();
         this.initStats();

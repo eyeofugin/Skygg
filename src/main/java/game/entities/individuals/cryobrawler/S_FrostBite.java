@@ -34,7 +34,7 @@ public class S_FrostBite extends Skill {
         this.effects = List.of(new Injured(1));
         this.targetType = TargetType.SINGLE;
         this.distance = 1;
-        this.dmg = 1;
+        this.dmg = 9;
         this.damageType = DamageType.FROST;
         this.damageMode = DamageMode.PHYSICAL;
         this.primary = true;

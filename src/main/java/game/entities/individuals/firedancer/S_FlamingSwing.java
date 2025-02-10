@@ -45,7 +45,7 @@ public class S_FlamingSwing extends Skill {
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
-        target.addEffect(new Burning(1), this.hero);
+        target.addEffect(new Burning(2), this.hero);
         this.hero.addResource(Stat.CURRENT_FAITH, Stat.FAITH, 2, this.hero);
         if (this.hero.hasPermanentEffect(Combo.class)> 0) {
             this.hero.removePermanentEffectOfClass(Combo.class);

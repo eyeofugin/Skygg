@@ -31,11 +31,11 @@ public class S_Fireblast extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG);
-        this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.15));
+        this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.6));
         this.targetType = TargetType.SINGLE;
-        this.effects = List.of(new Burning(1));
+        this.effects = List.of(new Burning(2));
         this.distance = 2;
-        this.dmg = 8;
+        this.dmg = 7;
         this.damageType = DamageType.HEAT;
         this.damageMode = DamageMode.MAGICAL;
     }
@@ -51,7 +51,7 @@ public class S_Fireblast extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Double power if target under 50% life. Burns.";
+        return "Double power if target under 50% life. Burns 2.";
     }
     @Override
     public String getName() {

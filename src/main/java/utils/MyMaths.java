@@ -8,7 +8,7 @@ import java.util.stream.IntStream;
 public class MyMaths {
 //    public static int damageRdmValue = 2;
     public static int dmgRdmPercentage = 15;
-    public static int dmgEqualizer = 20;
+    public static int dmgEqualizer = 15;
     public static int getPcProbability(int turn, int tier) {
         int m = 1;
         int t = 1;
@@ -16,9 +16,55 @@ public class MyMaths {
         return 2;
     }
 
-    public static int getDamage(int att, int def, int lethal) {
-        int defResult = def - (def*lethal/100);
-        return (int) (rdmize(att) * (dmgEqualizer / (dmgEqualizer + (double) rdmize(defResult))));
+    public static void simulateDmg() {
+//        int att = 0;
+//        int def = 0;
+//        int armor = 0;
+//        int lethal = 0;
+
+        System.out.println("Early");
+        System.out.println("att/def\t3\t6\t9\t12\t15\t18\t21");
+        for (int att = 5; att <= 20; att+=3) {
+            System.out.print(att + "\t\t");
+            for (int def = 3; def <= 21; def+=3) {
+                System.out.print(getDamage(att,def,def, 0, false)+"\t");
+            }
+            System.out.println();
+        }
+
+        System.out.println("Late");
+        System.out.println("att/def\t10\t15\t20\t25\t30\t35\t40");
+        for (int att = 10; att <= 40; att+=5) {
+            System.out.print(att + "\t\t");
+            for (int def = 10; def <= 40; def+=5) {
+                System.out.print(getDamage(att,def,def, 0, false)+"\t");
+            }
+            System.out.println();
+        }
+//        for (int armor = 0; armor <= 40; armor+=5) {
+//            System.out.println("Armor: " + armor);
+//            System.out.println("att/def\t10\t15\t20\t25\t30\t35\t40");
+//            for (int att = 10; att <= 50; att+=5) {
+//                System.out.print(att + "\t\t");
+//                for (int def = 10; def <= 40; def+=5) {
+//                    System.out.print(getDamage(att,def,armor,0, false)+"\t");
+//                }
+//                System.out.println();
+//            }
+//        }
+
+    }
+    public static int getDamage(int att, int def, int armor, int lethal) {
+        return getDamage(att, def, armor, lethal, true);
+    }
+    public static int getDamage(int att, int def, int armor, int lethal, boolean rdmize) {
+        int armorAfterLethality = armor - (armor*lethal/100);
+        int mixedDef = (3*def + 7*armorAfterLethality) / 10;
+        if (rdmize) {
+            att = rdmize(att);
+            mixedDef = rdmize(mixedDef);
+        }
+        return (int) (att * (dmgEqualizer / (dmgEqualizer + (double) mixedDef)));
     }
 
     static private int rdmize(int a) {

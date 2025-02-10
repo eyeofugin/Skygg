@@ -30,8 +30,8 @@ public class S_DeepThrust extends Skill {
         this.distance = 1;
         this.damageMode = DamageMode.PHYSICAL;
         this.damageType = DamageType.NORMAL;
-        this.dmg = 3;
-        this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.2));
+        this.dmg = 8;
+        this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.4));
     }
     @Override
     public void applySkillEffects(Hero target) {
@@ -53,7 +53,7 @@ public class S_DeepThrust extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "phys/normal, gain 1 Favor (2 with combo). Can Bleed";
+        return "phys/normal, gain 1 Halo (2 with combo). Can Bleed";
     }
 
 

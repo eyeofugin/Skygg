@@ -24,7 +24,7 @@ public class S_SupremeDefense extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.SELF;
-        this.cdMax = 5;
+        this.cdMax = 6;
         this.ultimate = true;
     }
 

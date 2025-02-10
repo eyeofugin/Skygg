@@ -35,9 +35,14 @@ public class H_DragonBreather extends Hero {
 
     @Override
     protected void initSkills() {
-        this.primary = new Skill[]{new S_Chop(this),new S_BlazingCleaver(this)};
-        this.tactical = new Skill[]{new S_HeatOfTheDragon(this), new S_DragonBreath(this),
-                new S_InnerFire(this), new S_DragonScales(this)};
+        this.primary = new Skill[]{
+                new S_Chop(this),
+                new S_BlazingCleaver(this)};
+        this.tactical = new Skill[]{
+                new S_HeatOfTheDragon(this),
+                new S_DragonBreath(this),
+                new S_InnerFire(this),
+                new S_DragonScales(this)};
         this.ult = new S_BellowingRoar(this);
         this.randomizeSkills();
     }

@@ -42,7 +42,7 @@ public class S_FlameDance extends Skill {
         super.applySkillEffects(target);
         int targetPosition = target.getPosition();
         this.hero.arena.moveTo(this.hero, targetPosition);
-        this.hero.addEffect(new Burning(1), this.hero);
+        this.hero.addEffect(new Burning(2), this.hero);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class S_FlameDance extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Free Action. Move 1. Get a burn stack.";
+        return "Free Action. Move 1. Get 2 burn stack.";
     }
 
 }

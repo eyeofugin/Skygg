@@ -30,7 +30,7 @@ public class S_Reposte extends Skill {
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.3));
         this.targetType = TargetType.SINGLE;
         this.distance = 2;
-        this.dmg = 4;
+        this.dmg = 8;
         this.casterEffects = List.of(new Cover(1));
         this.damageType = DamageType.NORMAL;
         this.damageMode = DamageMode.PHYSICAL;

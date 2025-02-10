@@ -175,7 +175,7 @@ public abstract class Skill {
     public abstract String getDescriptionFor(Hero hero);
     public void addSubscriptions() {
 
-    };
+    }
 
     //SKILL LOGIC
     public void baseDamageChanges(Hero target, Hero caster){

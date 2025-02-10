@@ -10,12 +10,14 @@ import game.entities.individuals.eldritchguy.S_UnnaturalDefenses;
 import game.entities.individuals.eldritchguy.S_VoidGraft;
 import game.entities.individuals.eldritchguy.S_VoidLeech;
 import game.skills.Skill;
+import game.skills.Stat;
 
 public class H_CryoBrawler extends Hero {
 
     public H_CryoBrawler() {
         super("Cryo Brawler");
         this.initBasePath("cryobrawler");
+        this.secondaryResource = Stat.MANA;
         initAnimator();
         initSkills();
         this.initStats();
@@ -40,13 +42,13 @@ public class H_CryoBrawler extends Hero {
     @Override
     protected void initSkills() {
         this.primary = new Skill[]{
-                new S_GraspOfTheAbyss(this), new S_VoidLeech(this)
+                new S_FrostBite(this), new S_IceClaw(this)
         };
         this.tactical = new Skill[]{
-                new S_VoidGraft(this), new S_UnnaturalDefenses(this),
-                new S_TentacleGrab(this), new S_HorrificGlare(this)
+                new S_BlueLife(this), new S_ColdWinds(this),
+                new S_FrostBreath(this), new S_FrozenShield(this)
         };
-        this.ult = new S_UnleashEmptiness(this);
+        this.ult = new S_Avalanche(this);
         randomizeSkills();
     }
 }

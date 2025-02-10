@@ -28,8 +28,8 @@ public class S_PiercingBolt extends Skill {
         super.setToInitial();
         this.targetType = TargetType.SINGLE;
         this.distance = 3;
-        this.dmg = 3;
-        this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.3));
+        this.dmg = 10;
+        this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.2));
         this.damageType = DamageType.NORMAL;
         this.damageMode = DamageMode.PHYSICAL;
         this.primary = true;
@@ -55,6 +55,6 @@ public class S_PiercingBolt extends Skill {
 
     @Override
     public String getName() {
-        return "Piercing Bolt";
+        return "Piercing Arrow";
     }
 }

@@ -41,13 +41,15 @@ public class S_UnfairAdvantage extends Skill {
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
-        target.addToStat(Stat.MAGIC, 1);
-        target.addToStat(Stat.SPEED, 1);
+        int magicAdd = target.getStat(Stat.MAGIC) / 10;
+        int speedAdd = target.getStat(Stat.SPEED) / 10;
+        target.addToStat(Stat.MAGIC, magicAdd);
+        target.addToStat(Stat.SPEED, speedAdd);
         target.addEffect(new Combo(), this.hero);
     }
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "+1 Magic. +1 Speed. + Combo";
+        return "+10% Magic. +10% Speed. + Combo";
     }
 
     @Override

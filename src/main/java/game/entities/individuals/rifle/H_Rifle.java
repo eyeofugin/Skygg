@@ -9,7 +9,7 @@ import game.skills.genericskills.S_Skip;
 public class H_Rifle extends Hero {
 
     public H_Rifle() {
-        super("Rifle");
+        super("Crossbow");
         this.initBasePath("rifle");
         initAnimator();
         initSkills();

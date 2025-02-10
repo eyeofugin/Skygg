@@ -25,10 +25,10 @@ public class S_Spark extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG);
-        this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.1));
+        this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.3));
         this.targetType = TargetType.SINGLE;
         this.distance = 2;
-        this.dmg = 5;
+        this.dmg = 7;
         this.damageType = DamageType.HEAT;
         this.damageMode = DamageMode.MAGICAL;
         this.primary = true;

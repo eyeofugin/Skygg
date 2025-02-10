@@ -23,7 +23,7 @@ public class S_PhoenixFlames extends Skill {
         this.tags = List.of(SkillTag.BUFF);
         this.targetType = TargetType.SELF;
         this.effects = List.of(new Exalted(3));
-        this.faithCost = 8;
+        this.faithCost = 13;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class S_PhoenixFlames extends Skill {
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
         for (Hero hero : this.hero.getEnemies()) {
-            hero.addEffect(new Burning(3), this.hero);
+            hero.addEffect(new Burning(5), this.hero);
         }
     }
 
@@ -51,7 +51,7 @@ public class S_PhoenixFlames extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Get Exalted(3). All enemies get 3 Burning stacks.";
+        return "Get Exalted(3). All enemies get 5 Burning stacks.";
     }
 
 }

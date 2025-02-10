@@ -51,6 +51,11 @@ public class Connector {
             subscriptions.put(topic, newList);
         }
     }
+    public static void removeSubscriptions(Object obj) {
+        for (Map.Entry<String, ArrayList<Connection>> topicSubscription : subscriptions.entrySet()) {
+            topicSubscription.getValue().removeIf(connection -> connection.element == null || connection.equals(obj));
+        }
+    }
     public static void cleanUpSubscriptions(Object obj) {
         for (Map.Entry<String, ArrayList<Connection>> topicSubscription : subscriptions.entrySet()) {
             topicSubscription.getValue().removeIf(connection -> connection.element == null);

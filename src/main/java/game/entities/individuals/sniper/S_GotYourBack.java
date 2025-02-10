@@ -23,7 +23,7 @@ public class S_GotYourBack extends Skill {
         super.setToInitial();
         this.targetType = TargetType.SINGLE_ALLY;
         this.distance = 1;
-        this.cdMax = 3;
+        this.cdMax = 1;
         this.effects = List.of(new Combo());
     }
 

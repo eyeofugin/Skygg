@@ -58,10 +58,10 @@ public class S_EagleEye extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Gives a random debuff. Combo: Gives another random debuff.";
+        return "Gain Lucky. Whenever you crit, gain combo.";
     }
     @Override
     public String getName() {
-        return "Lucky Shot";
+        return "Eagle Eye";
     }
 }

@@ -31,11 +31,10 @@ public class S_Slash extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG);
-        this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.3),
-                new Multiplier(Stat.POWER, 0.1));
+        this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.45));
         this.targetType = TargetType.SINGLE;
         this.distance = 2;
-        this.dmg = 3;
+        this.dmg = 9;
         this.damageType = DamageType.NORMAL;
         this.damageMode = DamageMode.PHYSICAL;
         this.comboEnabled = true;
@@ -67,7 +66,7 @@ public class S_Slash extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Bleeds. +2 Favor per hit. Combo: +2.";
+        return "Bleeds. +2 Favor per hit. Combo: +2 Favor.";
     }
 
 }

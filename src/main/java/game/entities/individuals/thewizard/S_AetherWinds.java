@@ -63,6 +63,6 @@ public class S_AetherWinds extends Skill {
 
     @Override
     public String getName() {
-        return "Dispel";
+        return "Aether Winds";
     }
 }

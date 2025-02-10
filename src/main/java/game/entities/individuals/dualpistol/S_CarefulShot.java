@@ -29,8 +29,8 @@ public class S_CarefulShot extends Skill {
         this.targetType = TargetType.SINGLE;
         this.distance = 3;
         this.primary = true;
-        this.dmg = 4;
-        this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.5));
+        this.dmg = 6;
+        this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.4));
         this.damageType = DamageType.NORMAL;
         this.damageMode = DamageMode.PHYSICAL;
         this.comboEnabled = true;

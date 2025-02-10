@@ -22,6 +22,7 @@ import java.util.List;
 public class S_DuelistDance extends Skill {
 
     private boolean active = false;
+    private boolean used = false;
     public S_DuelistDance(Hero hero) {
         super(hero);
         this.iconPath = "/icons/duelistdance.png";
@@ -35,6 +36,7 @@ public class S_DuelistDance extends Skill {
         super.setToInitial();
         this.passive = true;
         this.active = false;
+        this.used = false;
         this.ultimate = true;
     }
     @Override
@@ -45,13 +47,14 @@ public class S_DuelistDance extends Skill {
     }
 
     public void castChange(CastChangePayload pl) {
-        if (this.active && pl.skill.hero.equals(this.hero)) {
+        if (this.active && pl.skill.hero.equals(this.hero) && pl.skill.getActionCost() > 0) {
             pl.skill.setActionCost(0);
+            this.used = true;
         }
     }
 
     public void onPerform(OnPerformPayload pl) {
-        if (this.active && pl.skill.hero.equals(this.hero)) {
+        if (this.active && pl.skill.hero.equals(this.hero) && this.used) {
             this.active = false;
         }
     }

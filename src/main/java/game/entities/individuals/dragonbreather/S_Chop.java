@@ -31,7 +31,7 @@ public class S_Chop extends Skill {
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.3), new Multiplier(Stat.MAGIC, 0.2));
         this.targetType = TargetType.SINGLE;
         this.distance = 1;
-        this.dmg = 1;
+        this.dmg = 10;
         this.damageType = DamageType.NORMAL;
         this.damageMode = DamageMode.PHYSICAL;
         this.primary = true;

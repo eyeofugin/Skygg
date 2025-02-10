@@ -31,11 +31,9 @@ public class S_LightningStorm extends Skill {
         this.tags = List.of(SkillTag.DMG);
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.5));
         this.targetType = TargetType.ALL_ENEMY;
-        this.dmg = 2;
         this.manaCost = 8;
         this.damageType = DamageType.HEAT;
         this.damageMode = DamageMode.MAGICAL;
-        this.comboEnabled = true;
     }
     @Override
     protected void initAnimation() {

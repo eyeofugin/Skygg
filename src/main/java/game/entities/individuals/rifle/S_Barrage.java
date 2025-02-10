@@ -25,10 +25,10 @@ public class S_Barrage extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG);
-        this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.2));
+        this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.15));
         this.effects = List.of(new Injured(1));
         this.targetType = TargetType.ENEMY_LINE;
-        this.dmg = 3;
+        this.dmg = 10;
         this.distance = 3;
         this.damageType = DamageType.NORMAL;
         this.damageMode = DamageMode.PHYSICAL;

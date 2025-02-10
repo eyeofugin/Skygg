@@ -41,18 +41,18 @@ public class S_InnerFire extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "+2"+Stat.POWER.getIconString()+", +2"+Stat.MAGIC.getIconString()+" during Heat. +2"+Stat.ENDURANCE.getIconString()+", +2"+Stat.STAMINA.getIconString()+ " otherwise";
+        return "+6"+Stat.POWER.getIconString()+", +6"+Stat.MAGIC.getIconString()+" during Heat. +4"+Stat.ENDURANCE.getIconString()+", +4"+Stat.STAMINA.getIconString()+ " otherwise";
     }
 
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
         if (this.hero.arena.globalEffect instanceof Heat) {
-            this.hero.addToStat(Stat.POWER, 2);
-            this.hero.addToStat(Stat.MAGIC, 2);
+            this.hero.addToStat(Stat.POWER, 6);
+            this.hero.addToStat(Stat.MAGIC, 6);
         } else {
-            this.hero.addToStat(Stat.ENDURANCE, 2);
-            this.hero.addToStat(Stat.MAGIC, 2);
+            this.hero.addToStat(Stat.ENDURANCE, 4);
+            this.hero.addToStat(Stat.STAMINA, 4);
         }
     }
 

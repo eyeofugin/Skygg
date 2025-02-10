@@ -22,7 +22,7 @@ public class S_HardRound extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.SINGLE;
-        this.dmg = 4;
+        this.dmg = 8;
         this.distance = 4;
         this.damageMode = DamageMode.PHYSICAL;
         this.damageType = DamageType.NORMAL;

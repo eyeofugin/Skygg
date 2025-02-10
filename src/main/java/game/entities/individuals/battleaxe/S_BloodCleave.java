@@ -30,7 +30,7 @@ public class S_BloodCleave extends Skill {
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.2));
         this.targetType = TargetType.SINGLE;
         this.distance = 1;
-        this.dmg = 5;
+        this.dmg = 10;
         this.damageMode = DamageMode.PHYSICAL;
         this.damageType = DamageType.NORMAL;
         this.effects = List.of(new Bleeding(1));

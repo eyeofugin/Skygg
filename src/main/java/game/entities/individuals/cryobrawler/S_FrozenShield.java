@@ -39,12 +39,12 @@ public class S_FrozenShield extends Skill {
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
-        target.shield(this.hero.getStat(Stat.MANA) / 5, this.hero);
+        target.shield( 5 + (this.hero.getStat(Stat.MANA) / 5), this.hero);
     }
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Get 20% Max Mana Shield.";
+        return "Get 5 + 20% Max Mana Shield.";
     }
 
 

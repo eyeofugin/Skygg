@@ -1,5 +1,6 @@
 package game.objects;
 
+import framework.connector.Connector;
 import framework.graphics.text.Color;
 import game.entities.Hero;
 import game.skills.Stat;
@@ -14,25 +15,28 @@ public class Equipment {
     protected Map<Stat, Integer> statBonus = new HashMap<>();
     protected Hero hero;
     protected boolean active;
-    protected final String description;
     protected final String name;
 
-    public Equipment(String packageName, String description, String name) {
+    public Equipment(String packageName, String name) {
         this.packageName = packageName;
-        this.description = description;
         this.name = name;
+    }
+    public void addSubscriptions() {}
+    public void removeSubscriptions() {
+        Connector.removeSubscriptions(this);
     }
 
     public void equipToHero(Hero hero) {
         this.hero = hero;
         this.hero.getEquipments().add(this);
-
+        addSubscriptions();
         statChange(1);
     }
 
     public void unEquipFromHero() {
         this.hero.getEquipments().remove(this);
         statChange(-1);
+        removeSubscriptions();
         this.hero = null;
     }
 
@@ -64,9 +68,6 @@ public class Equipment {
 
     public String getName() {
         return this.name;
-    }
-    public String getDescription() {
-        return this.description;
     }
     public String getStatBonusString() {
         if (statBonus == null || statBonus.isEmpty()) {

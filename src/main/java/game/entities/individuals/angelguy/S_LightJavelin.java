@@ -28,10 +28,10 @@ public class S_LightJavelin extends Skill {
         this.tags = List.of(SkillTag.DMG);
         this.targetType = TargetType.SINGLE;
         this.distance = 3;
-        this.damageMode = DamageMode.MAGICAL;
+        this.damageMode = DamageMode.PHYSICAL;
         this.damageType = DamageType.LIGHT;
-        this.dmg = 2;
-        this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.1));
+        this.dmg = 6;
+        this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.3));
     }
     @Override
     public void applySkillEffects(Hero target) {

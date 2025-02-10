@@ -23,8 +23,8 @@ public class S_HealingGleam extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.LINE;
-        this.heal = 0;
-        this.healMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.2));
+        this.heal = 10;
+        this.healMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.3));
         this.distance = 2;
         this.faithCost = 12;
         this.ultimate = true;

@@ -36,6 +36,7 @@ public class S_WideSwing extends Skill {
         this.damageType = DamageType.NORMAL;
         this.damageMode = DamageMode.PHYSICAL;
         this.ultimate = true;
+        this.cdMax = 2;
     }
 
     @Override
@@ -45,8 +46,7 @@ public class S_WideSwing extends Skill {
     }
     @Override
     public int getDmg(Hero target) {
-        int currentLife = this.hero.getCurrentLifePercentage();
-        return (100-currentLife) / 7;
+        return this.hero.getMissingLifePercentage() / 2;
     }
 
     @Override

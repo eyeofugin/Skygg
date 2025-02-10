@@ -1,18 +1,17 @@
 {
   "1": {
     "MAGIC" : 1,
-    "FORCE" : 1,
+    "POWER" : 14,
     "STAMINA" : 3,
     "ENDURANCE" : 3,
-    "FINESSE" : 14,
     "SPEED" : 12,
-    "LIFE" : 8,
-    "CURRENT_LIFE" : 8,
+    "LIFE" : 31,
+    "CURRENT_LIFE" : 31,
     "LIFE_REGAIN" : 1,
-    "NORMAL_DEF": 10,
-    "HEAT_DEF": 10,
-    "FROST_DEF": 10,
-    "LIGHT_DEF": 10,
-    "DARK_DEF": 10
+    "NORMAL_DEF": 4,
+    "HEAT_DEF": 3,
+    "FROST_DEF": 2,
+    "LIGHT_DEF": 1,
+    "DARK_DEF": 1
   }
 }

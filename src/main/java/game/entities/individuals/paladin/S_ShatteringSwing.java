@@ -26,10 +26,10 @@ public class S_ShatteringSwing extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG);
-        this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.4));
+        this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.1));
         this.targetType = TargetType.SINGLE;
         this.distance = 1;
-        this.dmg = 2;
+        this.dmg = 5;
         this.faithGain = true;
         this.damageType = DamageType.NORMAL;
         this.damageMode = DamageMode.PHYSICAL;

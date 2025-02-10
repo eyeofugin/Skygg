@@ -23,7 +23,7 @@ public class S_HolyWords extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.SINGLE_ALLY;
-        this.heal = 0;
+        this.heal = 2;
         this.healMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.5));
         this.faithCost = 2;
         this.distance = 2;

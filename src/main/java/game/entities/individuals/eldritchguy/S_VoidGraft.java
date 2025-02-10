@@ -24,7 +24,7 @@ public class S_VoidGraft extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.tags = List.of(SkillTag.HEAL);
-        this.healMultipliers = List.of(new Multiplier(Stat.ENDURANCE, 1));
+        this.healMultipliers = List.of(new Multiplier(Stat.ENDURANCE, 0.8));
         this.targetType = TargetType.SELF;
         this.manaCost = 2;
     }
