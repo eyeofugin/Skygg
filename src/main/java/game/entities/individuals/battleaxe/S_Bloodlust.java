@@ -14,7 +14,6 @@ public class S_Bloodlust extends Skill {
         this.iconPath = "/icons/bloodlust.png";
         addSubscriptions();
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -23,9 +22,6 @@ public class S_Bloodlust extends Skill {
         this.passive = true;
     }
 
-    @Override
-    protected void initAnimation() {
-    }
 
     @Override
     public String getDescriptionFor(Hero hero) {

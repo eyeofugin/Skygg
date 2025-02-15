@@ -22,7 +22,6 @@ public class S_CutDown extends Skill {
         this.iconPath = "/icons/cutdown.png";
         addSubscriptions();
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -43,9 +42,6 @@ public class S_CutDown extends Skill {
         return 1;
     }
 
-    protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
-    }
     @Override
     public void addSubscriptions() {
         Connector.addSubscription(Connector.DMG_CHANGES, new Connection(this, DmgChangesPayload.class, "dmgChanges"));

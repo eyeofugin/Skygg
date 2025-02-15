@@ -16,7 +16,6 @@ public class S_Reengage extends Skill {
         super(hero);
         this.iconPath = "/icons/reengage.png";
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -47,12 +46,6 @@ public class S_Reengage extends Skill {
             }
         }
     }
-
-    @Override
-    protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
-    }
-
     @Override
     public String getDescriptionFor(Hero hero) {
         return "Move 1 pos forward. Damages first opponent when moved to front.";

@@ -15,7 +15,6 @@ public class S_HolyShield extends Skill {
         super(hero);
         this.iconPath = "/icons/holyshield.png";
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -31,10 +30,6 @@ public class S_HolyShield extends Skill {
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
         target.shield(this.shield, this.hero);
-    }
-    @Override
-    protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
     }
 
     @Override

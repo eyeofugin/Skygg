@@ -86,7 +86,7 @@ public class ActiveAbilitiesCard extends GUIElement {
         activateIcon();
     }
     private void createSkillIcons() {
-        skillIcons = new GUIElement[5];
+        skillIcons = new GUIElement[this.activeHero.getSkills().length];
         int y = 2;
         for (int i = 0; i < 5; i++) {
             GUIElement skillIcon = new GUIElement();

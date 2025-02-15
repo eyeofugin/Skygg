@@ -12,7 +12,6 @@ public class S_Cleanse extends Skill {
         this.iconPath = "/icons/cleanse.png";
         addSubscriptions();
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -22,10 +21,7 @@ public class S_Cleanse extends Skill {
         this.manaCost = 4;
         this.distance = 2;
     }
-    @Override
-    protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
-    }
+
 
     @Override
     public void applySkillEffects(Hero target) {

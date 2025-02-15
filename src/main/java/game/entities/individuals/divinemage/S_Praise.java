@@ -16,7 +16,6 @@ public class S_Praise extends Skill {
         this.iconPath = "/icons/praise.png";
         addSubscriptions();
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -27,11 +26,7 @@ public class S_Praise extends Skill {
         this.targetResources = List.of(new Resource(Stat.CURRENT_FAITH, Stat.FAITH, 1));
         this.faithGain = true;
     }
-    @Override
-    protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
 
-    }
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);

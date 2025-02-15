@@ -18,7 +18,6 @@ public class S_Steadfast extends Skill {
         this.iconPath = "/icons/steadfast.png";
         addSubscriptions();
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -27,9 +26,7 @@ public class S_Steadfast extends Skill {
         this.passive = true;
     }
 
-    @Override
-    protected void initAnimation() {
-    }
+
 
 
     @Override

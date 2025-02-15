@@ -12,7 +12,7 @@ public class AllyHeal extends Skill {
         super(hero);
         this.iconPath = "/icons/spark.png";
         setToInitial();
-        initAnimation();
+
     }
 
     @Override

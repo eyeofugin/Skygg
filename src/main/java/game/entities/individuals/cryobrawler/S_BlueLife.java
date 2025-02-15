@@ -17,7 +17,6 @@ public class S_BlueLife extends Skill {
         this.iconPath = "/icons/bluelife.png";
         addSubscriptions();
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -26,9 +25,7 @@ public class S_BlueLife extends Skill {
         this.passive = true;
     }
 
-    @Override
-    protected void initAnimation() {
-    }
+
 
 
     @Override

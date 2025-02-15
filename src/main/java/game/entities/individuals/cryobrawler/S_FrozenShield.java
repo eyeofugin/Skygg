@@ -20,7 +20,6 @@ public class S_FrozenShield extends Skill {
         this.iconPath = "/icons/frozenshield.png";
         addSubscriptions();
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -31,10 +30,7 @@ public class S_FrozenShield extends Skill {
         this.manaCost = 6;
     }
 
-    @Override
-    protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
-    }
+
 
     @Override
     public void applySkillEffects(Hero target) {

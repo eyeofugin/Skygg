@@ -20,7 +20,6 @@ public class S_Headsmash extends Skill {
         this.iconPath = "/icons/headsmash.png";
         addSubscriptions();
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -50,9 +49,7 @@ public class S_Headsmash extends Skill {
             this.hero.addEffect(new Combo(), this.hero);
         }
     }
-    protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
-    }
+
 
     @Override
     public String getDescriptionFor(Hero hero) {

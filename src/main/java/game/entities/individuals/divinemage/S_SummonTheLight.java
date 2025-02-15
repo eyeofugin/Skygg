@@ -21,7 +21,6 @@ public class S_SummonTheLight extends Skill {
         this.iconPath = "/icons/summonthelight.png";
         addSubscriptions();
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -40,10 +39,7 @@ public class S_SummonTheLight extends Skill {
             pl.target.shield(pl.excess, this.hero);
         }
     }
-    @Override
-    protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
-    }
+
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);

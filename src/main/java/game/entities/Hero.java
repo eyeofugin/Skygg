@@ -79,6 +79,8 @@ public abstract class Hero extends GUIElement {
 
     public int effectiveRange = 0;
 
+    public static Hero getForDraft(){return null;};
+
     protected Hero(String name) {
         this.id = idCounter++;
         this.width = 64;
@@ -149,9 +151,11 @@ public abstract class Hero extends GUIElement {
 
     protected void randomizeSkills() {
         this.skills = new Skill[5];
-        this.skills[0] = primary[MyMaths.getFromToIncl(0,2, new ArrayList<>())];
-        int tac1 = MyMaths.getFromToIncl(0, 3, new ArrayList<>());
-        int tac2 = MyMaths.getFromToIncl(0, 3, List.of(tac1));
+        int primaryUpper = this.primary.length-1;
+        this.skills[0] = primary[MyMaths.getFromToIncl(0,primaryUpper, new ArrayList<>())];
+        int tacticalUpper = this.tactical.length-1;
+        int tac1 = MyMaths.getFromToIncl(0, tacticalUpper, new ArrayList<>());
+        int tac2 = MyMaths.getFromToIncl(0, tacticalUpper, List.of(tac1));
         this.skills[1] = tactical[tac1];
         this.skills[2] = tactical[tac2];
         this.skills[3] = ult;
@@ -405,6 +409,7 @@ public abstract class Hero extends GUIElement {
     }
     public void endOfRound() {
         effectTurn();
+        equipmentTurn();
 
         if (this.getStat(Stat.CURRENT_LIFE) < 1) {
             return;
@@ -423,7 +428,29 @@ public abstract class Hero extends GUIElement {
             this.changeStatTo(Stat.CURRENT_ACTION, 0);
         }
     }
-
+//Equipment Magic
+    public void equip(Equipment equipment) {
+        this.equipments.add(equipment);
+        if (equipment.getSkill() != null && this.skills.length < 8 && this.skills.length > 1) {
+            equipment.getSkill().hero = this;
+            List<Skill> newSkills = new ArrayList<>(List.of(this.skills));
+            newSkills.add(newSkills.size()-2, equipment.getSkill());
+            this.skills = newSkills.toArray(new Skill[0]);
+        }
+    }
+    public void unequip(Equipment equipment) {
+        this.equipments.remove(equipment);
+        if (equipment.getSkill() != null) {
+            List<Skill> newSkills = new ArrayList<>(List.of(this.skills));
+            newSkills.remove(equipment.getSkill());
+            this.skills = newSkills.toArray(new Skill[0]);
+        }
+    }
+    private void equipmentTurn() {
+        for (Equipment equipment: this.equipments) {
+            equipment.turn();
+        }
+    }
 //EffectMagic
     private void effectTurn() {
         for (Effect effect : effects) {
@@ -629,7 +656,9 @@ public abstract class Hero extends GUIElement {
 
     public void shield(int shield, Hero source) {
         ShieldChangesPayload pl = new ShieldChangesPayload()
-                .setShield(shield);
+                .setShield(shield)
+                .setSource(source)
+                .setTarget(this);
         Connector.fireTopic(Connector.SHIELD_CHANGES, pl);
         addResource(Stat.SHIELD, Stat.LIFE, pl.shield, source);
     }
@@ -652,6 +681,7 @@ public abstract class Hero extends GUIElement {
                 .setSkill(skill)
                 .setDmg(result)
                 .setDmgtype(dmgType)
+                .setDmgMode(dmgMode)
                 .setSimulate(false);
         Connector.fireTopic(Connector.DMG_CHANGES, dmgChangesPayload);
         System.out.println("dmg:"+result);
@@ -726,6 +756,7 @@ public abstract class Hero extends GUIElement {
                 .setSkill(skill)
                 .setDmg(result)
                 .setDmgtype(dmgType)
+                .setDmgMode(dmgMode)
                 .setSimulate(true);
         Connector.fireTopic(Connector.DMG_CHANGES, dmgChangesPayload);
         return result * 100 / this.stats.get(Stat.LIFE);

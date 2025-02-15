@@ -16,7 +16,6 @@ public class S_UseTheScope extends Skill {
         this.iconPath = "/icons/usethescope.png";
         addSubscriptions();
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -47,9 +46,7 @@ public class S_UseTheScope extends Skill {
             skill.setAccuracy(skill.getAccuracy() + 20);
         }
     }
-    protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
-    }
+
 
     @Override
     public String getDescriptionFor(Hero hero) {

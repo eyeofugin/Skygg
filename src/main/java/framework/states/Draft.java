@@ -6,6 +6,8 @@ import framework.graphics.containers.HUD;
 import framework.graphics.text.Color;
 import game.entities.DraftBuilder;
 import game.entities.Hero;
+import game.objects.equipments.skills.S_GraftedExoskeleton;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +19,7 @@ public class Draft extends GUIElement {
     private Hero[] draftChoices = new Hero[6];
     public Hero[] draftResult = new Hero[3];
     private int draftPointer = 0;
+    public int round = 0;
     public boolean finished = false;
 
     public Draft(Engine engine) {
@@ -24,6 +27,7 @@ public class Draft extends GUIElement {
         this.engine = engine;
         this.hud = new HUD(engine);
         this.hud.setDraft(this);
+        this.round = 1;
 
         this.initDraft();
     }

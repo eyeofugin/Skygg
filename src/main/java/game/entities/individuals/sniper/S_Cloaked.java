@@ -13,10 +13,9 @@ public class S_Cloaked extends Skill {
 
     public S_Cloaked(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/cloaked.png";
+        this.iconPath = "/icons/hardround.png";
         addSubscriptions();
         setToInitial();
-        initAnimation();
         this.hero.addToStat(Stat.EVASION, 50);
     }
 
@@ -26,9 +25,7 @@ public class S_Cloaked extends Skill {
         this.passive = true;
     }
 
-    @Override
-    protected void initAnimation() {
-    }
+
 
     @Override
     public String getDescriptionFor(Hero hero) {

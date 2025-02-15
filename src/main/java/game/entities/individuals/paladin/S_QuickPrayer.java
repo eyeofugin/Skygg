@@ -16,7 +16,6 @@ public class S_QuickPrayer extends Skill {
         this.iconPath = "/icons/quickprayer.png";
         addSubscriptions();
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -27,10 +26,7 @@ public class S_QuickPrayer extends Skill {
         this.primary = true;
         this.faithGain = true;
     }
-    @Override
-    protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
-    }
+
 
     @Override
     public String getDescriptionFor(Hero hero) {

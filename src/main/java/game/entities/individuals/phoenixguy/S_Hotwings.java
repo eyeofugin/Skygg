@@ -18,7 +18,6 @@ public class S_Hotwings extends Skill {
         super(hero);
         this.iconPath = "/icons/hotwings.png";
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -47,9 +46,7 @@ public class S_Hotwings extends Skill {
         return "Hot Wings";
     }
 
-    protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
-    }
+
 
     @Override
     public String getDescriptionFor(Hero hero) {

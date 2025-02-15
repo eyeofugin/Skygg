@@ -11,10 +11,7 @@ public class S_Skip extends Skill {
         this.iconPath = "/icons/skip.png";
         this.iconPixels = SpriteLibrary.getSprite(this.getClass().getName());
         this.targetType = TargetType.SELF;
-    }
-
-    @Override
-    protected void initAnimation() {
+        this.animationName = null;
     }
 
     @Override

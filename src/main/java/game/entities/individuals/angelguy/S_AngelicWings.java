@@ -20,7 +20,6 @@ public class S_AngelicWings extends Skill {
         super(hero);
         this.iconPath = "/icons/angelicwings.png";
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -37,10 +36,6 @@ public class S_AngelicWings extends Skill {
         target.addEffect(new Cover(2), this.hero);
         target.addEffect(new Combo(), this.hero);
         this.hero.heal(this.hero, 5 + (int)(this.hero.getStat(Stat.ENDURANCE)*0.1), this, false);
-    }
-    @Override
-    protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
     }
 
     @Override

@@ -15,10 +15,9 @@ public class S_HoliestShield extends Skill {
 
     public S_HoliestShield(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/shiningshield.png";
+        this.iconPath = "/icons/holiestshield.png";
         addSubscriptions();
         setToInitial();
-        initAnimation();
         this.hero.shield(this.hero.getStat(Stat.LIFE) * 10 / 100, this.hero);
     }
 
@@ -31,10 +30,7 @@ public class S_HoliestShield extends Skill {
         this.tags = List.of(SkillTag.BUFF);
     }
 
-    @Override
-    protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
-    }
+
 
     @Override
     public String getDescriptionFor(Hero hero) {

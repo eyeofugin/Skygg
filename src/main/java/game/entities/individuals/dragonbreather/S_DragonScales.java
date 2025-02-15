@@ -19,18 +19,12 @@ public class S_DragonScales extends Skill {
         this.iconPath = "/icons/blazingskin.png";
         addSubscriptions();
         setToInitial();
-        initAnimation();
     }
 
     @Override
     public void setToInitial() {
         super.setToInitial();
         this.passive = true;
-    }
-
-    @Override
-    protected void initAnimation() {
-
     }
 
     @Override

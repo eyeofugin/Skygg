@@ -21,7 +21,6 @@ public class S_Heat extends Skill {
         this.iconPath = "/icons/heat.png";
         addSubscriptions();
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -41,10 +40,7 @@ public class S_Heat extends Skill {
         return rating;
     }
 
-    @Override
-    protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
-    }
+
     @Override
     public void addSubscriptions() {
         Connector.addSubscription(Connector.END_OF_ROUND, new Connection(this, EndOfRoundPayload.class, "endOfRound"));

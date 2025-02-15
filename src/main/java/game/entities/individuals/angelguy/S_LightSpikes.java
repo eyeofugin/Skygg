@@ -22,7 +22,6 @@ public class S_LightSpikes extends Skill {
         super(hero);
         this.iconPath = "/icons/lightspikes.png";
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -47,11 +46,6 @@ public class S_LightSpikes extends Skill {
         return 0;
     }
 
-    @Override
-    protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
-
-    }
     @Override
     public String getDescriptionFor(Hero hero) {
         return "Heal for each halo stack 10% of the damage dealt";

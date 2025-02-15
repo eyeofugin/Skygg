@@ -15,7 +15,6 @@ public class S_DarkSecrets extends Skill {
         this.iconPath = "/icons/darksecrets.png";
         addSubscriptions();
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -27,10 +26,7 @@ public class S_DarkSecrets extends Skill {
         this.distance = 2;
         this.manaCost = 4;
     }
-    @Override
-    protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
-    }
+
 
     @Override
     public int getAIRating(Hero target) {

@@ -30,8 +30,6 @@ public class S_AshenHeat extends Skill {
         this.faithCost = 4;
 
     }
-    @Override
-    protected void initAnimation() {}
 
     @Override
     public String getDescriptionFor(Hero hero) {

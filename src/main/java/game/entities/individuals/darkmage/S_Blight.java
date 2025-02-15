@@ -14,10 +14,9 @@ public class S_Blight extends Skill {
 
     public S_Blight(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/darkblast.png";
+        this.iconPath = "/icons/blight.png";
         addSubscriptions();
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -30,10 +29,7 @@ public class S_Blight extends Skill {
         this.distance = 3;
         this.primary = true;
     }
-    @Override
-    protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
-    }
+
 
     @Override
     public int getDmg(Hero target) {

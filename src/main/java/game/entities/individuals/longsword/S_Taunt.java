@@ -14,7 +14,6 @@ public class S_Taunt extends Skill {
         this.iconPath = "/icons/taunt.png";
         addSubscriptions();
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -31,10 +30,7 @@ public class S_Taunt extends Skill {
         return 5;
     }
 
-    @Override
-    protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
-    }
+
 
     @Override
     public String getDescriptionFor(Hero hero) {

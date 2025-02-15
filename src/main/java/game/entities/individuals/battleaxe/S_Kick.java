@@ -17,7 +17,7 @@ public class S_Kick extends Skill {
         this.iconPath = "/icons/kick.png";
         addSubscriptions();
         setToInitial();
-        initAnimation();
+
     }
 
     @Override
@@ -31,10 +31,6 @@ public class S_Kick extends Skill {
         this.cdMax = 4;
         this.damageType = DamageType.NORMAL;
         this.damageMode = DamageMode.PHYSICAL;
-    }
-    @Override
-    protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
     }
 
     @Override

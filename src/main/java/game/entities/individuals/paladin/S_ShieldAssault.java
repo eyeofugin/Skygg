@@ -17,7 +17,6 @@ public class S_ShieldAssault extends Skill {
         super(hero);
         this.iconPath = "/icons/shieldassault.png";
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -41,10 +40,7 @@ public class S_ShieldAssault extends Skill {
     public int getAIRating(Hero target) {
         return getRollRating(target);
     }
-    @Override
-    protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
-    }
+
 
     @Override
     public String getDescriptionFor(Hero hero) {

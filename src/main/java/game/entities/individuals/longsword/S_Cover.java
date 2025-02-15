@@ -14,7 +14,6 @@ public class S_Cover extends Skill {
         super(hero);
         this.iconPath = "/icons/cover.png";
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -30,10 +29,7 @@ public class S_Cover extends Skill {
         super.applySkillEffects(target);
         target.addEffect(new Cover(3), this.hero);
     }
-    @Override
-    protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
-    }
+
 
     @Override
     public String getDescriptionFor(Hero hero) {

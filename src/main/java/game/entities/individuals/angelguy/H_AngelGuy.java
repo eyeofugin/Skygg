@@ -8,8 +8,13 @@ import game.skills.Stat;
 public class H_AngelGuy extends Hero {
 
     public static final String NAME = "Angel Guy";
-    public H_AngelGuy() {
 
+    public static H_AngelGuy getForDraft() {
+        H_AngelGuy hero = new H_AngelGuy();
+        hero.randomizeSkills();
+        return hero;
+    }
+    public H_AngelGuy() {
         super(NAME);
         this.initBasePath("angelguy");
         this.secondaryResource = Stat.HALO;
@@ -28,6 +33,7 @@ public class H_AngelGuy extends Hero {
 
         anim.setupAnimation(this.basePath + "/sprites/idle_w.png", "idle", new int[]{40,80});
         anim.setupAnimation(this.basePath + "/sprites/damaged_w.png", "damaged", new int[]{3,6,9,12});
+        anim.setupAnimation(this.basePath + "/sprites/action_w.png", "action_w", new int[]{15, 30, 45});
 
         anim.setDefaultAnim("idle");
         anim.currentAnim = anim.getDefaultAnim();
@@ -45,6 +51,5 @@ public class H_AngelGuy extends Hero {
                 new S_LightSpikes(this),
                 new S_PiercingLight(this)};
         this.ult = new S_Halo(this);
-        randomizeSkills();
     }
 }

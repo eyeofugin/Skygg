@@ -71,13 +71,14 @@ public class StateManager {
 
     }
 
-    public void joinArena(Hero[] draftedHeroes) {
+    public void joinArena(Draft draft) {
         Arena arena = new Arena(this.e, false);
-        for (Hero hero: draftedHeroes) {
+        arena.round = draft.round;
+        for (Hero hero: draft.draftResult) {
             hero.enterArena(hero.getDraftChoice()-1, arena);
             hero.removeFromDraft();
         }
-        HeroTeam friends = new HeroTeam(1, draftedHeroes, 1);
+        HeroTeam friends = new HeroTeam(1, draft.draftResult, 1);
         HeroTeam enemies = DraftBuilder.getRandomEnemyTeam(arena);
         arena.setTeams(friends, enemies);
         this.activeScene = arena;
@@ -86,7 +87,7 @@ public class StateManager {
     private void checkEndOfDraft() {
         if (this.activeScene instanceof Draft) {
             if (((Draft) this.activeScene).finished) {
-                joinArena(((Draft) this.activeScene).draftResult);
+                joinArena((Draft) this.activeScene);
             }
         }
     }

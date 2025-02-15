@@ -12,7 +12,6 @@ public class S_ShieldRay extends Skill {
         this.iconPath = "/icons/shieldray.png";
         addSubscriptions();
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -27,10 +26,7 @@ public class S_ShieldRay extends Skill {
         super.applySkillEffects(target);
         target.shield(getShield(), this.hero);
     }
-    @Override
-    protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
-    }
+
 
     @Override
     public int getShield() {

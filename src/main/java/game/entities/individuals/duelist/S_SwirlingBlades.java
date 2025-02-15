@@ -22,7 +22,6 @@ public class S_SwirlingBlades extends Skill {
         this.iconPath = "/icons/swirlingblades.png";
         addSubscriptions();
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -49,9 +48,7 @@ public class S_SwirlingBlades extends Skill {
         }
     }
 
-    protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
-    }
+
 
     @Override
     public String getDescriptionFor(Hero hero) {

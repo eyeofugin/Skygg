@@ -21,7 +21,6 @@ public class S_Avalanche extends Skill {
         this.iconPath = "/icons/avalanche.png";
         addSubscriptions();
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -38,10 +37,7 @@ public class S_Avalanche extends Skill {
         this.ultimate = true;
     }
 
-    @Override
-    protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
-    }
+
 
     @Override
     public String getDescriptionFor(Hero hero) {

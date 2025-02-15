@@ -17,7 +17,6 @@ public class S_HorrificGlare extends Skill {
         this.iconPath = "/icons/horrificglare.png";
         addSubscriptions();
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -41,10 +40,7 @@ public class S_HorrificGlare extends Skill {
         return 2;
     }
 
-    @Override
-    protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
-    }
+
     @Override
     public String getDescriptionFor(Hero hero) {
         return "-20% Endurance, Daze(1).";

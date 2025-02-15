@@ -19,7 +19,6 @@ public class S_HailMissile extends Skill {
         this.iconPath = "/icons/hailmissile.png";
         addSubscriptions();
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -36,11 +35,7 @@ public class S_HailMissile extends Skill {
         this.canMiss = false;
         this.primary = true;
     }
-    @Override
-    protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
 
-    }
 
     @Override
     public void applySkillEffects(Hero target) {

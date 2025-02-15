@@ -14,6 +14,7 @@ import framework.resources.SpriteLibrary;
 import framework.states.Arena;
 import game.entities.Hero;
 import game.entities.Multiplier;
+import game.objects.Equipment;
 import game.skills.changeeffects.effects.Scoped;
 import game.skills.changeeffects.effects.Threatening;
 import game.skills.changeeffects.statusinflictions.Rooted;
@@ -29,10 +30,12 @@ public abstract class Skill {
     private static int counter;
     public int id;
     public String name;
-    public final Hero hero;
+    public Hero hero;
+    public Equipment equipment;
     public String description;
     protected int[] iconPixels;
     protected String iconPath;
+    protected String animationName = "action_w";
 
     protected int distance = 0;
     protected TargetType targetType = TargetType.SINGLE;
@@ -157,8 +160,9 @@ public abstract class Skill {
         if (SpriteLibrary.hasSprite(this.getName())) {
             this.iconPixels = SpriteLibrary.getSprite(this.getName());
         } else {
+            String basePath = this.hero != null? this.hero.basePath : "icons/skills";
             this.iconPixels = SpriteLibrary.sprite(Property.SKILL_ICON_SIZE,Property.SKILL_ICON_SIZE,Property.SKILL_ICON_SIZE,Property.SKILL_ICON_SIZE,
-                    this.hero.basePath + this.iconPath, 0);
+                    basePath + this.iconPath, 0);
             SpriteLibrary.addSprite(this.getName(), this.iconPixels);
         }
     }
@@ -171,7 +175,6 @@ public abstract class Skill {
         }
         setToInitial();
     }
-    protected abstract void  initAnimation();
     public abstract String getDescriptionFor(Hero hero);
     public void addSubscriptions() {
 
@@ -204,7 +207,7 @@ public abstract class Skill {
         OnPerformPayload pl = new OnPerformPayload()
                 .setSkill(this);
         Connector.fireTopic(Connector.ON_PERFORM, pl);
-        this.hero.playAnimation(this.getName());
+        this.hero.playAnimation(this.animationName);
         this.hero.payForSkill(this);
         this.setCdCurrent(this.getCdMax());
         this.justCast = true;

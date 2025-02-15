@@ -16,7 +16,6 @@ public class S_PiercingLight extends Skill {
         super(hero);
         this.iconPath = "/icons/piercinglight.png";
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -31,10 +30,6 @@ public class S_PiercingLight extends Skill {
         this.damageMode = DamageMode.MAGICAL;
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.3));
 
-    }
-    @Override
-    protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
     }
 
     @Override

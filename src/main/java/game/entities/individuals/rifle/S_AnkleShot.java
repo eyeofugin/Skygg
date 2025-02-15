@@ -18,7 +18,6 @@ public class S_AnkleShot extends Skill {
         this.iconPath = "/icons/ankleshot.png";
         addSubscriptions();
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -39,10 +38,7 @@ public class S_AnkleShot extends Skill {
         target.addToStat(Stat.SPEED, -2);
     }
 
-    @Override
-    protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
-    }
+
 
 
     @Override

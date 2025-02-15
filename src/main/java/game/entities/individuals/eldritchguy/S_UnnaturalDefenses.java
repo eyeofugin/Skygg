@@ -16,7 +16,6 @@ public class S_UnnaturalDefenses extends Skill {
         this.iconPath = "/icons/unnaturaldefenses.png";
         addSubscriptions();
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -25,9 +24,7 @@ public class S_UnnaturalDefenses extends Skill {
         this.passive = true;
     }
 
-    @Override
-    protected void initAnimation() {
-    }
+
 
 
     @Override

@@ -22,7 +22,6 @@ public class S_BlazingCleaver extends Skill {
         this.iconPath = "/icons/blazingcleaver.png";
         addSubscriptions();
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -57,9 +56,7 @@ public class S_BlazingCleaver extends Skill {
         return 0;
     }
 
-    protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
-    }
+
 
     @Override
     public String getDescriptionFor(Hero hero) {

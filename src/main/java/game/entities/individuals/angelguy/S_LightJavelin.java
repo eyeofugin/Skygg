@@ -19,7 +19,6 @@ public class S_LightJavelin extends Skill {
         super(hero);
         this.iconPath = "/icons/lightjavelin.png";
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -38,10 +37,6 @@ public class S_LightJavelin extends Skill {
         super.applySkillEffects(target);
         this.hero.addResource(Stat.CURRENT_HALO, Stat.HALO, 1, this.hero);
         target.addToStat(Stat.EVASION, -10);
-    }
-    @Override
-    protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
     }
 
     @Override

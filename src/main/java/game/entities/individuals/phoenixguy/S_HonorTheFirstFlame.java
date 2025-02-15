@@ -22,8 +22,6 @@ public class S_HonorTheFirstFlame extends Skill {
         super.setToInitial();
         this.passive = true;
     }
-    @Override
-    protected void initAnimation() {}
 
     @Override
     public String getDescriptionFor(Hero hero) {

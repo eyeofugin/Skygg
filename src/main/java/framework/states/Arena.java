@@ -52,6 +52,7 @@ public class Arena extends GUIElement {
         WAIT_ON_AI,
         WAIT_ON_HUD
     }
+    public int round = 0;
     public boolean pvp = true;
     public Status status = Status.WAIT_ON_HUD;
     public String nextAction = null;

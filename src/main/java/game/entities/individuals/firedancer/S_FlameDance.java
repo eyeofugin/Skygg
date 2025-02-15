@@ -15,7 +15,6 @@ public class S_FlameDance extends Skill {
         this.iconPath = "/icons/flamedance.png";
         addSubscriptions();
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -28,9 +27,7 @@ public class S_FlameDance extends Skill {
         this.actionCost = 0;
     }
 
-    protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
-    }
+
 
     @Override
     public int getAIRating(Hero target) {

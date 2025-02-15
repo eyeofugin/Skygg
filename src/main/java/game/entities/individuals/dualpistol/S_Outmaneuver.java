@@ -14,7 +14,6 @@ public class S_Outmaneuver extends Skill {
         this.iconPath = "/icons/outmaneuver.png";
         addSubscriptions();
         setToInitial();
-        initAnimation();
     }
 
     @Override
@@ -53,10 +52,7 @@ public class S_Outmaneuver extends Skill {
         return rating;
     }
 
-    @Override
-    protected void initAnimation() {
-        this.hero.anim.setupAnimation(this.hero.basePath + "/sprites/action_w.png", this.getName(), new int[]{15, 30, 45});
-    }
+
     @Override
     public String getDescriptionFor(Hero hero) {
         return "pull 1. if combo: daze target";
