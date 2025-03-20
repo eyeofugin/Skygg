@@ -6,6 +6,7 @@ import framework.connector.payloads.EndOfRoundPayload;
 import framework.connector.payloads.ExcessResourcePayload;
 import framework.states.Arena;
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -18,7 +19,7 @@ public class S_HolyLight extends Skill {
 
     public S_HolyLight(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/holylight.png";
+        this.iconPath = "entities/thehealer/icons/holylight.png";
         addSubscriptions();
         setToInitial();
     }
@@ -29,6 +30,7 @@ public class S_HolyLight extends Skill {
         this.tags = List.of(SkillTag.SETUP);
         this.targetType = TargetType.ARENA;
         this.manaCost = 5;
+        this.abilityType = AbilityType.TACTICAL;
     }
     @Override
     public int getAIArenaRating(Arena arena) {

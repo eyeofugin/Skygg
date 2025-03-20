@@ -1,6 +1,7 @@
 package game.entities.individuals.duelist;
 
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -12,7 +13,7 @@ public class S_AllOut extends Skill {
 
     public S_AllOut(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/allout.png";
+        this.iconPath = "entities/duelist/icons/allout.png";
         addSubscriptions();
         setToInitial();
     }
@@ -23,6 +24,7 @@ public class S_AllOut extends Skill {
         this.tags = List.of(SkillTag.BUFF);
         this.targetType = TargetType.SELF;
         this.cdMax = 5;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override

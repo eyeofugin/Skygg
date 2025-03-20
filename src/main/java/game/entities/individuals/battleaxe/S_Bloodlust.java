@@ -4,6 +4,7 @@ import framework.connector.Connection;
 import framework.connector.Connector;
 import framework.connector.payloads.DmgTriggerPayload;
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.changeeffects.statusinflictions.Bleeding;
 
@@ -11,7 +12,7 @@ public class S_Bloodlust extends Skill {
 
     public S_Bloodlust(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/bloodlust.png";
+        this.iconPath = "entities/battleaxe/icons/bloodlust.png";
         addSubscriptions();
         setToInitial();
     }
@@ -20,6 +21,7 @@ public class S_Bloodlust extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.passive = true;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 

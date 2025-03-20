@@ -2,6 +2,7 @@ package game.entities.individuals.angelguy;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -14,7 +15,7 @@ public class S_Halo extends Skill {
 
     public S_Halo(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/halo.png";
+        this.iconPath = "entities/angelguy/icons/halo.png";
         addSubscriptions();
         setToInitial();
     }
@@ -25,6 +26,7 @@ public class S_Halo extends Skill {
         this.tags = List.of(SkillTag.BUFF);
         this.targetType = TargetType.ALL_ALLY;
         this.cdMax = 5;
+        this.abilityType = AbilityType.ULT;
     }
 
     @Override

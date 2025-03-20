@@ -2,11 +2,7 @@ package game.entities.individuals.cryobrawler;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Burning;
 import game.skills.changeeffects.effects.Frost;
 
@@ -16,7 +12,7 @@ public class S_FrostBreath extends Skill {
 
     public S_FrostBreath(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/frostbreath.png";
+        this.iconPath = "entities/cryobrawler/icons/frostbreath.png";
         addSubscriptions();
         setToInitial();
     }
@@ -31,9 +27,9 @@ public class S_FrostBreath extends Skill {
         this.targetType = TargetType.LINE;
         this.distance = 2;
         this.dmg = 5;
-        this.damageType = DamageType.FROST;
         this.damageMode = DamageMode.MAGICAL;
         this.manaCost = 4;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 

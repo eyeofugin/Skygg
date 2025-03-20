@@ -1,6 +1,7 @@
 package game.entities.individuals.dragonbreather;
 
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -14,7 +15,7 @@ public class S_InnerFire extends Skill {
 
     public S_InnerFire(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/innerfire.png";
+        this.iconPath = "entities/dragonbreather/icons/innerfire.png";
         addSubscriptions();
         setToInitial();
     }
@@ -25,6 +26,7 @@ public class S_InnerFire extends Skill {
         this.tags = List.of(SkillTag.BUFF);
         this.targetType = TargetType.SELF;
         this.manaCost = 8;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 

@@ -1,6 +1,7 @@
 package game.entities.individuals.divinemage;
 
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -9,7 +10,7 @@ public class S_ShieldRay extends Skill {
 
     public S_ShieldRay(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/shieldray.png";
+        this.iconPath = "entities/divinemage/icons/shieldray.png";
         addSubscriptions();
         setToInitial();
     }
@@ -20,6 +21,7 @@ public class S_ShieldRay extends Skill {
         this.targetType = TargetType.LINE;
         this.distance = 2;
         this.faithCost = 3;
+        this.abilityType = AbilityType.TACTICAL;
     }
     @Override
     public void applySkillEffects(Hero target) {

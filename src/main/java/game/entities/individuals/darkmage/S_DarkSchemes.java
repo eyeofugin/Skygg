@@ -3,10 +3,7 @@ package game.entities.individuals.darkmage;
 import framework.graphics.containers.ActiveCharCard;
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 
 import java.util.List;
 import java.util.Map;
@@ -15,7 +12,7 @@ public class S_DarkSchemes extends Skill {
 
     public S_DarkSchemes(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/darkschemes.png";
+        this.iconPath = "entities/darkmage/icons/darkschemes.png";
         addSubscriptions();
         setToInitial();
     }
@@ -27,6 +24,7 @@ public class S_DarkSchemes extends Skill {
         this.targetType = TargetType.SINGLE;
         this.distance = 3;
         this.manaCost = 10;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 

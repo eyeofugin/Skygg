@@ -2,6 +2,7 @@ package framework;
 
 import framework.resources.Sound;
 import framework.resources.SpriteUtils;
+import framework.states.Memory;
 import framework.states.StateManager;
 
 import javax.swing.*;
@@ -14,11 +15,12 @@ import java.awt.image.DataBufferInt;
 public class Engine extends JPanel implements Runnable{
 
     private final JFrame frame;
-    public final int multiplier = 1;
+    public final int multiplier = 3;
     public KeyBoard keyB = new KeyBoard(this);
     private final BufferedImage image = new BufferedImage(Engine.X * multiplier, Engine.Y*multiplier, BufferedImage.TYPE_INT_RGB);
     private final int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
     public StateManager stateManager;
+    public Memory memory;
     private Thread gameThread;
     public static final int X = 640;
     public static final int Y = 360;

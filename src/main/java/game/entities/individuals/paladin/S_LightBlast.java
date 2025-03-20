@@ -2,11 +2,7 @@ package game.entities.individuals.paladin;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 
 import java.util.List;
 
@@ -14,7 +10,7 @@ public class S_LightBlast extends Skill {
 
     public S_LightBlast(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/lightblast.png";
+        this.iconPath = "entities/paladin/icons/lightblast.png";
         addSubscriptions();
         setToInitial();
     }
@@ -28,8 +24,8 @@ public class S_LightBlast extends Skill {
         this.distance = 1;
         this.dmg = 2;
         this.faithCost = 5;
-        this.damageType = DamageType.LIGHT;
         this.damageMode = DamageMode.MAGICAL;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 

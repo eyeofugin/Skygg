@@ -1,6 +1,7 @@
 package game.entities.individuals.thehealer;
 
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.TargetType;
 import game.skills.changeeffects.statusinflictions.Blinded;
@@ -11,7 +12,7 @@ public class S_BlindingLight extends Skill {
 
     public S_BlindingLight(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/blindinglight.png";
+        this.iconPath = "entities/thehealer/icons/blindinglight.png";
         addSubscriptions();
         setToInitial();
     }
@@ -23,6 +24,7 @@ public class S_BlindingLight extends Skill {
         this.distance = 4;
         this.manaCost = 5;
         this.effects = List.of(new Blinded(2));
+        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override

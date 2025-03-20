@@ -4,6 +4,7 @@ import framework.connector.Connection;
 import framework.connector.Connector;
 import framework.connector.payloads.GlobalEffectChangePayload;
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -16,7 +17,7 @@ public class S_AetherWinds extends Skill {
 
     public S_AetherWinds(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/aetherwinds.png";
+        this.iconPath = "entities/thewizard/icons/aetherwinds.png";
         addSubscriptions();
         setToInitial();
     }
@@ -27,6 +28,7 @@ public class S_AetherWinds extends Skill {
         this.tags = List.of(SkillTag.SETUP);
         this.targetType = TargetType.ARENA;
         this.manaCost = 4;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 

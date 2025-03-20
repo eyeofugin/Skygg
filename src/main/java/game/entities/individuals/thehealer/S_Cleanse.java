@@ -1,6 +1,7 @@
 package game.entities.individuals.thehealer;
 
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Effect;
 import game.skills.Skill;
 import game.skills.TargetType;
@@ -9,7 +10,7 @@ public class S_Cleanse extends Skill {
 
     public S_Cleanse(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/cleanse.png";
+        this.iconPath = "entities/thehealer/icons/cleanse.png";
         addSubscriptions();
         setToInitial();
     }
@@ -20,6 +21,7 @@ public class S_Cleanse extends Skill {
         this.targetType = TargetType.SINGLE_ALLY;
         this.manaCost = 4;
         this.distance = 2;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 

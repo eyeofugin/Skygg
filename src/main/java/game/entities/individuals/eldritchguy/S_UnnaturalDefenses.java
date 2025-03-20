@@ -4,16 +4,16 @@ import framework.connector.Connection;
 import framework.connector.Connector;
 import framework.connector.payloads.DmgTriggerPayload;
 import game.entities.Hero;
-import game.skills.DamageType;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 
-
+//TODO: DT Changes
 public class S_UnnaturalDefenses extends Skill {
 
     public S_UnnaturalDefenses(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/unnaturaldefenses.png";
+        this.iconPath = "entities/eldritchguy/icons/unnaturaldefenses.png";
         addSubscriptions();
         setToInitial();
     }
@@ -22,6 +22,7 @@ public class S_UnnaturalDefenses extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.passive = true;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 
@@ -38,7 +39,7 @@ public class S_UnnaturalDefenses extends Skill {
     }
 
     public void dmgTrigger(DmgTriggerPayload pl) {
-        if (this.hero.equals(pl.target) && !pl.damageType.equals(DamageType.NORMAL)) {
+        if (this.hero.equals(pl.target)) {
             this.hero.addToStat(Stat.ENDURANCE, 2);
         }
     }

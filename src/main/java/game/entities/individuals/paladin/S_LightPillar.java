@@ -2,11 +2,7 @@ package game.entities.individuals.paladin;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.statusinflictions.Disenchanted;
 
 import java.util.ArrayList;
@@ -16,7 +12,7 @@ public class S_LightPillar extends Skill {
 
     public S_LightPillar(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/lightpillar.png";
+        this.iconPath = "entities/paladin/icons/lightpillar.png";
         addSubscriptions();
         setToInitial();
     }
@@ -31,8 +27,8 @@ public class S_LightPillar extends Skill {
         this.distance = 2;
         this.dmg = 2;
         this.faithCost = 2;
-        this.damageType = DamageType.LIGHT;
         this.damageMode = DamageMode.MAGICAL;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 

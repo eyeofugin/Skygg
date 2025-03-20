@@ -2,11 +2,7 @@ package game.entities.individuals.burner;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Burning;
 import utils.MyMaths;
 
@@ -16,7 +12,7 @@ public class S_TwinFlames extends Skill {
 
     public S_TwinFlames(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/twinflames.png";
+        this.iconPath = "entities/burner/icons/twinflames.png";
         addSubscriptions();
         setToInitial();
     }
@@ -29,9 +25,9 @@ public class S_TwinFlames extends Skill {
         this.effects = List.of(new Burning(1));
         this.targetType = TargetType.TWO_RDM;
         this.dmg = 2;
-        this.damageType = DamageType.HEAT;
         this.damageMode = DamageMode.MAGICAL;
         this.faithCost = 2;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 

@@ -2,10 +2,7 @@ package game.entities.individuals.thewizard;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Blight;
 
 import java.util.List;
@@ -14,7 +11,7 @@ public class S_Dispel extends Skill {
 
     public S_Dispel(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/dispel.png";
+        this.iconPath = "entities/thewizard/icons/dispel.png";
         addSubscriptions();
         setToInitial();
     }
@@ -24,8 +21,9 @@ public class S_Dispel extends Skill {
         super.setToInitial();
         this.tags = List.of(SkillTag.CC);
         this.targetType = TargetType.SINGLE;
-        this.distance = 3;
+        this.distance = 2;
         this.manaCost = 4;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 

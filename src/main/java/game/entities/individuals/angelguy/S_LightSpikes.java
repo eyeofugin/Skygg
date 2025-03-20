@@ -5,11 +5,7 @@ import framework.connector.Connector;
 import framework.connector.payloads.DmgTriggerPayload;
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Combo;
 import game.skills.changeeffects.effects.Exalted;
 import jdk.jfr.Percentage;
@@ -20,7 +16,7 @@ public class S_LightSpikes extends Skill {
 
     public S_LightSpikes(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/lightspikes.png";
+        this.iconPath = "entities/angelguy/icons/lightspikes.png";
         setToInitial();
     }
 
@@ -31,8 +27,8 @@ public class S_LightSpikes extends Skill {
         this.dmg = 5;
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.5));
         this.cdMax = 2;
-        this.damageType = DamageType.LIGHT;
         this.damageMode = DamageMode.MAGICAL;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override

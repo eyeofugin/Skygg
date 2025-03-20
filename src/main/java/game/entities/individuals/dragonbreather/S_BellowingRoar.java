@@ -2,11 +2,7 @@ package game.entities.individuals.dragonbreather;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.AxeSwingCounter;
 import game.skills.changeeffects.effects.Burning;
 import game.skills.changeeffects.effects.Combo;
@@ -18,7 +14,7 @@ public class S_BellowingRoar extends Skill {
 
     public S_BellowingRoar(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/bellowingroar.png";
+        this.iconPath = "entities/dragonbreather/icons/bellowingroar.png";
         addSubscriptions();
         setToInitial();
     }
@@ -29,6 +25,7 @@ public class S_BellowingRoar extends Skill {
         this.targetType = TargetType.SELF;
         this.manaCost = 12;
         this.ultimate = true;
+        this.abilityType = AbilityType.ULT;
     }
 
     @Override

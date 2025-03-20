@@ -1,6 +1,7 @@
 package game.entities.individuals.sniper;
 
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.RegenBoost;
@@ -11,7 +12,7 @@ public class S_ChemShot extends Skill {
 
     public S_ChemShot(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/chemshot.png";
+        this.iconPath = "entities/sniper/icons/chemshot.png";
         addSubscriptions();
         setToInitial();
     }
@@ -23,6 +24,7 @@ public class S_ChemShot extends Skill {
         this.distance = 4;
         this.primary = true;
         this.allowAllyForSingle = true;
+        this.abilityType = AbilityType.PRIMARY;
     }
 
 

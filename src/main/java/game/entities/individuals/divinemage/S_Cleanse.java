@@ -1,10 +1,7 @@
 package game.entities.individuals.divinemage;
 
 import game.entities.Hero;
-import game.skills.Effect;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Invincible;
 
 import java.util.List;
@@ -13,7 +10,7 @@ public class S_Cleanse extends Skill {
 
     public S_Cleanse(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/cleanse.png";
+        this.iconPath = "entities/divinemage/icons/cleanse.png";
         addSubscriptions();
         setToInitial();
     }
@@ -24,6 +21,7 @@ public class S_Cleanse extends Skill {
         this.targetType = TargetType.SINGLE_ALLY;
         this.faithCost = 5;
         this.distance = 2;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 

@@ -7,7 +7,7 @@ public class SimpleDagger extends Equipment {
     public SimpleDagger() {
         super("simpledagger",
                 "Simple Dagger");
-        this.statBonus = loadStatBonus();
+        this.statBonus = this.loadBaseStatBonus();
     }
 
 

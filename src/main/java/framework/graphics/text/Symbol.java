@@ -189,6 +189,11 @@ public class Symbol {
     public static Symbol evasion = new Symbol("fonts/evasion.png", 8,8);
     public static Symbol lethality = new Symbol("fonts/lethality.png", 8,8);
     public static Symbol accuracy = new Symbol("fonts/accuracy.png", 8,8);
+    public static Symbol normal = new Symbol("fonts/normal.png", 8,8);
+    public static Symbol light = new Symbol("fonts/light.png", 8,8);
+    public static Symbol dark = new Symbol("fonts/dark.png", 8,8);
+    public static Symbol heat = new Symbol("fonts/heat.png", 8,8);
+    public static Symbol frost = new Symbol("fonts/frost.png", 8,8);
 
     public static Symbol smallNum1 = new Symbol(30,	0,2,	0,4,	SpriteSheet.smallNum);
     public static Symbol smallNum2 = new Symbol(30,	3,5,	0,4,	SpriteSheet.smallNum);

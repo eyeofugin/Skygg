@@ -2,11 +2,9 @@ package framework.graphics;
 
 import framework.Logger;
 import framework.Property;
-import framework.graphics.text.Color;
-import framework.graphics.text.Symbol;
-import framework.graphics.text.TextAlignment;
-import framework.graphics.text.TextEditor;
+import framework.graphics.text.*;
 
+import javax.sound.sampled.Line;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -117,7 +115,8 @@ public class GUIElement {
 
     private List<List<Symbol>> splitRows(List<Symbol> fullList, int maxWidth) {
         int width = editor.getTextWidth(fullList);
-        if (width > maxWidth) {
+        boolean hasLineBreaks = fullList.stream().anyMatch(s -> s instanceof LineBreak);
+        if (width > maxWidth || hasLineBreaks) {
             return splitAt(maxWidth, fullList);
         } else {
             return List.of(fullList);
@@ -158,6 +157,10 @@ public class GUIElement {
         }
         int index = 0;
         while (editor.getTextWidth(newLine) + editor.getTextWidth(words.get(index)) + 5 < maxWidth) {
+            if (words.get(index) instanceof LineBreak) {
+                words.remove(index);
+                return newLine;
+            }
             newLine.addAll(words.get(index));
             words.remove(index);
             newLine.add(editor.getSymbol(" "));

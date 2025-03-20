@@ -2,11 +2,7 @@ package game.entities.individuals.paladin;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.statusinflictions.Injured;
 import utils.MyMaths;
 
@@ -16,7 +12,7 @@ public class S_ShatteringSwing extends Skill {
 
     public S_ShatteringSwing(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/shatteringswing.png";
+        this.iconPath = "entities/paladin/icons/shatteringswing.png";
         addSubscriptions();
         setToInitial();
     }
@@ -30,9 +26,9 @@ public class S_ShatteringSwing extends Skill {
         this.distance = 1;
         this.dmg = 5;
         this.faithGain = true;
-        this.damageType = DamageType.NORMAL;
         this.damageMode = DamageMode.PHYSICAL;
         this.primary = true;
+        this.abilityType = AbilityType.PRIMARY;
     }
 
 

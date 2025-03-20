@@ -6,11 +6,7 @@ import framework.connector.payloads.DmgChangesPayload;
 import framework.connector.payloads.GlobalEffectChangePayload;
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Burning;
 import game.skills.changeeffects.globals.Heat;
 import utils.MyMaths;
@@ -21,7 +17,7 @@ public class S_Fireblast extends Skill {
 
     public S_Fireblast(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/fireblast.png";
+        this.iconPath = "entities/phoenixguy/icons/fireblast.png";
         addSubscriptions();
         setToInitial();
     }
@@ -35,8 +31,8 @@ public class S_Fireblast extends Skill {
         this.effects = List.of(new Burning(2));
         this.distance = 2;
         this.dmg = 7;
-        this.damageType = DamageType.HEAT;
         this.damageMode = DamageMode.MAGICAL;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override

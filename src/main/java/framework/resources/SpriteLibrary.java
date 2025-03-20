@@ -1,23 +1,10 @@
 package framework.resources;
 
 import framework.Property;
+import game.objects.equipments.ArcaneCloak;
 import game.objects.equipments.SimpleBow;
 import game.objects.equipments.SimpleDagger;
-import game.skills.changeeffects.effects.AxeSwingCounter;
-import game.skills.changeeffects.effects.BlastingCounter;
-import game.skills.changeeffects.effects.Blight;
-import game.skills.changeeffects.effects.Burning;
-import game.skills.changeeffects.effects.Combo;
-import game.skills.changeeffects.effects.DarkSecrets;
-import game.skills.changeeffects.effects.Exalted;
-import game.skills.changeeffects.effects.Immunity;
-import game.skills.changeeffects.effects.RegenBoost;
-import game.skills.changeeffects.effects.RegenStop;
-import game.skills.changeeffects.effects.RighteousHammerCounter;
-import game.skills.changeeffects.effects.Scoped;
-import game.skills.changeeffects.effects.Cover;
-import game.skills.changeeffects.effects.Steadfast;
-import game.skills.changeeffects.effects.SwiftStrikeCounter;
+import game.skills.changeeffects.effects.*;
 import game.skills.changeeffects.globals.Heat;
 import game.skills.changeeffects.statusinflictions.Bleeding;
 import game.skills.changeeffects.statusinflictions.Blinded;
@@ -101,14 +88,13 @@ public class SpriteLibrary {
                 "icons/effect/steadfast.png", 0));
         sprites.put(SwiftStrikeCounter.class.getName(), sprite(Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,
                 "icons/effect/swiftstrikecounter.png", 0));
+        sprites.put(Frost.class.getName(), sprite(Property.EFFECT_ICON_SIZE, Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,Property.EFFECT_ICON_SIZE,
+                "icons/effect/frost.png", 0));
         sprites.put(Heat.class.getName(), sprite(Property.GLOBAL_EFFECT_WIDTH, Property.GLOBAL_EFFECT_HEIGHT,Property.GLOBAL_EFFECT_WIDTH,Property.GLOBAL_EFFECT_HEIGHT,
                 "icons/effect/heat.png", 0));
         sprites.put(S_Skip.class.getName(), sprite(Property.SKILL_ICON_SIZE, Property.SKILL_ICON_SIZE,Property.SKILL_ICON_SIZE,Property.SKILL_ICON_SIZE,
                 "icons/skills/skip.png", 0));
-        sprites.put(SimpleDagger.class.getName(), sprite(Property.EQUIPMENT_ICON_SIZE, Property.EQUIPMENT_ICON_SIZE, Property.EQUIPMENT_ICON_SIZE, Property.EQUIPMENT_ICON_SIZE,
-                "equipments/simpledagger/sprite.png",0));
-        sprites.put(SimpleBow.class.getName(), sprite(Property.EQUIPMENT_ICON_SIZE, Property.EQUIPMENT_ICON_SIZE, Property.EQUIPMENT_ICON_SIZE, Property.EQUIPMENT_ICON_SIZE,
-                "equipments/simplebow/sprite.png",0));
+
     }
 
     public static boolean hasSprite(String name) {
@@ -120,6 +106,10 @@ public class SpriteLibrary {
     }
 
     public static int[] getSprite(String name) {
+        if (SpriteLibrary.sprites.get(name) == null) {
+            System.out.println(name);
+            return new int[0];
+        }
         return SpriteLibrary.sprites.get(name).clone();
     }
 
@@ -138,6 +128,7 @@ public class SpriteLibrary {
             sheet.getRGB(0, 0, w, h, pixels, 0, w);
             return convert(pixels, targetW, targetH, w);
         } catch (Exception e) {
+            System.out.println(path);
             e.printStackTrace();
         }
         return sprite;

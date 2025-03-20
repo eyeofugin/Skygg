@@ -1,6 +1,7 @@
 package game.entities.individuals.divinemage;
 
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.Immunity;
@@ -12,7 +13,7 @@ public class S_Invincibility extends Skill {
 
     public S_Invincibility(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/invincibility.png";
+        this.iconPath = "entities/divinemage/icons/invincibility.png";
         addSubscriptions();
         setToInitial();
     }
@@ -24,6 +25,7 @@ public class S_Invincibility extends Skill {
         this.faithCost = 5;
         this.effects = List.of(new Invincible(2));
         this.distance = 2;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 

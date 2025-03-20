@@ -2,10 +2,7 @@ package game.entities.individuals.paladin;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.RighteousHammerCounter;
 import game.skills.changeeffects.statusinflictions.Dazed;
 
@@ -15,7 +12,7 @@ public class S_ShieldAssault extends Skill {
 
     public S_ShieldAssault(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/shieldassault.png";
+        this.iconPath = "entities/paladin/icons/shieldassault.png";
         setToInitial();
     }
 
@@ -25,6 +22,7 @@ public class S_ShieldAssault extends Skill {
         this.tags = List.of(SkillTag.MOVE);
         this.targetType = TargetType.SINGLE_ALLY_IN_FRONT;
         this.distance = 1;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override
@@ -34,6 +32,7 @@ public class S_ShieldAssault extends Skill {
         this.hero.arena.moveTo(this.hero, targetPosition);
         Hero firstEnemy = this.hero.arena.getEntitiesAt(new int[]{3})[0];
         firstEnemy.addEffect(new Dazed(1), this.hero);
+        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override

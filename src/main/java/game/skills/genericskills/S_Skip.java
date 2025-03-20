@@ -8,7 +8,7 @@ import game.skills.TargetType;
 public class S_Skip extends Skill {
     public S_Skip(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/skip.png";
+        this.iconPath = "icons/skills/skip.png";
         this.iconPixels = SpriteLibrary.getSprite(this.getClass().getName());
         this.targetType = TargetType.SELF;
         this.animationName = null;

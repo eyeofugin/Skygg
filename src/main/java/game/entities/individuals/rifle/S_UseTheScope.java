@@ -4,6 +4,7 @@ import framework.connector.Connection;
 import framework.connector.Connector;
 import framework.connector.payloads.CastChangePayload;
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.Scoped;
@@ -13,7 +14,7 @@ public class S_UseTheScope extends Skill {
 
     public S_UseTheScope(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/usethescope.png";
+        this.iconPath = "entities/rifle/icons/usethescope.png";
         addSubscriptions();
         setToInitial();
     }
@@ -23,6 +24,7 @@ public class S_UseTheScope extends Skill {
         super.setToInitial();
         this.targetType = TargetType.SELF;
         this.cdMax = 2;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override

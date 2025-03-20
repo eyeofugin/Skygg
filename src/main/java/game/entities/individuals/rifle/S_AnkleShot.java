@@ -2,11 +2,7 @@ package game.entities.individuals.rifle;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.statusinflictions.Bleeding;
 
 import java.util.List;
@@ -15,7 +11,7 @@ public class S_AnkleShot extends Skill {
 
     public S_AnkleShot(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/ankleshot.png";
+        this.iconPath = "entities/rifle/icons/ankleshot.png";
         addSubscriptions();
         setToInitial();
     }
@@ -24,12 +20,12 @@ public class S_AnkleShot extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.SINGLE;
-        this.distance = 3;
+        this.distance = 2;
         this.dmg = 11;
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.1));
-        this.damageType = DamageType.NORMAL;
         this.damageMode = DamageMode.PHYSICAL;
         this.primary = true;
+        this.abilityType = AbilityType.PRIMARY;
     }
 
     @Override

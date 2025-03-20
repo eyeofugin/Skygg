@@ -6,10 +6,7 @@ import framework.connector.payloads.GlobalEffectChangePayload;
 import framework.connector.payloads.OnPerformPayload;
 import framework.connector.payloads.UpdatePayload;
 import game.entities.Hero;
-import game.skills.Effect;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Burning;
 import game.skills.changeeffects.effects.Gifted;
 import game.skills.changeeffects.globals.Heat;
@@ -21,7 +18,7 @@ public class S_GiftOfTheFirstFlame extends Skill {
 
     public S_GiftOfTheFirstFlame(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/giftofthefirstflame.png";
+        this.iconPath = "entities/firedancer/icons/giftofthefirstflame.png";
         addSubscriptions();
         setToInitial();
     }
@@ -32,6 +29,7 @@ public class S_GiftOfTheFirstFlame extends Skill {
         this.tags = List.of(SkillTag.BUFF);
         this.targetType = TargetType.SELF;
         this.faithCost = 7;
+        this.abilityType = AbilityType.ULT;
     }
 
 

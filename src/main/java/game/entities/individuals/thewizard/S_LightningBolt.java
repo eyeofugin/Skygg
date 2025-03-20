@@ -2,11 +2,7 @@ package game.entities.individuals.thewizard;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Burning;
 import game.skills.changeeffects.effects.Combo;
 import game.skills.changeeffects.statusinflictions.Injured;
@@ -18,7 +14,7 @@ public class S_LightningBolt extends Skill {
 
     public S_LightningBolt(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/lightningbolt.png";
+        this.iconPath = "entities/thewizard/icons/lightningbolt.png";
         addSubscriptions();
         setToInitial();
     }
@@ -30,9 +26,9 @@ public class S_LightningBolt extends Skill {
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.7));
         this.targetType = TargetType.SINGLE;
         this.distance = 2;
-        this.damageType = DamageType.HEAT;
         this.damageMode = DamageMode.MAGICAL;
         this.primary = true;
+        this.abilityType = AbilityType.PRIMARY;
     }
 
 

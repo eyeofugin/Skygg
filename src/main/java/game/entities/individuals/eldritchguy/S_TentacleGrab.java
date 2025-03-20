@@ -1,11 +1,7 @@
 package game.entities.individuals.eldritchguy;
 
 import game.entities.Hero;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Combo;
 import game.skills.changeeffects.statusinflictions.Dazed;
 
@@ -13,7 +9,7 @@ public class S_TentacleGrab extends Skill {
 
     public S_TentacleGrab(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/tentaclegrab.png";
+        this.iconPath = "entities/eldritchguy/icons/tentaclegrab.png";
         addSubscriptions();
         setToInitial();
     }
@@ -22,10 +18,10 @@ public class S_TentacleGrab extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.SINGLE;
-        this.distance = 3;
+        this.distance = 2;
         this.damageMode = DamageMode.PHYSICAL;
-        this.damageType = DamageType.DARK;
         this.manaCost = 6;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override

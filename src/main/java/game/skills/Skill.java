@@ -36,12 +36,12 @@ public abstract class Skill {
     protected int[] iconPixels;
     protected String iconPath;
     protected String animationName = "action_w";
+    public AbilityType abilityType;
 
     protected int distance = 0;
     protected TargetType targetType = TargetType.SINGLE;
     protected int targetRadius = 0;
 
-    protected DamageType damageType = null;
     protected DamageMode damageMode = null;
     protected boolean passive = false;
     protected boolean isMove = false;
@@ -77,6 +77,8 @@ public abstract class Skill {
     protected boolean comboEnabled = false;
     protected boolean faithGain = false;
     public boolean allowAllyForSingle = false;
+    public int[] possibleTargetPositions;
+    public int[] possibleCastPositions;
 
     public static List<TargetType> MAX_ACC_TARGET_TYPES = List.of(
             TargetType.SELF,
@@ -160,9 +162,8 @@ public abstract class Skill {
         if (SpriteLibrary.hasSprite(this.getName())) {
             this.iconPixels = SpriteLibrary.getSprite(this.getName());
         } else {
-            String basePath = this.hero != null? this.hero.basePath : "icons/skills";
             this.iconPixels = SpriteLibrary.sprite(Property.SKILL_ICON_SIZE,Property.SKILL_ICON_SIZE,Property.SKILL_ICON_SIZE,Property.SKILL_ICON_SIZE,
-                    basePath + this.iconPath, 0);
+                    this.iconPath, 0);
             SpriteLibrary.addSprite(this.getName(), this.iconPixels);
         }
     }
@@ -255,9 +256,7 @@ public abstract class Skill {
         Logger.logLn("After base dmg changes:" + this.dmg);
         int dmg = getDmgWithMulti(target);
         Logger.logLn("After multipliers:" + dmg);
-        DamageType dt = this.getDamageType();
         DamageMode dm = this.getDamageMode();
-        Logger.logLn("DT:" + dt);
         int lethality = this.hero.getStat(Stat.LETHALITY) + this.getLethality();
         for (int i = 0; i < getCountsAsHits(); i++) {
             int dmgPerHit = dmg;
@@ -273,9 +272,9 @@ public abstract class Skill {
                 }
             }
             if (dmgPerHit>0) {
-                int doneDamage = target.damage(this.hero, dmgPerHit, dm, dt, lethality, this);
+                int doneDamage = target.damage(this.hero, dmgPerHit, dm, lethality, this);
                 Logger.logLn("done damage:"+doneDamage);
-                this.fireDmgTrigger(target,this, doneDamage, dm, dt);
+                this.fireDmgTrigger(target,this, doneDamage, dm);
             }
             int heal = this.getHealWithMulti(target);
             Logger.logLn("Heal:" + heal);
@@ -292,13 +291,12 @@ public abstract class Skill {
         Connector.fireTopic(Connector.CRITICAL_TRIGGER, criticalTriggerPayload);
     }
 
-    public void fireDmgTrigger(Hero target, Skill cast, int damageDone, DamageMode dm, DamageType dt) {
+    public void fireDmgTrigger(Hero target, Skill cast, int damageDone, DamageMode dm) {
         DmgTriggerPayload dmgTriggerPayload = new DmgTriggerPayload()
                 .setTarget(target)
                 .setCast(cast)
                 .setDmgDone(damageDone)
-                .setDamageMode(dm)
-                .setDamageType(dt);
+                .setDamageMode(dm);
         Connector.fireTopic(Connector.DMG_TRIGGER, dmgTriggerPayload);
     }
     public void applySkillEffects(Hero target) {
@@ -409,14 +407,6 @@ public abstract class Skill {
 
     public void setTargetRadius(int targetRadius) {
         this.targetRadius = targetRadius;
-    }
-
-    public DamageType getDamageType() {
-        return damageType;
-    }
-
-    public void setDamageType(DamageType damageType) {
-        this.damageType = damageType;
     }
 
     public DamageMode getDamageMode() {
@@ -767,7 +757,6 @@ public abstract class Skill {
                 ", distance=" + distance +
                 ", targetType=" + targetType +
                 ", targetRadius=" + targetRadius +
-                ", damageType=" + damageType +
                 ", passive=" + passive +
                 ", isMove=" + isMove +
                 ", movedWithEffects=" + movedWithEffects +

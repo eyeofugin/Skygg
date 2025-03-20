@@ -4,6 +4,7 @@ import framework.connector.Connection;
 import framework.connector.Connector;
 import framework.connector.payloads.CastChangePayload;
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.DoubleShot;
@@ -14,7 +15,7 @@ public class S_DoubleShot extends Skill {
 
     public S_DoubleShot(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/doubleshot.png";
+        this.iconPath = "entities/rifle/icons/doubleshot.png";
         addSubscriptions();
         setToInitial();
     }
@@ -24,6 +25,7 @@ public class S_DoubleShot extends Skill {
         super.setToInitial();
         this.targetType = TargetType.SELF;
         this.cdMax = 2;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override

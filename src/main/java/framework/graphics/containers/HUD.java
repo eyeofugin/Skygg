@@ -5,6 +5,7 @@ import framework.graphics.GUIElement;
 import framework.graphics.text.Color;
 import framework.states.Arena;
 import framework.states.Draft;
+import framework.states.PvpDraft;
 import game.entities.Hero;
 
 
@@ -12,8 +13,10 @@ public class HUD extends GUIElement {
     Engine e;
     Arena arena;
     Draft draft;
+    PvpDraft pvpDraft;
     TeamArenaOverview arenaOv;
     TeamDraftOverview draftOV;
+    TeamPvpDraftOverview pvpDraftOV;
 
     public HUD(Engine e) {
         super(Engine.X, Engine.Y);
@@ -43,6 +46,11 @@ public class HUD extends GUIElement {
         this.draftOV = new TeamDraftOverview(e, draft);
         this.children.add(draftOV);
     }
+    public void setPvpDraft(PvpDraft pvpDraft) {
+        this.pvpDraft = pvpDraft;
+        this.pvpDraftOV = new TeamPvpDraftOverview(e, draft);
+        this.children.add(pvpDraftOV);
+    }
     public void setActiveHero(Hero e) {
         if (this.arenaOv != null) {
             this.arenaOv.setActiveHero(e);
@@ -63,4 +71,6 @@ public class HUD extends GUIElement {
     public void disableTeamDraftOV() {
         this.draftOV.deactivate();
     }
+    public void activateTeamPvpDraftOV() { this.pvpDraftOV.activate(); }
+    public void disableTeamPcpDraftOV() { this.pvpDraftOV.deactivate(); }
 }

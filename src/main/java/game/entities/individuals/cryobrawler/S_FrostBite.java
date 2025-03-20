@@ -5,11 +5,7 @@ import framework.connector.Connector;
 import framework.connector.payloads.DmgTriggerPayload;
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.statusinflictions.Bleeding;
 import game.skills.changeeffects.statusinflictions.Injured;
 
@@ -19,7 +15,7 @@ public class S_FrostBite extends Skill {
 
     public S_FrostBite(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/frostbite.png";
+        this.iconPath = "entities/cryobrawler/icons/frostbite.png";
         addSubscriptions();
         setToInitial();
     }
@@ -34,9 +30,9 @@ public class S_FrostBite extends Skill {
         this.targetType = TargetType.SINGLE;
         this.distance = 1;
         this.dmg = 9;
-        this.damageType = DamageType.FROST;
         this.damageMode = DamageMode.PHYSICAL;
         this.primary = true;
+        this.abilityType = AbilityType.PRIMARY;
     }
 
 

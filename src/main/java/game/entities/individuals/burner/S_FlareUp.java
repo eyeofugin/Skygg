@@ -5,11 +5,7 @@ import framework.connector.Connector;
 import framework.connector.payloads.DmgChangesPayload;
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Burning;
 
 import java.util.List;
@@ -18,7 +14,7 @@ public class S_FlareUp extends Skill {
 
     public S_FlareUp(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/flareup.png";
+        this.iconPath = "entities/burner/icons/flareup.png";
         addSubscriptions();
         setToInitial();
     }
@@ -28,11 +24,11 @@ public class S_FlareUp extends Skill {
         this.tags = List.of(SkillTag.DMG);
         this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.2));
         this.targetType = TargetType.SINGLE;
-        this.damageType = DamageType.HEAT;
         this.damageMode = DamageMode.MAGICAL;
         this.distance = 2;
         this.dmg = 3;
         this.faithCost = 4;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override

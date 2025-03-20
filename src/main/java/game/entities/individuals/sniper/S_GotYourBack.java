@@ -1,6 +1,7 @@
 package game.entities.individuals.sniper;
 
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -12,7 +13,7 @@ public class S_GotYourBack extends Skill {
 
     public S_GotYourBack(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/gotyourback.png";
+        this.iconPath = "entities/sniper/icons/gotyourback.png";
         addSubscriptions();
         setToInitial();
     }
@@ -24,6 +25,7 @@ public class S_GotYourBack extends Skill {
         this.distance = 1;
         this.cdMax = 1;
         this.effects = List.of(new Combo());
+        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override

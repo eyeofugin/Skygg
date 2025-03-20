@@ -11,7 +11,7 @@ public class FlamingChestplate extends Equipment {
 
     public FlamingChestplate() {
         super("flamingchestplate", "Flaming Chestplate");
-        this.statBonus = this.loadStatBonus();
+        this.statBonus = this.loadBaseStatBonus();
     }
 
     @Override

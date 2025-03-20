@@ -2,10 +2,7 @@ package game.entities.individuals.thehealer;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 
 import java.util.List;
 
@@ -13,7 +10,7 @@ public class S_DivineRay extends Skill {
 
     public S_DivineRay(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/divineray.png";
+        this.iconPath = "entities/thehealer/icons/divineray.png";
         addSubscriptions();
         setToInitial();
     }
@@ -26,6 +23,7 @@ public class S_DivineRay extends Skill {
         this.healMultipliers = List.of(new Multiplier(Stat.MANA, 0.3));
         this.distance = 2;
         this.primary = true;
+        this.abilityType = AbilityType.PRIMARY;
     }
 
 

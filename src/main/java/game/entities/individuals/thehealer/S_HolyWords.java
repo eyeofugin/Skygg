@@ -2,6 +2,7 @@ package game.entities.individuals.thehealer;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -12,7 +13,7 @@ public class S_HolyWords extends Skill {
 
     public S_HolyWords(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/holywords.png";
+        this.iconPath = "entities/thehealer/icons/holywords.png";
         addSubscriptions();
         setToInitial();
     }
@@ -25,6 +26,7 @@ public class S_HolyWords extends Skill {
         this.manaCost = 3;
         this.healMultipliers = List.of(new Multiplier(Stat.LIFE, 0.2),
                 new Multiplier(Stat.MANA, 0.3));
+        this.abilityType = AbilityType.TACTICAL;
     }
     @Override
     public int getAIRating(Hero target) {

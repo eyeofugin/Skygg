@@ -5,6 +5,7 @@ import framework.connector.Connector;
 import framework.connector.payloads.ExcessResourcePayload;
 import framework.connector.payloads.GlobalEffectChangePayload;
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -18,7 +19,7 @@ public class S_SummonTheLight extends Skill {
 
     public S_SummonTheLight(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/summonthelight.png";
+        this.iconPath = "entities/divinemage/icons/summonthelight.png";
         addSubscriptions();
         setToInitial();
     }
@@ -28,6 +29,7 @@ public class S_SummonTheLight extends Skill {
         super.setToInitial();
         this.targetType = TargetType.ARENA;
         this.faithCost = 5;
+        this.abilityType = AbilityType.TACTICAL;
     }
     @Override
     public void addSubscriptions() {

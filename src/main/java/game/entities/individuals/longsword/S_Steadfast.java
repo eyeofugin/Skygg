@@ -4,6 +4,7 @@ import framework.connector.Connection;
 import framework.connector.Connector;
 import framework.connector.payloads.DmgTriggerPayload;
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 
@@ -15,7 +16,7 @@ public class S_Steadfast extends Skill {
 
     public S_Steadfast(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/steadfast.png";
+        this.iconPath = "entities/longsword/icons/steadfast.png";
         addSubscriptions();
         setToInitial();
     }
@@ -24,6 +25,7 @@ public class S_Steadfast extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.passive = true;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 

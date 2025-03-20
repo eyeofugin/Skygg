@@ -2,10 +2,7 @@ package game.entities.individuals.divinemage;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.Effect;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 
 import java.util.List;
 
@@ -13,7 +10,7 @@ public class S_HealingGleam extends Skill {
 
     public S_HealingGleam(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/healinggleam.png";
+        this.iconPath = "entities/divinemage/icons/healinggleam.png";
         addSubscriptions();
         setToInitial();
     }
@@ -27,6 +24,7 @@ public class S_HealingGleam extends Skill {
         this.distance = 2;
         this.faithCost = 12;
         this.ultimate = true;
+        this.abilityType = AbilityType.ULT;
     }
 
     @Override

@@ -2,11 +2,7 @@ package game.entities.individuals.eldritchguy;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Blight;
 import game.skills.changeeffects.effects.Combo;
 
@@ -16,7 +12,7 @@ public class S_UnleashEmptiness extends Skill {
 
     public S_UnleashEmptiness(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/unleashemptiness.png";
+        this.iconPath = "entities/eldritchguy/icons/unleashemptiness.png";
         addSubscriptions();
         setToInitial();
     }
@@ -29,6 +25,7 @@ public class S_UnleashEmptiness extends Skill {
         this.manaCost = 5;
         this.lifeCost = 5;
         this.ultimate = true;
+        this.abilityType = AbilityType.ULT;
     }
 
 

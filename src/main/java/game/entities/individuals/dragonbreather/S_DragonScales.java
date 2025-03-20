@@ -5,6 +5,7 @@ import framework.connector.Connector;
 import framework.connector.payloads.DmgChangesPayload;
 import framework.connector.payloads.EndOfRoundPayload;
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Effect;
 import game.skills.Skill;
 import game.skills.changeeffects.globals.Heat;
@@ -16,7 +17,7 @@ public class S_DragonScales extends Skill {
 
     public S_DragonScales(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/blazingskin.png";
+        this.iconPath = "entities/dragonbreather/icons/blazingskin.png";
         addSubscriptions();
         setToInitial();
     }
@@ -25,6 +26,7 @@ public class S_DragonScales extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.passive = true;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override

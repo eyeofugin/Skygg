@@ -2,11 +2,7 @@ package game.entities.individuals.firedancer;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Burning;
 import game.skills.changeeffects.effects.Combo;
 import utils.MyMaths;
@@ -17,7 +13,7 @@ public class S_SingingBlades extends Skill {
 
     public S_SingingBlades(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/singingblades.png";
+        this.iconPath = "entities/firedancer/icons/singingblades.png";
         addSubscriptions();
         setToInitial();
     }
@@ -31,8 +27,8 @@ public class S_SingingBlades extends Skill {
         this.targetType = TargetType.SINGLE;
         this.distance = 2;
         this.dmg = 10;
-        this.damageType = DamageType.NORMAL;
         this.damageMode = DamageMode.PHYSICAL;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 

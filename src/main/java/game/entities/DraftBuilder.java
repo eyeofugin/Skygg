@@ -4,11 +4,13 @@ import framework.states.Arena;
 import game.entities.individuals.angelguy.H_AngelGuy;
 import game.entities.individuals.battleaxe.H_BattleAxe;
 import game.entities.individuals.burner.H_Burner;
+import game.entities.individuals.cryobrawler.H_CryoBrawler;
 import game.entities.individuals.darkmage.H_DarkMage;
 import game.entities.individuals.divinemage.H_DivineMage;
 import game.entities.individuals.dragonbreather.H_DragonBreather;
 import game.entities.individuals.dualpistol.H_DualPistol;
 import game.entities.individuals.duelist.H_Duelist;
+import game.entities.individuals.eldritchguy.H_EldritchGuy;
 import game.entities.individuals.firedancer.H_FireDancer;
 import game.entities.individuals.longsword.H_Longsword;
 import game.entities.individuals.paladin.H_Paladin;
@@ -17,8 +19,8 @@ import game.entities.individuals.rifle.H_Rifle;
 import game.entities.individuals.sniper.H_Sniper;
 import game.entities.individuals.thehealer.H_TheHealer;
 import game.entities.individuals.thewizard.H_TheWizard;
-import game.objects.equipments.SimpleBow;
-import game.objects.equipments.SimpleDagger;
+import game.objects.Equipment;
+import game.objects.equipments.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,46 @@ import java.util.Random;
 
 public class DraftBuilder {
 
+    public static List<Class<? extends Equipment>> getAllItems() {
+        return new ArrayList<>(List.of(
+                ArcaneCloak.class,
+                BastardSword.class,
+                BlueOrb.class,
+                ButchersCleaver.class,
+                DefensiveAura.class,
+                FlamingChestplate.class,
+                FlamingSword.class,
+                GraftedExoskeleton.class,
+                JewelOfLife.class,
+                PocketDarkness.class,
+                RedOrb.class,
+                SceptedOfTheGods.class,
+                ShiningArmor.class,
+                SnipersTunika.class,
+                WingedBoots.class,
+                WinterOrb.class));
+    }
+    public static List<Class<? extends Hero>> getAllHeroes() {
+        return new ArrayList<>(List.of(
+                H_AngelGuy.class,
+                H_BattleAxe.class,
+                H_Burner.class,
+                H_CryoBrawler.class,
+                H_DarkMage.class,
+                H_DivineMage.class,
+                H_DragonBreather.class,
+                H_DualPistol.class,
+                H_Duelist.class,
+                H_EldritchGuy.class,
+                H_FireDancer.class,
+                H_Longsword.class,
+                H_Paladin.class,
+                H_Phoenixguy.class,
+                H_Rifle.class,
+                H_Sniper.class,
+                H_TheHealer.class,
+                H_TheWizard.class));
+    }
     public static Hero getRandomBackLiner(List<Hero> exclusions) {
         return getHeroFromClassList(new ArrayList<>(List.of(
                 H_Burner.class,

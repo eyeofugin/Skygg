@@ -4,6 +4,7 @@ import framework.connector.Connection;
 import framework.connector.Connector;
 import framework.connector.payloads.DeathTriggerPayload;
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public class S_Deathpact extends Skill {
 
     public S_Deathpact(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/deathpact.png";
+        this.iconPath = "entities/darkmage/icons/deathpact.png";
         addSubscriptions();
         setToInitial();
     }
@@ -22,6 +23,7 @@ public class S_Deathpact extends Skill {
         this.tags = List.of(SkillTag.DMG);
         this.passive = true;
         this.ultimate = true;
+        this.abilityType = AbilityType.ULT;
     }
 
 

@@ -27,7 +27,7 @@ public class MyMaths {
         for (int att = 5; att <= 20; att+=3) {
             System.out.print(att + "\t\t");
             for (int def = 3; def <= 21; def+=3) {
-                System.out.print(getDamage(att,def,def, 0, false)+"\t");
+                System.out.print(getDamage(att,def, 0, false)+"\t");
             }
             System.out.println();
         }
@@ -37,7 +37,7 @@ public class MyMaths {
         for (int att = 10; att <= 40; att+=5) {
             System.out.print(att + "\t\t");
             for (int def = 10; def <= 40; def+=5) {
-                System.out.print(getDamage(att,def,def, 0, false)+"\t");
+                System.out.print(getDamage(att,def, 0, false)+"\t");
             }
             System.out.println();
         }
@@ -54,17 +54,16 @@ public class MyMaths {
 //        }
 
     }
-    public static int getDamage(int att, int def, int armor, int lethal) {
-        return getDamage(att, def, armor, lethal, true);
+    public static int getDamage(int att, int def, int lethal) {
+        return getDamage(att, def, lethal, true);
     }
-    public static int getDamage(int att, int def, int armor, int lethal, boolean rdmize) {
-        int armorAfterLethality = armor - (armor*lethal/100);
-        int mixedDef = (3*def + 7*armorAfterLethality) / 10;
+    public static int getDamage(int att, int def, int lethal, boolean rdmize) {
+        int defense = def - (def*lethal/100);
         if (rdmize) {
             att = rdmize(att);
-            mixedDef = rdmize(mixedDef);
+            defense = rdmize(defense);
         }
-        return (int) (att * (dmgEqualizer / (dmgEqualizer + (double) mixedDef)));
+        return (int) (att * (dmgEqualizer / (dmgEqualizer + (double) defense)));
     }
 
     static private int rdmize(int a) {

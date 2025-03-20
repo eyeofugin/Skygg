@@ -2,11 +2,7 @@ package game.entities.individuals.phoenixguy;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Burning;
 import game.skills.changeeffects.effects.Combo;
 
@@ -16,7 +12,7 @@ public class S_Hotwings extends Skill {
 
     public S_Hotwings(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/hotwings.png";
+        this.iconPath = "entities/phoenixguy/icons/hotwings.png";
         setToInitial();
     }
 
@@ -29,10 +25,10 @@ public class S_Hotwings extends Skill {
         this.effects = List.of(new Burning(1));
         this.distance = 2;
         this.dmg = 4;
-        this.damageType =  DamageType.HEAT;
         this.damageMode = DamageMode.MAGICAL;
         this.primary = true;
         this.faithGain = true;
+        this.abilityType = AbilityType.PRIMARY;
     }
 
     @Override

@@ -5,6 +5,7 @@ import framework.connector.Connector;
 import framework.connector.payloads.StartOfMatchPayload;
 import framework.connector.payloads.StartOfTurnPayload;
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -15,7 +16,7 @@ public class S_HoliestShield extends Skill {
 
     public S_HoliestShield(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/holiestshield.png";
+        this.iconPath = "entities/paladin/icons/holiestshield.png";
         addSubscriptions();
         setToInitial();
         this.hero.shield(this.hero.getStat(Stat.LIFE) * 10 / 100, this.hero);
@@ -28,6 +29,7 @@ public class S_HoliestShield extends Skill {
         this.faithCost = 6;
         this.targetType = TargetType.SELF;
         this.tags = List.of(SkillTag.BUFF);
+        this.abilityType = AbilityType.ULT;
     }
 
 

@@ -84,7 +84,7 @@ public class ItemField extends GUIElement {
                     GUIElement.addBorder(EQUIPMENT_SIZE, EQUIPMENT_SIZE, pixels, Color.WHITE);
                 }
                 GUIElement.staticFillSize(1, 1, Property.EQUIPMENT_ICON_SIZE, Property.EQUIPMENT_ICON_SIZE,
-                        EQUIPMENT_SIZE, pixels, SpriteLibrary.getSprite(equipment.getClass().getName()));
+                        EQUIPMENT_SIZE, pixels, equipment.getIcon());
                 GUIElement equipmentElement = new GUIElement();
                 equipmentElement.setSize(EQUIPMENT_SIZE, EQUIPMENT_SIZE);
                 equipmentElement.setPosition(ICON_X_POSITIONS[i], ICONS_Y);

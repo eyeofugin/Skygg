@@ -5,11 +5,7 @@ import framework.connector.Connector;
 import framework.connector.payloads.CastChangePayload;
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Combo;
 import game.skills.changeeffects.statusinflictions.Dazed;
 
@@ -19,7 +15,7 @@ public class S_SwirlingBlades extends Skill {
 
     public S_SwirlingBlades(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/swirlingblades.png";
+        this.iconPath = "entities/duelist/icons/swirlingblades.png";
         addSubscriptions();
         setToInitial();
     }
@@ -33,10 +29,10 @@ public class S_SwirlingBlades extends Skill {
         this.distance = 2;
         this.dmg = 2;
         this.cdMax = 2;
-        this.damageType = DamageType.NORMAL;
         this.damageMode = DamageMode.PHYSICAL;
         this.comboEnabled = true;
         this.countAsHits = 3;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override

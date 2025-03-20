@@ -8,11 +8,6 @@
     "LIFE" : 54,
     "CURRENT_LIFE" : 54,
     "LIFE_REGAIN" : 5,
-    "HALO" : 4,
-    "NORMAL_DEF": 13,
-    "HEAT_DEF": 17,
-    "FROST_DEF": 11,
-    "LIGHT_DEF": 19,
-    "DARK_DEF": 9
+    "HALO" : 4
   }
 }

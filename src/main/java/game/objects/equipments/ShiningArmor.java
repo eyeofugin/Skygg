@@ -10,7 +10,7 @@ public class ShiningArmor extends Equipment {
 
     public ShiningArmor() {
         super("shiningarmor", "Shining Armor");
-        this.statBonus = this.loadStatBonus();
+        this.statBonus = this.loadBaseStatBonus();
     }
 
     @Override

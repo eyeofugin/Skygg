@@ -2,10 +2,9 @@ package game.entities.individuals.cryobrawler;
 
 import framework.connector.Connection;
 import framework.connector.Connector;
-import framework.connector.payloads.DmgTriggerPayload;
 import framework.connector.payloads.OnPerformPayload;
 import game.entities.Hero;
-import game.skills.DamageType;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 
@@ -14,7 +13,7 @@ public class S_BlueLife extends Skill {
 
     public S_BlueLife(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/bluelife.png";
+        this.iconPath = "entities/cryobrawler/icons/bluelife.png";
         addSubscriptions();
         setToInitial();
     }
@@ -23,6 +22,7 @@ public class S_BlueLife extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.passive = true;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 

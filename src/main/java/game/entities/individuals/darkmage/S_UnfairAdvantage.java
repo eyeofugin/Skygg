@@ -1,6 +1,7 @@
 package game.entities.individuals.darkmage;
 
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -13,7 +14,7 @@ public class S_UnfairAdvantage extends Skill {
 
     public S_UnfairAdvantage(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/unfairadvantage.png";
+        this.iconPath = "entities/darkmage/icons/unfairadvantage.png";
         addSubscriptions();
         setToInitial();
     }
@@ -25,6 +26,7 @@ public class S_UnfairAdvantage extends Skill {
         this.targetType = TargetType.SINGLE_ALLY;
         this.distance = 2;
         this.manaCost = 3;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 

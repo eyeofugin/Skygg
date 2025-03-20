@@ -5,6 +5,7 @@ import framework.connector.Connector;
 import framework.connector.payloads.EndOfRoundPayload;
 import framework.connector.payloads.GlobalEffectChangePayload;
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -19,7 +20,7 @@ public class S_ColdWinds extends Skill {
 
     public S_ColdWinds(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/coldwinds.png";
+        this.iconPath = "entities/cryobrawler/icons/coldwinds.png";
         addSubscriptions();
         setToInitial();
     }
@@ -30,6 +31,7 @@ public class S_ColdWinds extends Skill {
         this.tags = List.of(SkillTag.SETUP);
         this.targetType = TargetType.ARENA;
         this.manaCost = 4;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 

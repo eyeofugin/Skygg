@@ -1,6 +1,5 @@
 {
   "LIFE" : 5,
-  "STAMINA": 18,
-  "ENDURANCE": 4,
-  "FROST_DEF": 15
+  "STAMINA": 12,
+  "ENDURANCE": 4
 }

@@ -186,6 +186,7 @@ public class TextEditor {
         symbols.put(Stat.EVASION.getIconKey(), Symbol.evasion);
         symbols.put(Stat.LETHALITY.getIconKey(), Symbol.lethality);
         symbols.put(Stat.ACCURACY.getIconKey(), Symbol.accuracy);
+        symbols.put("BRL", new LineBreak());
 
         return symbols;
     }
@@ -708,7 +709,12 @@ public class TextEditor {
         for(int i = index+1; i < index+4; i++) {
             specialSymbolCode.append(textArray[i]);
         }
-        return symbolMap.get(specialSymbolCode.toString()).copy();
+        Symbol original = symbolMap.get(specialSymbolCode.toString());
+        if (original == null) {
+            System.out.println(specialSymbolCode);
+            return null;
+        }
+        return original.copy();
     }
     private Color getColor(int index, char[] textArray, Color fontColor) {
         StringBuilder codeBuilder = new StringBuilder();
@@ -801,7 +807,7 @@ public class TextEditor {
 
     private static String[] splitRows(String text, int width, int fontSize) {
         int stringWidth = getStringWidth(text, fontSize);
-        boolean hasLineBreaks = text.contains("[br]");
+        boolean hasLineBreaks = text.contains("[br][br]");
         if (stringWidth > width || hasLineBreaks) {
             return splitAt(width, text, fontSize);
         } else {

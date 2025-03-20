@@ -1,10 +1,7 @@
 package game.entities.individuals.divinemage;
 
 import game.entities.Hero;
-import game.skills.Resource;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,7 +10,7 @@ public class S_Praise extends Skill {
 
     public S_Praise(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/praise.png";
+        this.iconPath = "entities/divinemage/icons/praise.png";
         addSubscriptions();
         setToInitial();
     }
@@ -25,6 +22,7 @@ public class S_Praise extends Skill {
         this.primary = true;
         this.targetResources = List.of(new Resource(Stat.CURRENT_FAITH, Stat.FAITH, 1));
         this.faithGain = true;
+        this.abilityType = AbilityType.PRIMARY;
     }
 
     @Override

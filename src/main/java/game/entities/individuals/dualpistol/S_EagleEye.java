@@ -6,12 +6,7 @@ import framework.connector.payloads.CriticalTriggerPayload;
 import framework.connector.payloads.GlobalEffectChangePayload;
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Effect;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Combo;
 import game.skills.changeeffects.effects.Lucky;
 import game.skills.changeeffects.globals.Heat;
@@ -22,7 +17,7 @@ public class S_EagleEye extends Skill {
 
     public S_EagleEye(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/eagleeye.png";
+        this.iconPath = "entities/dualpistol/icons/eagleeye.png";
         addSubscriptions();
         setToInitial();
     }
@@ -34,6 +29,7 @@ public class S_EagleEye extends Skill {
         this.targetType = TargetType.SELF;
         this.effects = List.of(new Lucky(3));
         this.cdMax = 5;
+        this.abilityType = AbilityType.ULT;
     }
 
     @Override

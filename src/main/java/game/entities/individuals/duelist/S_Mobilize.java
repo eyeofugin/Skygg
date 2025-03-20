@@ -1,6 +1,7 @@
 package game.entities.individuals.duelist;
 
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -12,7 +13,7 @@ public class S_Mobilize extends Skill {
 
     public S_Mobilize(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/mobilize.png";
+        this.iconPath = "entities/duelist/icons/mobilize.png";
         addSubscriptions();
         setToInitial();
     }
@@ -23,6 +24,7 @@ public class S_Mobilize extends Skill {
         this.tags = List.of(SkillTag.MOVE);
         this.targetType = TargetType.SINGLE_ALLY;
         this.distance = 1;
+        this.abilityType = AbilityType.TACTICAL;
         this.cdMax = 3;
     }
 

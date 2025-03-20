@@ -2,6 +2,7 @@ package game.entities.individuals.darkmage;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -12,7 +13,7 @@ public class S_LifeForceSharing extends Skill {
 
     public S_LifeForceSharing(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/lifeforcesharing.png";
+        this.iconPath = "entities/darkmage/icons/lifeforcesharing.png";
         addSubscriptions();
         setToInitial();
     }
@@ -25,6 +26,7 @@ public class S_LifeForceSharing extends Skill {
         this.targetType = TargetType.SINGLE_ALLY;
         this.distance = 2;
         this.lifeCost = 4;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 

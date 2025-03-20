@@ -1,6 +1,7 @@
 package game.entities.individuals.longsword;
 
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.TargetType;
 import game.skills.changeeffects.statusinflictions.Taunted;
@@ -11,7 +12,7 @@ public class S_Taunt extends Skill {
 
     public S_Taunt(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/taunt.png";
+        this.iconPath = "entities/longsword/icons/taunt.png";
         addSubscriptions();
         setToInitial();
     }
@@ -23,6 +24,7 @@ public class S_Taunt extends Skill {
         this.distance = 2;
         this.cdMax = 5;
         this.effects = List.of(new Taunted(2));
+        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override

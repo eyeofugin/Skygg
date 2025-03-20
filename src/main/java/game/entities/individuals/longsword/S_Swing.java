@@ -2,11 +2,7 @@ package game.entities.individuals.longsword;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.statusinflictions.Bleeding;
 import game.skills.changeeffects.statusinflictions.Injured;
 import utils.MyMaths;
@@ -17,7 +13,7 @@ public class S_Swing extends Skill {
 
     public S_Swing(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/swing.png";
+        this.iconPath = "entities/longsword/icons/swing.png";
         addSubscriptions();
         setToInitial();
     }
@@ -27,12 +23,12 @@ public class S_Swing extends Skill {
         super.setToInitial();
         this.targetType = TargetType.SINGLE;
         this.distance = 1;
-        this.damageType = DamageType.NORMAL;
         this.damageMode = DamageMode.PHYSICAL;
         this.dmg = 3;
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.25));
         this.effects = List.of(new Injured(1));
         this.primary = true;
+        this.abilityType = AbilityType.PRIMARY;
     }
 
 

@@ -2,11 +2,7 @@ package game.entities.individuals.battleaxe;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 
 import java.util.List;
 
@@ -14,7 +10,7 @@ public class S_Kick extends Skill {
 
     public S_Kick(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/kick.png";
+        this.iconPath = "entities/battleaxe/icons/kick.png";
         addSubscriptions();
         setToInitial();
 
@@ -29,8 +25,8 @@ public class S_Kick extends Skill {
         this.distance = 1;
         this.dmg = 3;
         this.cdMax = 4;
-        this.damageType = DamageType.NORMAL;
         this.damageMode = DamageMode.PHYSICAL;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override

@@ -1,19 +1,8 @@
 package game.entities.individuals.battleaxe;
 
-import framework.connector.Connection;
-import framework.connector.Connector;
-import framework.connector.payloads.BaseDmgChangesPayload;
-import framework.connector.payloads.DmgChangesPayload;
 import game.entities.Hero;
-import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
-import game.skills.changeeffects.effects.Combo;
+import game.skills.*;
 import game.skills.changeeffects.statusinflictions.Bleeding;
-import game.skills.changeeffects.statusinflictions.Injured;
 
 import java.util.List;
 
@@ -21,7 +10,7 @@ public class S_WideSwing extends Skill {
 
     public S_WideSwing(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/wideswing.png";
+        this.iconPath = "entities/battleaxe/icons/wideswing.png";
         addSubscriptions();
         setToInitial();
 
@@ -33,10 +22,10 @@ public class S_WideSwing extends Skill {
         this.tags = List.of(SkillTag.DMG);
         this.targetType = TargetType.LINE;
         this.distance = 2;
-        this.damageType = DamageType.NORMAL;
         this.damageMode = DamageMode.PHYSICAL;
         this.ultimate = true;
         this.cdMax = 2;
+        this.abilityType = AbilityType.ULT;
     }
 
     @Override

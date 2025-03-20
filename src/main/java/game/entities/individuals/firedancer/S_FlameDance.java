@@ -1,6 +1,7 @@
 package game.entities.individuals.firedancer;
 
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -12,7 +13,7 @@ public class S_FlameDance extends Skill {
 
     public S_FlameDance(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/flamedance.png";
+        this.iconPath = "entities/firedancer/icons/flamedance.png";
         addSubscriptions();
         setToInitial();
     }
@@ -25,6 +26,7 @@ public class S_FlameDance extends Skill {
         this.distance = 1;
         this.faithCost = 2;
         this.actionCost = 0;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 

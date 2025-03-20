@@ -9,11 +9,6 @@
     "CURRENT_LIFE" : 63,
     "LIFE_REGAIN" : 2,
     "MANA" : 15,
-    "MANA_REGAIN": 2,
-    "NORMAL_DEF": 14,
-    "HEAT_DEF": 10,
-    "FROST_DEF": 17,
-    "LIGHT_DEF": 20,
-    "DARK_DEF": 20
+    "MANA_REGAIN": 2
   }
 }

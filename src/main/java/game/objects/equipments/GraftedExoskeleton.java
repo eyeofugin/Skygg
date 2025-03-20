@@ -6,17 +6,18 @@ import game.skills.Stat;
 
 import java.util.List;
 
+//TODO: DT Changes
 public class GraftedExoskeleton extends Equipment {
 
     public GraftedExoskeleton() {
         super("graftedexoskeleton", "Grafted Exoskeleton");
-        this.statBonus = this.loadStatBonus();
-        this.adaptiveStats = List.of(Stat.NORMAL_DEF, Stat.LIGHT_DEF, Stat.DARK_DEF, Stat.HEAT_DEF, Stat.FROST_DEF);
+        this.statBonus = this.loadBaseStatBonus();
+        this.adaptiveStats = List.of();
         this.skill = new S_GraftedExoskeleton(this);
     }
 
     @Override
     public String getDescription() {
-        return "+2 Adaptive stat on each def. +15 Life.[br]Active: Remove all debuffs. Cooldown 4.";
+        return "+2 Adaptive stat on each def. +15 Life. [BRL]Active: Remove all debuffs. Cooldown 4.";
     }
 }

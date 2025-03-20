@@ -1,6 +1,7 @@
 package game.entities.individuals.thewizard;
 
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.TargetType;
 
@@ -10,7 +11,7 @@ public class S_AetherStep extends Skill {
 
     public S_AetherStep(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/aetherstep.png";
+        this.iconPath = "entities/thewizard/icons/aetherstep.png";
         addSubscriptions();
         setToInitial();
     }
@@ -23,6 +24,7 @@ public class S_AetherStep extends Skill {
         this.distance = 1;
         this.manaCost = 5;
         this.actionCost = 0;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 

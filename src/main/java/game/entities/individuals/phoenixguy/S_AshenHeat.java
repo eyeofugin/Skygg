@@ -5,6 +5,7 @@ import framework.connector.Connector;
 import framework.connector.payloads.DmgTriggerPayload;
 import framework.connector.payloads.GlobalEffectChangePayload;
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -17,7 +18,7 @@ public class S_AshenHeat extends Skill {
 
     public S_AshenHeat(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/ashenheat.png";
+        this.iconPath = "entities/phoenixguy/icons/ashenheat.png";
         addSubscriptions();
         setToInitial();
     }
@@ -28,6 +29,7 @@ public class S_AshenHeat extends Skill {
         this.tags = List.of(SkillTag.SETUP);
         this.targetType = TargetType.ARENA;
         this.faithCost = 4;
+        this.abilityType = AbilityType.TACTICAL;
 
     }
 

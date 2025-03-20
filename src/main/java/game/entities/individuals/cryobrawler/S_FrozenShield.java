@@ -5,11 +5,7 @@ import framework.connector.Connector;
 import framework.connector.payloads.DmgTriggerPayload;
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 
 import java.util.List;
 
@@ -17,7 +13,7 @@ public class S_FrozenShield extends Skill {
 
     public S_FrozenShield(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/frozenshield.png";
+        this.iconPath = "entities/cryobrawler/icons/frostshield.png";
         addSubscriptions();
         setToInitial();
     }
@@ -28,6 +24,7 @@ public class S_FrozenShield extends Skill {
         this.tags = List.of(SkillTag.DMG);
         this.targetType = TargetType.SELF;
         this.manaCost = 6;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 

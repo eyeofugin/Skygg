@@ -2,11 +2,7 @@ package game.entities.individuals.duelist;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Combo;
 import game.skills.changeeffects.effects.SwiftStrikeCounter;
 import game.skills.changeeffects.statusinflictions.Injured;
@@ -17,7 +13,7 @@ public class S_Slash extends Skill {
 
     public S_Slash(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/slash.png";
+        this.iconPath = "entities/duelist/icons/slash.png";
         addSubscriptions();
         setToInitial();
     }
@@ -30,9 +26,9 @@ public class S_Slash extends Skill {
         this.targetType = TargetType.SINGLE;
         this.distance = 2;
         this.dmg = 7;
-        this.damageType = DamageType.NORMAL;
         this.damageMode = DamageMode.PHYSICAL;
         this.primary = true;
+        this.abilityType = AbilityType.PRIMARY;
     }
 
 

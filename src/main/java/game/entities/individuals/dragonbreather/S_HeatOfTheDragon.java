@@ -6,6 +6,7 @@ import framework.connector.payloads.CastChangePayload;
 import framework.connector.payloads.GlobalEffectChangePayload;
 import framework.states.Arena;
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -20,7 +21,7 @@ public class S_HeatOfTheDragon extends Skill {
 
     public S_HeatOfTheDragon(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/heat.png";
+        this.iconPath = "entities/dragonbreather/icons/heat.png";
         addSubscriptions();
         setToInitial();
     }
@@ -31,6 +32,7 @@ public class S_HeatOfTheDragon extends Skill {
         this.tags = List.of(SkillTag.SETUP);
         this.targetType = TargetType.ARENA;
         this.manaCost = 6;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override

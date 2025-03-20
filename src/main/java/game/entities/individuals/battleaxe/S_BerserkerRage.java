@@ -1,6 +1,7 @@
 package game.entities.individuals.battleaxe;
 
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -14,7 +15,7 @@ public class S_BerserkerRage extends Skill {
 
     public S_BerserkerRage(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/berserkerrage.png";
+        this.iconPath = "entities/battleaxe/icons/berserkerrage.png";
         addSubscriptions();
         setToInitial();
     }
@@ -27,6 +28,7 @@ public class S_BerserkerRage extends Skill {
         this.lifeCost = 15;
         this.cdMax = 3;
         this.comboEnabled = true;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override

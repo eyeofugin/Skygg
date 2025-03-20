@@ -5,11 +5,7 @@ import framework.connector.Connector;
 import framework.connector.payloads.DmgTriggerPayload;
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Frost;
 
 import java.util.List;
@@ -18,7 +14,7 @@ public class S_Avalanche extends Skill {
 
     public S_Avalanche(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/avalanche.png";
+        this.iconPath = "entities/cryobrawler/icons/avalanche.png";
         addSubscriptions();
         setToInitial();
     }
@@ -31,10 +27,10 @@ public class S_Avalanche extends Skill {
         this.targetType = TargetType.ALL_ENEMY;
         this.dmg = 10;
         this.effects = List.of(new Frost(1));
-        this.damageType = DamageType.FROST;
         this.damageMode = DamageMode.MAGICAL;
         this.manaCost = 6;
         this.ultimate = true;
+        this.abilityType = AbilityType.ULT;
     }
 
 

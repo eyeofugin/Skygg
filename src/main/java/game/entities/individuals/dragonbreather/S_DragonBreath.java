@@ -2,11 +2,7 @@ package game.entities.individuals.dragonbreather;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Burning;
 import utils.MyMaths;
 
@@ -17,7 +13,7 @@ public class S_DragonBreath extends Skill {
 
     public S_DragonBreath(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/dragonbreath.png";
+        this.iconPath = "entities/dragonbreather/icons/dragonbreath.png";
         addSubscriptions();
         setToInitial();
     }
@@ -31,9 +27,9 @@ public class S_DragonBreath extends Skill {
         this.targetType = TargetType.LINE;
         this.distance = 2;
         this.dmg = 8;
-        this.damageType = DamageType.HEAT;
         this.damageMode = DamageMode.MAGICAL;
         this.manaCost = 6;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 

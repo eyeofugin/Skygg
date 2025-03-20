@@ -10,12 +10,12 @@ public class DefensiveAura extends Equipment {
 
     public DefensiveAura() {
         super("defensiveaura", "Defensive Aura");
-        this.statBonus = this.loadStatBonus();
+        this.statBonus = this.loadBaseStatBonus();
     }
 
     @Override
     public String getDescription() {
-        return "+4 on each Defense Stat.[br]Reduce magical damage by 10%.";
+        return "+4 on each Defense Stat. Reduce magical damage by 10%.";
     }
 
     @Override

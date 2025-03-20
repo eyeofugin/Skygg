@@ -2,11 +2,7 @@ package game.entities.individuals.eldritchguy;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Blight;
 import game.skills.changeeffects.effects.Combo;
 
@@ -16,7 +12,7 @@ public class S_GraspOfTheAbyss extends Skill {
 
     public S_GraspOfTheAbyss(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/graspoftheabyss.png";
+        this.iconPath = "entities/eldritchguy/icons/graspoftheabyss.png";
         addSubscriptions();
         setToInitial();
     }
@@ -29,10 +25,10 @@ public class S_GraspOfTheAbyss extends Skill {
         this.targetType = TargetType.SINGLE;
         this.distance = 1;
         this.dmg = 8;
-        this.damageType = DamageType.TRUE;
         this.damageMode = DamageMode.PHYSICAL;
         this.comboEnabled = true;
         this.primary = true;
+        this.abilityType = AbilityType.PRIMARY;
     }
 
 

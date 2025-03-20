@@ -2,6 +2,7 @@ package game.entities.individuals.dualpistol;
 
 import com.sun.source.tree.Scope;
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -14,7 +15,7 @@ public class S_Roll extends Skill {
 
     public S_Roll(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/roll.png";
+        this.iconPath = "entities/dualpistol/icons/roll.png";
         addSubscriptions();
         setToInitial();
     }
@@ -26,6 +27,7 @@ public class S_Roll extends Skill {
         this.distance = 1;
         this.cdMax = 3;
         this.comboEnabled = true;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 

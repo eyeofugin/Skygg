@@ -1,6 +1,7 @@
 package game.entities.individuals.darkmage;
 
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -13,7 +14,7 @@ public class S_GiftOfTheLeech extends Skill {
 
     public S_GiftOfTheLeech(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/giftoftheleech.png";
+        this.iconPath = "entities/darkmage/icons/giftoftheleech.png";
         addSubscriptions();
         setToInitial();
     }
@@ -25,6 +26,7 @@ public class S_GiftOfTheLeech extends Skill {
         this.targetType = TargetType.SINGLE_ALLY;
         this.distance = 2;
         this.primary = true;
+        this.abilityType = AbilityType.PRIMARY;
     }
 
 

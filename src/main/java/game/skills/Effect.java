@@ -81,7 +81,7 @@ public abstract class Effect {
             turnLogic();
         }
     }
-    public int getDamageChanges(Hero caster, Hero target, Skill damagingSkill, int result, Stat damageType, boolean simulated) {
+    public int getDamageChanges(Hero caster, Hero target, Skill damagingSkill, int result, boolean simulated) {
         return result;
     }
 

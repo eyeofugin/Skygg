@@ -5,10 +5,7 @@ import framework.connector.Connector;
 import framework.connector.payloads.CriticalTriggerPayload;
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Combo;
 
 import java.util.List;
@@ -17,7 +14,7 @@ public class S_QuickShot extends Skill {
 
     public S_QuickShot(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/quickshot.png";
+        this.iconPath = "entities/dualpistol/icons/quickshot.png";
         addSubscriptions();
         setToInitial();
     }
@@ -29,8 +26,8 @@ public class S_QuickShot extends Skill {
         this.distance = 2;
         this.dmg = 2;
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.4));
-        this.damageType = DamageType.NORMAL;
         this.primary = true;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 

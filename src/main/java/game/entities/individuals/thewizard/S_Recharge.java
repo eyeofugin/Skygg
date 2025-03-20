@@ -1,6 +1,7 @@
 package game.entities.individuals.thewizard;
 
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -11,7 +12,7 @@ public class S_Recharge extends Skill {
 
     public S_Recharge(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/recharge.png";
+        this.iconPath = "entities/thewizard/icons/recharge.png";
         addSubscriptions();
         setToInitial();
     }
@@ -22,6 +23,7 @@ public class S_Recharge extends Skill {
         this.tags = List.of(SkillTag.RESTOCK);
         this.targetType = TargetType.SELF;
         this.manaCost = 0;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 

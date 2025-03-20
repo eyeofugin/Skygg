@@ -4,12 +4,13 @@ import framework.connector.Connection;
 import framework.connector.Connector;
 import framework.connector.payloads.DmgChangesPayload;
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 
 public class S_FocusedFire extends Skill {
     public S_FocusedFire(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/focusedfire.png";
+        this.iconPath = "entities/dualpistol/icons/focusedfire.png";
         addSubscriptions();
         setToInitial();
     }
@@ -18,6 +19,7 @@ public class S_FocusedFire extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.passive = true;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override

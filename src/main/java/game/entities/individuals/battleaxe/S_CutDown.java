@@ -5,11 +5,7 @@ import framework.connector.Connector;
 import framework.connector.payloads.DmgChangesPayload;
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.globals.Heat;
 import game.skills.changeeffects.statusinflictions.Bleeding;
 
@@ -19,7 +15,7 @@ public class S_CutDown extends Skill {
 
     public S_CutDown(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/cutdown.png";
+        this.iconPath = "entities/battleaxe/icons/cutdown.png";
         addSubscriptions();
         setToInitial();
     }
@@ -33,8 +29,8 @@ public class S_CutDown extends Skill {
         this.distance = 1;
         this.dmg = 9;
         this.damageMode = DamageMode.PHYSICAL;
-        this.damageType = DamageType.NORMAL;
         this.primary = true;
+        this.abilityType = AbilityType.PRIMARY;
     }
 
     @Override

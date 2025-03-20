@@ -1,6 +1,7 @@
 package game.entities.individuals.rifle;
 
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -12,7 +13,7 @@ public class S_FieldRations extends Skill {
 
     public S_FieldRations(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/fieldrations.png";
+        this.iconPath = "entities/rifle/icons/fieldrations.png";
         addSubscriptions();
         setToInitial();
     }
@@ -25,6 +26,7 @@ public class S_FieldRations extends Skill {
         this.distance = 1;
         this.cdMax = 3;
         this.comboEnabled = true;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 

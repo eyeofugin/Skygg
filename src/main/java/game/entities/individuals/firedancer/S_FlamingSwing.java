@@ -2,11 +2,7 @@ package game.entities.individuals.firedancer;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Burning;
 import game.skills.changeeffects.effects.Combo;
 import game.skills.changeeffects.statusinflictions.Bleeding;
@@ -17,7 +13,7 @@ public class S_FlamingSwing extends Skill {
 
     public S_FlamingSwing(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/flamingswing.png";
+        this.iconPath = "entities/firedancer/icons/flamingswing.png";
         addSubscriptions();
         setToInitial();
     }
@@ -30,11 +26,11 @@ public class S_FlamingSwing extends Skill {
         this.targetType = TargetType.SINGLE;
         this.distance = 2;
         this.dmg = 3;
-        this.damageType = DamageType.NORMAL;
         this.damageMode = DamageMode.PHYSICAL;
         this.comboEnabled = true;
         this.primary = true;
         this.faithGain = true;
+        this.abilityType = AbilityType.PRIMARY;
     }
 
 

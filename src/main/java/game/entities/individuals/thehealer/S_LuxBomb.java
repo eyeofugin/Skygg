@@ -2,11 +2,7 @@ package game.entities.individuals.thehealer;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 
 import java.util.List;
 
@@ -14,7 +10,7 @@ public class S_LuxBomb extends Skill {
 
     public S_LuxBomb(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/luxbomb.png";
+        this.iconPath = "entities/thehealer/icons/luxbomb.png";
         addSubscriptions();
         setToInitial();
     }
@@ -27,9 +23,9 @@ public class S_LuxBomb extends Skill {
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.1),
                 new Multiplier(Stat.MANA, 0.3));
         this.damageMode = DamageMode.MAGICAL;
-        this.damageType = DamageType.LIGHT;
         this.distance = 3;
         this.primary = true;
+        this.abilityType = AbilityType.PRIMARY;
     }
 
 

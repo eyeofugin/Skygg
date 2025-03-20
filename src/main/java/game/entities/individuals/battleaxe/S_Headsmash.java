@@ -2,11 +2,7 @@ package game.entities.individuals.battleaxe;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Combo;
 import game.skills.changeeffects.statusinflictions.Bleeding;
 import game.skills.changeeffects.statusinflictions.Dazed;
@@ -17,7 +13,7 @@ public class S_Headsmash extends Skill {
 
     public S_Headsmash(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/headsmash.png";
+        this.iconPath = "entities/battleaxe/icons/headsmash.png";
         addSubscriptions();
         setToInitial();
     }
@@ -32,8 +28,8 @@ public class S_Headsmash extends Skill {
         this.dmg = 1;
         this.cdMax = 2;
         this.damageMode = DamageMode.PHYSICAL;
-        this.damageType = DamageType.NORMAL;
         this.comboEnabled = true;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override

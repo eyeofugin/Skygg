@@ -1,11 +1,7 @@
 package game.entities.individuals.eldritchguy;
 
 import game.entities.Hero;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.statusinflictions.Dazed;
 
 import java.util.List;
@@ -14,7 +10,7 @@ public class S_HorrificGlare extends Skill {
 
     public S_HorrificGlare(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/horrificglare.png";
+        this.iconPath = "entities/eldritchguy/icons/horrificglare.png";
         addSubscriptions();
         setToInitial();
     }
@@ -27,6 +23,7 @@ public class S_HorrificGlare extends Skill {
         this.effects = List.of(new Dazed(1));
         this.distance = 3;
         this.manaCost = 3;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override

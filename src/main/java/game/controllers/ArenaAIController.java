@@ -120,27 +120,25 @@ public class ArenaAIController {
 //--------------------RATINGS-----------------------------
 
     private int getDamageRating(Skill cast, Hero[] targets) {
-        if (cast.getDamageType() != null) {
-            int weightedPercentages = 0;
-            int lethality = 0; // this.arena.activeHero.getStat(Stat.LETHALITY, cast);
-            for (Hero e : targets) {
-                int estimatedDamage = cast.getDmgWithMulti(e);
-                Logger.aiLog(" target:"+e.getName());
+        int weightedPercentages = 0;
+        int lethality = 0; // this.arena.activeHero.getStat(Stat.LETHALITY, cast);
+        for (Hero e : targets) {
+            int estimatedDamage = cast.getDmgWithMulti(e);
+            Logger.aiLog(" target:"+e.getName());
 
-                int dmgPercentage = e.simulateDamageInPercentages(this.arena.activeHero, estimatedDamage, cast.getDamageMode(), cast.getDamageType(), lethality, cast);
-                if (dmgPercentage >= e.getCurrentLifePercentage()) {
-                    Logger.aiLog(" low life bonus!");
-                    dmgPercentage *= 5;
-                }
-                int HeroWeightedPercentage = e.isTeam2()?-1*dmgPercentage:dmgPercentage;
-                Logger.aiLog(" weighted dmg percentage:"+HeroWeightedPercentage);
-                weightedPercentages += HeroWeightedPercentage;
+            int dmgPercentage = e.simulateDamageInPercentages(this.arena.activeHero, estimatedDamage, cast.getDamageMode(), lethality, cast);
+            if (dmgPercentage >= e.getCurrentLifePercentage()) {
+                Logger.aiLog(" low life bonus!");
+                dmgPercentage *= 5;
             }
-            int damageRating = weightedPercentages / 10;
-            Logger.aiLog(" sum weighted dmg percentage:"+weightedPercentages);
-            Logger.aiLog(" dmgRating:"+damageRating);
-            return damageRating;
+            int HeroWeightedPercentage = e.isTeam2()?-1*dmgPercentage:dmgPercentage;
+            Logger.aiLog(" weighted dmg percentage:"+HeroWeightedPercentage);
+            weightedPercentages += HeroWeightedPercentage;
         }
+        int damageRating = weightedPercentages / 10;
+        Logger.aiLog(" sum weighted dmg percentage:"+weightedPercentages);
+        Logger.aiLog(" dmgRating:"+damageRating);
+        return damageRating;
         return 0;
     }
     private int getHealRating(Skill cast, Hero[] targets) {

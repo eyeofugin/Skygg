@@ -2,11 +2,7 @@ package game.entities.individuals.angelguy;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 
 import java.util.List;
 
@@ -14,7 +10,7 @@ public class S_Reengage extends Skill {
 
     public S_Reengage(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/reengage.png";
+        this.iconPath = "entities/angelguy/icons/reengage.png";
         setToInitial();
     }
 
@@ -26,9 +22,9 @@ public class S_Reengage extends Skill {
         this.targetType = TargetType.SINGLE_ALLY;
         this.distance = 1;
         this.dmg = 4;
-        this.damageType = DamageType.NORMAL;
         this.damageMode = DamageMode.PHYSICAL;
         this.cdMax = 4;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override
@@ -42,7 +38,7 @@ public class S_Reengage extends Skill {
         if (position == ownPosition) {
             Hero enemy = this.hero.arena.getAtPosition(enemyPosition);
             if (enemy!=null) {
-                enemy.damage(this.hero,dmg,this.damageMode, this.damageType,0,this);
+                enemy.damage(this.hero,dmg,this.damageMode, 0,this);
             }
         }
     }

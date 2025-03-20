@@ -13,7 +13,7 @@ public class S_HolyShield extends Skill {
 
     public S_HolyShield(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/holyshield.png";
+        this.iconPath = "entities/angelguy/icons/holyshield.png";
         setToInitial();
     }
 

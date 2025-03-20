@@ -2,11 +2,7 @@ package game.entities.individuals.thewizard;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Combo;
 import game.skills.changeeffects.statusinflictions.Injured;
 
@@ -16,7 +12,7 @@ public class S_HailMissile extends Skill {
 
     public S_HailMissile(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/hailmissile.png";
+        this.iconPath = "entities/thewizard/icons/hailmissile.png";
         addSubscriptions();
         setToInitial();
     }
@@ -27,13 +23,13 @@ public class S_HailMissile extends Skill {
         this.tags = List.of(SkillTag.DMG);
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.5));
         this.targetType = TargetType.SINGLE;
-        this.distance = 3;
+        this.distance = 2;
         this.dmg = 4;
-        this.damageType = DamageType.FROST;
         this.damageMode = DamageMode.MAGICAL;
         this.comboEnabled = true;
         this.canMiss = false;
         this.primary = true;
+        this.abilityType = AbilityType.PRIMARY;
     }
 
 

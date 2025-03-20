@@ -1,6 +1,7 @@
 package game.entities.individuals.phoenixguy;
 
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.Burning;
@@ -12,7 +13,7 @@ public class S_PhoenixFlames extends Skill {
 
     public S_PhoenixFlames(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/phoenixflames.png";
+        this.iconPath = "entities/phoenixguy/icons/phoenixflames.png";
         setToInitial();
     }
 
@@ -23,6 +24,7 @@ public class S_PhoenixFlames extends Skill {
         this.targetType = TargetType.SELF;
         this.effects = List.of(new Exalted(3));
         this.faithCost = 13;
+        this.abilityType = AbilityType.ULT;
     }
 
     @Override

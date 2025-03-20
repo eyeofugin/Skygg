@@ -12,12 +12,6 @@ public enum Stat {
     ENDURANCE("Endurance", "END", "{017}"),
     SPEED("Speed", "SPE", "{018}"),
 
-    NORMAL_DEF("Normal", "NOD", "{001}"),
-    HEAT_DEF("Heat", "HED", "{001}"),
-    FROST_DEF("Frost", "FRD", "{001}"),
-    DARK_DEF("Dark", "DAD", "{001}"),
-    LIGHT_DEF("Light", "LID", "{001}"),
-
     ACCURACY("Accuracy", "ACC", "{001}"),
     EVASION("Evasion", "EVA", "{001}"),
     CRIT_CHANCE("Crit Chance", "CRI", "{001}"),
@@ -51,7 +45,7 @@ public enum Stat {
 
     public static List<Stat> nonResourceStats = List.of(Stat.MAGIC,
             Stat.POWER, Stat.ENDURANCE, Stat.STAMINA, Stat.EVASION, Stat.CRIT_CHANCE,
-            Stat.ACCURACY, Stat.LETHALITY, Stat.SPEED, Stat.NORMAL_DEF, Stat.HEAT_DEF, Stat.FROST_DEF, Stat.DARK_DEF, Stat.LIGHT_DEF);
+            Stat.ACCURACY, Stat.LETHALITY, Stat.SPEED);
 
     Stat(String translationString, String iconKey, String colorKey) {
         this.translationString = translationString;

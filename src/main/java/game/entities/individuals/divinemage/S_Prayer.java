@@ -1,10 +1,7 @@
 package game.entities.individuals.divinemage;
 
 import game.entities.Hero;
-import game.skills.Resource;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 
 import java.util.List;
 import java.util.Map;
@@ -14,7 +11,7 @@ public class S_Prayer extends Skill {
 
     public S_Prayer(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/prayer.png";
+        this.iconPath = "entities/divinemage/icons/prayer.png";
         addSubscriptions();
         setToInitial();
     }
@@ -26,6 +23,7 @@ public class S_Prayer extends Skill {
         this.targetResources = List.of(new Resource(Stat.CURRENT_FAITH, Stat.FAITH, 3));
         this.primary = true;
         this.faithGain = true;
+        this.abilityType = AbilityType.PRIMARY;
     }
 
     @Override

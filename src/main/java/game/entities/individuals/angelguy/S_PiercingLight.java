@@ -2,11 +2,7 @@ package game.entities.individuals.angelguy;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 
 import java.util.List;
 
@@ -14,7 +10,7 @@ public class S_PiercingLight extends Skill {
 
     public S_PiercingLight(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/piercinglight.png";
+        this.iconPath = "entities/angelguy/icons/piercinglight.png";
         setToInitial();
     }
 
@@ -26,9 +22,9 @@ public class S_PiercingLight extends Skill {
         this.dmg = 13;
         this.distance = 1;
         this.cdMax = 2;
-        this.damageType = DamageType.LIGHT;
         this.damageMode = DamageMode.MAGICAL;
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.3));
+        this.abilityType = AbilityType.TACTICAL;
 
     }
 

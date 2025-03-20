@@ -1,6 +1,7 @@
 package game.entities.individuals.sniper;
 
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -13,7 +14,7 @@ public class S_FatalBrew extends Skill {
 
     public S_FatalBrew(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/fatalbrew.png";
+        this.iconPath = "entities/sniper/icons/fatalbrew.png";
         addSubscriptions();
         setToInitial();
     }
@@ -24,6 +25,7 @@ public class S_FatalBrew extends Skill {
         this.targetType = TargetType.SINGLE;
         this.distance = 3;
         this.ultimate = true;
+        this.abilityType = AbilityType.ULT;
     }
 
 

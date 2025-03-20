@@ -2,11 +2,7 @@ package game.entities.individuals.burner;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Burning;
 import utils.MyMaths;
 
@@ -16,7 +12,7 @@ public class S_Burn extends Skill {
 
     public S_Burn(Hero hero) {
         super(hero);
-        this.iconPath ="/icons/burn.png";
+        this.iconPath ="entities/burner/icons/burn.png";
         addSubscriptions();
         setToInitial();
 
@@ -30,6 +26,7 @@ public class S_Burn extends Skill {
         this.distance = 3;
         this.primary = true;
         this.faithGain = true;
+        this.abilityType = AbilityType.PRIMARY;
     }
 
 

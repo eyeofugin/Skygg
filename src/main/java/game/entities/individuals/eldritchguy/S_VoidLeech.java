@@ -2,11 +2,7 @@ package game.entities.individuals.eldritchguy;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Combo;
 import game.skills.changeeffects.statusinflictions.Injured;
 
@@ -16,7 +12,7 @@ public class S_VoidLeech extends Skill {
 
     public S_VoidLeech(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/voidleech.png";
+        this.iconPath = "entities/eldritchguy/icons/voidleech.png";
         addSubscriptions();
         setToInitial();
     }
@@ -27,11 +23,11 @@ public class S_VoidLeech extends Skill {
         this.tags = List.of(SkillTag.DMG);
         this.dmgMultipliers = List.of(new Multiplier(Stat.LIFE, 0.05));
         this.targetType = TargetType.SINGLE;
-        this.distance = 2;
+        this.distance = 1;
         this.dmg = 5;
-        this.damageType = DamageType.DARK;
         this.damageMode = DamageMode.PHYSICAL;
         this.primary = true;
+        this.abilityType = AbilityType.PRIMARY;
     }
 
 

@@ -1,6 +1,7 @@
 package game.entities.individuals.darkmage;
 
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -12,7 +13,7 @@ public class S_DarkSecrets extends Skill {
 
     public S_DarkSecrets(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/darksecrets.png";
+        this.iconPath = "entities/darkmage/icons/darksecrets.png";
         addSubscriptions();
         setToInitial();
     }
@@ -25,6 +26,7 @@ public class S_DarkSecrets extends Skill {
         this.effects = List.of(new DarkSecrets());
         this.distance = 2;
         this.manaCost = 4;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 

@@ -11,7 +11,7 @@ public class S_GraftedExoskeleton extends Skill {
     public S_GraftedExoskeleton(Equipment equipment) {
         super(null);
         this.equipment = equipment;
-        this.iconPath = "graftedexoskeleton";
+        this.iconPath = "icons/skills/graftedexoskeleton.png";
         setToInitial();
     }
 

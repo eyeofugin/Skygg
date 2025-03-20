@@ -6,7 +6,7 @@ public class SimpleBow extends Equipment {
 
     public SimpleBow() {
         super("simplebow", "Simple Bow");
-        this.statBonus = this.loadStatBonus();
+        this.statBonus = this.loadBaseStatBonus();
 
     }
 }

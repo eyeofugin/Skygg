@@ -1,6 +1,7 @@
 package game.entities.individuals.rifle;
 
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -10,7 +11,7 @@ public class S_Mobilize extends Skill {
 
     public S_Mobilize(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/mobilize.png";
+        this.iconPath = "entities/rifle/icons/mobilize.png";
         addSubscriptions();
         setToInitial();
     }
@@ -22,6 +23,7 @@ public class S_Mobilize extends Skill {
         this.distance = 1;
         this.cdMax = 2;
         this.comboEnabled = true;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 

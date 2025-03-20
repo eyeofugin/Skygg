@@ -5,6 +5,7 @@ import framework.connector.Connector;
 import framework.connector.payloads.DmgChangesPayload;
 import framework.connector.payloads.DmgTriggerPayload;
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -14,7 +15,7 @@ public class S_SupremeDefense extends Skill {
 
     public S_SupremeDefense(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/supremedefense.png";
+        this.iconPath = "entities/longsword/icons/supremedefense.png";
         addSubscriptions();
         setToInitial();
     }
@@ -25,6 +26,7 @@ public class S_SupremeDefense extends Skill {
         this.targetType = TargetType.SELF;
         this.cdMax = 6;
         this.ultimate = true;
+        this.abilityType = AbilityType.ULT;
     }
 
 

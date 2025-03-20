@@ -2,11 +2,7 @@ package game.entities.individuals.dragonbreather;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.AxeSwingCounter;
 import game.skills.changeeffects.effects.Burning;
 import game.skills.changeeffects.effects.Combo;
@@ -19,7 +15,7 @@ public class S_BlazingCleaver extends Skill {
 
     public S_BlazingCleaver(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/blazingcleaver.png";
+        this.iconPath = "entities/dragonbreather/icons/blazingcleaver.png";
         addSubscriptions();
         setToInitial();
     }
@@ -30,11 +26,11 @@ public class S_BlazingCleaver extends Skill {
         this.tags = List.of(SkillTag.DMG);
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.1), new Multiplier(Stat.MAGIC, 0.3));
         this.targetType = TargetType.SINGLE;
-        this.distance = 2;
+        this.distance = 1;
         this.dmg = 14;
-        this.damageType = DamageType.HEAT;
         this.damageMode = DamageMode.PHYSICAL;
         this.primary = true;
+        this.abilityType = AbilityType.PRIMARY;
     }
 
     @Override

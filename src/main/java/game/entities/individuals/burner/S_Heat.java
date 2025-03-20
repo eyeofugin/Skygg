@@ -6,6 +6,7 @@ import framework.connector.payloads.EndOfRoundPayload;
 import framework.connector.payloads.GlobalEffectChangePayload;
 import framework.states.Arena;
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -18,7 +19,7 @@ public class S_Heat extends Skill {
 
     public S_Heat(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/heat.png";
+        this.iconPath = "entities/burner/icons/heat.png";
         addSubscriptions();
         setToInitial();
     }
@@ -29,6 +30,7 @@ public class S_Heat extends Skill {
         this.tags = List.of(SkillTag.SETUP);
         this.targetType = TargetType.ARENA;
         this.faithCost = 5;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override

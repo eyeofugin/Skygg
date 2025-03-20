@@ -12,12 +12,12 @@ public class JewelOfLife extends Equipment {
     private boolean healAvailable = true;
     public JewelOfLife() {
         super("jeweloflife", "Jewel of Life");
-        this.statBonus = this.loadStatBonus();
+        this.statBonus = this.loadBaseStatBonus();
     }
 
     @Override
     public String getDescription() {
-        return "+30 Life, +50% Heal.[br]Once: When less than 50% Life, gain healboost 5.";
+        return "+30 Life, +50% Heal. Once: When less than 50% Life, gain healboost 5.";
     }
 
     @Override

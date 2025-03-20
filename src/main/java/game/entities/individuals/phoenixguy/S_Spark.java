@@ -2,11 +2,7 @@ package game.entities.individuals.phoenixguy;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Combo;
 
 import java.util.List;
@@ -15,7 +11,7 @@ public class S_Spark extends Skill {
 
     public S_Spark(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/spark.png";
+        this.iconPath = "entities/phoenixguy/icons/spark.png";
         setToInitial();
     }
 
@@ -25,13 +21,13 @@ public class S_Spark extends Skill {
         this.tags = List.of(SkillTag.DMG);
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.1));
         this.targetType = TargetType.SINGLE;
-        this.distance = 3;
+        this.distance = 2;
         this.dmg = 12;
-        this.damageType =  DamageType.HEAT;
         this.damageMode = DamageMode.MAGICAL;
         this.primary = true;
         this.faithGain = true;
         this.comboEnabled = true;
+        this.abilityType = AbilityType.PRIMARY;
     }
 
     @Override

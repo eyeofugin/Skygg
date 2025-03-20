@@ -1,6 +1,7 @@
 package game.entities.individuals.dualpistol;
 
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.Combo;
@@ -11,7 +12,7 @@ public class S_Outmaneuver extends Skill {
 
     public S_Outmaneuver(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/outmaneuver.png";
+        this.iconPath = "entities/dualpistol/icons/outmaneuver.png";
         addSubscriptions();
         setToInitial();
     }
@@ -23,6 +24,7 @@ public class S_Outmaneuver extends Skill {
         this.distance = 3;
         this.cdMax = 5;
         this.comboEnabled = true;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override

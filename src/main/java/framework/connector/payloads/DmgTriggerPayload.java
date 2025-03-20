@@ -3,7 +3,6 @@ package framework.connector.payloads;
 import framework.connector.ConnectionPayload;
 import game.entities.Hero;
 import game.skills.DamageMode;
-import game.skills.DamageType;
 import game.skills.Effect;
 import game.skills.Skill;
 
@@ -13,7 +12,6 @@ public class DmgTriggerPayload  extends ConnectionPayload {
     public int dmgDone;
     public Effect effect;
     public DamageMode damageMode;
-    public DamageType damageType;
 
     public DmgTriggerPayload setDmgDone(int dmgDone) {
         this.dmgDone = dmgDone;
@@ -35,10 +33,6 @@ public class DmgTriggerPayload  extends ConnectionPayload {
         return this;
     }
 
-    public DmgTriggerPayload setDamageType(DamageType damageType) {
-        this.damageType = damageType;
-        return this;
-    }
 
     public DmgTriggerPayload setDamageMode(DamageMode damageMode) {
         this.damageMode = damageMode;

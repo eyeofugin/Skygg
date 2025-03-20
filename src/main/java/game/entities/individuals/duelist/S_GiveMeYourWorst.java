@@ -4,6 +4,7 @@ import framework.connector.Connection;
 import framework.connector.Connector;
 import framework.connector.payloads.DmgTriggerPayload;
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.TargetType;
 import game.skills.changeeffects.statusinflictions.Taunted;
@@ -14,7 +15,7 @@ public class S_GiveMeYourWorst extends Skill {
 
     public S_GiveMeYourWorst(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/givemeyourworst.png";
+        this.iconPath = "entities/duelist/icons/givemeyourworst.png";
         addSubscriptions();
         setToInitial();
     }
@@ -25,6 +26,7 @@ public class S_GiveMeYourWorst extends Skill {
         this.distance = 3;
         this.cdMax = 3;
         this.effects = List.of(new Taunted(2));
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 

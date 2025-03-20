@@ -1,8 +1,6 @@
 package game.skills.changeeffects.effects;
 
-import game.skills.DamageType;
 import game.skills.Effect;
-import game.skills.Stat;
 
 public class Burning extends Effect {
 

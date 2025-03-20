@@ -1,6 +1,7 @@
 package game.entities.individuals.longsword;
 
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -13,7 +14,7 @@ public class S_Challenge extends Skill {
 
     public S_Challenge(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/challenge.png";
+        this.iconPath = "entities/longsword/icons/challenge.png";
         addSubscriptions();
         setToInitial();
     }
@@ -31,6 +32,7 @@ public class S_Challenge extends Skill {
         super.applySkillEffects(target);
         int targetPosition = target.getPosition();
         this.hero.arena.moveTo(this.hero, targetPosition);
+        this.abilityType = AbilityType.TACTICAL;
     }
     @Override
     public int getAIRating(Hero target) {

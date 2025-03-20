@@ -1,6 +1,7 @@
 package game.entities.individuals.longsword;
 
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.Combo;
@@ -12,7 +13,7 @@ public class S_Cover extends Skill {
 
     public S_Cover(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/cover.png";
+        this.iconPath = "entities/longsword/icons/cover.png";
         setToInitial();
     }
 
@@ -28,6 +29,7 @@ public class S_Cover extends Skill {
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
         target.addEffect(new Cover(3), this.hero);
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 

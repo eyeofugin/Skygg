@@ -2,11 +2,7 @@ package game.entities.individuals.battleaxe;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.statusinflictions.Bleeding;
 import utils.MyMaths;
 
@@ -17,7 +13,7 @@ public class S_BloodCleave extends Skill {
 
     public S_BloodCleave(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/awesomeaxe.png";
+        this.iconPath = "entities/battleaxe/icons/awesomeaxe.png";
         addSubscriptions();
         setToInitial();
     }
@@ -31,9 +27,9 @@ public class S_BloodCleave extends Skill {
         this.distance = 1;
         this.dmg = 10;
         this.damageMode = DamageMode.PHYSICAL;
-        this.damageType = DamageType.NORMAL;
         this.effects = List.of(new Bleeding(1));
         this.primary = true;
+        this.abilityType = AbilityType.PRIMARY;
     }
 
     @Override

@@ -2,11 +2,7 @@ package game.entities.individuals.angelguy;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Combo;
 import game.skills.changeeffects.effects.Cover;
 import game.skills.changeeffects.statusinflictions.Bleeding;
@@ -18,7 +14,7 @@ public class S_AngelicWings extends Skill {
 
     public S_AngelicWings(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/angelicwings.png";
+        this.iconPath = "entities/angelguy/icons/angelicwings.png";
         setToInitial();
     }
 
@@ -29,6 +25,7 @@ public class S_AngelicWings extends Skill {
         this.targetType = TargetType.SINGLE_ALLY;
         this.distance = 1;
         this.cdMax = 3;
+        this.abilityType = AbilityType.TACTICAL;
     }
     @Override
     public void applySkillEffects(Hero target) {

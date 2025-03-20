@@ -8,11 +8,6 @@
     "CRIT_CHANCE" : 5,
     "LIFE" : 50,
     "CURRENT_LIFE" : 50,
-    "LIFE_REGAIN" : 2,
-    "NORMAL_DEF": 10,
-    "HEAT_DEF": 10,
-    "FROST_DEF": 10,
-    "LIGHT_DEF": 10,
-    "DARK_DEF": 10
+    "LIFE_REGAIN" : 2
   }
 }

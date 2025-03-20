@@ -8,11 +8,7 @@ import framework.connector.payloads.OnPerformPayload;
 import framework.connector.payloads.StartOfTurnPayload;
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Combo;
 import game.skills.changeeffects.globals.Heat;
 import game.skills.changeeffects.statusinflictions.Dazed;
@@ -25,7 +21,7 @@ public class S_DuelistDance extends Skill {
     private boolean used = false;
     public S_DuelistDance(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/duelistdance.png";
+        this.iconPath = "entities/duelist/icons/duelistdance.png";
         addSubscriptions();
         setToInitial();
     }
@@ -37,6 +33,7 @@ public class S_DuelistDance extends Skill {
         this.active = false;
         this.used = false;
         this.ultimate = true;
+        this.abilityType = AbilityType.ULT;
     }
     @Override
     public void addSubscriptions() {

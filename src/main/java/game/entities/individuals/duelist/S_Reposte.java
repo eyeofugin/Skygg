@@ -2,11 +2,7 @@ package game.entities.individuals.duelist;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Combo;
 import game.skills.changeeffects.effects.Cover;
 import game.skills.changeeffects.statusinflictions.Injured;
@@ -17,7 +13,7 @@ public class S_Reposte extends Skill {
 
     public S_Reposte(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/reposte.png";
+        this.iconPath = "entities/duelist/icons/reposte.png";
         addSubscriptions();
         setToInitial();
     }
@@ -31,9 +27,9 @@ public class S_Reposte extends Skill {
         this.distance = 2;
         this.dmg = 8;
         this.casterEffects = List.of(new Cover(1));
-        this.damageType = DamageType.NORMAL;
         this.damageMode = DamageMode.PHYSICAL;
         this.primary = true;
+        this.abilityType = AbilityType.PRIMARY;
     }
 
 

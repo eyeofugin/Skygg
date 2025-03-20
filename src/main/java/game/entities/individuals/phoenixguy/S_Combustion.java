@@ -5,11 +5,7 @@ import framework.connector.Connector;
 import framework.connector.payloads.DmgChangesPayload;
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Burning;
 
 import java.util.List;
@@ -19,7 +15,7 @@ public class S_Combustion extends Skill {
 
     public S_Combustion(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/combustion.png";
+        this.iconPath = "entities/phoenixguy/icons/combustion.png";
         addSubscriptions();
         setToInitial();
     }
@@ -32,9 +28,9 @@ public class S_Combustion extends Skill {
         this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.2));
         this.distance = 2;
         this.dmg = 1;
-        this.damageType = DamageType.HEAT;
         this.damageMode = DamageMode.MAGICAL;
         this.faithCost = 4;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override

@@ -1,11 +1,7 @@
 package game.entities.individuals.darkmage;
 
 import game.entities.Hero;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Blight;
 
 import java.util.List;
@@ -14,7 +10,7 @@ public class S_Blight extends Skill {
 
     public S_Blight(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/blight.png";
+        this.iconPath = "entities/darkmage/icons/blight.png";
         addSubscriptions();
         setToInitial();
     }
@@ -25,9 +21,9 @@ public class S_Blight extends Skill {
         this.tags = List.of(SkillTag.DMG);
         this.targetType = TargetType.SINGLE;
         this.damageMode = DamageMode.MAGICAL;
-        this.damageType = DamageType.TRUE;
         this.distance = 3;
         this.primary = true;
+        this.abilityType = AbilityType.PRIMARY;
     }
 
 

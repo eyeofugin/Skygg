@@ -1,6 +1,7 @@
 package game.entities.individuals.firedancer;
 
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -12,7 +13,7 @@ public class S_RushOfHeat extends Skill {
 
     public S_RushOfHeat(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/rushofheat.png";
+        this.iconPath = "entities/firedancer/icons/rushofheat.png";
         addSubscriptions();
         setToInitial();
     }
@@ -25,6 +26,7 @@ public class S_RushOfHeat extends Skill {
         this.effects = List.of(new Burning(4));
         this.cdMax = 3;
         this.faithGain = true;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 

@@ -2,11 +2,7 @@ package game.entities.individuals.firedancer;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Combo;
 
 import java.util.List;
@@ -15,7 +11,7 @@ public class S_FlameLasso extends Skill {
 
     public S_FlameLasso(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/flamelasso.png";
+        this.iconPath = "entities/firedancer/icons/flamelasso.png";
         addSubscriptions();
         setToInitial();
     }
@@ -28,10 +24,10 @@ public class S_FlameLasso extends Skill {
         this.targetType = TargetType.SINGLE;
         this.distance = 3;
         this.dmg = 4;
-        this.damageType = DamageType.HEAT;
         this.damageMode = DamageMode.MAGICAL;
         this.comboEnabled = true;
         this.faithCost = 4;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 

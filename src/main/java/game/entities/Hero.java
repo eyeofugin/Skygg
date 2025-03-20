@@ -3,20 +3,7 @@ package game.entities;
 import framework.Logger;
 import framework.Property;
 import framework.connector.Connector;
-import framework.connector.payloads.ActionInflictionPayload;
-import framework.connector.payloads.CanPerformPayload;
-import framework.connector.payloads.CastChangePayload;
-import framework.connector.payloads.DmgChangesPayload;
-import framework.connector.payloads.DmgToShieldPayload;
-import framework.connector.payloads.DmgTriggerPayload;
-import framework.connector.payloads.EffectAddedPayload;
-import framework.connector.payloads.EffectDmgChangesPayload;
-import framework.connector.payloads.EffectFailurePayload;
-import framework.connector.payloads.ExcessResourcePayload;
-import framework.connector.payloads.HealChangesPayload;
-import framework.connector.payloads.ShieldBrokenPayload;
-import framework.connector.payloads.ShieldChangesPayload;
-import framework.connector.payloads.StartOfTurnPayload;
+import framework.connector.payloads.*;
 import framework.graphics.GUIElement;
 import framework.graphics.text.Color;
 import framework.graphics.text.TextAlignment;
@@ -25,7 +12,6 @@ import framework.resources.SpriteUtils;
 import framework.states.Arena;
 import game.objects.Equipment;
 import game.skills.DamageMode;
-import game.skills.DamageType;
 import game.skills.Effect;
 import game.skills.Resource;
 import game.skills.Skill;
@@ -44,7 +30,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Random;
 
 public abstract class Hero extends GUIElement {
 
@@ -64,6 +49,9 @@ public abstract class Hero extends GUIElement {
     protected Skill ult;
     protected List<Equipment> equipments = new ArrayList<>();
     protected String portraitName;
+    public static int draftDimensionX = 64;
+    public static int draftDimensionY = 74;
+
 
     protected int level = 1;
     protected int draftChoice = 0;
@@ -117,12 +105,6 @@ public abstract class Hero extends GUIElement {
         base.put(Stat.STAMINA, 0);
         base.put(Stat.ENDURANCE, 0);
         base.put(Stat.SPEED, 0);
-
-        base.put(Stat.NORMAL_DEF, 0);
-        base.put(Stat.HEAT_DEF, 0);
-        base.put(Stat.FROST_DEF, 0);
-        base.put(Stat.DARK_DEF, 0);
-        base.put(Stat.LIGHT_DEF, 0);
 
         //ResourceStats
         base.put(Stat.LIFE, 0);
@@ -181,11 +163,21 @@ public abstract class Hero extends GUIElement {
         return pixels;
     }
 
-    private void renderImage() {
-        boolean flipHorizontal = this.team == null || this.team.teamNumber == 2;
-        int[] image = flipHorizontal ? SpriteUtils.flipHorizontal(this.anim.image, 64) : this.anim.image;
+    public int[] draftRender() {
+        int[] pixels = new int[draftDimensionX*draftDimensionY];
+        Arrays.fill(pixels, Color.VOID.VALUE);
+        staticFillSize(0,0,64,64,64,pixels,getImagePixels());
+        staticFillSize(0,64,64,10,64,pixels,getTextLine(this.name,64,10,Color.WHITE));
+        return pixels;
+    }
 
-        fillWithGraphicsSize(0, 0, 64, 64, image, false);
+    private int[] getImagePixels() {
+        boolean flipHorizontal = this.team == null || this.team.teamNumber == 2;
+        return flipHorizontal ? SpriteUtils.flipHorizontal(this.anim.image, 64) : this.anim.image;
+    }
+
+    private void renderImage() {
+        fillWithGraphicsSize(0, 0, 64, 64, getImagePixels(), false);
     }
     private void renderBars() {
         fillWithGraphicsSize(0, yf, 64, 3, getBar(64, 3, 0, getResourcePercentage(Stat.LIFE), Color.GREEN, Color.DARKRED), false);
@@ -405,7 +397,6 @@ public abstract class Hero extends GUIElement {
         if (this.secondaryResource != null && this.secondaryResource.equals(Stat.MANA)) {
             addResource(Stat.CURRENT_MANA, Stat.MANA, this.getStat(Stat.MANA_REGAIN), this);
         }
-
     }
     public void endOfRound() {
         effectTurn();
@@ -430,11 +421,13 @@ public abstract class Hero extends GUIElement {
     }
 //Equipment Magic
     public void equip(Equipment equipment) {
-        this.equipments.add(equipment);
+        if (!this.equipments.contains(equipment)) {
+            this.equipments.add(equipment);
+        }
         if (equipment.getSkill() != null && this.skills.length < 8 && this.skills.length > 1) {
             equipment.getSkill().hero = this;
             List<Skill> newSkills = new ArrayList<>(List.of(this.skills));
-            newSkills.add(newSkills.size()-2, equipment.getSkill());
+            newSkills.add(newSkills.size()-1, equipment.getSkill());
             this.skills = newSkills.toArray(new Skill[0]);
         }
     }
@@ -616,11 +609,10 @@ public abstract class Hero extends GUIElement {
     }
 
     public void removeNegativeEffects() {
-        for (Effect effect : this.effects) {
-            if (effect.type.equals(Effect.ChangeEffectType.DEBUFF) ||
-                effect.type.equals(Effect.ChangeEffectType.STATUS_INFLICTION)) {
-                this.removeEffect(effect);
-            }
+        List<Effect> toRemove = this.effects.stream().filter(e-> e.type.equals(Effect.ChangeEffectType.DEBUFF)
+                || e.type.equals(Effect.ChangeEffectType.STATUS_INFLICTION)).toList();
+        for (Effect effect : toRemove) {
+            this.removeEffect(effect);
         }
     }
     public void removePositiveEffects() {
@@ -670,17 +662,15 @@ public abstract class Hero extends GUIElement {
         addResource(Stat.CURRENT_LIFE, Stat.LIFE, -1*damage, caster);
         return damage;
     }
-    public int damage(Hero caster, int damage, DamageMode dmgMode, DamageType dmgType, int lethality, Skill skill) {
+    public int damage(Hero caster, int damage, DamageMode dmgMode, int lethality, Skill skill) {
 
         int def = getStat(getDefenseStatFor(dmgMode));
-        int armor = getStat(getArmorStatFor(dmgType));
-        int result = MyMaths.getDamage(damage, def, armor, lethality);
+        int result = MyMaths.getDamage(damage, def, lethality);
         DmgChangesPayload dmgChangesPayload = new DmgChangesPayload()
                 .setCaster(caster)
                 .setTarget(this)
                 .setSkill(skill)
                 .setDmg(result)
-                .setDmgtype(dmgType)
                 .setDmgMode(dmgMode)
                 .setSimulate(false);
         Connector.fireTopic(Connector.DMG_CHANGES, dmgChangesPayload);
@@ -725,37 +715,14 @@ public abstract class Hero extends GUIElement {
         }
         return Stat.ENDURANCE;
     }
-    private Stat getArmorStatFor(DamageType dmgType) {
-        if (dmgType == null) {
-            return null;
-        }
-        if (dmgType.equals(DamageType.NORMAL)) {
-            return Stat.NORMAL_DEF;
-        }
-        if (dmgType.equals(DamageType.HEAT)) {
-            return Stat.HEAT_DEF;
-        }
-        if (dmgType.equals(DamageType.FROST)) {
-            return Stat.FROST_DEF;
-        }
-        if (dmgType.equals(DamageType.DARK)) {
-            return Stat.DARK_DEF;
-        }
-        if (dmgType.equals(DamageType.LIGHT)) {
-            return Stat.LIGHT_DEF;
-        }
-        return null;
-    }
-    public int simulateDamageInPercentages(Hero caster, int damage, DamageMode dmgMode, DamageType dmgType, int lethality, Skill skill) {
+    public int simulateDamageInPercentages(Hero caster, int damage, DamageMode dmgMode, int lethality, Skill skill) {
         int def = getStat(getDefenseStatFor(dmgMode));
-        int armor = getStat(getArmorStatFor(dmgType));
-        int result = MyMaths.getDamage(damage, def, armor, lethality);
+        int result = MyMaths.getDamage(damage, def, lethality);
         DmgChangesPayload dmgChangesPayload = new DmgChangesPayload()
                 .setCaster(caster)
                 .setTarget(this)
                 .setSkill(skill)
                 .setDmg(result)
-                .setDmgtype(dmgType)
                 .setDmgMode(dmgMode)
                 .setSimulate(true);
         Connector.fireTopic(Connector.DMG_CHANGES, dmgChangesPayload);
@@ -941,7 +908,18 @@ public abstract class Hero extends GUIElement {
         return this.team.teamNumber==2;
     }
 
-    //DEV
+    public Skill[] getPrimary() {
+        return primary;
+    }
+
+    public Skill[] getTactical() {
+        return tactical;
+    }
+
+    public Skill getUlt() {
+        return ult;
+    }
+//DEV
 
     public void devDMGTestSkill(int index, Hero target) {
         if (this.skills.length > index) {

@@ -18,6 +18,7 @@ import framework.graphics.containers.HUD;
 import game.controllers.ArenaAIController;
 import game.entities.Hero;
 import game.entities.HeroTeam;
+import game.objects.Equipment;
 import game.skills.GlobalEffect;
 import game.skills.Skill;
 import game.skills.Stat;
@@ -60,6 +61,7 @@ public class Arena extends GUIElement {
     public int[] pointers = new int[0];
     public int matrixPointer = 0;
     public int[] targetMatrix = new int[0];
+    public boolean finished = false;
 
     public Skill activeSkill;
     public Hero activeHero = null;
@@ -68,13 +70,22 @@ public class Arena extends GUIElement {
     public HeroTeam enemies;
     public GlobalEffect globalEffect;
 
-    private final int[] friendXPos = new int[]{98, 166, 234};
-    private final int[] enemyXPos = new int[]{342, 410, 478};
+    private final int[] friendXPos = new int[]{30, 98, 166, 234};
+    private final int[] enemyXPos = new int[]{342, 410, 478, 546};
+    private int numberPositions = 4;
+    private int firstFriendPos = 0;
+    private int lastFriendPos = 3;
+    private int firstEnemyPos = 4;
+    private int lastEnemeyPos = 7;
+    private int[] friendPos = new int[]{0,1,2,3};
+    private int[] enemyPos = new int[]{4,5,6,7};
+    private int[] allPos = new int[]{0,1,2,3,4,5,6,7};
     private final int heroYPos = 80;
 
     public Arena(Engine e, boolean pvp) {
         super(Engine.X, Engine.Y);
         this.engine = e;
+        this.round = this.engine.memory.pvpRound;
         this.hud = new HUD(e);
         this.hud.setArena(this);
         this.pvp = pvp;
@@ -86,6 +97,30 @@ public class Arena extends GUIElement {
     public void setTeams(HeroTeam friend, HeroTeam enemies) {
         this.friends = friend;
         this.enemies = enemies;
+        for (int i = 0; i < this.friends.heroes.length; i++) {
+            Hero hero = this.friends.heroes[i];
+            hero.setPosition(i);
+            hero.arena = this;
+            hero.team = this.friends;
+            for (Equipment item : hero.getEquipments()) {
+                item.equipToHero(hero);
+            }
+            hero.changeStatTo(Stat.CURRENT_LIFE, hero.getStat(Stat.LIFE));
+            hero.changeStatTo(Stat.CURRENT_MANA, hero.getStat(Stat.MANA));
+            hero.changeStatTo(Stat.CURRENT_FAITH, 0);
+        }
+        for (int i = 0; i < this.enemies.heroes.length; i++) {
+            Hero hero = this.enemies.heroes[i];
+            hero.setPosition(Math.abs(i-2) + numberPositions);
+            hero.arena = this;
+            hero.team = this.enemies;
+            for (Equipment item : hero.getEquipments()) {
+                item.equipToHero(hero);
+            }
+            hero.changeStatTo(Stat.CURRENT_LIFE, hero.getStat(Stat.LIFE));
+            hero.changeStatTo(Stat.CURRENT_MANA, hero.getStat(Stat.MANA));
+            hero.changeStatTo(Stat.CURRENT_FAITH, 0);
+        }
         initialOrder();
         this.activeHero = this.queue.peek();
         if (this.activeHero == null) {
@@ -93,7 +128,9 @@ public class Arena extends GUIElement {
             return;
         }
         this.hud.setActiveHero(this.activeHero);
-        this.aiController.setup();
+        if (!this.pvp) {
+            this.aiController.setup();
+        }
         this.updateEntities();
         this.startOfMatch();
     }
@@ -202,6 +239,10 @@ public class Arena extends GUIElement {
     private void resumeTurn() {
         Logger.logLn("resumeTurn()");
         this.removeTheDead();
+        if (this.checkEndOfMatch()) {
+            return;
+        }
+
         this.updateEntities();
         if (this.activeHero.getStat(Stat.CURRENT_ACTION) > 0) {
             if (!this.pvp && this.activeHero.isTeam2()) {
@@ -221,6 +262,13 @@ public class Arena extends GUIElement {
         this.queue.didTurn(this.activeHero);
 
         checkEndOfRound();
+    }
+    private boolean checkEndOfMatch() {
+        if (this.friends.deadHeroes.size() == numberPositions || this.enemies.deadHeroes.size() == numberPositions) {
+            this.finished = true;
+            return true;
+        }
+        return false;
     }
     private void checkEndOfRound() {
         if (this.queue.hasHeroUp()) {
@@ -300,13 +348,13 @@ public class Arena extends GUIElement {
         }
         if (toGo>0) {
             int targetPos = e.getPosition()+dir;
-            int indexOffset = e.isTeam2() ? 3:0;
+            int indexOffset = e.isTeam2() ? numberPositions:0;
 
-            if ((e.isTeam2() && (targetPos == 2 || targetPos == 6)) ||
-                    (!e.isTeam2() && (targetPos == -1 || targetPos == 3))) {
+            if ((e.isTeam2() && (targetPos < firstEnemyPos || targetPos > lastEnemeyPos)) ||
+                    (!e.isTeam2() && (targetPos <firstFriendPos || targetPos > lastFriendPos))) {
                 return;
             }
-            if ((e.isTeam2() && (this.enemies.heroes.length <= targetPos-3 || this.enemies.heroes[targetPos-3] == null)) ||
+            if ((e.isTeam2() && (this.enemies.heroes.length <= targetPos-numberPositions || this.enemies.heroes[targetPos-numberPositions] == null)) ||
                     !e.isTeam2() && (this.friends.heroes.length <= targetPos || this.friends.heroes[targetPos] == null)) {
                 return;
             }
@@ -346,11 +394,11 @@ public class Arena extends GUIElement {
             this.matrixPointer = startIndex;
         } else {
             Random rand = new Random();
-            int from = this.activeHero.isTeam2()?0:3;
-            int until = this.activeHero.isTeam2()?2:5;
+            int from = this.activeHero.isTeam2()?firstFriendPos:lastFriendPos;
+            int until = this.activeHero.isTeam2()?firstEnemyPos:lastEnemeyPos;
             switch (this.activeSkill.getTargetType()) {
                 case ALL:
-                    this.pointers = new int[]{0,1,2,3,4,5};
+                    this.pointers = allPos;
                     break;
                 case SELF:
                     this.pointers = new int[]{this.activeHero.getPosition()};
@@ -365,16 +413,16 @@ public class Arena extends GUIElement {
                     this.pointers = MyMaths.getIntArrayWithExclusiveRandValues(from, until, 3);
                     break;
                 case ALL_ALLY:
-                    this.pointers = this.activeHero.isTeam2()?new int[]{3,4,5}:new int[]{0,1,2};
+                    this.pointers = this.activeHero.isTeam2()?enemyPos:friendPos;
                     break;
                 case ALL_ENEMY:
-                    this.pointers = this.activeHero.isTeam2()?new int[]{0,1,2}:new int[]{3,4,5};
+                    this.pointers = this.activeHero.isTeam2()?friendPos:enemyPos;
                     break;
                 case FIRST_ENEMY:
-                    this.pointers = this.activeHero.isTeam2()?new int[]{2}:new int[]{3};
+                    this.pointers = this.activeHero.isTeam2()?new int[]{lastFriendPos}:new int[]{firstEnemyPos};
                     break;
                 case FIRST_TWO_ENEMIES:
-                    this.pointers = this.activeHero.isTeam2()?new int[]{1,2}:new int[]{3,4};
+                    this.pointers = this.activeHero.isTeam2()?new int[]{lastEnemeyPos-1,lastEnemeyPos}:new int[]{firstEnemyPos,firstEnemyPos+1};
                     break;
                 case ARENA:
                     this.pointers = new int[]{};
@@ -466,8 +514,8 @@ public class Arena extends GUIElement {
     private void renderPointer() {
         for (int j : pointers) {
             int x;
-            if (j > 2) {
-                x = enemyXPos[j - 3];
+            if (j > lastFriendPos) {
+                x = enemyXPos[j - firstEnemyPos];
             } else {
                 x = friendXPos[j];
             }
@@ -484,7 +532,7 @@ public class Arena extends GUIElement {
         }
         for (Hero hero: enemies.heroes) {
             if (hero != null) {
-                int x = enemyXPos[hero.getPosition() - 3];
+                int x = enemyXPos[hero.getPosition() - firstEnemyPos];
                 fillWithGraphicsSize(x, heroYPos, hero.getWidth(), hero.getHeight(), hero.render(), this.activeHero.equals(hero));
             }
         }

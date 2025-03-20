@@ -1,6 +1,7 @@
 package game.entities.individuals.sniper;
 
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.Combo;
@@ -10,7 +11,7 @@ public class S_SmokeGrenade extends Skill {
 
     public S_SmokeGrenade(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/smokegrenade.png";
+        this.iconPath = "entities/sniper/icons/smokegrenade.png";
         addSubscriptions();
         setToInitial();
     }
@@ -20,6 +21,7 @@ public class S_SmokeGrenade extends Skill {
         super.setToInitial();
         this.targetType = TargetType.ALL_ALLY;
         this.cdMax = 4;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 

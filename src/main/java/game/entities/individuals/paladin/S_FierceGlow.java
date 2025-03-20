@@ -1,6 +1,7 @@
 package game.entities.individuals.paladin;
 
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -12,7 +13,7 @@ public class S_FierceGlow extends Skill {
 
     public S_FierceGlow(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/fierceglow.png";
+        this.iconPath = "entities/paladin/icons/fierceglow.png";
         addSubscriptions();
         setToInitial();
     }
@@ -24,6 +25,7 @@ public class S_FierceGlow extends Skill {
         this.targetType = TargetType.SELF;
         this.effects = List.of(new Threatening(2));
         this.faithCost = 6;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override

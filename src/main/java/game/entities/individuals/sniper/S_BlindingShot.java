@@ -2,11 +2,7 @@ package game.entities.individuals.sniper;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.statusinflictions.Blinded;
 
 import java.util.List;
@@ -15,7 +11,7 @@ public class S_BlindingShot extends Skill {
 
     public S_BlindingShot(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/blindingshot.png";
+        this.iconPath = "entities/sniper/icons/blindingshot.png";
         addSubscriptions();
         setToInitial();
     }
@@ -26,11 +22,11 @@ public class S_BlindingShot extends Skill {
         this.targetType = TargetType.SINGLE;
         this.distance = 3;
         this.cdMax = 3;
-        this.damageType = DamageType.NORMAL;
         this.damageMode = DamageMode.PHYSICAL;
         this.dmg = 8;
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.1));
         this.effects = List.of(new Blinded(2));
+        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override

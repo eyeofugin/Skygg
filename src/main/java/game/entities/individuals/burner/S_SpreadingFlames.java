@@ -1,6 +1,7 @@
 package game.entities.individuals.burner;
 
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -13,7 +14,7 @@ public class S_SpreadingFlames extends Skill {
 
     public S_SpreadingFlames(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/spreadingflames.png";
+        this.iconPath = "entities/burner/icons/spreadingflames.png";
         addSubscriptions();
         setToInitial();
     }
@@ -24,6 +25,7 @@ public class S_SpreadingFlames extends Skill {
         this.targetType = TargetType.ALL_ENEMY;
         this.faithCost = 6;
         this.ultimate = true;
+        this.abilityType = AbilityType.ULT;
     }
 
 

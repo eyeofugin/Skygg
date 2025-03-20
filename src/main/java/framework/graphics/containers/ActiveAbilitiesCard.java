@@ -88,7 +88,7 @@ public class ActiveAbilitiesCard extends GUIElement {
     private void createSkillIcons() {
         skillIcons = new GUIElement[this.activeHero.getSkills().length];
         int y = 2;
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < this.activeHero.getSkills().length; i++) {
             GUIElement skillIcon = new GUIElement();
             skillIcon.setSize(16, 16);
             skillIcon.setPixels(new int[16*16]);
@@ -105,7 +105,9 @@ public class ActiveAbilitiesCard extends GUIElement {
     }
     private void activateIcon() {
         for (GUIElement skillIcon : this.skillIcons) {
-            skillIcon.removeBorder();
+            if (skillIcon != null) {
+                skillIcon.removeBorder();
+            }
         }
         this.skillIcons[this.abilityPointer].setBorder(Color.WHITE, 1);
         setSkillInfo();

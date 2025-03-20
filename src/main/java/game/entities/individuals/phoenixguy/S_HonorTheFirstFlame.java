@@ -4,6 +4,7 @@ import framework.connector.Connection;
 import framework.connector.Connector;
 import framework.connector.payloads.DmgTriggerPayload;
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.changeeffects.effects.Burning;
@@ -12,7 +13,7 @@ public class S_HonorTheFirstFlame extends Skill {
 
     public S_HonorTheFirstFlame(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/honorthefirstflame.png";
+        this.iconPath = "entities/phoenixguy/icons/honorthefirstflame.png";
         addSubscriptions();
         setToInitial();
     }
@@ -21,6 +22,7 @@ public class S_HonorTheFirstFlame extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.passive = true;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override

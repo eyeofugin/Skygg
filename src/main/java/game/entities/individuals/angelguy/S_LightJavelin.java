@@ -2,11 +2,7 @@ package game.entities.individuals.angelguy;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.DamageMode;
-import game.skills.DamageType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Combo;
 import game.skills.changeeffects.statusinflictions.Bleeding;
 import utils.MyMaths;
@@ -17,7 +13,7 @@ public class S_LightJavelin extends Skill {
 
     public S_LightJavelin(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/lightjavelin.png";
+        this.iconPath = "entities/angelguy/icons/lightjavelin.png";
         setToInitial();
     }
 
@@ -28,9 +24,9 @@ public class S_LightJavelin extends Skill {
         this.targetType = TargetType.SINGLE;
         this.distance = 3;
         this.damageMode = DamageMode.PHYSICAL;
-        this.damageType = DamageType.LIGHT;
         this.dmg = 6;
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.3));
+        this.abilityType = AbilityType.PRIMARY;
     }
     @Override
     public void applySkillEffects(Hero target) {

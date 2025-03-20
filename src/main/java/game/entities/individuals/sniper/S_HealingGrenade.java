@@ -1,6 +1,7 @@
 package game.entities.individuals.sniper;
 
 import game.entities.Hero;
+import game.skills.AbilityType;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -14,7 +15,7 @@ public class S_HealingGrenade extends Skill {
 
     public S_HealingGrenade(Hero hero) {
         super(hero);
-        this.iconPath = "/icons/healinggrenade.png";
+        this.iconPath = "entities/sniper/icons/healinggrenade.png";
         addSubscriptions();
         setToInitial();
     }
@@ -24,6 +25,7 @@ public class S_HealingGrenade extends Skill {
         super.setToInitial();
         this.targetType = TargetType.ALL_ALLY;
         this.cdMax = 3;
+        this.abilityType = AbilityType.TACTICAL;
     }
 
 
