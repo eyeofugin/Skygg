@@ -21,8 +21,9 @@ public class S_Cover extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.tags = List.of(SkillTag.BUFF);
-        this.targetType = TargetType.SINGLE_ALLY;
-        this.distance = 1;
+        this.targetType = TargetType.SINGLE_OTHER;
+        this.possibleCastPositions = new int[]{2,3};
+        this.possibleTargetPositions = new int[]{1,2};
         this.cdMax = 4;
     }
     @Override

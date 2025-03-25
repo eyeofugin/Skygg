@@ -23,7 +23,8 @@ public class S_Burn extends Skill {
         this.tags = List.of(SkillTag.CC);
         this.targetType = TargetType.SINGLE;
         this.effects = List.of(new Burning(4));
-        this.distance = 3;
+        this.possibleCastPositions = new int[]{0,1,2};
+        this.possibleTargetPositions = new int[]{4,5};
         this.primary = true;
         this.faithGain = true;
         this.abilityType = AbilityType.PRIMARY;

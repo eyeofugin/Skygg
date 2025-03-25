@@ -21,7 +21,8 @@ public class S_LightBlast extends Skill {
         this.tags = List.of(SkillTag.DMG, SkillTag.PEEL);
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.4));
         this.targetType = TargetType.SINGLE;
-        this.distance = 1;
+        this.possibleCastPositions = new int[]{3};
+        this.possibleTargetPositions = new int[]{4};
         this.dmg = 2;
         this.faithCost = 5;
         this.damageMode = DamageMode.MAGICAL;

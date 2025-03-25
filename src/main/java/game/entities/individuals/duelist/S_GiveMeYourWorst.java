@@ -23,7 +23,8 @@ public class S_GiveMeYourWorst extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.SINGLE;
-        this.distance = 3;
+        this.possibleCastPositions = new int[]{1,2};
+        this.possibleTargetPositions = new int[]{4,5};
         this.cdMax = 3;
         this.effects = List.of(new Taunted(2));
         this.abilityType = AbilityType.TACTICAL;

@@ -40,12 +40,12 @@ import java.util.stream.Stream;
 public class Arena extends GUIElement {
 
     public Engine engine;
-    private boolean started = false;
 
     private final HUD hud;
     public ArenaAIController aiController;
 
     public Queue queue = new Queue();
+
 
     public enum Status {
         TARGET_CHOICE,
@@ -72,14 +72,14 @@ public class Arena extends GUIElement {
 
     private final int[] friendXPos = new int[]{30, 98, 166, 234};
     private final int[] enemyXPos = new int[]{342, 410, 478, 546};
-    private int numberPositions = 4;
-    private int firstFriendPos = 0;
-    private int lastFriendPos = 3;
-    private int firstEnemyPos = 4;
-    private int lastEnemeyPos = 7;
-    private int[] friendPos = new int[]{0,1,2,3};
-    private int[] enemyPos = new int[]{4,5,6,7};
-    private int[] allPos = new int[]{0,1,2,3,4,5,6,7};
+    public static int numberPositions = 4;
+    public static int firstFriendPos = 0;
+    public static int lastFriendPos = 3;
+    public static int firstEnemyPos = 4;
+    public static int lastEnemeyPos = 7;
+    public static int[] friendPos = new int[]{0,1,2,3};
+    public static int[] enemyPos = new int[]{4,5,6,7};
+    public static int[] allPos = new int[]{0,1,2,3,4,5,6,7};
     private final int heroYPos = 80;
 
     public Arena(Engine e, boolean pvp) {
@@ -213,14 +213,10 @@ public class Arena extends GUIElement {
     private void setPointerArray() {
         if (this.status == Status.TARGET_CHOICE) {
             if (this.activeSkill.getTargetType().equals(TargetType.SINGLE)
-                    || this.activeSkill.getTargetType().equals(TargetType.SINGLE_ALLY)
-                    || this.activeSkill.getTargetType().equals(TargetType.SINGLE_ALLY_IN_FRONT)
-                    || this.activeSkill.getTargetType().equals(TargetType.SINGLE_ALLY_BEHIND)) {
+                    || this.activeSkill.getTargetType().equals(TargetType.SINGLE_OTHER)) {
                 this.pointers = getSingleTargets();
-            } else if (this.activeSkill.getTargetType().equals(TargetType.LINE)) {
-                this.pointers = getLineTargets();
-            } else if (this.activeSkill.getTargetType().equals(TargetType.ENEMY_LINE)) {
-                this.pointers = getEnemyLineTargets();
+            } else if (this.activeSkill.getTargetType().equals(TargetType.ALL_TARGETS)) {
+                this.pointers = getAllTargets();
             }
         }
     }
@@ -383,11 +379,8 @@ public class Arena extends GUIElement {
         this.activeSkill = s;
 
         if (this.activeSkill.getTargetType().equals(TargetType.SINGLE)
-                || this.activeSkill.getTargetType().equals(TargetType.SINGLE_ALLY)
-                || this.activeSkill.getTargetType().equals(TargetType.SINGLE_ALLY_IN_FRONT)
-                || this.activeSkill.getTargetType().equals(TargetType.SINGLE_ALLY_BEHIND)
-                || this.activeSkill.getTargetType().equals(TargetType.LINE)
-                || this.activeSkill.getTargetType().equals(TargetType.ENEMY_LINE)) {
+                || this.activeSkill.getTargetType().equals(TargetType.SINGLE_OTHER)
+                || this.activeSkill.getTargetType().equals(TargetType.ALL_TARGETS)) {
             this.setupTargetMatrix();
             int startIndex = this.activeHero.isTeam2() ? 0 : this.targetMatrix.length-1;
             this.activePointer = this.targetMatrix[startIndex];
@@ -396,10 +389,8 @@ public class Arena extends GUIElement {
             Random rand = new Random();
             int from = this.activeHero.isTeam2()?firstFriendPos:lastFriendPos;
             int until = this.activeHero.isTeam2()?firstEnemyPos:lastEnemeyPos;
+            this.pointers = new int[]{};
             switch (this.activeSkill.getTargetType()) {
-                case ALL:
-                    this.pointers = allPos;
-                    break;
                 case SELF:
                     this.pointers = new int[]{this.activeHero.getPosition()};
                     break;
@@ -412,20 +403,8 @@ public class Arena extends GUIElement {
                 case THREE_RDM:
                     this.pointers = MyMaths.getIntArrayWithExclusiveRandValues(from, until, 3);
                     break;
-                case ALL_ALLY:
-                    this.pointers = this.activeHero.isTeam2()?enemyPos:friendPos;
-                    break;
-                case ALL_ENEMY:
-                    this.pointers = this.activeHero.isTeam2()?friendPos:enemyPos;
-                    break;
-                case FIRST_ENEMY:
-                    this.pointers = this.activeHero.isTeam2()?new int[]{lastFriendPos}:new int[]{firstEnemyPos};
-                    break;
-                case FIRST_TWO_ENEMIES:
-                    this.pointers = this.activeHero.isTeam2()?new int[]{lastEnemeyPos-1,lastEnemeyPos}:new int[]{firstEnemyPos,firstEnemyPos+1};
-                    break;
-                case ARENA:
-                    this.pointers = new int[]{};
+                case ALL:
+                    this.pointers = allPos;
                     break;
             }
             this.performSkill();
@@ -489,27 +468,8 @@ public class Arena extends GUIElement {
     private int[] getSingleTargets() {
         return new int[]{this.activePointer};
     }
-    private int[] getLineTargets() {
-        int casterPosition = this.activeHero.getPosition();
-        int[] targets = new int[Math.abs(casterPosition-this.activePointer)];
-        int index = 0;
-        for (int j = Math.min(this.activePointer,casterPosition); j <= Math.max(this.activePointer,casterPosition);j++) {
-            if (j!=casterPosition) {
-                targets[index] = j;
-                index++;
-            }
-        }
-        return targets;
-    }
-    private int[] getEnemyLineTargets() {
-        int firstEnemyPosition = this.activeHero.isTeam2()?3:4;
-        int[] targets = new int[Math.abs(firstEnemyPosition-this.activePointer) + 1];
-        int index = 0;
-        for (int j = Math.min(this.activePointer,firstEnemyPosition); j <= Math.max(this.activePointer,firstEnemyPosition);j++) {
-            targets[index] = j;
-            index++;
-        }
-        return targets;
+    private int[] getAllTargets() {
+        return this.targetMatrix;
     }
     private void renderPointer() {
         for (int j : pointers) {

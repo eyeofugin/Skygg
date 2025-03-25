@@ -20,8 +20,9 @@ public class S_WideSwing extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG);
-        this.targetType = TargetType.LINE;
-        this.distance = 2;
+        this.targetType = TargetType.ALL_TARGETS;
+        this.possibleCastPositions = new int[]{2,3};
+        this.possibleTargetPositions = new int[]{4,5};
         this.damageMode = DamageMode.PHYSICAL;
         this.ultimate = true;
         this.cdMax = 2;

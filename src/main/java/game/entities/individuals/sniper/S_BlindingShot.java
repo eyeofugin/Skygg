@@ -20,7 +20,8 @@ public class S_BlindingShot extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.SINGLE;
-        this.distance = 3;
+        this.possibleCastPositions = new int[]{0,1};
+        this.possibleTargetPositions = new int[]{4,5,6};
         this.cdMax = 3;
         this.damageMode = DamageMode.PHYSICAL;
         this.dmg = 8;

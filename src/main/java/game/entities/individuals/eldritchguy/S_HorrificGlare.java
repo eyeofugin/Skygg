@@ -19,9 +19,10 @@ public class S_HorrificGlare extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.SINGLE;
+        this.possibleCastPositions = new int[]{2,3};
+        this.possibleTargetPositions = new int[]{4,5,6};
         this.tags = List.of(SkillTag.PEEL);
         this.effects = List.of(new Dazed(1));
-        this.distance = 3;
         this.manaCost = 3;
         this.abilityType = AbilityType.TACTICAL;
     }

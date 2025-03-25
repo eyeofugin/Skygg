@@ -21,6 +21,7 @@ public class S_VoidGraft extends Skill {
         this.tags = List.of(SkillTag.HEAL);
         this.healMultipliers = List.of(new Multiplier(Stat.ENDURANCE, 0.8));
         this.targetType = TargetType.SELF;
+        this.possibleCastPositions = new int[]{0,1,2,3};
         this.manaCost = 2;
         this.abilityType = AbilityType.TACTICAL;
     }

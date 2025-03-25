@@ -20,10 +20,9 @@ public class S_ChemShot extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.targetType = TargetType.SINGLE;
-        this.distance = 4;
+        this.targetType = TargetType.ANY;
+        this.possibleCastPositions = new int[]{0,1};
         this.primary = true;
-        this.allowAllyForSingle = true;
         this.abilityType = AbilityType.PRIMARY;
     }
 

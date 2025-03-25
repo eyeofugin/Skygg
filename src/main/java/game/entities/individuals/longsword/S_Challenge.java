@@ -22,8 +22,9 @@ public class S_Challenge extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.targetType = TargetType.SINGLE_ALLY;
-        this.distance = 1;
+        this.targetType = TargetType.SINGLE;
+        this.possibleCastPositions = new int[]{1,2};
+        this.possibleTargetPositions = new int[]{3};
         this.cdMax = 3;
         this.casterEffects = List.of(new Threatening(1));
     }
@@ -43,7 +44,7 @@ public class S_Challenge extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Move 1. Threaten";
+        return "Move. Threaten";
     }
 
     @Override

@@ -22,8 +22,9 @@ public class S_FieldRations extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.tags = List.of(SkillTag.HEAL);
-        this.targetType = TargetType.SINGLE_ALLY;
-        this.distance = 1;
+        this.targetType = TargetType.SINGLE;
+        this.possibleCastPositions = new int[]{0,1,2};
+        this.possibleTargetPositions = new int[]{0,1,2,3};
         this.cdMax = 3;
         this.comboEnabled = true;
         this.abilityType = AbilityType.TACTICAL;

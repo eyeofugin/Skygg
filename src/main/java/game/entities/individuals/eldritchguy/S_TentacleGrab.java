@@ -18,7 +18,8 @@ public class S_TentacleGrab extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.SINGLE;
-        this.distance = 2;
+        this.possibleCastPositions = new int[]{3};
+        this.possibleTargetPositions = new int[]{5,6};
         this.damageMode = DamageMode.PHYSICAL;
         this.manaCost = 6;
         this.abilityType = AbilityType.TACTICAL;

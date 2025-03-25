@@ -22,7 +22,8 @@ public class S_FlameLasso extends Skill {
         this.tags = List.of(SkillTag.DMG, SkillTag.PEEL);
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.5));
         this.targetType = TargetType.SINGLE;
-        this.distance = 3;
+        this.possibleCastPositions = new int[]{1,2};
+        this.possibleTargetPositions = new int[]{5,6};
         this.dmg = 4;
         this.damageMode = DamageMode.MAGICAL;
         this.comboEnabled = true;

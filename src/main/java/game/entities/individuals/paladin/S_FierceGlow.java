@@ -23,6 +23,7 @@ public class S_FierceGlow extends Skill {
         super.setToInitial();
         this.tags = List.of(SkillTag.BUFF);
         this.targetType = TargetType.SELF;
+        this.possibleCastPositions = new int[]{0,1,2,3};
         this.effects = List.of(new Threatening(2));
         this.faithCost = 6;
         this.abilityType = AbilityType.TACTICAL;

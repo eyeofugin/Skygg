@@ -23,7 +23,8 @@ public class S_QuickShot extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.SINGLE;
-        this.distance = 2;
+        this.possibleCastPositions = new int[]{1,2,3};
+        this.possibleTargetPositions = new int[]{4,5};
         this.dmg = 2;
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.4));
         this.primary = true;

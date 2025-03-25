@@ -23,7 +23,8 @@ public class S_LuxBomb extends Skill {
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.1),
                 new Multiplier(Stat.MANA, 0.3));
         this.damageMode = DamageMode.MAGICAL;
-        this.distance = 3;
+        this.possibleCastPositions = new int[]{0,1,2};
+        this.possibleTargetPositions = new int[]{4};
         this.primary = true;
         this.abilityType = AbilityType.PRIMARY;
     }

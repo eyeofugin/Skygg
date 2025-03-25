@@ -21,7 +21,9 @@ public class S_HolyShield extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.tags = List.of(SkillTag.BUFF);
-        this.targetType = TargetType.ALL_ALLY;
+        this.targetType = TargetType.ALL_TARGETS;
+        this.possibleTargetPositions = new int[]{0,1,2,3};
+        this.possibleCastPositions = new int[]{0,1,2,3};
         this.cdMax = 1;
         this.faithCost = 4;
         this.shield = 3;

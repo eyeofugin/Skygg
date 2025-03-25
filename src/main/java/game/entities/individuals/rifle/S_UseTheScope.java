@@ -23,6 +23,7 @@ public class S_UseTheScope extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.SELF;
+        this.possibleCastPositions = new int[]{0,1,2,3};
         this.cdMax = 2;
         this.abilityType = AbilityType.TACTICAL;
     }

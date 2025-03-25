@@ -22,7 +22,8 @@ public class S_LuckyShot extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.SINGLE;
-        this.distance = 2;
+        this.possibleCastPositions = new int[]{0,1,2};
+        this.possibleTargetPositions = new int[]{5,6,7};
         this.dmg = 3;
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.05));
         this.cdMax = 2;

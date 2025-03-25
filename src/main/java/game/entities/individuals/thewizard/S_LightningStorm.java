@@ -25,7 +25,9 @@ public class S_LightningStorm extends Skill {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG);
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.5));
-        this.targetType = TargetType.ALL_ENEMY;
+        this.targetType = TargetType.ALL_TARGETS;
+        this.possibleCastPositions = new int[]{1,2};
+        this.possibleTargetPositions = new int[]{4,5,6,7};
         this.manaCost = 8;
         this.damageMode = DamageMode.MAGICAL;
         this.abilityType = AbilityType.ULT;

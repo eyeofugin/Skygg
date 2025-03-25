@@ -22,7 +22,8 @@ public class S_LightJavelin extends Skill {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG);
         this.targetType = TargetType.SINGLE;
-        this.distance = 3;
+        this.possibleTargetPositions = new int[]{4,5,6};
+        this.possibleCastPositions = new int[]{2,3};
         this.damageMode = DamageMode.PHYSICAL;
         this.dmg = 6;
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.3));

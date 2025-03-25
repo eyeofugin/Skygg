@@ -23,6 +23,7 @@ public class S_RushOfHeat extends Skill {
         super.setToInitial();
         this.tags = List.of(SkillTag.RESTOCK);
         this.targetType = TargetType.SELF;
+        this.possibleCastPositions = new int[]{0,1,2,3};
         this.effects = List.of(new Burning(4));
         this.cdMax = 3;
         this.faithGain = true;

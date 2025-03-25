@@ -28,6 +28,7 @@ public class S_AshenHeat extends Skill {
         super.setToInitial();
         this.tags = List.of(SkillTag.SETUP);
         this.targetType = TargetType.ARENA;
+        this.possibleCastPositions = new int[]{0,1,2,3};
         this.faithCost = 4;
         this.abilityType = AbilityType.TACTICAL;
 

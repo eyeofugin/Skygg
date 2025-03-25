@@ -19,6 +19,7 @@ public class S_QuickPrayer extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.SELF;
+        this.possibleCastPositions = new int[]{0,1,2,3};
         this.targetResources = List.of(new Resource(Stat.CURRENT_FAITH, Stat.FAITH, 4));
         this.primary = true;
         this.faithGain = true;

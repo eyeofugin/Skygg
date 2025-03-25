@@ -22,9 +22,10 @@ public class S_DarkSecrets extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.tags = List.of(SkillTag.BUFF);
-        this.targetType = TargetType.SINGLE_ALLY;
+        this.targetType = TargetType.SINGLE;
         this.effects = List.of(new DarkSecrets());
-        this.distance = 2;
+        this.possibleCastPositions = new int[]{0,1,2,3};
+        this.possibleTargetPositions = new int[]{0,1,2,3};
         this.manaCost = 4;
         this.abilityType = AbilityType.TACTICAL;
     }

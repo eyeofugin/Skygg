@@ -21,8 +21,9 @@ public class S_HolyWords extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.targetType = TargetType.SINGLE_ALLY;
-        this.distance = 2;
+        this.targetType = TargetType.SINGLE;
+        this.possibleCastPositions = new int[]{0,1,2,3};
+        this.possibleTargetPositions = new int[]{0,1,2,3};
         this.manaCost = 3;
         this.healMultipliers = List.of(new Multiplier(Stat.LIFE, 0.2),
                 new Multiplier(Stat.MANA, 0.3));

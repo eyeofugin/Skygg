@@ -25,7 +25,8 @@ public class S_SingingBlades extends Skill {
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.15),
                 new Multiplier(Stat.POWER, 0.4));
         this.targetType = TargetType.SINGLE;
-        this.distance = 2;
+        this.possibleCastPositions = new int[]{2};
+        this.possibleTargetPositions = new int[]{4,5};
         this.dmg = 10;
         this.damageMode = DamageMode.PHYSICAL;
         this.abilityType = AbilityType.TACTICAL;

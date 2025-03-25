@@ -23,8 +23,9 @@ public class S_Roll extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.targetType = TargetType.SINGLE_ALLY;
-        this.distance = 1;
+        this.targetType = TargetType.SINGLE_OTHER;
+        this.possibleCastPositions = new int[]{1,2,3};
+        this.possibleTargetPositions = new int[]{0,1,2};
         this.cdMax = 3;
         this.comboEnabled = true;
         this.abilityType = AbilityType.TACTICAL;
@@ -33,7 +34,7 @@ public class S_Roll extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Move 1, Combo: +2 Speed";
+        return "Move, Combo: +2 Speed";
     }
 
     @Override

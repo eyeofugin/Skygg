@@ -22,7 +22,8 @@ public class S_Spark extends Skill {
         this.tags = List.of(SkillTag.DMG);
         this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.3));
         this.targetType = TargetType.SINGLE;
-        this.distance = 2;
+        this.possibleCastPositions = new int[]{0,1,2};
+        this.possibleTargetPositions = new int[]{4,5,6};
         this.dmg = 7;
         this.damageMode = DamageMode.MAGICAL;
         this.primary = true;

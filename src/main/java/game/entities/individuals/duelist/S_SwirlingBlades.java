@@ -26,7 +26,8 @@ public class S_SwirlingBlades extends Skill {
         this.tags = List.of(SkillTag.DMG);
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.4));
         this.targetType = TargetType.SINGLE;
-        this.distance = 2;
+        this.possibleCastPositions = new int[]{2,3};
+        this.possibleTargetPositions = new int[]{4,5};
         this.dmg = 2;
         this.cdMax = 2;
         this.damageMode = DamageMode.PHYSICAL;

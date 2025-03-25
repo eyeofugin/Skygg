@@ -19,8 +19,9 @@ public class S_PiercingLight extends Skill {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG);
         this.targetType = TargetType.SINGLE;
+        this.possibleTargetPositions = new int[]{4};
+        this.possibleCastPositions = new int[]{2,3};
         this.dmg = 13;
-        this.distance = 1;
         this.cdMax = 2;
         this.damageMode = DamageMode.MAGICAL;
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.3));

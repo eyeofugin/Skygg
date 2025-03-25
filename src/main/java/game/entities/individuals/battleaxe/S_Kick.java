@@ -22,7 +22,8 @@ public class S_Kick extends Skill {
         this.tags = List.of(SkillTag.DMG, SkillTag.PEEL);
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.1));
         this.targetType = TargetType.SINGLE;
-        this.distance = 1;
+        this.possibleCastPositions = new int[]{3};
+        this.possibleTargetPositions = new int[]{4,5};
         this.dmg = 3;
         this.cdMax = 4;
         this.damageMode = DamageMode.PHYSICAL;

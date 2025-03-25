@@ -25,7 +25,8 @@ public class S_FlareUp extends Skill {
         this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.2));
         this.targetType = TargetType.SINGLE;
         this.damageMode = DamageMode.MAGICAL;
-        this.distance = 2;
+        this.possibleCastPositions = new int[]{0,1,2,3};
+        this.possibleTargetPositions = new int[]{4,5,6};
         this.dmg = 3;
         this.faithCost = 4;
         this.abilityType = AbilityType.TACTICAL;

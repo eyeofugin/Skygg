@@ -21,7 +21,8 @@ public class S_Outmaneuver extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.SINGLE;
-        this.distance = 3;
+        this.possibleCastPositions = new int[]{0,1,2};
+        this.possibleTargetPositions = new int[]{5,6};
         this.cdMax = 5;
         this.comboEnabled = true;
         this.abilityType = AbilityType.TACTICAL;

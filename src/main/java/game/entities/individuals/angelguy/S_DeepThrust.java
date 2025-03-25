@@ -22,7 +22,8 @@ public class S_DeepThrust extends Skill {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG);
         this.targetType = TargetType.SINGLE;
-        this.distance = 1;
+        this.possibleTargetPositions = new int[]{4};
+        this.possibleCastPositions = new int[]{2,3};
         this.damageMode = DamageMode.PHYSICAL;
         this.dmg = 8;
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.4));

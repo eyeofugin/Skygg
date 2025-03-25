@@ -88,6 +88,10 @@ public class ArenaAIController {
                     action.targets = new Hero[0];
                     action.rating = rating;
                     this.turnOptions.add(action);
+                } else if(s.getTargetType().equals(TargetType.ONE_RDM)
+                            || s.getTargetType().equals(TargetType.TWO_RDM)
+                            || s.getTargetType().equals(TargetType.THREE_RDM)) {
+                    //ignore action for now
                 } else {
                     for (Hero[] targets : getPossibleTargetGroups(s)) {
                         Logger.aiLog("\trating for targetgroup ");
@@ -139,7 +143,6 @@ public class ArenaAIController {
         Logger.aiLog(" sum weighted dmg percentage:"+weightedPercentages);
         Logger.aiLog(" dmgRating:"+damageRating);
         return damageRating;
-        return 0;
     }
     private int getHealRating(Skill cast, Hero[] targets) {
         int weightedPercentages = 0;
@@ -216,16 +219,13 @@ public class ArenaAIController {
     private List<Hero[]> getPossibleTargetGroups(Skill s) {
         List<Hero[]> preFilter = new ArrayList<>();
         List<Hero[]> result = new ArrayList<>();
+        int[] targetMatrix = s.setupTargetMatrix();
         switch (s.getTargetType()) {
-            case SINGLE -> setSingleTargetGroups(s, preFilter);
-            case SINGLE_ALLY, SINGLE_ALLY_IN_FRONT, SINGLE_ALLY_BEHIND -> setSingleAllyTargetGroups(s, preFilter);
-            case LINE -> setLineTargetGroups(s, preFilter);
+            case SINGLE -> setSingleTargetGroups(s, targetMatrix, preFilter, true);
+            case SINGLE_OTHER -> setSingleTargetGroups(s, targetMatrix, preFilter, false);
             case SELF -> preFilter.add(new Hero[]{this.arena.activeHero});
             case ALL -> setAllTargetGroups(preFilter);
-            case ALL_ALLY -> setAllAllyTargetGroups(preFilter);
-            case ALL_ENEMY -> setAllEnemyTargetGroups(preFilter);
-            case FIRST_TWO_ENEMIES -> setFirstTwoEnemyTargetGroups(preFilter);
-            case FIRST_ENEMY -> setFirstEnemyTargetGroups(preFilter);
+            case ALL_TARGETS -> setAllTargetsTargetGroups(targetMatrix, preFilter);
         }
         for (Hero[] heroArray : preFilter) {
             List<Hero> targets = new ArrayList<>();
@@ -249,12 +249,11 @@ public class ArenaAIController {
             result.add(targets);
         }
     }
-    private void setSingleTargetGroups(Skill s, List<Hero[]> result) {
-        int[] targetMatrix = s.setupTargetMatrix();
+    private void setSingleTargetGroups(Skill s, int[] targetMatrix, List<Hero[]> result, boolean includeSelf) {
         for (int i : targetMatrix) {
             Hero[] targets = new Hero[1];
             Hero target = this.arena.getAtPosition(i);
-            if (s.allowAllyForSingle || target.isTeam2() != this.arena.activeHero.isTeam2()) {
+            if (!target.equals(s.hero) || includeSelf) {
                 targets[0] = target;
                 result.add(targets);
             }
@@ -274,6 +273,14 @@ public class ArenaAIController {
     }
     private void setAllTargetGroups(List<Hero[]> results) {
         results.add(this.arena.getAllLivingEntities().toArray(new Hero[0]));
+    }
+    private void setAllTargetsTargetGroups(int[] targetMatrix, List<Hero[]> results) {
+        Hero[] targets = new Hero[targetMatrix.length];
+        int index = 0;
+        for (int i : targetMatrix) {
+            targets[index++] = this.arena.getAtPosition(i);
+        }
+        results.add(targets);
     }
     private void setAllAllyTargetGroups(List<Hero[]> results) {
         results.add(this.arena.activeHero.getAllies().toArray(new Hero[0]));

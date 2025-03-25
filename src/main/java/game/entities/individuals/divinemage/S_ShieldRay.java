@@ -18,8 +18,9 @@ public class S_ShieldRay extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.targetType = TargetType.LINE;
-        this.distance = 2;
+        this.targetType = TargetType.ALL_TARGETS;
+        this.possibleCastPositions = new int[]{0,1};
+        this.possibleTargetPositions = new int[]{2,3};
         this.faithCost = 3;
         this.abilityType = AbilityType.TACTICAL;
     }

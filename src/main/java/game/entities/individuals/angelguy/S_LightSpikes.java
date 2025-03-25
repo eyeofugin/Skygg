@@ -23,7 +23,9 @@ public class S_LightSpikes extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.targetType = TargetType.ALL_ENEMY;
+        this.targetType = TargetType.ALL_TARGETS;
+        this.possibleTargetPositions = new int[]{4,5,6,7};
+        this.possibleCastPositions = new int[]{0,1,2,3};
         this.dmg = 5;
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.5));
         this.cdMax = 2;

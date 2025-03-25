@@ -29,7 +29,8 @@ public class S_Fireblast extends Skill {
         this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.6));
         this.targetType = TargetType.SINGLE;
         this.effects = List.of(new Burning(2));
-        this.distance = 2;
+        this.possibleCastPositions = new int[]{1,2};
+        this.possibleTargetPositions = new int[]{4,5};
         this.dmg = 7;
         this.damageMode = DamageMode.MAGICAL;
         this.abilityType = AbilityType.TACTICAL;

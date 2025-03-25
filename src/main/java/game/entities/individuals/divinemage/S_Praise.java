@@ -20,6 +20,7 @@ public class S_Praise extends Skill {
         super.setToInitial();
         this.targetType = TargetType.SELF;
         this.primary = true;
+        this.possibleCastPositions = new int[]{0,1,2,3};
         this.targetResources = List.of(new Resource(Stat.CURRENT_FAITH, Stat.FAITH, 1));
         this.faithGain = true;
         this.abilityType = AbilityType.PRIMARY;

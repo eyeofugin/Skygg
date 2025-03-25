@@ -38,9 +38,7 @@ public abstract class Skill {
     protected String animationName = "action_w";
     public AbilityType abilityType;
 
-    protected int distance = 0;
     protected TargetType targetType = TargetType.SINGLE;
-    protected int targetRadius = 0;
 
     protected DamageMode damageMode = null;
     protected boolean passive = false;
@@ -76,17 +74,10 @@ public abstract class Skill {
     protected boolean ultimate = false;
     protected boolean comboEnabled = false;
     protected boolean faithGain = false;
-    public boolean allowAllyForSingle = false;
+    public int priority = 0;
+
     public int[] possibleTargetPositions;
     public int[] possibleCastPositions;
-
-    public static List<TargetType> MAX_ACC_TARGET_TYPES = List.of(
-            TargetType.SELF,
-            TargetType.ALL_ALLY,
-            TargetType.SINGLE_ALLY,
-            TargetType.SINGLE_ALLY_IN_FRONT,
-            TargetType.SINGLE_ALLY_BEHIND
-    );
 
 //AI
     public List<SkillTag> tags = new ArrayList<>();
@@ -138,7 +129,6 @@ public abstract class Skill {
     }
     public void setToInitial() {
         Logger.logLn("Set to initial");
-        this.targetRadius = 0;
         this.passive = false;
         this.isMove = false;
         this.movedWithEffects = new ArrayList<>();
@@ -226,10 +216,7 @@ public abstract class Skill {
         } else {
             oncePerActivationEffect();
             for (Hero arenaTarget : targets) {
-                if (this.targetType.equals(TargetType.SINGLE_ALLY)
-                        || this.targetType.equals(TargetType.SINGLE_ALLY_IN_FRONT)
-                        || this.targetType.equals(TargetType.SINGLE_ALLY_BEHIND)
-                        || this.targetType.equals(TargetType.ALL_ALLY)) {
+                if (!this.targetType.equals(TargetType.SINGLE) && !this.targetType.equals(TargetType.SINGLE_OTHER)) {
                     this.individualResolve(arenaTarget);
                 } else {
                     Logger.logLn("Resolve " + this.getName() + " for " + arenaTarget.getName());
@@ -321,54 +308,25 @@ public abstract class Skill {
         return result;
     }
     public int[] setupTargetMatrix() {
-        int[] baseTargets = new int[]{0,1,2,3,4,5,6,7};
-        int position = this.hero.getPosition();
+        if (this.targetType == null) {
+            return new int[0];
+        }
+        List<Integer> targetList = new ArrayList<>();
 
-        if (!this.hero.isTeam2() && this.targetType.equals(TargetType.SINGLE_ALLY)) {
-            baseTargets = new int[]{0,1,2,3};
-        } else if (this.hero.isTeam2() && this.targetType.equals(TargetType.SINGLE_ALLY)) {
-            baseTargets = new int[]{4,5,6,7};
-        } else if (!this.hero.isTeam2() && this.targetType.equals(TargetType.SINGLE_ALLY_IN_FRONT)) {
-            baseTargets = Arrays.stream(baseTargets).filter(i->i<4 && i>position).toArray();
-        } else if (this.hero.isTeam2() && this.targetType.equals(TargetType.SINGLE_ALLY_IN_FRONT)) {
-            baseTargets = Arrays.stream(baseTargets).filter(i->i>3 && i<position).toArray();
-        } else if (this.targetType.equals(TargetType.ENEMY_LINE)) {
-            baseTargets = this.hero.isTeam2()?new int[]{0,1,2,3}:new int[]{4,5,6,7};
-        } else if (this.targetType.equals(TargetType.SINGLE_ALLY_BEHIND)) {
-            if (this.hero.isTeam2()) {
-                baseTargets = Arrays.stream(baseTargets).filter(i->i>4 && i>position).toArray();
-            } else {
-                baseTargets = Arrays.stream(baseTargets).filter(i->i<3 && i<position).toArray();
+        for (int pos : this.possibleTargetPositions) {
+            int targetPos = this.hero.isTeam2() ? Arena.lastEnemeyPos - pos : pos;
+            if (this.targetType.equals(TargetType.SINGLE_OTHER) && this.hero.getPosition() == targetPos) {
+                continue;
             }
+            targetList.add(targetPos);
         }
-        int range = this.distance;
-        for (int i = 0; i < baseTargets.length; i++) {
-            int dist = Math.abs(position-baseTargets[i]);
-            if (dist>range) {
-                baseTargets[i]=-1;
-            }
-            Hero possibleTarget = this.hero.arena.getAtPosition(baseTargets[i]);
-            if (possibleTarget == null) {
-                baseTargets[i] = -1;
-            } else if (this.targetType.equals(TargetType.SINGLE) && possibleTarget.hasPermanentEffect(Threatening.class) > 0) {
-                for (int j = 0; j < baseTargets.length; j++) {
-                    if (baseTargets[j] != baseTargets[i]) {
-                        baseTargets[j] = -1;
-                    }
-                }
-            } else if (this.targetType.equals(TargetType.LINE)) {
-                if (position == baseTargets[i]) {
-                    baseTargets[i] = -1;
-                }
-            }
+        Collections.sort(targetList);
+        int[] targets = new int[targetList.size()];
+        for (int i = 0; i < targets.length; i++) {
+            targets[i] = targetList.get(i);
         }
-        List<Integer> resultList = new ArrayList<>();
-        for (int baseTarget : baseTargets) {
-            if (baseTarget != -1) {
-                resultList.add(baseTarget);
-            }
-        }
-        return resultList.stream().mapToInt(i->i).toArray();
+
+        return targets;
     }
 
     public int getLifeCost(Hero caster) {
@@ -385,28 +343,12 @@ public abstract class Skill {
         return result;
     }
 
-    public void setDistance(int distance) {
-        this.distance = distance;
-    }
-
-    public int getDistance() {
-        return distance;
-    }
-
     public TargetType getTargetType() {
         return targetType;
     }
 
     public void setTargetType(TargetType targetType) {
         this.targetType = targetType;
-    }
-
-    public int getTargetRadius() {
-        return targetRadius;
-    }
-
-    public void setTargetRadius(int targetRadius) {
-        this.targetRadius = targetRadius;
     }
 
     public DamageMode getDamageMode() {
@@ -625,15 +567,6 @@ public abstract class Skill {
             case SINGLE -> {
                 builder.append("Any");
             }
-            case SINGLE_ALLY -> {
-                builder.append("Ally");
-            }
-            case SINGLE_ALLY_IN_FRONT -> {
-                builder.append("Ally front");
-            }
-            case SINGLE_ALLY_BEHIND -> {
-                builder.append("Ally behind");
-            }
             case SELF -> {
                 builder.append("Self");
             }
@@ -648,24 +581,6 @@ public abstract class Skill {
             }
             case ALL -> {
                 builder.append("All");
-            }
-            case ALL_ENEMY -> {
-                builder.append("All enemies");
-            }
-            case ALL_ALLY -> {
-                builder.append("All allies");
-            }
-            case LINE -> {
-                builder.append("Line");
-            }
-            case FIRST_TWO_ENEMIES -> {
-                builder.append("First two enemies");
-            }
-            case FIRST_ENEMY -> {
-                builder.append("First enemy");
-            }
-            case ENEMY_LINE -> {
-                builder.append("Enemy line");
             }
             case ARENA -> {
                 builder.append("Arena");
@@ -754,9 +669,7 @@ public abstract class Skill {
                 "id=" + id +
                 ", Hero=" + hero.getName() +
                 ", name='" + getName() + '\'' +
-                ", distance=" + distance +
                 ", targetType=" + targetType +
-                ", targetRadius=" + targetRadius +
                 ", passive=" + passive +
                 ", isMove=" + isMove +
                 ", movedWithEffects=" + movedWithEffects +

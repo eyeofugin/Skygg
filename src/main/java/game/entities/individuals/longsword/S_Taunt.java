@@ -21,7 +21,8 @@ public class S_Taunt extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.SINGLE;
-        this.distance = 2;
+        this.possibleCastPositions = new int[]{2,3};
+        this.possibleTargetPositions = new int[]{4,5};
         this.cdMax = 5;
         this.effects = List.of(new Taunted(2));
         this.abilityType = AbilityType.TACTICAL;

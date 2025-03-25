@@ -26,7 +26,8 @@ public class S_IceClaw extends Skill {
                 new Multiplier(Stat.MANA, 0.15),
                 new Multiplier(Stat.MAGIC, 0.15));
         this.targetType = TargetType.SINGLE;
-        this.distance = 1;
+        this.possibleCastPositions = new int[]{2,3};
+        this.possibleTargetPositions = new int[]{4,5};
         this.dmg = 8;
         this.damageMode = DamageMode.PHYSICAL;
         this.primary = true;

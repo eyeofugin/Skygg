@@ -25,8 +25,9 @@ public class S_Combustion extends Skill {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG);
         this.targetType = TargetType.SINGLE;
+        this.possibleCastPositions = new int[]{1,2,3};
+        this.possibleTargetPositions = new int[]{4,5,6};
         this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.2));
-        this.distance = 2;
         this.dmg = 1;
         this.damageMode = DamageMode.MAGICAL;
         this.faithCost = 4;

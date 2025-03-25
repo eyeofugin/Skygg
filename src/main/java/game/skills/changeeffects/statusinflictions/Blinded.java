@@ -7,13 +7,15 @@ import game.skills.Effect;
 import game.skills.Skill;
 import game.skills.TargetType;
 
+import java.util.Arrays;
+
 public class Blinded extends Effect {
 
     public Blinded(int turns) {
         this.turns = turns;
         this.name = "Blinded";
         this.stackable = false;
-        this.description = "All skills have -1 range.";
+        this.description = "Single target skills have -1 range.";
         this.type = ChangeEffectType.STATUS_INFLICTION;
     }
 
@@ -30,10 +32,8 @@ public class Blinded extends Effect {
     public void castChange(CastChangePayload castChangePayload) {
         Skill skill = castChangePayload.skill;
         if (skill != null && skill.hero.equals(this.hero)) {
-            if (skill.getTargetType().equals(TargetType.SINGLE)
-                    || skill.getTargetType().equals(TargetType.LINE)
-                    || skill.getTargetType().equals(TargetType.ENEMY_LINE)) {
-                skill.setDistance(1);
+            if (skill.getTargetType().equals(TargetType.SINGLE)) {
+                skill.possibleCastPositions = Arrays.copyOfRange(skill.possibleCastPositions, 1, skill.possibleCastPositions.length);
             }
         }
     }

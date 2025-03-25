@@ -20,6 +20,7 @@ public class S_Prayer extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.SELF;
+        this.possibleCastPositions = new int[]{0,1,2,3};
         this.targetResources = List.of(new Resource(Stat.CURRENT_FAITH, Stat.FAITH, 3));
         this.primary = true;
         this.faithGain = true;

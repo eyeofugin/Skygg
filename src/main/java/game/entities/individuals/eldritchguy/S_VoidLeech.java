@@ -23,7 +23,8 @@ public class S_VoidLeech extends Skill {
         this.tags = List.of(SkillTag.DMG);
         this.dmgMultipliers = List.of(new Multiplier(Stat.LIFE, 0.05));
         this.targetType = TargetType.SINGLE;
-        this.distance = 1;
+        this.possibleCastPositions = new int[]{2,3};
+        this.possibleTargetPositions = new int[]{4,5};
         this.dmg = 5;
         this.damageMode = DamageMode.PHYSICAL;
         this.primary = true;

@@ -19,7 +19,8 @@ public class S_DoubleShot extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.SINGLE;
-        this.distance = 2;
+        this.possibleCastPositions = new int[]{0,1,2};
+        this.possibleTargetPositions = new int[]{4,5};
         this.primary = true;
         this.countAsHits = 2;
         this.dmg = 6;

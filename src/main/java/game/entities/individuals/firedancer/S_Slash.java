@@ -28,7 +28,8 @@ public class S_Slash extends Skill {
         this.tags = List.of(SkillTag.DMG);
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.45));
         this.targetType = TargetType.SINGLE;
-        this.distance = 2;
+        this.possibleCastPositions = new int[]{1,2,3};
+        this.possibleTargetPositions = new int[]{4};
         this.dmg = 9;
         this.damageMode = DamageMode.PHYSICAL;
         this.comboEnabled = true;

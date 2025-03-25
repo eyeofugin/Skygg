@@ -22,7 +22,9 @@ public class S_SpreadingFlames extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.tags = List.of(SkillTag.DMG);
-        this.targetType = TargetType.ALL_ENEMY;
+        this.targetType = TargetType.ALL_TARGETS;
+        this.possibleCastPositions = new int[]{0,1,2,3};
+        this.possibleTargetPositions = new int[]{4,5,6,7};
         this.faithCost = 6;
         this.ultimate = true;
         this.abilityType = AbilityType.ULT;

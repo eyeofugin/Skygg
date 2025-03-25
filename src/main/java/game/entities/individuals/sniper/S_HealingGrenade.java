@@ -23,7 +23,9 @@ public class S_HealingGrenade extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.targetType = TargetType.ALL_ALLY;
+        this.targetType = TargetType.ALL_TARGETS;
+        this.possibleCastPositions = new int[]{0,1,2,3};
+        this.possibleTargetPositions = new int[]{0,1,2,3};
         this.cdMax = 3;
         this.abilityType = AbilityType.TACTICAL;
     }

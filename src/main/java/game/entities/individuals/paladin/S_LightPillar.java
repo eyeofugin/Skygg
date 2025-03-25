@@ -24,7 +24,8 @@ public class S_LightPillar extends Skill {
         this.dmgMultipliers = List.of(new Multiplier(Stat.CURRENT_FAITH, 0.6));
         this.effects = List.of(new Disenchanted(1));
         this.targetType = TargetType.SINGLE;
-        this.distance = 2;
+        this.possibleCastPositions = new int[]{0,1,2};
+        this.possibleTargetPositions = new int[]{5,6,7};
         this.dmg = 2;
         this.faithCost = 2;
         this.damageMode = DamageMode.MAGICAL;

@@ -22,6 +22,7 @@ public class S_PhoenixFlames extends Skill {
         super.setToInitial();
         this.tags = List.of(SkillTag.BUFF);
         this.targetType = TargetType.SELF;
+        this.possibleCastPositions = new int[]{0,1,2,3};
         this.effects = List.of(new Exalted(3));
         this.faithCost = 13;
         this.abilityType = AbilityType.ULT;

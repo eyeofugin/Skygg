@@ -21,7 +21,8 @@ public class S_BlindingLight extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.SINGLE;
-        this.distance = 4;
+        this.possibleCastPositions = new int[]{0,1,2};
+        this.possibleTargetPositions = new int[]{4,5};
         this.manaCost = 5;
         this.effects = List.of(new Blinded(2));
         this.abilityType = AbilityType.TACTICAL;

@@ -28,6 +28,7 @@ public class S_SummonTheLight extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.ARENA;
+        this.possibleCastPositions = new int[]{0,1,2,3};
         this.faithCost = 5;
         this.abilityType = AbilityType.TACTICAL;
     }

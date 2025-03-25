@@ -23,7 +23,8 @@ public class S_HailMissile extends Skill {
         this.tags = List.of(SkillTag.DMG);
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.5));
         this.targetType = TargetType.SINGLE;
-        this.distance = 2;
+        this.possibleCastPositions = new int[]{0,1,2,3};
+        this.possibleTargetPositions = new int[]{4,5,6};
         this.dmg = 4;
         this.damageMode = DamageMode.MAGICAL;
         this.comboEnabled = true;

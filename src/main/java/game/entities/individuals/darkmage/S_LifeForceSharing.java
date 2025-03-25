@@ -23,8 +23,9 @@ public class S_LifeForceSharing extends Skill {
         super.setToInitial();
         this.tags = List.of(SkillTag.HEAL);
         this.healMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.5));
-        this.targetType = TargetType.SINGLE_ALLY;
-        this.distance = 2;
+        this.targetType = TargetType.SINGLE_OTHER;
+        this.possibleCastPositions = new int[]{0,1,2,3};
+        this.possibleTargetPositions = new int[]{0,1,2,3};
         this.lifeCost = 4;
         this.abilityType = AbilityType.TACTICAL;
     }

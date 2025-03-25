@@ -11,11 +11,7 @@ import framework.resources.SpriteLibrary;
 import framework.resources.SpriteUtils;
 import framework.states.Arena;
 import game.objects.Equipment;
-import game.skills.DamageMode;
-import game.skills.Effect;
-import game.skills.Resource;
-import game.skills.Skill;
-import game.skills.Stat;
+import game.skills.*;
 import game.skills.changeeffects.effects.Immunity;
 import game.skills.changeeffects.effects.Invincible;
 import game.skills.changeeffects.statusinflictions.Dazed;
@@ -351,7 +347,7 @@ public abstract class Hero extends GUIElement {
     }
 
     public int getSkillAccuracy(Skill skill) {
-        if (skill.getAccuracy() == -1 || Skill.MAX_ACC_TARGET_TYPES.contains(skill.getTargetType())) {
+        if (skill.getAccuracy() == -1 || skill.getTargetType().equals(TargetType.SELF)) {
             return 100;
         }
         return skill.getAccuracy();
@@ -597,7 +593,11 @@ public abstract class Hero extends GUIElement {
                 this.stats.get(Stat.CURRENT_ACTION) >= s.getActionCost() &&
                 this.stats.get(Stat.CURRENT_FAITH) >= s.getFaithCost() &&
                 this.stats.get(Stat.CURRENT_MANA) >= s.getManaCost() &&
-                s.getCdCurrent()<=0 && !s.isPassive() && s.performCheck(this);
+                s.getCdCurrent()<=0 && !s.isPassive() && isInPosition(s) &&
+                s.performCheck(this);
+    }
+    private boolean isInPosition(Skill s) {
+        return Arrays.stream(s.possibleCastPositions).anyMatch(i -> i == getSkillPos());
     }
     public void payForSkill(Skill s) {
         addToStat(Stat.CURRENT_LIFE, -1*s.getLifeCost(this));
@@ -898,6 +898,10 @@ public abstract class Hero extends GUIElement {
 
     public int getPosition() {
         return position;
+    }
+
+    public int getSkillPos() {
+        return this.isTeam2() ? Arena.lastEnemeyPos - this.getPosition() : this.getPosition();
     }
 
     public void setPosition(int position) {

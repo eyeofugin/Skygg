@@ -9,6 +9,8 @@ import game.entities.individuals.rifle.S_PiercingBolt;
 import game.skills.Effect;
 import game.skills.Skill;
 
+import java.util.Arrays;
+
 public class Scoped extends Effect {
     public Scoped(int turns) {
         this.turns = turns;
@@ -30,7 +32,14 @@ public class Scoped extends Effect {
     public void castChange(CastChangePayload castChangePayload) {
         Skill skill = castChangePayload.skill;
         if (skill != null && skill.hero.equals(this.hero) && skill.isPrimary()) {
-            skill.setDistance(skill.getDistance() + 1);
+
+            if (Arrays.stream(skill.possibleCastPositions).anyMatch(i -> i == 1)) {
+                return;
+            }
+            int[] newCastPositions = Arrays.copyOf(skill.possibleCastPositions, skill.possibleCastPositions.length+1);
+            newCastPositions[newCastPositions.length-1] = 1;
+            Arrays.sort(newCastPositions);
+            skill.possibleCastPositions = newCastPositions;
         }
     }
 }

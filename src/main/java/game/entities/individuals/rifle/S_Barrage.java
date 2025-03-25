@@ -22,9 +22,10 @@ public class S_Barrage extends Skill {
         this.tags = List.of(SkillTag.DMG);
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.15));
         this.effects = List.of(new Injured(1));
-        this.targetType = TargetType.ENEMY_LINE;
+        this.possibleCastPositions = new int[]{0,1};
+        this.possibleTargetPositions = new int[]{4,5,6};
+        this.targetType = TargetType.ALL_TARGETS;
         this.dmg = 10;
-        this.distance = 3;
         this.damageMode = DamageMode.PHYSICAL;
         this.cdMax = 4;
         this.abilityType = AbilityType.ULT;

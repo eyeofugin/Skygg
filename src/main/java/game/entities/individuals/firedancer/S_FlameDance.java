@@ -22,8 +22,9 @@ public class S_FlameDance extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.tags = List.of(SkillTag.MOVE, SkillTag.BUFF);
-        this.targetType = TargetType.SINGLE_ALLY;
-        this.distance = 1;
+        this.targetType = TargetType.SINGLE_OTHER;
+        this.possibleCastPositions = new int[]{0,1,2,3};
+        this.possibleTargetPositions = new int[]{0,1,2,3};
         this.faithCost = 2;
         this.actionCost = 0;
         this.abilityType = AbilityType.TACTICAL;

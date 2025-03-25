@@ -20,8 +20,9 @@ public class S_ShieldAssault extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.tags = List.of(SkillTag.MOVE);
-        this.targetType = TargetType.SINGLE_ALLY_IN_FRONT;
-        this.distance = 1;
+        this.targetType = TargetType.SINGLE;
+        this.possibleCastPositions = new int[]{1,2};
+        this.possibleTargetPositions = new int[]{3};
         this.abilityType = AbilityType.TACTICAL;
     }
 
@@ -43,7 +44,7 @@ public class S_ShieldAssault extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Moves 1. Dazes first opponent.";
+        return "Moves. Dazes first opponent.";
     }
 
     @Override

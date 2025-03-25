@@ -28,7 +28,8 @@ public class S_FrostBite extends Skill {
                 new Multiplier(Stat.MAGIC, 0.2));
         this.effects = List.of(new Injured(1));
         this.targetType = TargetType.SINGLE;
-        this.distance = 1;
+        this.possibleCastPositions = new int[]{2,3};
+        this.possibleTargetPositions = new int[]{4};
         this.dmg = 9;
         this.damageMode = DamageMode.PHYSICAL;
         this.primary = true;
