@@ -21,7 +21,7 @@ public class S_Reposte extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.DMG);
+        this.tags = List.of(SkillTag.PRIMARY);
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.3));
         this.targetType = TargetType.SINGLE;
         this.possibleCastPositions = new int[]{2,3};
@@ -29,8 +29,6 @@ public class S_Reposte extends Skill {
         this.dmg = 8;
         this.casterEffects = List.of(new Cover(1));
         this.damageMode = DamageMode.PHYSICAL;
-        this.primary = true;
-        this.abilityType = AbilityType.PRIMARY;
     }
 
 

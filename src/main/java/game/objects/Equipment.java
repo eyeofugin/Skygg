@@ -154,7 +154,7 @@ public class Equipment {
                 builder.append(Color.DARKRED.getCodeString());
             }
             builder.append(entry.getValue()).append(" ");
-            builder.append(entry.getKey().getIconString());
+            builder.append(entry.getKey().getReference());
             builder.append(" ");
         }
         return builder.toString();

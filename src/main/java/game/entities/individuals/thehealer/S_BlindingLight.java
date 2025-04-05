@@ -1,8 +1,8 @@
 package game.entities.individuals.thehealer;
 
 import game.entities.Hero;
-import game.skills.AbilityType;
 import game.skills.Skill;
+import game.skills.SkillTag;
 import game.skills.TargetType;
 import game.skills.changeeffects.statusinflictions.Blinded;
 
@@ -20,12 +20,12 @@ public class S_BlindingLight extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
+        this.tags = List.of(SkillTag.TACTICAL);
         this.targetType = TargetType.SINGLE;
         this.possibleCastPositions = new int[]{0,1,2};
         this.possibleTargetPositions = new int[]{4,5};
         this.manaCost = 5;
         this.effects = List.of(new Blinded(2));
-        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override

@@ -18,14 +18,13 @@ public class S_HealingGleam extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
+        this.tags = List.of(SkillTag.ULT);
         this.targetType = TargetType.ALL_TARGETS;
         this.heal = 10;
         this.healMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.3));
         this.possibleCastPositions = new int[]{0,1};
         this.possibleTargetPositions = new int[]{2,3};
         this.faithCost = 12;
-        this.ultimate = true;
-        this.abilityType = AbilityType.ULT;
     }
 
     @Override
@@ -49,7 +48,7 @@ public class S_HealingGleam extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Heals and removes all debuffs.";
+        return "Removes all debuffs.";
     }
     @Override
     public String getName() {

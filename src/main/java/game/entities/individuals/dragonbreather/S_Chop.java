@@ -1,5 +1,6 @@
 package game.entities.individuals.dragonbreather;
 
+import framework.graphics.text.Color;
 import game.entities.Hero;
 import game.entities.Multiplier;
 import game.skills.*;
@@ -22,15 +23,13 @@ public class S_Chop extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.DMG);
+        this.tags = List.of(SkillTag.PRIMARY);
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.3), new Multiplier(Stat.MAGIC, 0.2));
         this.targetType = TargetType.SINGLE;
         this.possibleCastPositions = new int[]{2,3};
         this.possibleTargetPositions = new int[]{4};
         this.dmg = 10;
         this.damageMode = DamageMode.PHYSICAL;
-        this.primary = true;
-        this.abilityType = AbilityType.PRIMARY;
     }
 
     @Override
@@ -58,7 +57,7 @@ public class S_Chop extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Chance to bleed and burn.";
+        return (this.hero.getStat(Stat.MAGIC) +30) + "(30+"+Stat.MAGIC.getColorKey()+"100%"+Stat.MAGIC.getIconString()+ Color.WHITE.getCodeString()+")% Chance to give "+Bleeding.getStaticIconString()+"(1) and "+Burning.getStaticIconString()+"(1).";
     }
 
     @Override

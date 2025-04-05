@@ -23,7 +23,8 @@ public class S_PocketDarkness extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.SINGLE;
-        this.distance = 5;
+        this.possibleCastPositions = new int[]{0,1,2};
+        this.possibleTargetPositions = new int[]{4,5,6};
     }
 
     @Override
@@ -43,7 +44,7 @@ public class S_PocketDarkness extends Skill {
 
     @Override
     public boolean performCheck(Hero hero) {
-        return this.equipment.isActive() && !this.isUsedUp;
+        return super.performCheck(hero) && this.equipment.isActive() && !this.isUsedUp;
     }
 
     public int getAIRating(Hero target) {

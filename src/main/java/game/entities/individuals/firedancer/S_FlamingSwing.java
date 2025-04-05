@@ -21,17 +21,14 @@ public class S_FlamingSwing extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.DMG);
+        this.tags = List.of(SkillTag.PRIMARY);
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.3));
         this.targetType = TargetType.SINGLE;
         this.possibleCastPositions = new int[]{2,3};
         this.possibleTargetPositions = new int[]{4,5};
         this.dmg = 3;
         this.damageMode = DamageMode.PHYSICAL;
-        this.comboEnabled = true;
-        this.primary = true;
-        this.faithGain = true;
-        this.abilityType = AbilityType.PRIMARY;
+        this.aiTags = List.of(AiSkillTag.COMBO_ENABLED, AiSkillTag.FAITH_GAIN);
     }
 
 

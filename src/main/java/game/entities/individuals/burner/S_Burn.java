@@ -20,21 +20,19 @@ public class S_Burn extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.CC);
+        this.tags = List.of(SkillTag.PRIMARY);
+        this.aiTags = List.of(AiSkillTag.FAITH_GAIN);
         this.targetType = TargetType.SINGLE;
         this.effects = List.of(new Burning(4));
         this.possibleCastPositions = new int[]{0,1,2};
         this.possibleTargetPositions = new int[]{4,5};
-        this.primary = true;
-        this.faithGain = true;
-        this.abilityType = AbilityType.PRIMARY;
     }
 
 
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Gets 2"+Stat.FAITH.getIconString()+". Give 4 Burn stacks.";
+        return "Get 2"+Stat.FAITH.getIconString()+".";
     }
     @Override
     public void applySkillEffects(Hero target) {

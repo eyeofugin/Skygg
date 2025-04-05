@@ -11,12 +11,17 @@ import java.util.Arrays;
 
 public class Blinded extends Effect {
 
+    public static String ICON_STRING = "BLI";
     public Blinded(int turns) {
         this.turns = turns;
+        this.iconString = ICON_STRING;
         this.name = "Blinded";
         this.stackable = false;
         this.description = "Single target skills have -1 range.";
         this.type = ChangeEffectType.STATUS_INFLICTION;
+    }
+    public static String getStaticIconString() {
+        return "[" + ICON_STRING + "]";
     }
 
     @Override

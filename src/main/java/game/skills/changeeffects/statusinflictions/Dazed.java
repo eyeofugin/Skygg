@@ -9,14 +9,19 @@ import game.skills.genericskills.S_Skip;
 
 public class Dazed extends Effect {
 
+    public static String ICON_STRING = "DAZ";
     public Dazed(int turns) {
         this.turns = turns;
+        this.iconString = ICON_STRING;
         this.name = "Dazed";
         this.stackable = false;
         this.description = "CD for skills is +1.";
         this.type = ChangeEffectType.STATUS_INFLICTION;
     }
 
+    public static String getStaticIconString() {
+        return "[" + ICON_STRING + "]";
+    }
     @Override
     public Effect getNew() {
         return new Dazed(this.turns);

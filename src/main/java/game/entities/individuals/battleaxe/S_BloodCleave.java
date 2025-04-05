@@ -21,7 +21,7 @@ public class S_BloodCleave extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.DMG);
+        this.tags = List.of(SkillTag.PRIMARY);
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.2));
         this.targetType = TargetType.SINGLE;
         this.possibleCastPositions = new int[]{3};
@@ -29,8 +29,6 @@ public class S_BloodCleave extends Skill {
         this.dmg = 10;
         this.damageMode = DamageMode.PHYSICAL;
         this.effects = List.of(new Bleeding(1));
-        this.primary = true;
-        this.abilityType = AbilityType.PRIMARY;
     }
 
     @Override
@@ -41,7 +39,7 @@ public class S_BloodCleave extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "bleeds";
+        return " ";
     }
 
     @Override

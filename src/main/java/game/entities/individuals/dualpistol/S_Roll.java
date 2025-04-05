@@ -1,15 +1,10 @@
 package game.entities.individuals.dualpistol;
 
-import com.sun.source.tree.Scope;
 import game.entities.Hero;
-import game.skills.AbilityType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Combo;
-import game.skills.changeeffects.effects.Scoped;
-import game.skills.changeeffects.statusinflictions.Bleeding;
-import game.skills.changeeffects.statusinflictions.Rooted;
+
+import java.util.List;
 
 public class S_Roll extends Skill {
 
@@ -23,12 +18,12 @@ public class S_Roll extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
+        this.tags = List.of(SkillTag.TACTICAL);
+        this.aiTags = List.of(AiSkillTag.COMBO_ENABLED);
         this.targetType = TargetType.SINGLE_OTHER;
         this.possibleCastPositions = new int[]{1,2,3};
         this.possibleTargetPositions = new int[]{0,1,2};
         this.cdMax = 3;
-        this.comboEnabled = true;
-        this.abilityType = AbilityType.TACTICAL;
     }
 
 

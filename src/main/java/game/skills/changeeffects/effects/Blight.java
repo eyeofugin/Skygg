@@ -8,12 +8,17 @@ import game.skills.Stat;
 
 public class Blight extends Effect {
 
+    public static String ICON_STRING = "BLI";
     public Blight(int stacks) {
         this.name = "Blight";
+        this.iconString = ICON_STRING;
         this.stackable = true;
         this.stacks = stacks;
         this.description = "When receiving dmg, remove blight stacks and get 5 dmg per stack.";
         this.type = ChangeEffectType.DEBUFF;
+    }
+    public static String getStaticIconString() {
+        return "[" + ICON_STRING + "]";
     }
     @Override
     public Effect getNew() {

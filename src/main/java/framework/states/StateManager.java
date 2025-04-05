@@ -13,15 +13,17 @@ public class StateManager {
 
     public StateManager(Engine e) {
         this.engine = e;
-        HeroTeam left = new HeroTeam(1, new Hero[0], 1);
-        HeroTeam right = new HeroTeam(-1, new Hero[0], 2);
 
-        this.engine.memory = new Memory();
-        this.engine.memory.teams = new HeroTeam[]{left,right};
-        PvpDraft draft = new PvpDraft(e);
-        draft.setActive(true);
-        this.activeScene = draft;
-//        Draft draft = new Draft(e);
+        DevState devState = new DevState(this.engine);
+        devState.setActive(true);
+        this.activeScene = devState;
+
+//        HeroTeam left = new HeroTeam(1, new Hero[0], 1);
+//        HeroTeam right = new HeroTeam(-1, new Hero[0], 2);
+//
+//        this.engine.memory = new Memory();
+//        this.engine.memory.teams = new HeroTeam[]{left,right};
+//        PvpDraft draft = new PvpDraft(e);
 //        draft.setActive(true);
 //        this.activeScene = draft;
     }

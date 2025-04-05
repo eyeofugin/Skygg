@@ -20,16 +20,14 @@ public class S_ShatteringSwing extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.DMG);
+        this.tags = List.of(SkillTag.PRIMARY);
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.1));
         this.targetType = TargetType.SINGLE;
         this.possibleCastPositions = new int[]{2,3};
         this.possibleTargetPositions = new int[]{4};
         this.dmg = 5;
-        this.faithGain = true;
+        this.aiTags = List.of(AiSkillTag.FAITH_GAIN);
         this.damageMode = DamageMode.PHYSICAL;
-        this.primary = true;
-        this.abilityType = AbilityType.PRIMARY;
     }
 
 

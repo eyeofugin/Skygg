@@ -23,21 +23,19 @@ public class S_BlazingCleaver extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.DMG);
+        this.tags = List.of(SkillTag.PRIMARY);
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.1), new Multiplier(Stat.MAGIC, 0.3));
         this.targetType = TargetType.SINGLE;
         this.possibleCastPositions = new int[]{2,3};
         this.possibleTargetPositions = new int[]{4,5};
+        this.effects = List.of(new Burning(1));
         this.dmg = 14;
         this.damageMode = DamageMode.PHYSICAL;
-        this.primary = true;
-        this.abilityType = AbilityType.PRIMARY;
     }
 
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
-        target.addEffect(new Burning(1), this.hero);
         if (this.hero.hasPermanentEffect(Combo.class) > 0) {
             this.hero.removePermanentEffectOfClass(Combo.class);
             int burnStacks = target.getPermanentEffectStacks(Burning.class);
@@ -56,12 +54,12 @@ public class S_BlazingCleaver extends Skill {
 
 
     @Override
-    public String getDescriptionFor(Hero hero) {
-        return "Burns. Combo: Activates target burn stacks";
+    public String getComboDescription(Hero hero) {
+        return "Activates the target's "+Burning.getStaticIconString()+" stacks";
     }
 
     @Override
     public String getName() {
-        return "Chop";
+        return "Blazing Cleaver";
     }
 }

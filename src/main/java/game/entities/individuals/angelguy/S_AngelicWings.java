@@ -5,8 +5,6 @@ import game.entities.Multiplier;
 import game.skills.*;
 import game.skills.changeeffects.effects.Combo;
 import game.skills.changeeffects.effects.Cover;
-import game.skills.changeeffects.statusinflictions.Bleeding;
-import utils.MyMaths;
 
 import java.util.List;
 
@@ -21,24 +19,29 @@ public class S_AngelicWings extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.BUFF);
+        this.tags = List.of(SkillTag.TACTICAL);
         this.targetType = TargetType.SINGLE_OTHER;
         this.possibleTargetPositions = new int[]{0,1,2,3};
         this.possibleCastPositions = new int[]{0,1,2,3};
+        this.effects = List.of(new Cover(2), new Combo());
+        this.heal = 5;
+        this.healMultipliers = List.of(new Multiplier(Stat.ENDURANCE, 0.1));
         this.cdMax = 3;
-        this.abilityType = AbilityType.TACTICAL;
     }
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
-        target.addEffect(new Cover(2), this.hero);
-        target.addEffect(new Combo(), this.hero);
-        this.hero.heal(this.hero, 5 + (int)(this.hero.getStat(Stat.ENDURANCE)*0.1), this, false);
+        this.hero.heal(this.hero, getHealWithMulti(this.hero), this, false);
+    }
+
+    @Override
+    public String getDmgOrHealString() {
+        return "Heal self: "+ getHealString();//getHealWithMulti(this.hero)+" (5+" + Stat.ENDURANCE.getColorKey() + "10%" + Stat.ENDURANCE.getIconString() +")";
     }
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Gives cover and combo. Heals self for 5 + 10% END";
+        return "";
     }
 
 

@@ -19,12 +19,11 @@ public class S_Dispel extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.CC);
+        this.tags = List.of(SkillTag.TACTICAL);
         this.targetType = TargetType.SINGLE;
         this.possibleCastPositions = new int[]{1,2};
         this.possibleTargetPositions = new int[]{4,5};
         this.manaCost = 4;
-        this.abilityType = AbilityType.TACTICAL;
     }
 
 

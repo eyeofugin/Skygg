@@ -2,13 +2,11 @@ package game.entities.individuals.dragonbreather;
 
 import framework.connector.Connection;
 import framework.connector.Connector;
-import framework.connector.payloads.DmgChangesPayload;
 import framework.connector.payloads.EndOfRoundPayload;
 import game.entities.Hero;
-import game.skills.AbilityType;
 import game.skills.Effect;
 import game.skills.Skill;
-import game.skills.changeeffects.globals.Heat;
+import game.skills.SkillTag;
 
 import java.util.List;
 import java.util.Random;
@@ -25,13 +23,12 @@ public class S_DragonScales extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.passive = true;
-        this.abilityType = AbilityType.TACTICAL;
+        this.tags = List.of(SkillTag.TACTICAL, SkillTag.PASSIVE);
     }
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "At the end of turn, remove a random debuff";
+        return "At the end of each turn, remove a random debuff.";
     }
 
     @Override

@@ -19,7 +19,7 @@ public class S_Hotwings extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.DMG);
+        this.tags = List.of(SkillTag.PRIMARY);
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.5));
         this.targetType = TargetType.SINGLE;
         this.possibleCastPositions = new int[]{2,3};
@@ -27,9 +27,7 @@ public class S_Hotwings extends Skill {
         this.effects = List.of(new Burning(1));
         this.dmg = 4;
         this.damageMode = DamageMode.MAGICAL;
-        this.primary = true;
-        this.faithGain = true;
-        this.abilityType = AbilityType.PRIMARY;
+        this.aiTags = List.of(AiSkillTag.FAITH_GAIN);
     }
 
     @Override

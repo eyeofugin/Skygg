@@ -27,15 +27,11 @@ import game.skills.TargetType;
 import game.skills.changeeffects.effects.Scoped;
 import game.skills.changeeffects.globals.Heat;
 import game.skills.changeeffects.statusinflictions.Rooted;
+import utils.Action;
+import utils.ActionQueue;
 import utils.MyMaths;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
-import java.util.stream.Stream;
+import java.util.*;
 
 public class Arena extends GUIElement {
 
@@ -45,17 +41,19 @@ public class Arena extends GUIElement {
     public ArenaAIController aiController;
 
     public Queue queue = new Queue();
-
+    private final ActionQueue actionQueue = new ActionQueue();
 
     public enum Status {
+        HERO_CHOICE,
         TARGET_CHOICE,
         WAIT_ON_ANIMATION,
+        WAIT_ON_TURN,
         WAIT_ON_AI,
         WAIT_ON_HUD
     }
     public int round = 0;
     public boolean pvp = true;
-    public Status status = Status.WAIT_ON_HUD;
+    public Status status = Status.HERO_CHOICE;
     public String nextAction = null;
     public int activePointer = 0;
     public int[] pointers = new int[0];
@@ -66,8 +64,9 @@ public class Arena extends GUIElement {
     public Skill activeSkill;
     public Hero activeHero = null;
     public Hero[] activeTargets = null;
-    public HeroTeam friends;
-    public HeroTeam enemies;
+    public final List<HeroTeam> teams = new ArrayList<>();
+    public int activeTeamId;
+    private List<Hero> heroesChosen = new ArrayList<>();
     public GlobalEffect globalEffect;
 
     private final int[] friendXPos = new int[]{30, 98, 166, 234};
@@ -76,9 +75,7 @@ public class Arena extends GUIElement {
     public static int firstFriendPos = 0;
     public static int lastFriendPos = 3;
     public static int firstEnemyPos = 4;
-    public static int lastEnemeyPos = 7;
-    public static int[] friendPos = new int[]{0,1,2,3};
-    public static int[] enemyPos = new int[]{4,5,6,7};
+    public static int lastEnemyPos = 7;
     public static int[] allPos = new int[]{0,1,2,3,4,5,6,7};
     private final int heroYPos = 80;
 
@@ -95,72 +92,64 @@ public class Arena extends GUIElement {
     }
 
     public void setTeams(HeroTeam friend, HeroTeam enemies) {
-        this.friends = friend;
-        this.enemies = enemies;
-        for (int i = 0; i < this.friends.heroes.length; i++) {
-            Hero hero = this.friends.heroes[i];
-            hero.setPosition(i);
-            hero.arena = this;
-            hero.team = this.friends;
-            for (Equipment item : hero.getEquipments()) {
-                item.equipToHero(hero);
+        this.teams.add(0,friend);
+        this.teams.add(1,enemies);
+        for (HeroTeam team : this.teams) {
+            for (int i = 0; i < team.heroes.length; i++) {
+                Hero hero = team.heroes[i];
+                hero.setPosition(i);
+                hero.arena = this;
+                hero.team = team;
+                for (Equipment item : hero.getEquipments()) {
+                    item.equipToHero(hero);
+                }
+                hero.changeStatTo(Stat.CURRENT_LIFE, hero.getStat(Stat.LIFE));
+                hero.changeStatTo(Stat.CURRENT_MANA, hero.getStat(Stat.MANA));
+                hero.changeStatTo(Stat.CURRENT_FAITH, 0);
             }
-            hero.changeStatTo(Stat.CURRENT_LIFE, hero.getStat(Stat.LIFE));
-            hero.changeStatTo(Stat.CURRENT_MANA, hero.getStat(Stat.MANA));
-            hero.changeStatTo(Stat.CURRENT_FAITH, 0);
         }
-        for (int i = 0; i < this.enemies.heroes.length; i++) {
-            Hero hero = this.enemies.heroes[i];
-            hero.setPosition(Math.abs(i-2) + numberPositions);
-            hero.arena = this;
-            hero.team = this.enemies;
-            for (Equipment item : hero.getEquipments()) {
-                item.equipToHero(hero);
-            }
-            hero.changeStatTo(Stat.CURRENT_LIFE, hero.getStat(Stat.LIFE));
-            hero.changeStatTo(Stat.CURRENT_MANA, hero.getStat(Stat.MANA));
-            hero.changeStatTo(Stat.CURRENT_FAITH, 0);
-        }
-        initialOrder();
-        this.activeHero = this.queue.peek();
-        if (this.activeHero == null) {
-            System.out.println("Could not retrieve first in queue");
-            return;
-        }
-        this.hud.setActiveHero(this.activeHero);
         if (!this.pvp) {
             this.aiController.setup();
         }
-        this.updateEntities();
         this.startOfMatch();
     }
-    private void initialOrder() {
-        List<Hero> backwards = new ArrayList<>(Stream.concat(friends.getHeroesAsList().stream(), enemies.getHeroesAsList().stream())
-                .filter(Objects::nonNull)
-                .toList());
-        Collections.shuffle(backwards);
-        backwards = backwards.stream()
-                .sorted((Hero e1, Hero e2)->Integer.compare(e2.getStat(Stat.SPEED), e1.getStat(Stat.SPEED)))
-                .toList();
-        this.queue.addAll(backwards);
+    private void startOfMatch() {
+        StartOfMatchPayload startOfMatchPayload = new StartOfMatchPayload();
+        Connector.fireTopic(Connector.START_OF_MATCH, startOfMatchPayload);
+        this.startTurn();
+    }
+    private void startTurn() {
+        for (Hero hero: this.getAllLivingEntities()) {
+            hero.startOfTurn();
+            hero.prepareCast();
+        }
+        this.status = Status.HERO_CHOICE;
+        switchTeam(1);
+    }
+    private void switchTeam(int id) {
+        this.pointers = new int[0];
+        this.activePointer = id == 1 ? lastFriendPos : firstEnemyPos;
+        this.activeTeamId = id;
     }
 
     @Override
     public void update(int frame) {
         switch (status) {
+            case HERO_CHOICE -> updateChooseHero();
             case TARGET_CHOICE -> updateChooseTarget();
             case WAIT_ON_ANIMATION -> updateWaitOnAnimation();
+            case WAIT_ON_TURN -> resumeTurn();
         }
         this.hud.update(frame);
         updateAnimations(frame);
     }
     private void updateAnimations(int frame) {
-        friends.updateAnimations(frame);
-        enemies.updateAnimations(frame);
+        this.teams.forEach(t->t.updateAnimations(frame));
     }
     private void updateWaitOnAnimation() {
         int amntRunning = 0;
-        for (Hero e : Stream.concat(friends.getHeroesAsList().stream(), enemies.getHeroesAsList().stream()).toList()) {
+
+        for (Hero e : this.teams.stream().flatMap(ht->ht.getHeroesAsList().stream()).toList()) {
             if (e!= null && e.anim.waitFor) {
                 amntRunning++;
             }
@@ -168,7 +157,7 @@ public class Arena extends GUIElement {
         if (amntRunning == 0) {
             if (this.nextAction != null) {
                 try {
-                    Logger.logLn(this.nextAction);
+//                    Logger.logLn(this.nextAction);
                     Method method = this.getClass().getMethod(this.nextAction);
                     method.invoke(this);
                 } catch (Exception e) {
@@ -177,6 +166,31 @@ public class Arena extends GUIElement {
                 }
             } else {
                 resumeTurn();
+            }
+        }
+    }
+
+    private void updateChooseHero() {
+        if (engine.keyB._leftPressed) {
+            this.activePointer = this.getNextTeamPointer(-1);
+        }
+        if (engine.keyB._rightPressed) {
+            this.activePointer = this.getNextTeamPointer(1);
+        }
+        setPointerArray();
+        if (engine.keyB._backPressed) {
+            //if activehero is already null, remove last action
+            this.activeHero = null;
+            this.pointers = new int[0];
+            this.targetMatrix = new int[0];
+        }
+        if (engine.keyB._enterPressed) {
+            Hero hero = getAtPosition(this.activePointer);
+            if (!this.heroesChosen.contains(hero)) {
+                this.activeHero = hero;
+                this.pointers = new int[0];
+                this.targetMatrix = new int[0];
+                this.status = Status.WAIT_ON_HUD;
             }
         }
     }
@@ -199,10 +213,42 @@ public class Arena extends GUIElement {
             this.targetMatrix = new int[0];
         }
         if (engine.keyB._enterPressed) {
-            performSkill();
+            if (allChosen()) {
+                this.activeTeamId++;
+                if (this.activeTeamId == 1) {
+                    switchTeam(2);
+                    this.status = Status.HERO_CHOICE;
+                } else {
+                    this.status = Status.WAIT_ON_TURN;
+                }
+            } else {
+                addAction();
+                this.heroesChosen.add(this.activeHero);
+            }
             this.pointers = new int[0];
             this.targetMatrix = new int[0];
         }
+    }
+
+    private boolean allChosen() {
+        List<Hero> heroList = this.activeTeamId == 1? this.teams.get(0).getHeroesAsList() : this.teams.get(1).getHeroesAsList();
+        return new HashSet<>(this.heroesChosen).containsAll(heroList);
+    }
+
+    private void addAction() {
+        Action action = new Action();
+        action.skill = this.activeSkill;
+        action.targetPositions = this.pointers;
+        action.caster = this.activeHero;
+        this.actionQueue.addAction(action);
+    }
+    private int getNextTeamPointer(int dir) {
+        int pointer = this.activePointer + dir;
+        Hero hero = this.getAtPosition(pointer);
+        if (hero == null || hero.team.teamNumber != this.activeTeamId) {
+            return dir;
+        }
+        return pointer;
     }
     private void getNextMatrixPointer(int dir) {
         int nextMatrixPointer = this.matrixPointer+dir;
@@ -218,12 +264,13 @@ public class Arena extends GUIElement {
             } else if (this.activeSkill.getTargetType().equals(TargetType.ALL_TARGETS)) {
                 this.pointers = getAllTargets();
             }
+        } else if (this.status == Status.HERO_CHOICE) {
+            this.pointers = getSingleTargets();
         }
     }
 
     private void removeTheDead() {
-        this.queue.removeAll(friends.removeTheDead());
-        this.queue.removeAll(this.enemies.removeTheDead());
+        this.queue.removeAll(this.teams.stream().flatMap(ht->ht.removeTheDead().stream()).toList());
     }
     private void updateEntities() {
         PrepareUpdatePayload prepareUpdatePayload = new PrepareUpdatePayload();
@@ -238,69 +285,41 @@ public class Arena extends GUIElement {
         if (this.checkEndOfMatch()) {
             return;
         }
-
         this.updateEntities();
-        if (this.activeHero.getStat(Stat.CURRENT_ACTION) > 0) {
-            if (!this.pvp && this.activeHero.isTeam2()) {
-                aiTurn();
-            } else {
-                this.status = Status.WAIT_ON_HUD;
-                this.hud.activateTeamArenaOv();
-                this.hud.setActiveHero(this.activeHero);
+        if (this.actionQueue.hasAction()) {
+            Action action = this.actionQueue.getNextAction();
+            if (action != null) {
+                this.activeHero = action.caster;
+                this.activeSkill = action.skill;
+                if (this.activeHero.canPerform(this.activeSkill)) {
+                    this.activeSkill.setTargets(getEntitiesAt(action.targetPositions));
+                    this.performSkill();
+                } else {
+                    System.out.println("Failed. " + this.activeHero.getName() + ": " + this.activeSkill.getName());
+                }
+                this.actionQueue.remove(action);
             }
         } else {
-            endOfTurn();
+            endOfRound();
         }
     }
-    private void endOfTurn() {
-        Logger.logLn("endOfTurn()");
-        this.activeHero.endOfTurn();
-        this.queue.didTurn(this.activeHero);
-
-        checkEndOfRound();
-    }
     private boolean checkEndOfMatch() {
-        if (this.friends.deadHeroes.size() == numberPositions || this.enemies.deadHeroes.size() == numberPositions) {
+        if (this.teams.get(0).deadHeroes.size() == numberPositions || this.teams.get(1).deadHeroes.size() == numberPositions) {
             this.finished = true;
             return true;
         }
         return false;
     }
-    private void checkEndOfRound() {
-        if (this.queue.hasHeroUp()) {
-            startTurn();
-        } else {
-            endOfRound();
-        }
-    }
     private void endOfRound() {
         for (Hero hero: getAllLivingEntities()) {
             hero.endOfRound();
         }
-
+        this.heroesChosen = new ArrayList<>();
         EndOfRoundPayload endOfTurnPayload = new EndOfRoundPayload()
                 .setArena(this);
         Connector.fireTopic(Connector.END_OF_ROUND, endOfTurnPayload);
 
-        this.queue.restartTurnQueue();
-
         this.startTurn();
-    }
-    private void startOfMatch() {
-        StartOfMatchPayload startOfMatchPayload = new StartOfMatchPayload();
-        Connector.fireTopic(Connector.START_OF_MATCH, startOfMatchPayload);
-        this.startTurn();
-    }
-    private void startTurn() {
-        Logger.logLn("startTurn()");
-        this.activeHero = this.queue.peek();
-        if (this.activeHero != null) {
-            Logger.logLn("-----------------------------");
-            Logger.logLn("Start turn for " + this.activeHero.getName() + " " + this.activeHero.getPosition());
-            this.activeHero.startOfTurn();
-            this.activeHero.prepareCast();
-            resumeTurn();
-        }
     }
     private void aiTurn() {
         Logger.logLn("aiTurn()");
@@ -310,13 +329,6 @@ public class Arena extends GUIElement {
     }
 
     private void performSkill() {
-         if (this.activeSkill.getTargets() == null || this.activeSkill.getTargets().isEmpty()
-                || this.activeSkill.getTargetType().equals(TargetType.ARENA)) {
-            this.activeTargets = getEntitiesAt(this.pointers);
-            this.activeSkill.setTargets(java.util.List.of(this.activeTargets));
-        }
-        Logger.logLn("Player will perform " + this.activeSkill.getName() + " at position " + this.activePointer);
-        //allEntities.onPerform(skill, targets);
         this.activeSkill.perform();
         this.pointers = new int[0];
         this.nextAction = "resolveSkill";
@@ -325,6 +337,8 @@ public class Arena extends GUIElement {
 
     public void resolveSkill() {
         this.activeSkill.resolve();
+        this.activeHero.endOfTurn();
+        this.actionQueue.updateActions();
         this.activeSkill = null;
         this.nextAction = null;
     }
@@ -346,16 +360,16 @@ public class Arena extends GUIElement {
             int targetPos = e.getPosition()+dir;
             int indexOffset = e.isTeam2() ? numberPositions:0;
 
-            if ((e.isTeam2() && (targetPos < firstEnemyPos || targetPos > lastEnemeyPos)) ||
+            if ((e.isTeam2() && (targetPos < firstEnemyPos || targetPos > lastEnemyPos)) ||
                     (!e.isTeam2() && (targetPos <firstFriendPos || targetPos > lastFriendPos))) {
                 return;
             }
-            if ((e.isTeam2() && (this.enemies.heroes.length <= targetPos-numberPositions || this.enemies.heroes[targetPos-numberPositions] == null)) ||
-                    !e.isTeam2() && (this.friends.heroes.length <= targetPos || this.friends.heroes[targetPos] == null)) {
+            if ((e.isTeam2() && (this.teams.get(1).heroes.length <= targetPos-numberPositions || this.teams.get(1).heroes[targetPos-numberPositions] == null)) ||
+                    !e.isTeam2() && (this.teams.get(0).heroes.length <= targetPos || this.teams.get(0).heroes[targetPos] == null)) {
                 return;
             }
 
-            HeroTeam group = e.isTeam2() ? this.enemies : this.friends;
+            HeroTeam group = e.isTeam2() ? this.teams.get(1) : this.teams.get(0);
             int oldPosition = e.getPosition();
             Hero switchWith = group.heroes[targetPos-indexOffset];
 
@@ -388,7 +402,7 @@ public class Arena extends GUIElement {
         } else {
             Random rand = new Random();
             int from = this.activeHero.isTeam2()?firstFriendPos:lastFriendPos;
-            int until = this.activeHero.isTeam2()?firstEnemyPos:lastEnemeyPos;
+            int until = this.activeHero.isTeam2()?firstEnemyPos:lastEnemyPos;
             this.pointers = new int[]{};
             switch (this.activeSkill.getTargetType()) {
                 case SELF:
@@ -415,7 +429,7 @@ public class Arena extends GUIElement {
     }
 
     public List<Hero> getAllLivingEntities() {
-        return Stream.concat(this.friends.getHeroesAsList().stream(), this.enemies.getHeroesAsList().stream()).toList();
+        return this.teams.stream().flatMap(ht->ht.getHeroesAsList().stream()).toList();
     }
 
     public Hero getAtPosition(int position) {
@@ -484,13 +498,13 @@ public class Arena extends GUIElement {
         }
     }
     private void renderTeams() {
-        for (Hero hero: friends.heroes) {
+        for (Hero hero: this.teams.get(0).heroes) {
             if (hero != null) {
                 int x = friendXPos[hero.getPosition()];
                 fillWithGraphicsSize(x, heroYPos, hero.getWidth(), hero.getHeight(), hero.render(), this.activeHero.equals(hero));
             }
         }
-        for (Hero hero: enemies.heroes) {
+        for (Hero hero: this.teams.get(1).heroes) {
             if (hero != null) {
                 int x = enemyXPos[hero.getPosition() - firstEnemyPos];
                 fillWithGraphicsSize(x, heroYPos, hero.getWidth(), hero.getHeight(), hero.render(), this.activeHero.equals(hero));

@@ -22,33 +22,19 @@ public class S_BellowingRoar extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
+        this.tags = List.of(SkillTag.ULT);
         this.targetType = TargetType.SELF;
         this.possibleCastPositions = new int[]{0,1,2,3};
+        this.effects = List.of(new Threatening(2));
+        this.healMultipliers = List.of(new Multiplier(Stat.LIFE, 0.75));
         this.manaCost = 12;
-        this.ultimate = true;
-        this.abilityType = AbilityType.ULT;
     }
-
-    @Override
-    public void applySkillEffects(Hero target) {
-        super.applySkillEffects(target);
-        this.hero.addEffect(new Threatening(2), this.hero);
-        this.hero.heal(this.hero, this.hero.getStat(Stat.LIFE), null, false);
-    }
-
     @Override
     public int getAIRating(Hero target) {
         if (this.hero.getCurrentLifePercentage() < 50) {
             return 3;
         }
         return 0;
-    }
-
-
-
-    @Override
-    public String getDescriptionFor(Hero hero) {
-        return "Gain Threatening. Heal for 100% max life";
     }
 
     @Override

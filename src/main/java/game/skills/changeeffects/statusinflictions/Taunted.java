@@ -8,13 +8,19 @@ import game.skills.Skill;
 import game.skills.genericskills.S_Skip;
 
 public class Taunted extends Effect {
+
+    public static String ICON_STRING = "TAU";
     public Taunted(int turns) {
         this.turns = turns;
+        this.iconString = ICON_STRING;
         this.name = "Taunted";
         this.stackable = false;
         this.description = "Can only use skills that do dmg.";
         this.type = ChangeEffectType.STATUS_INFLICTION;
 
+    }
+    public static String getStaticIconString() {
+        return "[" + ICON_STRING + "]";
     }
 
     public void addSubscriptions() {
@@ -28,7 +34,8 @@ public class Taunted extends Effect {
 
     public void performCheck(CanPerformPayload payload) {
         if (payload.skill.hero.equals(this.hero) && payload.success) {
-            if (!payload.skill.tags.contains(Skill.SkillTag.DMG) && !(payload.skill instanceof S_Skip)) {
+            boolean isDmg = payload.skill.dmg>0 || !payload.skill.getDmgMultipliers().isEmpty();
+            if (!isDmg && !(payload.skill instanceof S_Skip)) {
                 payload.success = false;
             }
         }

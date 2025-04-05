@@ -65,7 +65,7 @@ public class TeamBuilder extends GUIElement {
                 }
             }
             if (engine.keyB._shoulderRightPressed) {
-                if (cardPointer != 2) {
+                if (cardPointer != 3) {
                     cardPointer++;
                 }
             }
@@ -162,19 +162,15 @@ public class TeamBuilder extends GUIElement {
     }
 
     private void renderAbilityCard() {
-        if (this.cardPointer == 1 || this.cardPointer == 0) {
-            TeamBuildAbilitiesCard card = this.abilitiesCardMap.get(this.activeHero);
-            if (card != null) {
-                fillWithGraphicsSize(card.getX(), card.getY(), card.getWidth(), card.getHeight(), card.render(), this.cardPointer == 1);
-            }
+        TeamBuildAbilitiesCard card = this.abilitiesCardMap.get(this.activeHero);
+        if (card != null) {
+            fillWithGraphicsSize(card.getX(), card.getY(), card.getWidth(), card.getHeight(), card.render(this.cardPointer == 1), this.cardPointer == 1);
         }
     }
     private void renderItemsCard() {
-        if (this.cardPointer == 2) {
-            TeamBuildItemsCard card = this.itemsCardMap.get(this.activeHero);
-            if (card != null) {
-                fillWithGraphicsSize(card.getX(), card.getY(), card.getWidth(), card.getHeight(), card.render(), this.cardPointer == 2);
-            }
+        TeamBuildItemsCard card = this.itemsCardMap.get(this.activeHero);
+        if (card != null) {
+            fillWithGraphicsSize(card.getX(), card.getY(), card.getWidth(), card.getHeight(), card.render(this.cardPointer == 2), this.cardPointer == 2);
         }
     }
 

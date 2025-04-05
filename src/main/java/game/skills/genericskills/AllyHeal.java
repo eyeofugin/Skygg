@@ -18,9 +18,6 @@ public class AllyHeal extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(Skill.SkillTag.DMG);
-        this.targetType = TargetType.SINGLE_ALLY;
-        this.distance = 8;
         this.heal = 1;
     }
 

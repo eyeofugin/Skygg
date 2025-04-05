@@ -27,6 +27,8 @@ public abstract class Effect {
         DEBUFF;
     }
 
+    public static String ICON_STRING = "%%%";
+    public String iconString;
     public int turns = -1;
     public int stacks = 1;
     public Hero origin;
@@ -104,6 +106,13 @@ public abstract class Effect {
         }
         return "";
 
+    }
+
+    public String getIconString() {
+        return "[" + this.iconString + "]";
+    }
+    public static String getStaticIconString() {
+        return "[" + ICON_STRING + "]";
     }
 
     @Override

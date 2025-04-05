@@ -7,11 +7,16 @@ import game.skills.Effect;
 
 public class Cover extends Effect {
 
+    public static String ICON_STRING = "COV";
     public Cover(int turns) {
         this.turns = turns;
+        this.iconString = ICON_STRING;
         this.name = "Cover";
         this.description = "Gain 20% dmg reduction";
         this.type = ChangeEffectType.BUFF;
+    }
+    public static String getStaticIconString() {
+        return "[" + ICON_STRING + "]";
     }
 
     @Override

@@ -4,9 +4,11 @@ import framework.connector.Connection;
 import framework.connector.Connector;
 import framework.connector.payloads.OnPerformPayload;
 import game.entities.Hero;
-import game.skills.AbilityType;
 import game.skills.Skill;
+import game.skills.SkillTag;
 import game.skills.Stat;
+
+import java.util.List;
 
 
 public class S_BlueLife extends Skill {
@@ -21,16 +23,12 @@ public class S_BlueLife extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.passive = true;
-        this.abilityType = AbilityType.TACTICAL;
+        this.tags = List.of(SkillTag.TACTICAL, SkillTag.PASSIVE);
     }
-
-
-
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Gain 50% of mana you spend as life";
+        return "Gain 50% of "+Stat.MANA.getIconString()+" you spend as "+Stat.LIFE.getIconString()+".";
     }
 
     @Override

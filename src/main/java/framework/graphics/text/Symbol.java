@@ -144,7 +144,7 @@ public class Symbol {
     public static Symbol ninex8=		new Symbol("9", 64,	51,54,	24,31,	SpriteSheet.fonts8x);
 
     public static Symbol pointx8 =		new Symbol(".","fonts/8x/point.png",2,8);
-    public static Symbol starx8 =		new Symbol("*","fonts/8x/star.png",2,8);
+    public static Symbol starx8 =		new Symbol("*","fonts/8x/star.png",3,8);
     public static Symbol slashx8 = 	new Symbol("/","fonts/8x/slash.png",3,8);
     public static Symbol colonx8 =     new Symbol(":","fonts/8x/colon.png",2,8);
     public static Symbol semicolonx8 =     new Symbol(";","fonts/8x/semicolon.png",2,8);
@@ -158,6 +158,8 @@ public class Symbol {
     public static Symbol percentagex8= new Symbol("%","fonts/8x/percentage.png",3,8);
     public static Symbol commax8 =     new Symbol(",","fonts/8x/comma.png",2,8);
     public static Symbol spacex8 =     new Symbol(" ","fonts/8x/space.png",3,8);
+    public static Symbol apostrophex8 =     new Symbol("'","fonts/8x/apostrophe.png",2,8);
+    public static Symbol infinitex8 = new Symbol("~", "fonts/infinite.png", 8, 8);
 
     public static Symbol point5x8 =		initPoint5x8();
     public static Symbol slash5x8 = 	initSlash5x8();
@@ -173,11 +175,50 @@ public class Symbol {
     public static Symbol comma5x8 =     initComma5x8();
 
     public static Symbol faith =    new Symbol("fonts/faith.png",5,8);
+    public static Symbol faithmax = new Symbol("fonts/faithmax.png",5,8);
+    public static Symbol halo =    new Symbol("fonts/halo.png",5,8);
+    public static Symbol halomax =    new Symbol("fonts/halomax.png",5,8);
     public static Symbol mana = 	new Symbol("fonts/mana.png",5,8);
+    public static Symbol manamax = 	new Symbol("fonts/manamax.png",5,8);
+    public static Symbol manaregain = 	new Symbol("fonts/manaregain.png",5,8);
     public static Symbol life = new Symbol("fonts/life.png",5,8);
+    public static Symbol lifemax = new Symbol("fonts/lifemax.png",5,8);
+    public static Symbol liferegain = new Symbol("fonts/liferegain.png",5,8);
     public static Symbol turn = new Symbol("fonts/turn.png", 5,8);
     public static Symbol turnCD = new Symbol("fonts/turnCD.png", 5,8);
     public static Symbol shield = new Symbol("fonts/shield.png", 5,8);
+
+    public static Symbol axeswingcounter = new Symbol("icons/effect/axeswingcounter.png", 8,8);
+    public static Symbol blastingcounter = new Symbol("icons/effect/blastingcounter.png", 8,8);
+    public static Symbol blight = new Symbol("icons/effect/blightsmall.png", 8,8);
+    public static Symbol burning = new Symbol("icons/effect/burning.png", 8,8);
+    public static Symbol combo = new Symbol("icons/effect/combo.png", 8,8);
+    public static Symbol cover = new Symbol("icons/effect/smokescreen.png", 8,8);
+    public static Symbol darksecrets = new Symbol("icons/effect/darksecrets.png", 8,8);
+    public static Symbol doubleshot = new Symbol("icons/effect/doubleshot.png", 8,8);
+    public static Symbol exalted = new Symbol("icons/effect/exalted.png", 8,8);
+    public static Symbol frost = new Symbol("icons/effect/frost.png", 8,8);
+    public static Symbol gifted = new Symbol("icons/effect/gifted.png", 8,8);
+    public static Symbol immunity = new Symbol("icons/effect/immunity.png", 8,8);
+    public static Symbol invincible = new Symbol("icons/effect/invincible.png", 8,8);
+    public static Symbol lifesteal = new Symbol("icons/effect/lifesteal.png", 8,8);
+    public static Symbol lucky = new Symbol("icons/effect/lucky.png", 8,8);
+    public static Symbol regenboost = new Symbol("icons/effect/regenboost.png", 8,8);
+    public static Symbol regenstop = new Symbol("icons/effect/regenstop.png", 8,8);
+    public static Symbol righteoushammer = new Symbol("icons/effect/missing.png", 8,8);
+    public static Symbol scoped = new Symbol("icons/effect/scoped.png", 8,8);
+    public static Symbol steadfast = new Symbol("icons/effect/steadfast.png", 8,8);
+    public static Symbol swiftstrikecounter = new Symbol("icons/effect/swiftstrikecounter.png", 8,8);
+    public static Symbol threatening = new Symbol("icons/effect/threatening.png", 8,8);
+
+    public static Symbol bleeding = new Symbol("icons/effect/bleeding.png", 8,8);
+    public static Symbol blinded = new Symbol("icons/effect/blinded.png", 8,8);
+    public static Symbol dazed = new Symbol("icons/effect/dazed.png", 8,8);
+    public static Symbol disenchanted = new Symbol("icons/effect/disenchanted.png", 8,8);
+    public static Symbol injured = new Symbol("icons/effect/injured.png", 8,8);
+    public static Symbol rooted = new Symbol("icons/effect/rooted.png", 8,8);
+    public static Symbol taunted = new Symbol("icons/effect/taunted.png", 8,8);
+
 
     public static Symbol magic = new Symbol("fonts/magic.png", 8,8);
     public static Symbol finesse = new Symbol("fonts/finesse.png", 8,8);
@@ -189,11 +230,14 @@ public class Symbol {
     public static Symbol evasion = new Symbol("fonts/evasion.png", 8,8);
     public static Symbol lethality = new Symbol("fonts/lethality.png", 8,8);
     public static Symbol accuracy = new Symbol("fonts/accuracy.png", 8,8);
-    public static Symbol normal = new Symbol("fonts/normal.png", 8,8);
-    public static Symbol light = new Symbol("fonts/light.png", 8,8);
-    public static Symbol dark = new Symbol("fonts/dark.png", 8,8);
-    public static Symbol heat = new Symbol("fonts/heat.png", 8,8);
-    public static Symbol frost = new Symbol("fonts/frost.png", 8,8);
+
+    public static Symbol enemyTarget = new Symbol("fonts/enemytarget.png", 8,8);
+    public static Symbol friendTarget = new Symbol("fonts/friendtarget.png", 8,8);
+    public static Symbol otherTarget = new Symbol("fonts/othertarget.png", 8,8);
+    public static Symbol enemyTargetAll = new Symbol("fonts/enemytargetall.png", 8,8);
+    public static Symbol friendTargetAll = new Symbol("fonts/friendtargetall.png", 8,8);
+    public static Symbol otherTargetAll = new Symbol("fonts/othertargetall.png", 8,8);
+    public static Symbol emptyTarget = new Symbol("fonts/emptytarget.png", 8,8);
 
     public static Symbol smallNum1 = new Symbol(30,	0,2,	0,4,	SpriteSheet.smallNum);
     public static Symbol smallNum2 = new Symbol(30,	3,5,	0,4,	SpriteSheet.smallNum);

@@ -22,13 +22,12 @@ public class S_QuickShot extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
+        this.tags = List.of(SkillTag.TACTICAL);
         this.targetType = TargetType.SINGLE;
         this.possibleCastPositions = new int[]{1,2,3};
         this.possibleTargetPositions = new int[]{4,5};
         this.dmg = 2;
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.4));
-        this.primary = true;
-        this.abilityType = AbilityType.TACTICAL;
     }
 
 

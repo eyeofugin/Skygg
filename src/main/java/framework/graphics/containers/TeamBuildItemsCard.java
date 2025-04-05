@@ -20,8 +20,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TeamBuildItemsCard extends GUIElement {
-    public static final int _WIDTH = 400;
-    public static final int _HEIGHT = 250;
+    public static final int _WIDTH = 300;
+    public static final int _HEIGHT = 300;
 
     private final Engine engine;
 
@@ -37,7 +37,7 @@ public class TeamBuildItemsCard extends GUIElement {
     public TeamBuildItemsCard(Engine e) {
         super(_WIDTH, _HEIGHT);
         this.engine = e;
-        this.x = 220;
+        this.x = 300;
         this.y = 10;
 
         initItemDraft();
@@ -112,40 +112,48 @@ public class TeamBuildItemsCard extends GUIElement {
     public void finish() {
         this.hero.setEquipments(this.chosen);
     }
-    @Override
-    public int[] render() {
-        background(Color.BLACK);
+
+    public int[] render(boolean full) {
+        background(Color.VOID);
         renderDraft();
-        renderItemInfo();
+        if (full) {
+            renderItemInfo();
+        }
 //        renderTeams();
 //        renderHUD();
 //        renderChildren();
         return this.pixels;
     }
+
     private void renderDraft() {
-        int x = 10;
+        int x = 170;
         int y = 10;
         for (int i = 0; i < choices.length; i++) {
             Equipment equipment = this.choices[i];
             if (equipment != null) {
-
-                Color borderColor = (this.pointerX + this.maxX * this.pointerY) == i
-                        ? Color.WHITE
-                        : this.chosen.contains(equipment)
-                            ? Color.GREEN
-                            : Color.VOID;
+                Color borderColor = getBorderColorFor(equipment, i);
                 fillWithGraphicsSize(x, y, Property.EQUIPMENT_ICON_SIZE, Property.EQUIPMENT_ICON_SIZE, equipment.getIcon(), true, borderColor);
                 x += 19;
             }
             if ((i+1)%this.maxX==0) {
                 y += 19;
-                x = 10;
+                x = 170;
             }
         }
+    }
+    private Color getBorderColorFor(Equipment equipment, int i) {
+        if (this.chosen.contains(equipment)) {
+            return Color.GREEN;
+        } else if (!this.active) {
+            return Color.VOID;
+        } else if ((this.pointerX + this.maxX * this.pointerY) == i) {
+            return Color.WHITE;
+        }
+        return Color.VOID;
     }
     private void renderItemInfo() {
         ItemInfo info = new ItemInfo(this.choices[this.pointerX + this.maxX * this.pointerY]);
         info.setSize(200, 200);
-        fillWithGraphicsSize(130, 10, info.getWidth(), info.getHeight(), info.render(), false);
+        fillWithGraphicsSize(0, 200, info.getWidth(), info.getHeight(), info.render(), false);
     }
 }

@@ -18,12 +18,11 @@ public class S_Praise extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
+        this.tags = List.of(SkillTag.PRIMARY);
+        this.aiTags = List.of(AiSkillTag.FAITH_GAIN);
         this.targetType = TargetType.SELF;
-        this.primary = true;
         this.possibleCastPositions = new int[]{0,1,2,3};
         this.targetResources = List.of(new Resource(Stat.CURRENT_FAITH, Stat.FAITH, 1));
-        this.faithGain = true;
-        this.abilityType = AbilityType.PRIMARY;
     }
 
     @Override
@@ -35,7 +34,7 @@ public class S_Praise extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Gain 1 Faith. Gain 2 Faith for each ally over 50% life";
+        return "Gain 1"+Stat.FAITH.getIconString()+". Gain 2"+Stat.FAITH.getIconString()+" for each ally with more than 50%" + Stat.LIFE.getReference()+ ".";
     }
     @Override
     public String getName() {

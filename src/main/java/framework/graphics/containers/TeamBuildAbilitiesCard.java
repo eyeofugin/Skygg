@@ -7,6 +7,7 @@ import framework.graphics.elements.SkillInfo;
 import framework.graphics.text.Color;
 import game.entities.Hero;
 import game.skills.Skill;
+import game.skills.SkillTag;
 import game.skills.genericskills.S_Skip;
 
 import java.util.ArrayList;
@@ -14,15 +15,15 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TeamBuildAbilitiesCard extends GUIElement {
-    public static final int _WIDTH = 400;
-    public static final int _HEIGHT = 250;
+    public static final int _WIDTH = 300;
+    public static final int _HEIGHT = 300;
 
     private final Engine engine;
 
     private Hero hero;
     private int abilityPointer = 0;
-    private List<Skill> availableSkills = new ArrayList<>();
-    private List<Skill> chosenSkills = new ArrayList<>();
+    private final List<Skill> availableSkills = new ArrayList<>();
+    private final List<Skill> chosenSkills = new ArrayList<>();
     private int primaryChosen = 0;
     private int tacticalChosen = 0;
     private int ultimateChosen = 0;
@@ -30,7 +31,7 @@ public class TeamBuildAbilitiesCard extends GUIElement {
     public TeamBuildAbilitiesCard(Engine e) {
         super(_WIDTH, _HEIGHT);
         this.engine = e;
-        this.x = 220;
+        this.x = 300;
         this.y = 10;
     }
 
@@ -69,32 +70,23 @@ public class TeamBuildAbilitiesCard extends GUIElement {
     private void chooseAbility() {
         Skill skill = this.availableSkills.get(this.abilityPointer);
         if (this.chosenSkills.contains(skill)) {
-            this.chosenSkills.remove(skill);
-            switch (skill.abilityType) {
-                case PRIMARY -> this.primaryChosen--;
-                case TACTICAL -> this.tacticalChosen--;
-                case ULT -> this.ultimateChosen--;
-            }
+            removeAbility();
             return;
         }
-        switch (skill.abilityType) {
-            case PRIMARY -> {
-                if (this.primaryChosen == 0) {
-                    this.primaryChosen++;
-                    this.chosenSkills.add(skill);
-                }
+        if (skill.tags.contains(SkillTag.PRIMARY)) {
+            if (this.primaryChosen == 0) {
+                this.primaryChosen++;
+                this.chosenSkills.add(skill);
             }
-            case TACTICAL -> {
-                if (this.tacticalChosen < 2) {
-                    this.tacticalChosen++;
-                    this.chosenSkills.add(skill);
-                }
+        } else if (skill.tags.contains(SkillTag.TACTICAL)) {
+            if (this.tacticalChosen < 2) {
+                this.tacticalChosen++;
+                this.chosenSkills.add(skill);
             }
-            case ULT -> {
-                if (this.ultimateChosen == 0) {
-                    this.ultimateChosen++;
-                    this.chosenSkills.add(skill);
-                }
+        } else if (skill.tags.contains(SkillTag.ULT)) {
+            if (this.ultimateChosen == 0) {
+                this.ultimateChosen++;
+                this.chosenSkills.add(skill);
             }
         }
     }
@@ -103,19 +95,22 @@ public class TeamBuildAbilitiesCard extends GUIElement {
         Skill skill = this.availableSkills.get(this.abilityPointer);
         if (this.chosenSkills.contains(skill)) {
             this.chosenSkills.remove(skill);
-            switch (skill.abilityType) {
-                case PRIMARY -> this.primaryChosen--;
-                case TACTICAL -> this.tacticalChosen--;
-                case ULT -> this.ultimateChosen--;
+            if (skill.tags.contains(SkillTag.PRIMARY)) {
+                this.primaryChosen--;
+            } else if (skill.tags.contains(SkillTag.TACTICAL)) {
+                this.tacticalChosen--;
+            } else if (skill.tags.contains(SkillTag.ULT)) {
+                this.ultimateChosen--;
             }
         }
     }
 
-    @Override
-    public int[] render() {
-        background(Color.BLACK);
+    public int[] render(boolean full) {
+        background(Color.VOID);
         renderAvailableSkills();
-        renderSkillInfo();
+        if (full) {
+            renderSkillInfo();
+        }
         return this.pixels;
     }
     private void renderAvailableSkills() {
@@ -132,40 +127,33 @@ public class TeamBuildAbilitiesCard extends GUIElement {
 
     private void renderSkillInfo() {
         SkillInfo info = new SkillInfo(this.availableSkills.get(this.abilityPointer));
-        info.setPosition(130,10);
-        fillWithGraphicsSize(130, 10, info.getWidth(), info.getHeight(), info.render(), false);
+        fillWithGraphicsSize(0, 200, info.getWidth(), info.getHeight(), info.render(), false);
     }
 
     private Color getBorderColorFor(Skill skill, int i) {
+        if (this.chosenSkills.contains(skill)) {
+            return Color.GREEN;
+        } else
+        if (isFullFor(skill)) {
+            return Color.RED;
+        } else
+        if (!this.active) {
+            return Color.VOID;
+        } else
         if (i == this.abilityPointer) {
             return Color.WHITE;
         }
-        if (this.chosenSkills.contains(skill)) {
-            return Color.GREEN;
-        }
-        if (isFullFor(skill)) {
-            return Color.RED;
-        }
+
         return Color.VOID;
     }
 
     private boolean isFullFor(Skill skill) {
-        switch (skill.abilityType) {
-            case PRIMARY -> {
-                if (this.primaryChosen > 0) {
-                    return true;
-                }
-            }
-            case TACTICAL -> {
-                if (this.tacticalChosen > 1) {
-                    return true;
-                }
-            }
-            case ULT -> {
-                if (this.ultimateChosen > 0) {
-                    return true;
-                }
-            }
+        if (skill.tags.contains(SkillTag.PRIMARY)) {
+            return this.primaryChosen > 0;
+        } else if (skill.tags.contains(SkillTag.TACTICAL)) {
+            return this.tacticalChosen > 1;
+        } else if (skill.tags.contains(SkillTag.ULT)) {
+            return this.ultimateChosen > 0;
         }
         return false;
     }

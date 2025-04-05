@@ -1,12 +1,7 @@
 package game.entities.individuals.angelguy;
 
 import game.entities.Hero;
-import game.entities.Multiplier;
-import game.skills.AbilityType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
-import game.skills.changeeffects.effects.Combo;
+import game.skills.*;
 import game.skills.changeeffects.effects.Invincible;
 
 import java.util.List;
@@ -23,12 +18,11 @@ public class S_Halo extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.BUFF);
+        this.tags = List.of(SkillTag.ULT);
         this.targetType = TargetType.ALL_TARGETS;
         this.possibleTargetPositions = new int[]{0,1,2,3};
         this.possibleCastPositions = new int[]{0,1,2,3};
         this.cdMax = 5;
-        this.abilityType = AbilityType.ULT;
     }
 
     @Override
@@ -41,8 +35,13 @@ public class S_Halo extends Skill {
     }
 
     @Override
+    public String getUpperDescriptionFor(Hero hero) {
+        return "Passive: " + this.hero.getName() + " uses " + Stat.HALO.getIconString() + " as resource instead of "+Stat.FAITH.getIconString()+".";
+    }
+
+    @Override
     public String getDescriptionFor(Hero hero) {
-        return "Uses all halo. All allies get Invincible for X turns, where X is the halo stacks.";
+        return "Active: Uses all " + Stat.HALO.getIconString() + " stacks. All allies get Invincible(X), where X is the number of "+ Stat.HALO.getIconString()+" stacks used.";
     }
 
     @Override

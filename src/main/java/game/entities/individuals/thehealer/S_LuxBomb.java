@@ -18,6 +18,7 @@ public class S_LuxBomb extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
+        this.tags = List.of(SkillTag.PRIMARY);
         this.targetType = TargetType.SINGLE;
         this.dmg = 1;
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.1),
@@ -25,8 +26,6 @@ public class S_LuxBomb extends Skill {
         this.damageMode = DamageMode.MAGICAL;
         this.possibleCastPositions = new int[]{0,1,2};
         this.possibleTargetPositions = new int[]{4};
-        this.primary = true;
-        this.abilityType = AbilityType.PRIMARY;
     }
 
 

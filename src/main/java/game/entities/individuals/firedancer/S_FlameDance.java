@@ -1,9 +1,8 @@
 package game.entities.individuals.firedancer;
 
 import game.entities.Hero;
-import game.skills.AbilityType;
 import game.skills.Skill;
-import game.skills.Stat;
+import game.skills.SkillTag;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.Burning;
 
@@ -21,13 +20,12 @@ public class S_FlameDance extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.MOVE, SkillTag.BUFF);
+        this.tags = List.of(SkillTag.TACTICAL);
         this.targetType = TargetType.SINGLE_OTHER;
         this.possibleCastPositions = new int[]{0,1,2,3};
         this.possibleTargetPositions = new int[]{0,1,2,3};
         this.faithCost = 2;
         this.actionCost = 0;
-        this.abilityType = AbilityType.TACTICAL;
     }
 
 

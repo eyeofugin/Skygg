@@ -5,8 +5,8 @@ import framework.connector.Connector;
 import framework.connector.payloads.StartOfMatchPayload;
 import framework.connector.payloads.StartOfTurnPayload;
 import game.entities.Hero;
-import game.skills.AbilityType;
 import game.skills.Skill;
+import game.skills.SkillTag;
 import game.skills.Stat;
 import game.skills.TargetType;
 
@@ -25,12 +25,10 @@ public class S_HoliestShield extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.ultimate = true;
+        this.tags = List.of(SkillTag.ULT);
         this.faithCost = 6;
         this.targetType = TargetType.SELF;
         this.possibleCastPositions = new int[]{0,1,2,3};
-        this.tags = List.of(SkillTag.BUFF);
-        this.abilityType = AbilityType.ULT;
     }
 
 

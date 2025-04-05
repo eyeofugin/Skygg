@@ -10,21 +10,16 @@ public class RedOrb extends Equipment {
 
     public RedOrb() {
         super("redorb", "Red Orb");
+        this.statBonus = this.loadBaseStatBonus();
     }
     @Override
     public void addSubscriptions() {
         Connector.addSubscription(Connector.START_OF_TURN, new Connection(this, StartOfTurnPayload.class, "start"));
-        Connector.addSubscription(Connector.CAST_CHANGE, new Connection(this, CastChangePayload.class, "castChange"));
     }
 
-    public void start(StartOfMatchPayload pl) {
+    public void start(StartOfTurnPayload pl) {
         if (this.active && this.hero != null) {
             this.hero.addEffect(new Burning(1), this.hero);
-        }
-    }
-    public void castChange(CastChangePayload pl) {
-        if (this.active && pl.skill.hero != null && pl.skill.hero.equals(this.hero)) {
-            pl.skill.setDistance(pl.skill.getDistance() + 1);
         }
     }
 }

@@ -2,14 +2,12 @@ package game.entities.individuals.phoenixguy;
 
 import framework.connector.Connection;
 import framework.connector.Connector;
-import framework.connector.payloads.DmgTriggerPayload;
 import framework.connector.payloads.GlobalEffectChangePayload;
 import game.entities.Hero;
-import game.skills.AbilityType;
 import game.skills.Skill;
+import game.skills.SkillTag;
 import game.skills.Stat;
 import game.skills.TargetType;
-import game.skills.changeeffects.effects.Burning;
 import game.skills.changeeffects.globals.Heat;
 
 import java.util.List;
@@ -26,11 +24,10 @@ public class S_AshenHeat extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.SETUP);
+        this.tags = List.of(SkillTag.TACTICAL);
         this.targetType = TargetType.ARENA;
         this.possibleCastPositions = new int[]{0,1,2,3};
         this.faithCost = 4;
-        this.abilityType = AbilityType.TACTICAL;
 
     }
 

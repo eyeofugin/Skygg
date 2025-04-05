@@ -3,6 +3,7 @@ package game.entities.individuals.burner;
 import framework.connector.Connection;
 import framework.connector.Connector;
 import framework.connector.payloads.DmgChangesPayload;
+import framework.graphics.text.Color;
 import game.entities.Hero;
 import game.entities.Multiplier;
 import game.skills.*;
@@ -21,7 +22,7 @@ public class S_FlareUp extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.DMG);
+        this.tags = List.of(SkillTag.TACTICAL);
         this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.2));
         this.targetType = TargetType.SINGLE;
         this.damageMode = DamageMode.MAGICAL;
@@ -29,7 +30,6 @@ public class S_FlareUp extends Skill {
         this.possibleTargetPositions = new int[]{4,5,6};
         this.dmg = 3;
         this.faithCost = 4;
-        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class S_FlareUp extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Deals an additional 3 dmg per burning stack.";
+        return "Deals an additional 3 damage for each of the target's "+Burning.getStaticIconString()+" stack.";
     }
 
     @Override

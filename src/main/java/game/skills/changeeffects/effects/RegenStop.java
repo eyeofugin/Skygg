@@ -7,14 +7,19 @@ import game.skills.Effect;
 
 public class RegenStop extends Effect {
 
+    public static String ICON_STRING = "RGS";
     public RegenStop(int turns) {
         this.turns = turns;
+        this.iconString = ICON_STRING;
         this.name = "Regen Stop";
         this.stackable = false;
         this.description = "Disables life regen.";
         this.type = ChangeEffectType.DEBUFF;
     }
 
+    public static String getStaticIconString() {
+        return "[" + ICON_STRING + "]";
+    }
     @Override
     public Effect getNew() {
         return new RegenStop(this.turns);

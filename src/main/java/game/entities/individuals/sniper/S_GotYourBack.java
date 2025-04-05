@@ -1,10 +1,7 @@
 package game.entities.individuals.sniper;
 
 import game.entities.Hero;
-import game.skills.AbilityType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Combo;
 
 import java.util.List;
@@ -21,19 +18,19 @@ public class S_GotYourBack extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
+        this.tags = List.of(SkillTag.TACTICAL);
         this.targetType = TargetType.SINGLE_OTHER;
         this.possibleCastPositions = new int[]{0,1};
         this.possibleTargetPositions = new int[]{0,1,2,3};
         this.cdMax = 1;
         this.effects = List.of(new Combo());
-        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override
     public int getAIRating(Hero target) {
         int rating = 2;
         for (Skill skill : target.getSkills()) {
-            if (skill.isComboEnabled()) {
+            if (skill.aiTags.contains(AiSkillTag.COMBO_ENABLED)) {
                 rating += 2;
             }
         }

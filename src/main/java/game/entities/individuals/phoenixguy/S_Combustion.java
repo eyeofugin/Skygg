@@ -23,7 +23,7 @@ public class S_Combustion extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.DMG);
+        this.tags = List.of(SkillTag.TACTICAL);
         this.targetType = TargetType.SINGLE;
         this.possibleCastPositions = new int[]{1,2,3};
         this.possibleTargetPositions = new int[]{4,5,6};
@@ -31,7 +31,6 @@ public class S_Combustion extends Skill {
         this.dmg = 1;
         this.damageMode = DamageMode.MAGICAL;
         this.faithCost = 4;
-        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override

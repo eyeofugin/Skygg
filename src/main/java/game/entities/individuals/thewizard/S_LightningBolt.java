@@ -22,14 +22,12 @@ public class S_LightningBolt extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.DMG);
+        this.tags = List.of(SkillTag.PRIMARY);
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.7));
         this.targetType = TargetType.SINGLE;
         this.possibleCastPositions = new int[]{1,2,3};
         this.possibleTargetPositions = new int[]{4,5};
         this.damageMode = DamageMode.MAGICAL;
-        this.primary = true;
-        this.abilityType = AbilityType.PRIMARY;
     }
 
 

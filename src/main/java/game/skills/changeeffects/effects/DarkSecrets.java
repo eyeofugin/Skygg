@@ -10,12 +10,17 @@ import java.util.HashMap;
 
 public class DarkSecrets extends Effect {
 
+    public static String ICON_STRING = "DKS";
     public DarkSecrets() {
         this.name ="Dark Secrets";
+        this.iconString = ICON_STRING;
         this.description = "100 Lethality";
         this.type = ChangeEffectType.BUFF;
         this.statBonus = new HashMap<>();
         this.statBonus.put(Stat.LETHALITY, 100);
+    }
+    public static String getStaticIconString() {
+        return "[" + ICON_STRING + "]";
     }
 
     @Override

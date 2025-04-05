@@ -21,7 +21,7 @@ public class S_IceClaw extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.DMG);
+        this.tags = List.of(SkillTag.PRIMARY);
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.15),
                 new Multiplier(Stat.MANA, 0.15),
                 new Multiplier(Stat.MAGIC, 0.15));
@@ -30,8 +30,6 @@ public class S_IceClaw extends Skill {
         this.possibleTargetPositions = new int[]{4,5};
         this.dmg = 8;
         this.damageMode = DamageMode.PHYSICAL;
-        this.primary = true;
-        this.abilityType = AbilityType.PRIMARY;
     }
 
 
@@ -48,7 +46,7 @@ public class S_IceClaw extends Skill {
     }
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Get 50% of damage done as mana.";
+        return "Get 50% of damage done as "+Stat.MANA.getIconString()+".";
     }
 
 

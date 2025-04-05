@@ -3,15 +3,12 @@ package game.entities.individuals.cryobrawler;
 import framework.connector.Connection;
 import framework.connector.Connector;
 import framework.connector.payloads.EndOfRoundPayload;
-import framework.connector.payloads.GlobalEffectChangePayload;
 import game.entities.Hero;
-import game.skills.AbilityType;
 import game.skills.Skill;
-import game.skills.Stat;
+import game.skills.SkillTag;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.Frost;
 import game.skills.changeeffects.globals.AetherWinds;
-import game.skills.changeeffects.globals.HolyLight;
 
 import java.util.List;
 import java.util.Random;
@@ -28,11 +25,10 @@ public class S_ColdWinds extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.SETUP);
+        this.tags = List.of(SkillTag.TACTICAL);
         this.targetType = TargetType.ARENA;
         this.possibleCastPositions = new int[]{0,1,2,3};
         this.manaCost = 4;
-        this.abilityType = AbilityType.TACTICAL;
     }
 
 
@@ -55,8 +51,12 @@ public class S_ColdWinds extends Skill {
         }
     }
     @Override
+    public String getUpperDescriptionFor(Hero hero) {
+        return "Active: Summon the Aether Winds global effect.";
+    }
+    @Override
     public String getDescriptionFor(Hero hero) {
-        return "Summon Aether Winds. During Aether Winds each turn a rdm enemy gets a frost stack";
+        return "Passive: During Aether Winds each turn a random enemy gets "+Frost.getStaticIconString()+"(1).";
     }
     @Override
     public void applySkillEffects(Hero target) {

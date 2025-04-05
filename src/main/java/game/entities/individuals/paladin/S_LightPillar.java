@@ -20,7 +20,7 @@ public class S_LightPillar extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.DMG, SkillTag.PEEL);
+        this.tags = List.of(SkillTag.TACTICAL);
         this.dmgMultipliers = List.of(new Multiplier(Stat.CURRENT_FAITH, 0.6));
         this.effects = List.of(new Disenchanted(1));
         this.targetType = TargetType.SINGLE;
@@ -29,7 +29,6 @@ public class S_LightPillar extends Skill {
         this.dmg = 2;
         this.faithCost = 2;
         this.damageMode = DamageMode.MAGICAL;
-        this.abilityType = AbilityType.TACTICAL;
     }
 
 

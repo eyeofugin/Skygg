@@ -1,9 +1,8 @@
 package game.entities.individuals.burner;
 
 import game.entities.Hero;
-import game.skills.AbilityType;
 import game.skills.Skill;
-import game.skills.Stat;
+import game.skills.SkillTag;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.Burning;
 
@@ -21,20 +20,18 @@ public class S_SpreadingFlames extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.DMG);
+        this.tags = List.of(SkillTag.ULT);
         this.targetType = TargetType.ALL_TARGETS;
         this.possibleCastPositions = new int[]{0,1,2,3};
         this.possibleTargetPositions = new int[]{4,5,6,7};
         this.faithCost = 6;
-        this.ultimate = true;
-        this.abilityType = AbilityType.ULT;
     }
 
 
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "For each enemy burn stack, give another burn stack randomly.";
+        return "For each "+Burning.getStaticIconString()+" stack among enemies, give another " +Burning.getStaticIconString()+" stack to a random enemy.";
     }
 
     @Override

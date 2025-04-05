@@ -7,14 +7,19 @@ import game.skills.Effect;
 
 public class RegenBoost extends Effect {
 
+    public static String ICON_STRING = "RGB";
     public RegenBoost(int turns) {
         this.turns = turns;
+        this.iconString = ICON_STRING;
         this.name = "Regen Boost";
         this.stackable = false;
         this.description = "Doubles life regen.";
         this.type = ChangeEffectType.BUFF;
     }
 
+    public static String getStaticIconString() {
+        return "[" + ICON_STRING + "]";
+    }
     @Override
     public Effect getNew() {
         return new RegenBoost(this.turns);

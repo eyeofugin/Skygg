@@ -18,12 +18,11 @@ public class S_QuickPrayer extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
+        this.tags = List.of(SkillTag.PRIMARY);
         this.targetType = TargetType.SELF;
         this.possibleCastPositions = new int[]{0,1,2,3};
         this.targetResources = List.of(new Resource(Stat.CURRENT_FAITH, Stat.FAITH, 4));
-        this.primary = true;
-        this.faithGain = true;
-        this.abilityType = AbilityType.PRIMARY;
+        this.aiTags = List.of(AiSkillTag.FAITH_GAIN);
     }
 
 

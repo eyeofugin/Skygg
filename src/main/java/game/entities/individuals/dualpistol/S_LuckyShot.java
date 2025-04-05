@@ -21,6 +21,8 @@ public class S_LuckyShot extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
+        this.tags = List.of(SkillTag.TACTICAL);
+        this.aiTags = List.of(AiSkillTag.COMBO_ENABLED);
         this.targetType = TargetType.SINGLE;
         this.possibleCastPositions = new int[]{0,1,2};
         this.possibleTargetPositions = new int[]{5,6,7};
@@ -28,9 +30,7 @@ public class S_LuckyShot extends Skill {
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.05));
         this.cdMax = 2;
         this.damageMode = DamageMode.PHYSICAL;
-        this.comboEnabled = true;
         this.critChance = 50;
-        this.abilityType = AbilityType.TACTICAL;
     }
 
 

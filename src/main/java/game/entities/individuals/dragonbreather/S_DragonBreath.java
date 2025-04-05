@@ -21,7 +21,7 @@ public class S_DragonBreath extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.DMG);
+        this.tags = List.of(SkillTag.TACTICAL);
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.5));
         this.effects = List.of(new Burning(4));
         this.targetType = TargetType.ALL_TARGETS;
@@ -30,14 +30,6 @@ public class S_DragonBreath extends Skill {
         this.dmg = 8;
         this.damageMode = DamageMode.MAGICAL;
         this.manaCost = 6;
-        this.abilityType = AbilityType.TACTICAL;
-    }
-
-
-
-    @Override
-    public String getDescriptionFor(Hero hero) {
-        return "Burns twice";
     }
 
     @Override

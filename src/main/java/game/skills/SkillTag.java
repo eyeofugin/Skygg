@@ -1,7 +1,9 @@
 package game.skills;
 
-public enum AbilityType {
+public enum SkillTag {
+
     PRIMARY,
     TACTICAL,
-    ULT;
+    ULT,
+    PASSIVE
 }

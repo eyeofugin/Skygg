@@ -21,14 +21,13 @@ public class S_PiercingBolt extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
+        this.tags = List.of(SkillTag.PRIMARY);
         this.targetType = TargetType.SINGLE;
         this.possibleCastPositions = new int[]{1,2};
         this.possibleTargetPositions = new int[]{4,5};
         this.dmg = 10;
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.2));
         this.damageMode = DamageMode.PHYSICAL;
-        this.primary = true;
-        this.abilityType = AbilityType.PRIMARY;
     }
 
     @Override

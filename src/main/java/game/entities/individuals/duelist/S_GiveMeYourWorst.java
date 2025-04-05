@@ -1,11 +1,8 @@
 package game.entities.individuals.duelist;
 
-import framework.connector.Connection;
-import framework.connector.Connector;
-import framework.connector.payloads.DmgTriggerPayload;
 import game.entities.Hero;
-import game.skills.AbilityType;
 import game.skills.Skill;
+import game.skills.SkillTag;
 import game.skills.TargetType;
 import game.skills.changeeffects.statusinflictions.Taunted;
 
@@ -22,12 +19,12 @@ public class S_GiveMeYourWorst extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
+        this.tags = List.of(SkillTag.TACTICAL);
         this.targetType = TargetType.SINGLE;
         this.possibleCastPositions = new int[]{1,2};
         this.possibleTargetPositions = new int[]{4,5};
         this.cdMax = 3;
         this.effects = List.of(new Taunted(2));
-        this.abilityType = AbilityType.TACTICAL;
     }
 
 

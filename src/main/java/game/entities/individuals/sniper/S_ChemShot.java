@@ -1,12 +1,13 @@
 package game.entities.individuals.sniper;
 
 import game.entities.Hero;
-import game.skills.AbilityType;
 import game.skills.Skill;
+import game.skills.SkillTag;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.RegenBoost;
-import game.skills.changeeffects.effects.RegenStop;
 import game.skills.changeeffects.statusinflictions.Injured;
+
+import java.util.List;
 
 public class S_ChemShot extends Skill {
 
@@ -20,10 +21,9 @@ public class S_ChemShot extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
+        this.tags = List.of(SkillTag.PRIMARY);
         this.targetType = TargetType.ANY;
         this.possibleCastPositions = new int[]{0,1};
-        this.primary = true;
-        this.abilityType = AbilityType.PRIMARY;
     }
 
 

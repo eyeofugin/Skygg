@@ -30,8 +30,9 @@ public class S_BlueOrb extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.targetType = TargetType.SINGLE_ALLY;
-        this.distance = 1;
+        this.targetType = TargetType.SINGLE_OTHER;
+        this.possibleCastPositions = new int[]{0,1,2,3};
+        this.possibleTargetPositions = new int[]{0,1,2,3};
     }
 
     @Override
@@ -47,7 +48,7 @@ public class S_BlueOrb extends Skill {
 
     @Override
     public boolean performCheck(Hero hero) {
-        return this.equipment.isActive() && !this.isUsedUp;
+        return super.performCheck(hero) && this.equipment.isActive() && !this.isUsedUp;
     }
 
     public int getAIRating(Hero target) {

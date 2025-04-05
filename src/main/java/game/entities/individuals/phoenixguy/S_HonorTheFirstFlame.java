@@ -4,10 +4,12 @@ import framework.connector.Connection;
 import framework.connector.Connector;
 import framework.connector.payloads.DmgTriggerPayload;
 import game.entities.Hero;
-import game.skills.AbilityType;
 import game.skills.Skill;
+import game.skills.SkillTag;
 import game.skills.Stat;
 import game.skills.changeeffects.effects.Burning;
+
+import java.util.List;
 
 public class S_HonorTheFirstFlame extends Skill {
 
@@ -21,8 +23,7 @@ public class S_HonorTheFirstFlame extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.passive = true;
-        this.abilityType = AbilityType.TACTICAL;
+        this.tags = List.of(SkillTag.TACTICAL, SkillTag.PASSIVE);
     }
 
     @Override

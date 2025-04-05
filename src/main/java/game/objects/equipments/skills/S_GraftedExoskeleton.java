@@ -19,7 +19,7 @@ public class S_GraftedExoskeleton extends Skill {
     public void setToInitial() {
         super.setToInitial();
         this.targetType = TargetType.SELF;
-        this.distance = 1;
+        this.possibleCastPositions = new int[]{0,1,2,3};
         this.cdMax = 5;
     }
 
@@ -31,7 +31,7 @@ public class S_GraftedExoskeleton extends Skill {
 
     @Override
     public boolean performCheck(Hero hero) {
-        return this.equipment.isActive();
+        return super.performCheck(hero) && this.equipment.isActive();
     }
 
     @Override

@@ -3,6 +3,7 @@ package game.controllers;
 import framework.Logger;
 import framework.states.Arena;
 import game.entities.Hero;
+import game.skills.AiSkillTag;
 import game.skills.Skill;
 import game.skills.Stat;
 import game.skills.TargetType;
@@ -25,8 +26,8 @@ public class ArenaAIController {
         this.memory = new AIMemory();
     }
     public void setup() {
-        for (Hero ai : this.arena.enemies.heroes) {
-            int averageLife = (int) Arrays.stream(this.arena.enemies.heroes).map(e->e.getStat(Stat.LIFE)).mapToInt(Integer::intValue)
+        for (Hero ai : this.arena.teams.get(1).heroes) {
+            int averageLife = (int) Arrays.stream(this.arena.teams.get(1).heroes).map(e->e.getStat(Stat.LIFE)).mapToInt(Integer::intValue)
                     .summaryStatistics().getAverage();
             calculatePreferredPosition(ai, averageLife);
         }
@@ -60,7 +61,7 @@ public class ArenaAIController {
             Skill s = bestAction.skill;
             Logger.aiLog("AI will perform " + s.getName() + "/" + bestAction.rating + " at position " + bestAction.targets[0].getPosition());
             this.arena.activeSkill = s;
-            this.arena.activeSkill.setTargets(List.of(bestAction.targets));
+            this.arena.activeSkill.setTargets(bestAction.targets);
 
             this.arena.activeSkill.perform();
             this.arena.activeTargets = bestAction.targets;
@@ -176,7 +177,7 @@ public class ArenaAIController {
 
     private int getShieldRating(Skill cast, Hero[] targets) {
         int result = 0;
-        if (cast.getShield() == 0) {
+        if (cast.getShield(null) == 0) {
             return 0;
         }
         for (Hero e : targets) {
@@ -200,14 +201,14 @@ public class ArenaAIController {
     }
 
     private int getComboRating(Skill s) {
-        if (s.isComboEnabled() && s.hero.hasPermanentEffect(Combo.class) > 0) {
+        if (s.aiTags.contains(AiSkillTag.COMBO_ENABLED) && s.hero.hasPermanentEffect(Combo.class) > 0) {
             return 1;
         }
         return 0;
     }
 
     private int getFaithGainRating(Skill s) {
-        if (s.isFaithGain()) {
+        if (s.aiTags.contains(AiSkillTag.FAITH_GAIN)) {
             double missingFaith = 1.0 - s.hero.getResourcePercentage(Stat.CURRENT_FAITH);
             return (int)(missingFaith / 0.3);
         }

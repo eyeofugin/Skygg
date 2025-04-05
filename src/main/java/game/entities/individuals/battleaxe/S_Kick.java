@@ -19,7 +19,7 @@ public class S_Kick extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.DMG, SkillTag.PEEL);
+        this.tags = List.of(SkillTag.TACTICAL);
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.1));
         this.targetType = TargetType.SINGLE;
         this.possibleCastPositions = new int[]{3};
@@ -27,7 +27,6 @@ public class S_Kick extends Skill {
         this.dmg = 3;
         this.cdMax = 4;
         this.damageMode = DamageMode.PHYSICAL;
-        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override
@@ -54,7 +53,7 @@ public class S_Kick extends Skill {
     }
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Push 1, target loses shield;";
+        return "Push 1, target loses all their "+Stat.SHIELD.getIconString()+".";
     }
 
     @Override

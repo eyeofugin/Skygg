@@ -9,12 +9,17 @@ import game.skills.Skill;
 
 public class Rooted extends Effect {
 
+    public static String ICON_STRING = "ROO";
     public Rooted(int turns) {
         this.turns = turns;
+        this.iconString = ICON_STRING;
         this.name = "Rooted";
         this.stackable = false;
         this.description = "Can't use movement skills.";
         this.type = ChangeEffectType.STATUS_INFLICTION;
+    }
+    public static String getStaticIconString() {
+        return "[" + ICON_STRING + "]";
     }
     @Override
     public Rooted getNew() {

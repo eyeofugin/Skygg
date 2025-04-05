@@ -128,8 +128,7 @@ public class SpriteLibrary {
             sheet.getRGB(0, 0, w, h, pixels, 0, w);
             return convert(pixels, targetW, targetH, w);
         } catch (Exception e) {
-            System.out.println(path);
-            e.printStackTrace();
+            System.out.println("Error loading sprite: " + path);
         }
         return sprite;
     }

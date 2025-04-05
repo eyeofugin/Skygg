@@ -19,14 +19,13 @@ public class S_AnkleShot extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
+        this.tags = List.of(SkillTag.PRIMARY);
         this.targetType = TargetType.SINGLE;
         this.possibleCastPositions = new int[]{0,1,2};
         this.possibleTargetPositions = new int[]{5,6,7};
         this.dmg = 11;
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.1));
         this.damageMode = DamageMode.PHYSICAL;
-        this.primary = true;
-        this.abilityType = AbilityType.PRIMARY;
     }
 
     @Override

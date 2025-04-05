@@ -20,12 +20,11 @@ public class S_DarkSchemes extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.PEEL);
+        this.tags = List.of(SkillTag.TACTICAL);
         this.targetType = TargetType.SINGLE;
         this.possibleCastPositions = new int[]{0,1,2,3};
         this.possibleTargetPositions = new int[]{4,5,6,7};
         this.manaCost = 10;
-        this.abilityType = AbilityType.TACTICAL;
     }
 
 
@@ -58,7 +57,7 @@ public class S_DarkSchemes extends Skill {
     }
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Reverts targets stat changes";
+        return "Reverts target's stat changes.";
     }
 
     @Override

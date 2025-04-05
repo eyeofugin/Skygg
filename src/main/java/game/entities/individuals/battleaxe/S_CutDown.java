@@ -6,9 +6,6 @@ import framework.connector.payloads.DmgChangesPayload;
 import game.entities.Hero;
 import game.entities.Multiplier;
 import game.skills.*;
-import game.skills.changeeffects.globals.Heat;
-import game.skills.changeeffects.statusinflictions.Bleeding;
-
 import java.util.List;
 
 public class S_CutDown extends Skill {
@@ -23,15 +20,13 @@ public class S_CutDown extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.DMG);
+        this.tags = List.of(SkillTag.PRIMARY);
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.2));
         this.targetType = TargetType.SINGLE;
         this.possibleCastPositions = new int[]{2,3};
         this.possibleTargetPositions = new int[]{4,5};
         this.dmg = 9;
         this.damageMode = DamageMode.PHYSICAL;
-        this.primary = true;
-        this.abilityType = AbilityType.PRIMARY;
     }
 
     @Override
@@ -53,7 +48,7 @@ public class S_CutDown extends Skill {
     }
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Double damage if the target has a shield";
+        return "Double damage if the target has " + Stat.SHIELD.getIconString() + ".";
     }
 
     @Override

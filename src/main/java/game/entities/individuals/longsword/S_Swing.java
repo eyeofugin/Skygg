@@ -21,6 +21,7 @@ public class S_Swing extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
+        this.tags = List.of(SkillTag.PRIMARY);
         this.targetType = TargetType.SINGLE;
         this.possibleCastPositions = new int[]{2,3};
         this.possibleTargetPositions = new int[]{4,5};
@@ -28,8 +29,6 @@ public class S_Swing extends Skill {
         this.dmg = 3;
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.25));
         this.effects = List.of(new Injured(1));
-        this.primary = true;
-        this.abilityType = AbilityType.PRIMARY;
     }
 
 

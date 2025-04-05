@@ -25,7 +25,7 @@ public class S_Fireblast extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.DMG);
+        this.tags = List.of(SkillTag.TACTICAL);
         this.dmgMultipliers = List.of(new Multiplier(Stat.FAITH, 0.6));
         this.targetType = TargetType.SINGLE;
         this.effects = List.of(new Burning(2));
@@ -33,7 +33,6 @@ public class S_Fireblast extends Skill {
         this.possibleTargetPositions = new int[]{4,5};
         this.dmg = 7;
         this.damageMode = DamageMode.MAGICAL;
-        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override

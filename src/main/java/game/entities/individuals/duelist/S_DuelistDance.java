@@ -29,11 +29,9 @@ public class S_DuelistDance extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.passive = true;
+        this.tags = List.of(SkillTag.ULT, SkillTag.PASSIVE);
         this.active = false;
         this.used = false;
-        this.ultimate = true;
-        this.abilityType = AbilityType.ULT;
     }
     @Override
     public void addSubscriptions() {

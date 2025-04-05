@@ -19,6 +19,7 @@ public class S_BlindingShot extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
+        this.tags = List.of(SkillTag.TACTICAL);
         this.targetType = TargetType.SINGLE;
         this.possibleCastPositions = new int[]{0,1};
         this.possibleTargetPositions = new int[]{4,5,6};
@@ -27,7 +28,6 @@ public class S_BlindingShot extends Skill {
         this.dmg = 8;
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.1));
         this.effects = List.of(new Blinded(2));
-        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override

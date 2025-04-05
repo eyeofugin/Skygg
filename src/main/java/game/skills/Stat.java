@@ -1,6 +1,8 @@
 package game.skills;
 
 
+import framework.graphics.text.Color;
+
 import java.util.List;
 import java.util.Random;
 
@@ -46,6 +48,7 @@ public enum Stat {
     public static List<Stat> nonResourceStats = List.of(Stat.MAGIC,
             Stat.POWER, Stat.ENDURANCE, Stat.STAMINA, Stat.EVASION, Stat.CRIT_CHANCE,
             Stat.ACCURACY, Stat.LETHALITY, Stat.SPEED);
+    public static List<Stat> maxStats = List.of(LIFE, MANA, FAITH, HALO);
 
     Stat(String translationString, String iconKey, String colorKey) {
         this.translationString = translationString;
@@ -62,6 +65,9 @@ public enum Stat {
     public String getIconString() {
         return "["+iconKey+"]";
     }
+    public String getFullStringReference() {
+        return colorKey + this.name() + getIconString() + Color.WHITE.getCodeString();
+    }
     public String getColorKey() {
         return colorKey;
     }
@@ -72,5 +78,12 @@ public enum Stat {
         Random random = new Random();
         int rndInt = random.nextInt(7);
         return stdStats[rndInt];
+    }
+
+    public String getReference() {
+        if (maxStats.contains(this)) {
+            return this.getColorKey() + "Max" + Color.WHITE.getCodeString() + this.getIconString();
+        }
+        return this.getIconString();
     }
 }

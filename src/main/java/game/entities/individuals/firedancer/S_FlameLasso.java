@@ -19,16 +19,15 @@ public class S_FlameLasso extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.DMG, SkillTag.PEEL);
+        this.tags = List.of(SkillTag.TACTICAL);
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.5));
         this.targetType = TargetType.SINGLE;
         this.possibleCastPositions = new int[]{1,2};
         this.possibleTargetPositions = new int[]{5,6};
         this.dmg = 4;
         this.damageMode = DamageMode.MAGICAL;
-        this.comboEnabled = true;
+        this.aiTags = List.of(AiSkillTag.COMBO_ENABLED);
         this.faithCost = 4;
-        this.abilityType = AbilityType.TACTICAL;
     }
 
 

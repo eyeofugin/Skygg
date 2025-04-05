@@ -12,12 +12,18 @@ import game.skills.Skill;
 import java.util.Arrays;
 
 public class Scoped extends Effect {
+
+    public static String ICON_STRING = "SCO";
     public Scoped(int turns) {
         this.turns = turns;
+        this.iconString = ICON_STRING;
         this.name = "Scoped";
         this.stackable = false;
-        this.description = "+1 Range";
+        this.description = "+20 Accuracy";
         this.type = ChangeEffectType.BUFF;
+    }
+    public static String getStaticIconString() {
+        return "[" + ICON_STRING + "]";
     }
 
     @Override
@@ -31,15 +37,8 @@ public class Scoped extends Effect {
 
     public void castChange(CastChangePayload castChangePayload) {
         Skill skill = castChangePayload.skill;
-        if (skill != null && skill.hero.equals(this.hero) && skill.isPrimary()) {
-
-            if (Arrays.stream(skill.possibleCastPositions).anyMatch(i -> i == 1)) {
-                return;
-            }
-            int[] newCastPositions = Arrays.copyOf(skill.possibleCastPositions, skill.possibleCastPositions.length+1);
-            newCastPositions[newCastPositions.length-1] = 1;
-            Arrays.sort(newCastPositions);
-            skill.possibleCastPositions = newCastPositions;
+        if (skill != null && skill.hero.equals(this.hero)) {
+            skill.setAccuracy(skill.getAccuracy() + 20);
         }
     }
 }

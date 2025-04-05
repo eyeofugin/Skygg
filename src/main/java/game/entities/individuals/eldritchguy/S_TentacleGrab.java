@@ -5,6 +5,8 @@ import game.skills.*;
 import game.skills.changeeffects.effects.Combo;
 import game.skills.changeeffects.statusinflictions.Dazed;
 
+import java.util.List;
+
 public class S_TentacleGrab extends Skill {
 
     public S_TentacleGrab(Hero hero) {
@@ -17,12 +19,12 @@ public class S_TentacleGrab extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
+        this.tags = List.of(SkillTag.TACTICAL);
         this.targetType = TargetType.SINGLE;
         this.possibleCastPositions = new int[]{3};
         this.possibleTargetPositions = new int[]{5,6};
         this.damageMode = DamageMode.PHYSICAL;
         this.manaCost = 6;
-        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override

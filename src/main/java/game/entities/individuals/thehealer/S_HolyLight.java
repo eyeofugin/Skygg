@@ -3,14 +3,12 @@ package game.entities.individuals.thehealer;
 import framework.connector.Connection;
 import framework.connector.Connector;
 import framework.connector.payloads.EndOfRoundPayload;
-import framework.connector.payloads.ExcessResourcePayload;
 import framework.states.Arena;
 import game.entities.Hero;
-import game.skills.AbilityType;
 import game.skills.Skill;
+import game.skills.SkillTag;
 import game.skills.Stat;
 import game.skills.TargetType;
-import game.skills.changeeffects.effects.Burning;
 import game.skills.changeeffects.globals.HolyLight;
 
 import java.util.List;
@@ -27,11 +25,10 @@ public class S_HolyLight extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.SETUP);
+        this.tags = List.of(SkillTag.TACTICAL);
         this.targetType = TargetType.ARENA;
         this.possibleCastPositions = new int[]{0,1,2,3};
         this.manaCost = 5;
-        this.abilityType = AbilityType.TACTICAL;
     }
     @Override
     public int getAIArenaRating(Arena arena) {

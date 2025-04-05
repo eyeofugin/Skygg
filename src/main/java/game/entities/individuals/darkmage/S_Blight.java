@@ -18,13 +18,11 @@ public class S_Blight extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.DMG);
+        this.tags = List.of(SkillTag.PRIMARY);
         this.targetType = TargetType.SINGLE;
         this.damageMode = DamageMode.MAGICAL;
         this.possibleCastPositions = new int[]{0,1,2,3};
         this.possibleTargetPositions = new int[]{4,5,6};
-        this.primary = true;
-        this.abilityType = AbilityType.PRIMARY;
     }
 
 
@@ -35,7 +33,7 @@ public class S_Blight extends Skill {
 
     @Override
     public String getDmgOrHealString() {
-        return "True damage equal to 50% of targets endurance";
+        return "DMG: 50% of target's " + Stat.ENDURANCE.getIconString() + ".";
     }
 
     @Override

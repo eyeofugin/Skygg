@@ -1,12 +1,10 @@
 package game.entities.individuals.longsword;
 
 import game.entities.Hero;
-import game.skills.AbilityType;
 import game.skills.Skill;
-import game.skills.Stat;
+import game.skills.SkillTag;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.Threatening;
-import game.skills.changeeffects.statusinflictions.Taunted;
 
 import java.util.List;
 
@@ -27,13 +25,13 @@ public class S_Challenge extends Skill {
         this.possibleTargetPositions = new int[]{3};
         this.cdMax = 3;
         this.casterEffects = List.of(new Threatening(1));
+        this.tags = List.of(SkillTag.TACTICAL);
     }
     @Override
     public void applySkillEffects(Hero target) {
         super.applySkillEffects(target);
         int targetPosition = target.getPosition();
         this.hero.arena.moveTo(this.hero, targetPosition);
-        this.abilityType = AbilityType.TACTICAL;
     }
     @Override
     public int getAIRating(Hero target) {

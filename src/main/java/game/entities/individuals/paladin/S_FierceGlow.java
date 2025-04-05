@@ -1,9 +1,8 @@
 package game.entities.individuals.paladin;
 
 import game.entities.Hero;
-import game.skills.AbilityType;
 import game.skills.Skill;
-import game.skills.Stat;
+import game.skills.SkillTag;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.Threatening;
 
@@ -21,12 +20,11 @@ public class S_FierceGlow extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.BUFF);
+        this.tags = List.of(SkillTag.TACTICAL);
         this.targetType = TargetType.SELF;
         this.possibleCastPositions = new int[]{0,1,2,3};
         this.effects = List.of(new Threatening(2));
         this.faithCost = 6;
-        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override

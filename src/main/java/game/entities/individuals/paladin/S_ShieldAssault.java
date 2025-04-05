@@ -19,11 +19,10 @@ public class S_ShieldAssault extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.MOVE);
+        this.tags = List.of(SkillTag.TACTICAL);
         this.targetType = TargetType.SINGLE;
         this.possibleCastPositions = new int[]{1,2};
         this.possibleTargetPositions = new int[]{3};
-        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override
@@ -33,7 +32,6 @@ public class S_ShieldAssault extends Skill {
         this.hero.arena.moveTo(this.hero, targetPosition);
         Hero firstEnemy = this.hero.arena.getEntitiesAt(new int[]{3})[0];
         firstEnemy.addEffect(new Dazed(1), this.hero);
-        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override

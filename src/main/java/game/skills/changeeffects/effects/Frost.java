@@ -7,12 +7,17 @@ import game.skills.Effect;
 
 public class Frost extends Effect {
 
+    public static String ICON_STRING = "FRO";
     public Frost(int stacks) {
         this.name = "Frost";
+        this.iconString = ICON_STRING;
         this.stackable = true;
         this.stacks = stacks;
         this.description = "Damage adds another stack, then if there are 3 stacks, remove all stacks and stun.";
         this.type = ChangeEffectType.DEBUFF;
+    }
+    public static String getStaticIconString() {
+        return "[" + ICON_STRING + "]";
     }
 
     @Override

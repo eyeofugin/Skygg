@@ -1,5 +1,6 @@
 package game.entities.individuals.angelguy;
 
+import framework.graphics.text.Color;
 import game.entities.Hero;
 import game.entities.Multiplier;
 import game.skills.*;
@@ -17,7 +18,7 @@ public class S_Reengage extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.DMG, SkillTag.MOVE);
+        this.tags = List.of(SkillTag.TACTICAL);
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.1), new Multiplier(Stat.ENDURANCE, 0.1));
         this.targetType = TargetType.SINGLE;
         this.possibleTargetPositions = new int[]{3};
@@ -25,7 +26,6 @@ public class S_Reengage extends Skill {
         this.dmg = 4;
         this.damageMode = DamageMode.PHYSICAL;
         this.cdMax = 4;
-        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class S_Reengage extends Skill {
     }
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Move forward. Damages first opponent.";
+        return "Move to target position. Deals " + Stat.POWER.getColorKey() + "DMG" + Color.WHITE.getCodeString() +" to the first opponent.";
     }
 
     @Override

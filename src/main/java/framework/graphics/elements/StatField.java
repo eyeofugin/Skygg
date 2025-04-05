@@ -8,12 +8,19 @@ import game.skills.Stat;
 
 public class StatField extends GUIElement {
     private final Hero hero;
-    private final Stat[] leftStatArray = new Stat[]{Stat.MAGIC, Stat.POWER, Stat.SPEED, Stat.EVASION, Stat.ACCURACY, Stat.CRIT_CHANCE, Stat.LETHALITY};
-    private final Stat[] rightStatArray = new Stat[]{Stat.STAMINA, Stat.ENDURANCE};
+    private Stat[] leftStatArray = new Stat[]{Stat.MAGIC, Stat.POWER, Stat.SPEED, Stat.EVASION, Stat.ACCURACY, Stat.CRIT_CHANCE, Stat.LETHALITY};
+    private Stat[] rightStatArray = new Stat[]{Stat.STAMINA, Stat.ENDURANCE};
 
     public StatField(Hero hero) {
         this.hero = hero;
         this.setSize(98, 100);
+    }
+
+    public StatField(Hero hero, Stat[] lArray, Stat[] rArray) {
+        this.hero = hero;
+        this.setSize(98, 100);
+        this.leftStatArray = lArray;
+        this.rightStatArray = rArray;
     }
 
     @Override
@@ -30,7 +37,7 @@ public class StatField extends GUIElement {
             int totalValue = hero.getStat(stat);
             int statChange = hero.getStatChange(stat);
             int baseValue = totalValue - statChange;
-            String baseStatString = stat.getIconString() + ":" + baseValue;
+            String baseStatString = stat.getReference() + ":" + baseValue;
             String statChangeString = "";
             if (statChange != 0) {
                 statChangeString = statChange > 0 ? "{006}+" : "{012}";

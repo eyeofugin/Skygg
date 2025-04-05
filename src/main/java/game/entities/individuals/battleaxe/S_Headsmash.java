@@ -21,7 +21,8 @@ public class S_Headsmash extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.DMG);
+        this.tags = List.of(SkillTag.TACTICAL);
+        this.aiTags = List.of(AiSkillTag.COMBO_ENABLED);
         this.dmgMultipliers = List.of(new Multiplier(Stat.STAMINA, 0.3));
         this.targetType = TargetType.SINGLE;
         this.possibleCastPositions = new int[]{3};
@@ -29,8 +30,6 @@ public class S_Headsmash extends Skill {
         this.dmg = 1;
         this.cdMax = 2;
         this.damageMode = DamageMode.PHYSICAL;
-        this.comboEnabled = true;
-        this.abilityType = AbilityType.TACTICAL;
     }
 
     @Override
@@ -47,10 +46,14 @@ public class S_Headsmash extends Skill {
         }
     }
 
+    @Override
+    public String getComboDescription(Hero hero) {
+        return "Give " + Dazed.getStaticIconString() + "(2), " + Bleeding.getStaticIconString() + "(1).";
+    }
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "combo: daze,bleed target; no combo: daze self and get combo";
+        return "Without combo: Get " + Dazed.getStaticIconString() + "(2), " + Combo.getStaticIconString() + "(~).";
     }
 
 

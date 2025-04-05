@@ -20,7 +20,7 @@ public class S_FrostBreath extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.DMG);
+        this.tags = List.of(SkillTag.TACTICAL);
         this.effects = List.of(new Frost(1));
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.2),
                 new Multiplier(Stat.MANA, 0.3));
@@ -30,7 +30,6 @@ public class S_FrostBreath extends Skill {
         this.dmg = 5;
         this.damageMode = DamageMode.MAGICAL;
         this.manaCost = 4;
-        this.abilityType = AbilityType.TACTICAL;
     }
 
 
@@ -43,7 +42,7 @@ public class S_FrostBreath extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "-1 Speed. Give Frost Stack.";
+        return "Give -1" + Stat.SPEED.getIconString() + ".";
     }
 
     @Override

@@ -1,5 +1,6 @@
 package game.entities.individuals.battleaxe;
 
+import framework.graphics.text.Color;
 import game.entities.Hero;
 import game.skills.*;
 import game.skills.changeeffects.statusinflictions.Bleeding;
@@ -19,14 +20,12 @@ public class S_WideSwing extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.DMG);
+        this.tags = List.of(SkillTag.ULT);
         this.targetType = TargetType.ALL_TARGETS;
         this.possibleCastPositions = new int[]{2,3};
         this.possibleTargetPositions = new int[]{4,5};
         this.damageMode = DamageMode.PHYSICAL;
-        this.ultimate = true;
         this.cdMax = 2;
-        this.abilityType = AbilityType.ULT;
     }
 
     @Override
@@ -41,7 +40,7 @@ public class S_WideSwing extends Skill {
 
     @Override
     public boolean performCheck(Hero hero) {
-        return hero.getCurrentLifePercentage() < 40;
+        return super.performCheck(hero) && hero.getCurrentLifePercentage() < 40;
     }
 
     @Override
@@ -55,7 +54,7 @@ public class S_WideSwing extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "scales with missing health. Can only activate under 40% Max life.";
+        return "Activate only when less than " + this.hero.getStat(Stat.LIFE) * 4 / 10 + Stat.LIFE.getColorKey() + "(40%)" + Stat.LIFE.getReference()+ Color.WHITE.getCodeString() +" remaining. Deals damage equal to half of your missing "+Stat.LIFE.getIconString()+" percentage. (Currently " + this.hero.getMissingLifePercentage() + "%)";
     }
 
     @Override

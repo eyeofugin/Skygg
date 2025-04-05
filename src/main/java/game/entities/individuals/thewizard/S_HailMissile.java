@@ -20,17 +20,15 @@ public class S_HailMissile extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.DMG);
+        this.tags = List.of(SkillTag.PRIMARY);
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.5));
         this.targetType = TargetType.SINGLE;
         this.possibleCastPositions = new int[]{0,1,2,3};
         this.possibleTargetPositions = new int[]{4,5,6};
         this.dmg = 4;
         this.damageMode = DamageMode.MAGICAL;
-        this.comboEnabled = true;
+        this.aiTags = List.of(AiSkillTag.COMBO_ENABLED);
         this.canMiss = false;
-        this.primary = true;
-        this.abilityType = AbilityType.PRIMARY;
     }
 
 

@@ -17,7 +17,7 @@ public class S_PiercingLight extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.DMG);
+        this.tags = List.of(SkillTag.TACTICAL);
         this.targetType = TargetType.SINGLE;
         this.possibleTargetPositions = new int[]{4};
         this.possibleCastPositions = new int[]{2,3};
@@ -25,7 +25,6 @@ public class S_PiercingLight extends Skill {
         this.cdMax = 2;
         this.damageMode = DamageMode.MAGICAL;
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.3));
-        this.abilityType = AbilityType.TACTICAL;
 
     }
 
@@ -36,7 +35,7 @@ public class S_PiercingLight extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "20% lethality per halo stack.";
+        return "Piercing Light has 20%" + Stat.LETHALITY.getIconString() + " per " + Stat.HALO.getIconString() + " stack.";
     }
 
     @Override

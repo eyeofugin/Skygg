@@ -1,13 +1,11 @@
 package game.entities.individuals.dragonbreather;
 
 import game.entities.Hero;
-import game.skills.AbilityType;
 import game.skills.Skill;
+import game.skills.SkillTag;
 import game.skills.Stat;
 import game.skills.TargetType;
-import game.skills.changeeffects.effects.Burning;
 import game.skills.changeeffects.globals.Heat;
-import utils.MyMaths;
 
 import java.util.List;
 
@@ -23,11 +21,10 @@ public class S_InnerFire extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.BUFF);
+        this.tags = List.of(SkillTag.TACTICAL);
         this.targetType = TargetType.SELF;
         this.possibleCastPositions = new int[]{0,1,2,3};
         this.manaCost = 8;
-        this.abilityType = AbilityType.TACTICAL;
     }
 
 
@@ -41,7 +38,7 @@ public class S_InnerFire extends Skill {
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "+6"+Stat.POWER.getIconString()+", +6"+Stat.MAGIC.getIconString()+" during Heat. +4"+Stat.ENDURANCE.getIconString()+", +4"+Stat.STAMINA.getIconString()+ " otherwise";
+        return "+6"+Stat.POWER.getIconString()+", +6"+Stat.MAGIC.getIconString()+" during Heat. +4"+Stat.ENDURANCE.getIconString()+", +4"+Stat.STAMINA.getIconString()+ " otherwise.";
     }
 
     @Override

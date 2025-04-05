@@ -3,11 +3,7 @@ package game.skills;
 import framework.Logger;
 import framework.Property;
 import framework.connector.Connector;
-import framework.connector.payloads.BaseHealChangesPayload;
-import framework.connector.payloads.CriticalTriggerPayload;
-import framework.connector.payloads.DmgChangesPayload;
-import framework.connector.payloads.DmgTriggerPayload;
-import framework.connector.payloads.OnPerformPayload;
+import framework.connector.payloads.*;
 import framework.graphics.text.Color;
 import framework.graphics.text.TextEditor;
 import framework.resources.SpriteLibrary;
@@ -16,14 +12,10 @@ import game.entities.Hero;
 import game.entities.Multiplier;
 import game.objects.Equipment;
 import game.skills.changeeffects.effects.Scoped;
-import game.skills.changeeffects.effects.Threatening;
 import game.skills.changeeffects.statusinflictions.Rooted;
 import utils.MyMaths;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public abstract class Skill {
 
@@ -36,14 +28,12 @@ public abstract class Skill {
     protected int[] iconPixels;
     protected String iconPath;
     protected String animationName = "action_w";
-    public AbilityType abilityType;
+
+    public List<SkillTag> tags = new ArrayList<>();
+    public List<AiSkillTag> aiTags = new ArrayList<>();
 
     protected TargetType targetType = TargetType.SINGLE;
-
     protected DamageMode damageMode = null;
-    protected boolean passive = false;
-    protected boolean isMove = false;
-    protected List<Effect> movedWithEffects = new ArrayList<>();
     protected List<Effect> effects = new ArrayList<>();
     protected List<Effect> casterEffects = new ArrayList<>();
 
@@ -51,6 +41,7 @@ public abstract class Skill {
 
     protected List<Multiplier> dmgMultipliers = new ArrayList<>();
     protected List<Multiplier> healMultipliers = new ArrayList<>();
+    protected List<Multiplier> shieldMultipliers = new ArrayList<>();
 
     protected List<Hero> targets = new ArrayList<>();
 
@@ -58,7 +49,6 @@ public abstract class Skill {
     protected int lifeCost = 0;
     protected int faithCost = 0;
     protected int actionCost = 1;
-    protected int overheatCost = 0;
     protected int accuracy = 100;
     protected int critChance = 0;
     public int dmg = 0;
@@ -66,21 +56,14 @@ public abstract class Skill {
     public int shield = 0;
     protected int cdMax = 0;
     protected int cdCurrent = 0;
-    protected boolean justCast = false;
-    protected int blockedTurns = 0;
     protected boolean canMiss = true;
     protected int countAsHits = 1;
-    protected boolean primary = false;
-    protected boolean ultimate = false;
-    protected boolean comboEnabled = false;
-    protected boolean faithGain = false;
     public int priority = 0;
 
-    public int[] possibleTargetPositions;
-    public int[] possibleCastPositions;
+    public int[] possibleTargetPositions = new int[0];
+    public int[] possibleCastPositions = new int[0];
 
 //AI
-    public List<SkillTag> tags = new ArrayList<>();
     public int getAIRating(Hero target){return 0;}
     public int getAIArenaRating(Arena arena) {return 0;}
 
@@ -109,36 +92,28 @@ public abstract class Skill {
     }
 
     public boolean performCheck(Hero hero) {
-        return true;
+        return Arrays.stream(this.possibleCastPositions).anyMatch(i -> i == hero.getCasterPosition());
     }
 
-    public enum SkillTag {
-        DMG,
-        HEAL,
-        BUFF,
-        CC,
-        RESTOCK,
-        SETUP,
-        PEEL,
-        REGROUP,
-        MOVE
-    }
     public Skill(Hero hero) {
         this.id = ++counter;
         this.hero = hero;
     }
+
+    public void getCurrentVersion() {
+        this.setToInitial();
+        CastChangePayload payload = new CastChangePayload()
+                .setSkill(this);
+        Connector.fireTopic(Connector.CAST_CHANGE, payload);
+    }
+
     public void setToInitial() {
         Logger.logLn("Set to initial");
-        this.passive = false;
-        this.isMove = false;
-        this.movedWithEffects = new ArrayList<>();
         this.effects = new ArrayList<>();
         this.casterEffects = new ArrayList<>();
         this.dmgMultipliers = new ArrayList<>();
-        this.targets = new ArrayList<>();
         this.manaCost = 0;
         this.lifeCost = 0;
-        this.overheatCost = 0;
         this.actionCost = 1;
         this.accuracy = 100;
         this.critChance = 0;
@@ -146,7 +121,6 @@ public abstract class Skill {
         this.heal = 0;
         this.cdMax = 0;
         this.shield = 0;
-        this.comboEnabled = false;
         this.canMiss = true;
         this.countAsHits = 1;
         if (SpriteLibrary.hasSprite(this.getName())) {
@@ -159,14 +133,26 @@ public abstract class Skill {
     }
 
     public void turn() {
-        if (justCast) {
-            justCast = false;
-        } else if (cdCurrent > 0) {
+        if (cdCurrent > 0) {
             cdCurrent--;
         }
-        setToInitial();
     }
-    public abstract String getDescriptionFor(Hero hero);
+
+    public int getLethality() {
+        return 0;
+    }
+
+    public String getUpperDescriptionFor(Hero hero) {
+        return "";
+    }
+
+    public String getComboDescription(Hero hero) {
+        return "";
+    }
+
+    public String getDescriptionFor(Hero hero) {
+        return "";
+    };
     public void addSubscriptions() {
 
     }
@@ -201,13 +187,11 @@ public abstract class Skill {
         this.hero.playAnimation(this.animationName);
         this.hero.payForSkill(this);
         this.setCdCurrent(this.getCdMax());
-        this.justCast = true;
         Logger.logLn("Cd now " + this.getCdCurrent());
     }
     public void clearEffects() {
         this.effects = new ArrayList<>();
         this.casterEffects = new ArrayList<>();
-        this.movedWithEffects = new ArrayList<>();
     }
 
     public void resolve() {
@@ -244,7 +228,7 @@ public abstract class Skill {
         int dmg = getDmgWithMulti(target);
         Logger.logLn("After multipliers:" + dmg);
         DamageMode dm = this.getDamageMode();
-        int lethality = this.hero.getStat(Stat.LETHALITY) + this.getLethality();
+        int lethality = this.hero.getStat(Stat.LETHALITY);
         for (int i = 0; i < getCountsAsHits(); i++) {
             int dmgPerHit = dmg;
             Logger.logLn("Hit no:" + i+1);
@@ -267,6 +251,10 @@ public abstract class Skill {
             Logger.logLn("Heal:" + heal);
             if (heal > 0) {
                 target.heal(this.hero, heal, this, false);
+            }
+            int shield = this.getShieldWithMulti(target);
+            if (shield > 0) {
+                target.shield(shield, this.hero);
             }
             this.applySkillEffects(target);
         }
@@ -291,6 +279,9 @@ public abstract class Skill {
         target.addAllEffects(this.getEffects(), this.hero);
         target.addResources(this.targetResources, this.hero);
     }
+    protected int getShieldMultiBonus() {
+        return this.getMultiplierBonus(this.shieldMultipliers);
+    }
     protected int getHealMultiBonus() {
         return this.getMultiplierBonus(this.healMultipliers);
     }
@@ -314,7 +305,7 @@ public abstract class Skill {
         List<Integer> targetList = new ArrayList<>();
 
         for (int pos : this.possibleTargetPositions) {
-            int targetPos = this.hero.isTeam2() ? Arena.lastEnemeyPos - pos : pos;
+            int targetPos = this.hero.isTeam2() ? Arena.lastEnemyPos - pos : pos;
             if (this.targetType.equals(TargetType.SINGLE_OTHER) && this.hero.getPosition() == targetPos) {
                 continue;
             }
@@ -359,32 +350,8 @@ public abstract class Skill {
         this.damageMode = damageMode;
     }
 
-    public int getLethality() {
-        return 0;
-    }
-
     public boolean isPassive() {
-        return passive;
-    }
-
-    public void setPassive(boolean passive) {
-        this.passive = passive;
-    }
-
-    public boolean isMove() {
-        return isMove;
-    }
-
-    public void setMove(boolean move) {
-        isMove = move;
-    }
-
-    public List<Effect> getMovedWithEffects() {
-        return movedWithEffects;
-    }
-
-    public void setMovedWithEffects(List<Effect> movedWithEffects) {
-        this.movedWithEffects = movedWithEffects;
+        return this.tags.contains(SkillTag.PASSIVE);
     }
 
     public List<Effect> getEffects() {
@@ -413,6 +380,10 @@ public abstract class Skill {
 
     public List<Multiplier> getHealMultipliers() {
         return healMultipliers;
+    }
+
+    public List<Multiplier> getShieldMultipliers() {
+        return shieldMultipliers;
     }
 
     public void setHealMultipliers(List<Multiplier> healMultipliers) {
@@ -465,6 +436,11 @@ public abstract class Skill {
         return getDmg(target) + getDmgMultiBonus();
     }
 
+    public int getShieldWithMulti(Hero target) {
+        int baseShield = this.getShield(target);
+        int multiBonus = getShieldMultiBonus();
+        return baseShield + multiBonus;
+    }
     public int getHealWithMulti(Hero target) {
         int baseHeal = this.getHeal(target);
         int multiplierBonus = getHealMultiBonus();
@@ -487,33 +463,8 @@ public abstract class Skill {
     public int getCdCurrent() {
         return cdCurrent;
     }
-
-    public void setTargets(List<Hero> targets) {
-        this.targets = targets;
-    }
-
-    public List<Hero> getTargets() {
-        return targets;
-    }
-
     public void setCdCurrent(int cdCurrent) {
         this.cdCurrent = cdCurrent;
-    }
-
-    public int getBlockedTurns() {
-        return blockedTurns;
-    }
-
-    public void setBlockedTurns(int blockedTurns) {
-        this.blockedTurns = blockedTurns;
-    }
-
-    public int getOverheatCost() {
-        return overheatCost;
-    }
-
-    public void setOverheatCost(int overheatCost) {
-        this.overheatCost = overheatCost;
     }
 
     public int getCountsAsHits() {
@@ -521,9 +472,6 @@ public abstract class Skill {
     }
     public void setCountsAsHits(int countsAsHits) {
         this.countAsHits = countsAsHits;
-    }
-    public boolean isPrimary() {
-        return this.primary;
     }
     public String getIcon() {
         return "aa_blaster";
@@ -545,89 +493,203 @@ public abstract class Skill {
         return this.name;
     }
 
-    public int getShield() {
+    public int getShield(Hero target) {
         return shield;
-    }
-
-    public boolean isComboEnabled() {
-        return comboEnabled;
-    }
-
-    public boolean isFaithGain() {
-        return faithGain;
     }
 
     public String getTargetString() {
         StringBuilder builder = new StringBuilder();
         if (this.isPassive()) {
-            return "";
+            return "Passive";
         }
-        builder.append("Target:");
-        switch (this.targetType) {
-            case SINGLE -> {
-                builder.append("Any");
+        List<Integer> castPosList = Arrays.stream(this.possibleCastPositions)
+                .boxed()
+                .toList();
+        List<Integer> targetPosList = Arrays.stream(this.possibleTargetPositions)
+                .boxed()
+                .toList();
+        for (int i = 0; i < 4; i++) {
+            if(castPosList.contains(i)) {
+                builder.append("[FTT]");
+            } else {
+                builder.append("[EMT]");
             }
-            case SELF -> {
-                builder.append("Self");
+        }
+        builder.append(" ");
+
+        if (this.targetType.equals(TargetType.SELF)) {
+            builder.append("Self");
+        } else if (targetType.equals(TargetType.ARENA)) {
+            builder.append("Arena");
+        } else if (targetType.equals(TargetType.ALL)) {
+            builder.append("All");
+        } else if (targetType.equals(TargetType.ONE_RDM)){
+            builder.append("1 Rdm");
+        } else if (targetType.equals(TargetType.TWO_RDM)) {
+            builder.append("2 Rdm");
+        } else if (targetType.equals(TargetType.THREE_RDM)) {
+            builder.append("3 Rdm");
+        } else if (targetPosList.stream().anyMatch(i-> i < 4)){
+            for (int i = 0; i < 4; i++) {
+                if (targetPosList.contains(i)) {
+                    if (targetType.equals(TargetType.SINGLE_OTHER)) {
+                        builder.append("[OTT]");
+                    } else if (targetType.equals(TargetType.SINGLE)) {
+                        builder.append("[FTT]");
+                    } else if (targetType.equals(TargetType.ALL_TARGETS)){
+                        builder.append("[FTA]");
+                    }
+                } else {
+                    builder.append("[EMT]");
+                }
             }
-            case ONE_RDM -> {
-                builder.append("Any Random");
-            }
-            case TWO_RDM -> {
-                builder.append("Two Random");
-            }
-            case THREE_RDM -> {
-                builder.append("Three Random");
-            }
-            case ALL -> {
-                builder.append("All");
-            }
-            case ARENA -> {
-                builder.append("Arena");
+        } else {
+            for (int i = 4; i < 8; i++) {
+                if (targetPosList.contains(i)) {
+                    if (targetType.equals(TargetType.SINGLE)) {
+                        builder.append("[ETT]");
+                    } else if (targetType.equals(TargetType.ALL_TARGETS)) {
+                        builder.append("[ETA]");
+                    }
+                } else {
+                    builder.append("[EMT]");
+                }
             }
         }
         return builder.toString();
     }
+
+    protected String getDmgString() {
+        int fullDmg = this.getDmgWithMulti(null);
+        int dmg = this.getDmg(null);
+        String pureDmg = dmg == 0? "": dmg + "";
+        StringBuilder builder = new StringBuilder();
+        Iterator<Multiplier> iter = this.dmgMultipliers.iterator();
+        while (iter.hasNext()) {
+            Multiplier mult = iter.next();
+            String profColor = mult.prof.getColorKey();
+            builder.append(profColor);
+            builder.append((int)(mult.percentage*100))
+                    .append("%")
+                    .append(mult.prof.getReference())
+                    .append("{001}");
+            if (iter.hasNext()) {
+                builder.append("+");
+            }
+        }
+        String multiDmg = builder.toString();
+        StringBuilder resultBuilder = new StringBuilder();
+        resultBuilder.append(fullDmg);
+        if (!multiDmg.isEmpty()) {
+            resultBuilder.append(" (");
+            if (!pureDmg.isEmpty()) {
+                resultBuilder.append(pureDmg);
+                resultBuilder.append("+");
+            }
+            resultBuilder.append(multiDmg);
+            resultBuilder.append(")");
+        }
+        return resultBuilder.toString();
+    }
+
+    protected String getHealString() {
+        int fullHeal = this.getHealWithMulti(null);
+        int heal = this.getHeal(null);
+        String pureHeal = heal == 0? "": heal + "";
+        StringBuilder builder = new StringBuilder();
+        Iterator<Multiplier> iter = this.healMultipliers.iterator();
+        while (iter.hasNext()) {
+            Multiplier mult = iter.next();
+            String profColor = mult.prof.getColorKey();
+            builder.append(profColor);
+            builder.append((int)(mult.percentage*100))
+                    .append("%")
+                    .append(mult.prof.getReference())
+                    .append("{001}");
+            if (iter.hasNext()) {
+                builder.append("+");
+            }
+        }
+        String multiHeal = builder.toString();
+        StringBuilder resultBuilder = new StringBuilder();
+        resultBuilder.append(fullHeal);
+        if (!multiHeal.isEmpty()) {
+            resultBuilder.append(" (");
+            if (!pureHeal.isEmpty()) {
+                resultBuilder.append(pureHeal);
+                resultBuilder.append("+");
+            }
+            resultBuilder.append(multiHeal);
+            resultBuilder.append(")");
+        }
+        return resultBuilder.toString();
+    }
+
+    protected String getShieldString() {
+        int fullShield = this.getShieldWithMulti(null);
+        int shield = this.getShield(null);
+        String pureShield = shield == 0? "": shield + "";
+        StringBuilder builder = new StringBuilder();
+        Iterator<Multiplier> iter = this.shieldMultipliers.iterator();
+        while (iter.hasNext()) {
+            Multiplier mult = iter.next();
+            String profColor = mult.prof.getColorKey();
+            builder.append(profColor);
+            builder.append((int)(mult.percentage*100))
+                    .append("%")
+                    .append(mult.prof.getReference())
+                    .append("{001}");
+            if (iter.hasNext()) {
+                builder.append("+");
+            }
+        }
+        String multiShield = builder.toString();
+        StringBuilder resultBuilder = new StringBuilder();
+        resultBuilder.append(fullShield);
+        if (!multiShield.isEmpty()) {
+            resultBuilder.append(" (");
+            if (!pureShield.isEmpty()) {
+                resultBuilder.append(pureShield);
+                resultBuilder.append("+");
+            }
+            resultBuilder.append(multiShield);
+            resultBuilder.append(")");
+        }
+        return resultBuilder.toString();
+    }
+
     public String getDmgOrHealString() {
         StringBuilder builder = new StringBuilder();
-        if (this.dmg != 0 || !this.dmgMultipliers.isEmpty()) {
+        if (this.getDmg(null) != 0 || !this.dmgMultipliers.isEmpty()) {
+            if (this.damageMode.equals(DamageMode.PHYSICAL)) {
+                builder.append(Color.FORCE_RED.getCodeString());
+            } else {
+                builder.append(Color.MAGIC_BLUE.getCodeString());
+            }
             builder.append("DMG: ");
-            if (this.dmg != 0) {
-                builder.append(this.dmg);
+            builder.append(Color.WHITE.getCodeString());
+            builder.append(getDmgString());
+
+        } else if ((this.getHeal(null) != 0 || !this.healMultipliers.isEmpty())
+                || (this.getShield(null) != 0 || !this.shieldMultipliers.isEmpty())){
+            if (this.getHeal(null) != 0 || !this.healMultipliers.isEmpty()){
+                builder.append("HEAL: ");
+                builder.append(Color.WHITE.getCodeString());
+                builder.append(getHealString());
             }
-            if (!this.dmgMultipliers.isEmpty()) {
-                for (Multiplier mult : this.dmgMultipliers) {
-                    builder.append(" + ");
-                    String profColor = mult.prof.getColorKey();
-                    builder.append(profColor);
-                    builder.append((int)(mult.percentage*100))
-                            .append("% ")
-                            .append(mult.prof.getIconString())
-                            .append("{000} ");
-                }
+
+            if (this.getShield(null) != 0 || !this.shieldMultipliers.isEmpty()) {
+                builder.append("SHIELD: ");
+                builder.append(getShieldString());
             }
-        } else if (this.heal != 0 || !this.healMultipliers.isEmpty()) {
-            builder.append("HEAL: ");
-            if (this.heal != 0) {
-                builder.append(this.heal);
-            }
-            if (!this.healMultipliers.isEmpty()) {
-                for (Multiplier mult : this.healMultipliers) {
-                    builder.append(" + ");
-                    String profColor = mult.prof.getColorKey();
-                    builder.append(profColor);
-                    builder.append((int)(mult.percentage*100))
-                            .append("% ")
-                            .append(mult.prof.getIconString())
-                            .append("{000} ");
-                }
-            }
+        } else {
+            builder.append("---");
         }
         return builder.toString();
     }
     public String getCostString() {
         if (this.isPassive()) {
-            return "Passive";
+            return "";
         }
         StringBuilder costString = new StringBuilder();
         if (this.manaCost != 0 || this.faithCost != 0 || this.lifeCost != 0) {
@@ -635,15 +697,15 @@ public abstract class Skill {
         }
         if (this.manaCost != 0) {
             costString.append(Color.BLUE.getCodeString()).append(this.manaCost).append("{000}");
-            costString.append(Stat.MANA.getIconString());
+            costString.append(Stat.CURRENT_MANA.getIconString());
         }
         if (this.faithCost != 0) {
             costString.append(Color.DARKYELLOW.getCodeString()).append(this.faithCost).append("{000}");
-            costString.append(Stat.FAITH.getIconString());
+            costString.append(Stat.CURRENT_FAITH.getIconString());
         }
         if (this.lifeCost != 0) {
             costString.append(Color.RED.getCodeString()).append(this.lifeCost).append("{000}");
-            costString.append(Stat.LIFE.getIconString());
+            costString.append(Stat.CURRENT_LIFE.getIconString());
         }
 //        if (this.actionCost != 0) {
 //            costString.append("Action:");
@@ -663,6 +725,31 @@ public abstract class Skill {
         }
         return costString.toString();
     }
+
+    public String getEffectString() {
+        return getEffectStringForEffectList(this.effects, "Target Effects: ");
+    }
+    public String getCasterEffectString() {
+        return getEffectStringForEffectList(this.casterEffects, "Caster Effects: ");
+    }
+    public String getEffectStringForEffectList(List<Effect> effectList, String listPrefix) {
+        if (effectList.isEmpty()) {
+            return "";
+        }
+        StringBuilder effectString = new StringBuilder();
+        effectString.append(listPrefix);
+        Iterator<Effect> iterator = effectList.iterator();
+        while (iterator.hasNext()) {
+            Effect effect = iterator.next();
+            int value = effect.stackable  ? effect.stacks : effect.turns;
+            effectString.append(effect.getIconString()).append("(").append(value == -1 ? "~" : value).append(")");
+            if (iterator.hasNext()) {
+                effectString.append(", ");
+            }
+        }
+
+        return effectString.toString();
+    }
     @Override
     public String toString() {
         return "\nSkill{" +
@@ -670,9 +757,6 @@ public abstract class Skill {
                 ", Hero=" + hero.getName() +
                 ", name='" + getName() + '\'' +
                 ", targetType=" + targetType +
-                ", passive=" + passive +
-                ", isMove=" + isMove +
-                ", movedWithEffects=" + movedWithEffects +
                 ", effects=" + effects +
                 ", casterEffects=" + casterEffects +
                 ", dmgMultipliers=" + dmgMultipliers +
@@ -680,16 +764,18 @@ public abstract class Skill {
                 ", manaCost=" + manaCost +
                 ", lifeCost=" + lifeCost +
                 ", actionCost=" + actionCost +
-                ", overheatCost=" + overheatCost +
                 ", accuracy=" + accuracy +
                 ", dmg=" + dmg +
                 ", heal=" + heal +
                 ", cdMax=" + cdMax +
                 ", cdCurrent=" + cdCurrent +
-                ", blockedTurns=" + blockedTurns +
                 ", canMiss=" + canMiss +
                 ", countAsHits=" + countAsHits +
                 ", tags=" + tags +
                 '}';
+    }
+
+    public void setTargets(Hero[] entitiesAt) {
+        this.targets = List.of(entitiesAt);
     }
 }

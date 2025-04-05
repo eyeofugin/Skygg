@@ -1,8 +1,8 @@
 package game.entities.individuals.phoenixguy;
 
 import game.entities.Hero;
-import game.skills.AbilityType;
 import game.skills.Skill;
+import game.skills.SkillTag;
 import game.skills.TargetType;
 import game.skills.changeeffects.effects.Burning;
 import game.skills.changeeffects.effects.Exalted;
@@ -20,12 +20,11 @@ public class S_PhoenixFlames extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.BUFF);
+        this.tags = List.of(SkillTag.ULT);
         this.targetType = TargetType.SELF;
         this.possibleCastPositions = new int[]{0,1,2,3};
         this.effects = List.of(new Exalted(3));
         this.faithCost = 13;
-        this.abilityType = AbilityType.ULT;
     }
 
     @Override

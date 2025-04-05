@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TeamBuildHeroesCard extends GUIElement {
-    public static final int _WIDTH = 200;
+    public static final int _WIDTH = 270;
     public static final int _HEIGHT = 300;
 
     private final Engine engine;
@@ -40,11 +40,11 @@ public class TeamBuildHeroesCard extends GUIElement {
     public void update(int frame) {
         if (this.active) {
             if (engine.keyB._leftPressed) {
-                this.activeHeroPointer = this.activeHeroPointer > 0 ? this.activeHeroPointer-1: 2;
+                this.activeHeroPointer = this.activeHeroPointer > 0 ? this.activeHeroPointer-1: 3;
                 setSelectedHero();
             }
             if (engine.keyB._rightPressed) {
-                this.activeHeroPointer = this.activeHeroPointer < 2 ? this.activeHeroPointer+1: 0;
+                this.activeHeroPointer = this.activeHeroPointer < 3 ? this.activeHeroPointer+1: 0;
                 setSelectedHero();
             }
             if (engine.keyB._enterPressed) {

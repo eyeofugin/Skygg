@@ -19,7 +19,7 @@ public class S_Barrage extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.DMG);
+        this.tags = List.of(SkillTag.ULT);
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.15));
         this.effects = List.of(new Injured(1));
         this.possibleCastPositions = new int[]{0,1};
@@ -28,7 +28,6 @@ public class S_Barrage extends Skill {
         this.dmg = 10;
         this.damageMode = DamageMode.PHYSICAL;
         this.cdMax = 4;
-        this.abilityType = AbilityType.ULT;
     }
 
 

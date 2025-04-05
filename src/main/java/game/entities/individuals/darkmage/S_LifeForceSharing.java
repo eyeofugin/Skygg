@@ -2,8 +2,8 @@ package game.entities.individuals.darkmage;
 
 import game.entities.Hero;
 import game.entities.Multiplier;
-import game.skills.AbilityType;
 import game.skills.Skill;
+import game.skills.SkillTag;
 import game.skills.Stat;
 import game.skills.TargetType;
 
@@ -21,13 +21,12 @@ public class S_LifeForceSharing extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.HEAL);
+        this.tags = List.of(SkillTag.TACTICAL);
         this.healMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.5));
         this.targetType = TargetType.SINGLE_OTHER;
         this.possibleCastPositions = new int[]{0,1,2,3};
         this.possibleTargetPositions = new int[]{0,1,2,3};
         this.lifeCost = 4;
-        this.abilityType = AbilityType.TACTICAL;
     }
 
 
@@ -37,11 +36,6 @@ public class S_LifeForceSharing extends Skill {
         rating -= this.hero.getMissingLifePercentage() / 50;
         rating += target.getMissingLifePercentage() / 15;
         return rating;
-    }
-
-    @Override
-    public String getDescriptionFor(Hero hero) {
-        return "heal ally for 50% Magic";
     }
 
     @Override

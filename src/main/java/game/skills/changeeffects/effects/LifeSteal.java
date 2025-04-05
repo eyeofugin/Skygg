@@ -8,12 +8,18 @@ import game.skills.Effect;
 import game.skills.Stat;
 
 public class LifeSteal extends Effect {
+
+    public static String ICON_STRING = "LST";
     public LifeSteal(int turns) {
         this.turns = turns;
+        this.iconString = ICON_STRING;
         this.name = "LifeSteal";
         this.stackable = false;
         this.description = "Get physical dmg dealt as life";
         this.type = ChangeEffectType.BUFF;
+    }
+    public static String getStaticIconString() {
+        return "[" + ICON_STRING + "]";
     }
     @Override
     public Effect getNew() {

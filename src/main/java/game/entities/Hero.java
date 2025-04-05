@@ -282,6 +282,10 @@ public abstract class Hero extends GUIElement {
         if (stat == null) {
             return 0;
         }
+        Integer statValue = this.stats.get(stat);
+        if (statValue == null) {
+            return 0;
+        }
         return this.stats.get(stat);
     }
 
@@ -375,9 +379,7 @@ public abstract class Hero extends GUIElement {
     public void prepareCast() {
         for (Skill skill : this.skills) {
             if (skill != null) {
-                CastChangePayload payload = new CastChangePayload()
-                        .setSkill(skill);
-                Connector.fireTopic(Connector.CAST_CHANGE, payload);
+                skill.getCurrentVersion();
             }
         }
     }
@@ -824,10 +826,10 @@ public abstract class Hero extends GUIElement {
         return allies;
     }
     public List<Hero> getEnemies() {
-        if (this.team.teamNumber==2) {
-            return Arrays.stream(this.arena.friends.heroes).filter(Objects::nonNull).toList();
+        if (this.isTeam2()) {
+            return Arrays.stream(this.arena.teams.get(0).heroes).filter(Objects::nonNull).toList();
         } else {
-            return Arrays.stream(this.arena.enemies.heroes).filter(Objects::nonNull).toList();
+            return Arrays.stream(this.arena.teams.get(1).heroes).filter(Objects::nonNull).toList();
         }
     }
 
@@ -901,7 +903,7 @@ public abstract class Hero extends GUIElement {
     }
 
     public int getSkillPos() {
-        return this.isTeam2() ? Arena.lastEnemeyPos - this.getPosition() : this.getPosition();
+        return this.isTeam2() ? Arena.lastEnemyPos - this.getPosition() : this.getPosition();
     }
 
     public void setPosition(int position) {
@@ -929,8 +931,12 @@ public abstract class Hero extends GUIElement {
         if (this.skills.length > index) {
             Skill skill = this.skills[index];
             System.out.print(skill.getName()+":");
-            skill.setTargets(List.of(target));
+            skill.setTargets(new Hero[]{target});
             skill.resolve();
         }
+    }
+
+    public int getCasterPosition() {
+        return this.isTeam2() ? 7 - this.position : this.position;
     }
 }

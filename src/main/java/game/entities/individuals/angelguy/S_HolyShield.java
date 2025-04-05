@@ -1,9 +1,7 @@
 package game.entities.individuals.angelguy;
 
 import game.entities.Hero;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Burning;
 import game.skills.changeeffects.effects.Exalted;
 
@@ -20,7 +18,7 @@ public class S_HolyShield extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.BUFF);
+        this.tags = List.of(SkillTag.TACTICAL);
         this.targetType = TargetType.ALL_TARGETS;
         this.possibleTargetPositions = new int[]{0,1,2,3};
         this.possibleCastPositions = new int[]{0,1,2,3};
@@ -29,14 +27,8 @@ public class S_HolyShield extends Skill {
         this.shield = 3;
     }
     @Override
-    public void applySkillEffects(Hero target) {
-        super.applySkillEffects(target);
-        target.shield(this.shield, this.hero);
-    }
-
-    @Override
     public String getDescriptionFor(Hero hero) {
-        return "All allies get 3 shield";
+        return "";
     }
 
 

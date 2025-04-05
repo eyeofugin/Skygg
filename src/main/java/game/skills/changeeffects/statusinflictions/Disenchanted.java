@@ -5,12 +5,17 @@ import game.skills.Effect;
 
 public class Disenchanted extends Effect {
 
+    public static String ICON_STRING = "DIS";
     public Disenchanted(int turns) {
         this.turns = turns;
+        this.iconString = ICON_STRING;
         this.name = "Disenchanted";
         this.stackable = false;
         this.description = "Ignore equipment stats";
         this.type = ChangeEffectType.STATUS_INFLICTION;
+    }
+    public static String getStaticIconString() {
+        return "[" + ICON_STRING + "]";
     }
     @Override
     public Disenchanted getNew() {

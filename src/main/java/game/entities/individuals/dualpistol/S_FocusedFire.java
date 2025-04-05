@@ -4,8 +4,10 @@ import framework.connector.Connection;
 import framework.connector.Connector;
 import framework.connector.payloads.DmgChangesPayload;
 import game.entities.Hero;
-import game.skills.AbilityType;
 import game.skills.Skill;
+import game.skills.SkillTag;
+
+import java.util.List;
 
 public class S_FocusedFire extends Skill {
     public S_FocusedFire(Hero hero) {
@@ -18,8 +20,7 @@ public class S_FocusedFire extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.passive = true;
-        this.abilityType = AbilityType.TACTICAL;
+        this.tags = List.of(SkillTag.TACTICAL, SkillTag.PASSIVE);
     }
 
     @Override

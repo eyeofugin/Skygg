@@ -18,7 +18,7 @@ public class S_LightBlast extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.DMG, SkillTag.PEEL);
+        this.tags = List.of(SkillTag.TACTICAL);
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.4));
         this.targetType = TargetType.SINGLE;
         this.possibleCastPositions = new int[]{3};
@@ -26,7 +26,6 @@ public class S_LightBlast extends Skill {
         this.dmg = 2;
         this.faithCost = 5;
         this.damageMode = DamageMode.MAGICAL;
-        this.abilityType = AbilityType.TACTICAL;
     }
 
 

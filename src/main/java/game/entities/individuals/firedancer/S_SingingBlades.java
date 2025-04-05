@@ -21,7 +21,7 @@ public class S_SingingBlades extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.DMG);
+        this.tags = List.of(SkillTag.TACTICAL);
         this.dmgMultipliers = List.of(new Multiplier(Stat.MAGIC, 0.15),
                 new Multiplier(Stat.POWER, 0.4));
         this.targetType = TargetType.SINGLE;
@@ -29,7 +29,6 @@ public class S_SingingBlades extends Skill {
         this.possibleTargetPositions = new int[]{4,5};
         this.dmg = 10;
         this.damageMode = DamageMode.PHYSICAL;
-        this.abilityType = AbilityType.TACTICAL;
     }
 
 

@@ -8,13 +8,20 @@ import game.skills.Effect;
 
 public class Steadfast extends Effect {
 
+
+    public static String ICON_STRING = "STE";
+
     public Steadfast(int stacks){
         this.stackable = true;
+        this.iconString = ICON_STRING;
         this.stacks = stacks;
         this.type = ChangeEffectType.BUFF;
         this.description = "10% dmg reduction per stack";
         this.name = "Steadfast";
 
+    }
+    public static String getStaticIconString() {
+        return "[" + ICON_STRING + "]";
     }
     @Override
     public Effect getNew() {

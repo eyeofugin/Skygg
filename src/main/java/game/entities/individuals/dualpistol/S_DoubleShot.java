@@ -18,15 +18,14 @@ public class S_DoubleShot extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
+        this.tags = List.of(SkillTag.PRIMARY);
         this.targetType = TargetType.SINGLE;
         this.possibleCastPositions = new int[]{0,1,2};
         this.possibleTargetPositions = new int[]{4,5};
-        this.primary = true;
         this.countAsHits = 2;
         this.dmg = 6;
         this.dmgMultipliers = List.of(new Multiplier(Stat.POWER, 0.1));
         this.damageMode = DamageMode.PHYSICAL;
-        this.abilityType = AbilityType.PRIMARY;
     }
 
 

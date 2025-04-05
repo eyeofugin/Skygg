@@ -1,10 +1,12 @@
 package game.entities.individuals.thehealer;
 
 import game.entities.Hero;
-import game.skills.AbilityType;
 import game.skills.Effect;
 import game.skills.Skill;
+import game.skills.SkillTag;
 import game.skills.TargetType;
+
+import java.util.List;
 
 public class S_Cleanse extends Skill {
 
@@ -18,11 +20,11 @@ public class S_Cleanse extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
+        this.tags = List.of(SkillTag.TACTICAL);
         this.targetType = TargetType.SINGLE;
         this.possibleCastPositions = new int[]{0,1,2,3};
         this.possibleTargetPositions = new int[]{0,1,2,3};
         this.manaCost = 4;
-        this.abilityType = AbilityType.TACTICAL;
     }
 
 

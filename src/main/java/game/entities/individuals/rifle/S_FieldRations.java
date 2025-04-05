@@ -1,10 +1,7 @@
 package game.entities.individuals.rifle;
 
 import game.entities.Hero;
-import game.skills.AbilityType;
-import game.skills.Skill;
-import game.skills.Stat;
-import game.skills.TargetType;
+import game.skills.*;
 import game.skills.changeeffects.effects.Combo;
 
 import java.util.List;
@@ -21,13 +18,12 @@ public class S_FieldRations extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
-        this.tags = List.of(SkillTag.HEAL);
+        this.tags = List.of(SkillTag.TACTICAL);
         this.targetType = TargetType.SINGLE;
         this.possibleCastPositions = new int[]{0,1,2};
         this.possibleTargetPositions = new int[]{0,1,2,3};
         this.cdMax = 3;
-        this.comboEnabled = true;
-        this.abilityType = AbilityType.TACTICAL;
+        this.aiTags = List.of(AiSkillTag.COMBO_ENABLED);
     }
 
 

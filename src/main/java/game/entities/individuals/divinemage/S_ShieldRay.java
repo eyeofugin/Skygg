@@ -1,10 +1,13 @@
 package game.entities.individuals.divinemage;
 
 import game.entities.Hero;
-import game.skills.AbilityType;
+import game.entities.Multiplier;
 import game.skills.Skill;
+import game.skills.SkillTag;
 import game.skills.Stat;
 import game.skills.TargetType;
+
+import java.util.List;
 
 public class S_ShieldRay extends Skill {
 
@@ -18,27 +21,17 @@ public class S_ShieldRay extends Skill {
     @Override
     public void setToInitial() {
         super.setToInitial();
+        this.tags = List.of(SkillTag.TACTICAL);
         this.targetType = TargetType.ALL_TARGETS;
         this.possibleCastPositions = new int[]{0,1};
         this.possibleTargetPositions = new int[]{2,3};
+        this.shieldMultipliers = List.of(new Multiplier(Stat.CURRENT_FAITH, 0.5));
         this.faithCost = 3;
-        this.abilityType = AbilityType.TACTICAL;
-    }
-    @Override
-    public void applySkillEffects(Hero target) {
-        super.applySkillEffects(target);
-        target.shield(getShield(), this.hero);
-    }
-
-
-    @Override
-    public int getShield() {
-        return this.hero.getStat(Stat.CURRENT_FAITH) * 50 / 100;
     }
 
     @Override
     public String getDescriptionFor(Hero hero) {
-        return "Allies get a shield equal to your 50%" + Stat.FAITH.getIconString();
+        return "";
     }
 
     @Override
